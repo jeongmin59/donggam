@@ -1,10 +1,14 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
+import MainPage from "./pages/MainPage";
 
 function App() {
   return (
-    <>
-      <div className=" bg-sky-600">Hello, 감자들</div>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<MainPage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

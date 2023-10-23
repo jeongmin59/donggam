@@ -1,12 +1,11 @@
-import './App.css'
+import "./App.css";
 
 function App() {
-
   return (
     <>
-      <div>Hello, 감자들</div>
+      <div className=" bg-sky-600">Hello, 감자들</div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

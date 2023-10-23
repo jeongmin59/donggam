@@ -7,7 +7,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -21,4 +24,10 @@ public class Location {
 
   @Column
   private Double longitude;
+
+  @Builder
+  private Location(Double latitude, Double longitude){
+    this.latitude = latitude;
+    this.longitude = longitude;
+  }
 }

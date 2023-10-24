@@ -4,7 +4,7 @@ import MainBackground from "../components/mainpage/MainBackground";
 const MainPage = () => {
   return (
     <>
-      <MainBackground /> 
+      <MainBackground />
     </>
   );
 };

@@ -40,6 +40,9 @@ dependencies {
 	// mattermost
 	implementation 'com.google.code.gson:gson:2.8.5'
 
+	// health check
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'

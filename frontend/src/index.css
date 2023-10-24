@@ -2,29 +2,35 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  box-sizing: border-box;
+  padding: 8px;
+  margin: 0;
+  font-family: "GmarketSansMedium", sans-serif;
+}
+
+
 @font-face {
-  font-family: "GmarketSansLight";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff")
-    format("woff");
-  font-weight: 300;
+  font-family: "GmarketSansBold";
   font-style: normal;
+  font-weight: 700;
+  src: url("../src/assets/fonts/GmarketSansTTFBold.ttf") format("woff");
 }
 
 @font-face {
   font-family: "GmarketSansMedium";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff")
-    format("woff");
-  font-weight: 500;
   font-style: normal;
+  font-weight: 500;
+  src: url("../src/assets/fonts/GmarketSansTTFMedium.ttf") format("woff");
 }
 
 @font-face {
-  font-family: "GmarketSansBold";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff")
-    format("woff");
-  font-weight: 700;
+  font-family: "GmarketSansLight";
   font-style: normal;
+  font-weight: 300;
+  src: url("../src/assets/fonts/GmarketSansTTFLight.ttf") format("woff");
 }
+
 
 @layer base {
   h1 {
@@ -35,17 +41,6 @@
   }
 }
 
-@layer components {
-  .bg-black {
-    background: black;
-  }
-}
-
-@layer utilities {
-  .content-auto {
-    content-visibility: auto;
-  }
-}
 
 :root {
   --mainColor: #e4efff;

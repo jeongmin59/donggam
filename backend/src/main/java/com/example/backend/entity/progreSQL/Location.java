@@ -10,24 +10,21 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import org.locationtech.jts.geom.Point;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "location")
+@Getter
 public class Location {
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @Column
-  private Double latitude;
-
-  @Column
-  private Double longitude;
+  private Point point;
 
   @Builder
-  private Location(Double latitude, Double longitude){
-    this.latitude = latitude;
-    this.longitude = longitude;
+  private Location(Point point){
+    this.point = point;
   }
 }

@@ -30,6 +30,10 @@ dependencies {
 	// ProgreSQL
 	runtimeOnly 'org.postgresql:postgresql'
 
+	// hibernate-spatial - jts Point쓰기 위해서 추가
+	implementation 'org.hibernate:hibernate-spatial:5.6.11.Final'
+
+
 	// swagger
 	implementation 'org.springdoc:springdoc-openapi-ui:1.6.6'
 

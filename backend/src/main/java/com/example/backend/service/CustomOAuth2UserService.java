@@ -1,7 +1,7 @@
 package com.example.backend.service;
 
-import com.example.backend.entity.Member;
-import com.example.backend.repository.MemberRepository;
+import com.example.backend.entity.mariaDB.Member;
+import com.example.backend.repository.mariaDB.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -22,9 +22,14 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         OAuth2User oAuth2User = delegate.loadUser(userRequest);
 
         String id = oAuth2User.getName();
+        String defaultNickname = "익명의 감자";
+        int defaultChracterId = 1;
+
         if (!memberRepository.existsById(id)) {
             Member member = Member.builder()
                     .id(oAuth2User.getName())
+                    .nickname(defaultNickname)
+                    .characterId(defaultChracterId)
                     .build();
 
             memberRepository.save(member);

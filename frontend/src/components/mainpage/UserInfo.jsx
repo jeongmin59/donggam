@@ -22,7 +22,7 @@ const UserInfo = () => {
     <div className="w-80 h-[70px] mx-auto mt-[78px]">
       <p className="username mb-[10px]">사용자 이름</p>
       <div className="usermsg h-full bg-white rounded-2xl flex justify-center">
-        <p>상태메시지를 입력하세요</p>
+        <p className="px-[37px] py-[18px] text-center">상태메시지를 입력하세요상태메시지를 </p>
       </div>
 
       {/* <p>위도 : {latitude}</p>

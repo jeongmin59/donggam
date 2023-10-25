@@ -1,42 +1,63 @@
 package com.example.backend.config;
 
-import com.example.backend.service.CustomOAuth2UserService;
+import com.example.backend.jwt.CustomAuthenticationProvider;
+import com.example.backend.jwt.JwtAccessDeniedHandler;
+import com.example.backend.jwt.JwtAuthenticationEntryPoint;
+import com.example.backend.jwt.JwtSecurityConfig;
+import com.example.backend.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.web.authentication.HttpStatusEntryPoint;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.SecurityFilterChain;
 
+@Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig{
 
-    private final CustomOAuth2UserService customOAuth2UserService;
+  private final TokenProvider tokenProvider;
+  private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+  private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
+  private final CustomAuthenticationProvider authenticationProvider;
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests(a -> a
-//                        .antMatchers("/", "/error", "/webjars/**").permitAll()
-                        .antMatchers("/index.html", "/error", "/webjars/**").permitAll()
-                        .anyRequest().authenticated()
-                )
-                .exceptionHandling(e -> e
-                        .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
-                )
-                .csrf(c -> c
-                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                )
-                .logout(l -> l
-//                        .logoutSuccessUrl("/").permitAll()
-                        .logoutSuccessUrl("/index.html").permitAll()
-                )
-                .oauth2Login(oauth2 -> oauth2
-                        .userInfoEndpoint(userInfo -> userInfo
-                                .userService(customOAuth2UserService)
-                        )
-                );
-    }
+  @Bean
+  public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    return http
+        .csrf().disable()
+        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+
+        .and()
+        .exceptionHandling()
+        .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+        .accessDeniedHandler(jwtAccessDeniedHandler)
+
+        .and()
+        .formLogin().disable()
+        .httpBasic().disable()
+
+        .authorizeRequests()
+        .antMatchers("/member/login").permitAll()
+        .antMatchers("/swagger-ui/**").permitAll()
+        .antMatchers("/v3/api-docs/**").permitAll()
+        .antMatchers("/profile").permitAll()
+        .anyRequest().authenticated()
+
+        .and()
+        .apply(new JwtSecurityConfig(tokenProvider))
+
+        .and()
+        .build();
+  }
+
+  @Bean
+  public AuthenticationManager authManager(HttpSecurity http) throws Exception {
+    AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
+    authenticationManagerBuilder.authenticationProvider(authenticationProvider);
+    return authenticationManagerBuilder.build();
+  }
 }

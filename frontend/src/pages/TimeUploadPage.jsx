@@ -1,14 +1,14 @@
 import React from "react";
 import TimeBackground from "../components/timepage/TimeBackground";
-import CreateButton from "../components/common/CreateButton";
+import PhotoUpload from "../components/timepage/PhotoUpload";
 
-const Timepage = () => {
+const TimeUploadpage = () => {
   return (
     <>
       <TimeBackground />
-      <CreateButton to="/time/upload" />
+      <PhotoUpload />
     </>
   );
 };
 
-export default Timepage;
+export default TimeUploadpage;

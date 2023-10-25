@@ -1,8 +1,8 @@
-package com.example.backend.entity.mariaDB;
+package com.example.backend.entity.mariaDB.member;
 
 import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -17,16 +17,19 @@ import javax.persistence.Id;
 @Table(name = "member")
 @Getter
 public class Member {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
     private Long id;
 
-    // 카카오에서 받아올 닉네임
+    // 랜덤으로 지정할 닉네임
     @Column
     private String nickname;
 
     // 카카오에서 받아올 이메일
     @Column
     private String email;
+
+    @Enumerated(EnumType.STRING)
+    private Authority authority;
 
     // 프로필 캐릭터 id
     @Column
@@ -37,11 +40,12 @@ public class Member {
     private Long pointId;
 
     @Builder
-    private Member(Long id, String nickname, String email, Integer characterId){
+    private Member(Long id, String nickname, String email, Integer characterId, Authority authority){
         this.id = id;
         this.nickname = nickname;
         this.email = email;
         this.characterId = characterId;
+        this.authority = authority;
     }
 
     private void setPointId(Long pointId) {

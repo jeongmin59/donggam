@@ -1,9 +1,10 @@
-package com.example.backend.controller;
+package com.example.backend.controller.member;
 
-import com.example.backend.entity.OauthToken;
-import com.example.backend.service.MemberService;
+import com.example.backend.dto.LoginDto;
+import com.example.backend.dto.Response;
+import com.example.backend.dto.TokenDto;
+import com.example.backend.service.Member.MemberService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,9 +18,8 @@ public class MemberController {
   private final MemberService memberService;
 
   @GetMapping("/login")
-  public ResponseEntity<OauthToken> login(@RequestParam("code") String code) {
-    System.out.println(code);
-    return ResponseEntity.ok(memberService.getAccessToken(code));
+  public Response<TokenDto> login(@RequestParam("code") String code) {
+    return new Response<>(200, "로그인 성공", memberService.login(code));
   }
 
 }

@@ -1,6 +1,10 @@
 package com.example.backend.entity.mariaDB.member;
 
+import com.example.backend.entity.mariaDB.Status;
 import javax.persistence.Column;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Table;
@@ -39,6 +43,10 @@ public class Member {
     @Column
     private Long pointId;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "status_id")
+    private Status status;
+
     @Builder
     private Member(Long id, String nickname, String email, Integer characterId, Authority authority){
         this.id = id;
@@ -50,6 +58,10 @@ public class Member {
 
     private void setPointId(Long pointId) {
         this.pointId = pointId;
+    }
+
+    private void setStatus(Status status) {
+        this.status = status;
     }
 }
 

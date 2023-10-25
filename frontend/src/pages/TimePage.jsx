@@ -1,9 +1,10 @@
 import React from "react";
+import TimeBackground from "../components/timepage/TimeBackground";
 
 const Timepage = () => {
   return (
     <>
-      <div>같은 시간, 다른 공간 페이지</div>
+      <TimeBackground />
     </>
   );
 };

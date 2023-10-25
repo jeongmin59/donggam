@@ -1,5 +1,7 @@
+import axios from 'axios';
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 
 const LoginRediect = () => {
   const navigator = useNavigate();
@@ -8,7 +10,7 @@ const LoginRediect = () => {
   const code = new URL(window.location.href).searchParams.get('code');
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/member/login?code=${code}`
+    axios.get(`http://k9e107.p.ssafy.io/member/login?code=${code}`
     )
       .then((res) => {
         console.log('성공!!', res.data);

@@ -4,6 +4,7 @@ import MainPage from "./pages/MainPage";
 import LoginPage from "./pages/LoginPage";
 import MailboxPage from "./pages/MailboxPage";
 import TimePage from "./pages/TimePage"
+import LoginRediect from "./components/loginpage/LoginRediect";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/kakao/callback" element={<LoginRediect />} />
         <Route path="/mailbox/:userId" element={<MailboxPage />} />
         <Route path="/time" element={<TimePage />} />
       </Routes>

@@ -1,4 +1,4 @@
-package com.example.backend.entity.progreSQL;
+package com.example.backend.entity.postgreSQL;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

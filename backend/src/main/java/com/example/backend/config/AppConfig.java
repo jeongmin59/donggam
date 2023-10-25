@@ -16,9 +16,9 @@ public class AppConfig {
   @PersistenceContext(unitName = "mariaDBEntityManager")
   private EntityManager mariaDBEntityManager;
 
-  // progreSQL EntityManager 등록
-  @PersistenceContext(unitName = "progreSQLEntityManager")
-  private EntityManager progreSQLEntityManager;
+  // postgreSQL EntityManager 등록
+  @PersistenceContext(unitName = "postgreSQLEntityManager")
+  private EntityManager postgreSQLEntityManager;
 
   // querydsl 관련 설정
   @Primary
@@ -28,9 +28,9 @@ public class AppConfig {
   }
 
   @Bean
-  @Qualifier("progreSQLQueryFactory")
-  public JPAQueryFactory progreSQLQueryFactory() {
-    return new JPAQueryFactory(progreSQLEntityManager);
+  @Qualifier("postgreSQLQueryFactory")
+  public JPAQueryFactory postgreSQLQueryFactory() {
+    return new JPAQueryFactory(postgreSQLEntityManager);
   }
 
 }

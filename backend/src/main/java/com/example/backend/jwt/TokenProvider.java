@@ -48,7 +48,6 @@ public class TokenProvider {
 //        .collect(Collectors.joining(","));
 //    String authorities = "ROLE_USER";
     String authorities = "USER";
-    System.out.println("토큰 만들때 authorities :" + authorities);
 
     Long now = (new Date()).getTime();
     Date accessExpiration = new Date(now + ACCESS_EXPIRATION);
@@ -68,18 +67,18 @@ public class TokenProvider {
   }
 
   public Authentication getAuthentication(String accessToken) {
-    System.out.println(1);
+
     Claims claims = parseClaims(accessToken);
-    System.out.println(2);
+
     if (claims.get(AUTHORITIES_KEY) == null) {
       throw new RuntimeException("권한 정보가 없는 토큰입니다.");
     }
-    System.out.println(3);
+
     Collection<? extends GrantedAuthority> authorities =
         Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
             .map(SimpleGrantedAuthority::new)
             .collect(Collectors.toList());
-    System.out.println(4);
+
     UserDetails principal = new User(claims.getSubject(), "", authorities);
 
     return new UsernamePasswordAuthenticationToken(principal, "", authorities);

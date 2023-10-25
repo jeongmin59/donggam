@@ -44,6 +44,7 @@ public class SecurityConfig{
         .antMatchers("/member/login").permitAll()
         .antMatchers("/swagger-ui/**").permitAll()
         .antMatchers("/v3/api-docs/**").permitAll()
+        .antMatchers("/profile").permitAll()
         .anyRequest().authenticated()
 
         .and()

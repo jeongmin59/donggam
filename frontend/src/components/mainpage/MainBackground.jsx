@@ -17,14 +17,14 @@ const MainBackground = () => {
 
 
   return (
-    <div className="w-full h-screen overflow-hidden">
-      <div className={backgroundClass} onClick={changeBackground}>
+    <div className="h-screen overflow-hidden">
+      <div className={backgroundClass} style={{zIndex:3}}>
         <UserInfo />
-        <button className="bg-red-200" >배경변경</button>
+        <button className="bg-red-200" onClick={changeBackground}>배경변경</button>
       </div>
-      <div className="bottomBG w-full h-full relative bg-[#abcdf0]" style={{ zIndex: -1 }}>
-        <img src="/background-image.png"
-          className="w-full h-full absolute top-40 object-cover opacity-60 " />
+      <div className="bottomBG h-screen relative bg-[#abcdf0]" style={{ zIndex: -1 }}>
+        <img src="/images/background-image.png"
+          className="h-full absolute top-40 object-cover opacity-60 " />
       </div>
     </div>
   );

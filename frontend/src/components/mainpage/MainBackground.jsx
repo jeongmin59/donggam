@@ -1,6 +1,6 @@
 import { useState } from "react";
 import UserInfo from "./UserInfo";
-import SideButtons from "./SideButtons";
+import MainArea from "./MainArea";
 
 const MainBackground = () => {
   const [selectedBackground, setSelectedBackground] = useState(1);
@@ -26,9 +26,9 @@ const MainBackground = () => {
   return (
     <div className="h-screen overflow-hidden">
       <div className={backgroundClass} style={{zIndex:3,backgroundSize: "cover" }}>
-        <UserInfo />
-        <SideButtons />
-        <button className="bg-red-200" onClick={changeBackground}>배경변경</button>
+        <UserInfo /> 
+        <MainArea />     
+      <button className="bg-red-200" onClick={changeBackground}>배경변경</button>
       </div>
       <div className="bottomBG h-screen relative bg-[#abcdf0]" style={{ zIndex: -1 }}>
         <img src="/images/background-image.png"

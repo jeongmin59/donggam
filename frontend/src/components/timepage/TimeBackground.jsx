@@ -1,11 +1,15 @@
 // 같은 시간, 다른 공간 페이지 배경
 import React, { useEffect, useState } from "react";
+import HeaderTemplate from "./HeaderTemplate";
+// import TimeHeader from "../timepage/TimeHeader"
+// import TimeZone from "./TimeZone";
 
 const TimeBackground = () => {
   const [timeClass, setTimeClass] = useState("bg-gradient-to-b from-blue-200 to-white");
+  const [currentTime, setCurrentTime] = useState(new Date().getHours());  // 현재 시간 상태로 관리
 
   useEffect(() => {
-    const currentTime = new Date().getHours();
+    setCurrentTime(new Date().getHours());
     console.log("현재 시간은??", currentTime);
 
     if ((currentTime >= 7 && currentTime < 10) || (currentTime >= 11 && currentTime < 14) || (currentTime >= 17 && currentTime < 20)) {
@@ -18,14 +22,18 @@ const TimeBackground = () => {
         setTimeClass("bg-gradient-to-b from-blue-900 to-white");    // 남색
       }
     } else {
-      // 그 외 시간대에는 회색 배경 사용
-      setTimeClass("bg-gradient-to-b from-slate-300 to-white");
+      // 그 외 시간대에는 연두색 배경 사용
+      setTimeClass("bg-gradient-to-b from-lime-200 to-white");
     }
-  }, []);
+  }, [currentTime]);
 
   return (
-    <div className="h-screen overflow-hidden">
-      <div className={`h-1/4 ${timeClass}`}>
+    <div className="h-[25vh] overflow-hidden">
+      <div className={`h-full ${timeClass}`}>
+        {/* {HeaderTemplate ({ currentTime })} */}
+        <HeaderTemplate currentTime={ currentTime } />
+        {/* <TimeZone />
+        <TimeHeader currentTime={currentTime} /> */}
       </div>
     </div>
   );

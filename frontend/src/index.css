@@ -34,10 +34,13 @@
 
 @layer base {
   h1 {
-    @apply text-2xl;
+    @apply text-[18px];
   }
   h2 {
-    @apply text-xl;
+    @apply text-[16px];
+  }
+  p {
+    @apply text-[14px];
   }
 }
 

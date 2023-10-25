@@ -19,10 +19,10 @@ const UserInfo = () => {
   // },[])
 
   return(
-    <div className="w-80 h-[70px] mx-auto mt-[78px]">
-      <p className="username mb-[10px]">사용자 이름</p>
-      <div className="usermsg h-full bg-white rounded-2xl flex justify-center">
-        <p className="px-[37px] py-[18px] text-center">상태메시지를 입력하세요상태메시지를 </p>
+    <div className="h-[70px] px-[24px] mx-auto mt-[78px]">
+      <h1 className="username mb-[10px]">사용자 이름</h1>
+      <div className="usermsg h-auto bg-white rounded-2xl flex justify-center">
+        <p className="px-[40px] py-[20px] text-center ">내 감정! 내 느낌! 달님.. 듣고 있나요?</p>
       </div>
 
       {/* <p>위도 : {latitude}</p>

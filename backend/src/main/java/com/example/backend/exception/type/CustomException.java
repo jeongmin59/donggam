@@ -9,7 +9,7 @@ public class CustomException extends RuntimeException {
   private ErrorCode errorCode;
 
   public CustomException(String message, ErrorCode errorCode) {
-    super(message);
+    super(errorCode.getStatus() + " " +message);
     this.errorCode = errorCode;
   }
 }

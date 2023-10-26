@@ -4,10 +4,10 @@ import TimeHeader from "./TimeHeader";
 
 const HeaderTemplate = ({ currentTime }) => {
   return (
-    <>
+    <div className="mt-3">
       <TimeZone />
       <TimeHeader currentTime={currentTime} />
-    </>
+    </div>
   );
 };
 

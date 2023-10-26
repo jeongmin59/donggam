@@ -1,8 +1,6 @@
 // 같은 시간, 다른 공간 페이지 배경
 import React, { useEffect, useState } from "react";
 import HeaderTemplate from "./HeaderTemplate";
-// import TimeHeader from "../timepage/TimeHeader"
-// import TimeZone from "./TimeZone";
 
 const TimeBackground = () => {
   const [timeClass, setTimeClass] = useState("bg-gradient-to-b from-blue-200 to-white");
@@ -29,11 +27,8 @@ const TimeBackground = () => {
 
   return (
     <div className="h-[25vh] overflow-hidden">
-      <div className={`h-full ${timeClass}`}>
-        {/* {HeaderTemplate ({ currentTime })} */}
+      <div className={`pt-5 h-full ${timeClass}`}>
         <HeaderTemplate currentTime={ currentTime } />
-        {/* <TimeZone />
-        <TimeHeader currentTime={currentTime} /> */}
       </div>
     </div>
   );

@@ -19,10 +19,9 @@ const LoginRediect = () => {
         console.log('성공!!', res.data);
         window.localStorage.setItem("accessToken", res.data.data.accessToken); //localStorage에 accessToken 저장하기
 
-        // const userId = res.data.data.userId;
+        const userId = res.data.data.memberId;
         // const status = res.data.data.status;
         const status = false;
-        const userId = 1;
 
         // 로그인 성공 후 상태 메시지 설정 여부에 따라 네비게이트 해주기
         if (status) {

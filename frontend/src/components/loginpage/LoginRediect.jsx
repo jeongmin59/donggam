@@ -24,15 +24,21 @@ const LoginRediect = () => {
         setMemberId(res.data.data.memberId)
         // console.log(res.data.data.memberId)
 
-        navigator('/') // 로그인 성공 후 메인페이지로 이동
+        const status = res.data.data.status
+        const memberId = res.data.data.memberId
+
+        // 로그인 성공 후 상태 메시지 설정 여부에 따라 네비게이트 해주기
+        if (status != null) {
+          navigator(`/`) // 메인페이지 이동
+        }
+        else {
+          navigator(`/profile/${memberId}`) // 프로필 설정 페이지 이동
+        }
       })
       .catch(err => {
         console.log('실패!!!!!!', err);
       });
   }, []);
-
-  console.log('멤버아이디', memberId)
-
 
   return (
     <div>

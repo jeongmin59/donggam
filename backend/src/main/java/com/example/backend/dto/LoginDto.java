@@ -28,4 +28,30 @@ public class LoginDto {
     return new UsernamePasswordAuthenticationToken(id, email);
   }
 
+  @Builder
+  @NoArgsConstructor
+  @AllArgsConstructor
+  @Data
+  public static class Response {
+    private Long memberId;
+    private String nickname;
+    private String status;
+    private Integer characterId;
+    private String grantType;
+    private String accessToken;
+    private Long accessTokenExpiration;
+  }
+
+  public static Response toLoginDtoResponse(Member member, TokenDto tokenDto) {
+    Long memberId = member.getId();
+    String nickname = member.getNickname();
+    String status = member.getStatus() != null ? member.getStatus().getContent() : null;
+    Integer characterId = member.getCharacterId();
+    String grandType = tokenDto.getGrantType();
+    String accessToken = tokenDto.getAccessToken();
+    Long accessTokenExpiration = tokenDto.getAccessTokenExpiration();
+
+    return new Response(memberId, nickname, status, characterId, grandType, accessToken, accessTokenExpiration);
+  }
+
 }

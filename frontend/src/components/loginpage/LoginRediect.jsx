@@ -22,7 +22,7 @@ const LoginRediect = () => {
 
         //userAtom 업데이트
         setMemberId(res.data.data.memberId)
-        console.log(res.data.data.memberId)
+        // console.log(res.data.data.memberId)
 
         navigator('/') // 로그인 성공 후 메인페이지로 이동
       })
@@ -30,6 +30,8 @@ const LoginRediect = () => {
         console.log('실패!!!!!!', err);
       });
   }, []);
+
+  console.log('멤버아이디', memberId)
 
 
   return (

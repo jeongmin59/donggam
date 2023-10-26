@@ -23,7 +23,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(
-    basePackages = "com.example.backend.mariaDB",
+    basePackages = "com.example.backend.repository.mariaDB",
     entityManagerFactoryRef = "mariaDBEntityManagerFactory",
     transactionManagerRef = "mariaDBTransactionManager"
 )

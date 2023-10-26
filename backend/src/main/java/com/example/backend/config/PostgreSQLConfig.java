@@ -22,47 +22,47 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(
-    basePackages = "com.example.backend.repository.progreSQL",
-    entityManagerFactoryRef = "progreSQLEntityManagerFactory",
-    transactionManagerRef = "progreSQLTransactionManager"
+    basePackages = "com.example.backend.repository.postgreSQL",
+    entityManagerFactoryRef = "postgreSQLEntityManagerFactory",
+    transactionManagerRef = "postgreSQLTransactionManager"
 )
 @RequiredArgsConstructor
-public class ProgreSQLConfig {
+public class PostgreSQLConfig {
 
   private final JpaProperties jpaProperties;
   private final HibernateProperties hibernateProperties;
 
   @Bean
   @ConfigurationProperties("spring.second-datasource")
-  public DataSourceProperties progreSQLDatasourceProperties() {
+  public DataSourceProperties postgreSQLDatasourceProperties() {
     return new DataSourceProperties();
   }
 
   @Bean
   @ConfigurationProperties("spring.second-datasource.configuration")
-  public DataSource progreSQLDatasource() {
-    return progreSQLDatasourceProperties()
+  public DataSource postgreSQLDatasource() {
+    return postgreSQLDatasourceProperties()
         .initializeDataSourceBuilder()
         .type(HikariDataSource.class)
         .build();
   }
 
-  @Bean(name = "progreSQLEntityManagerFactory")
-  public LocalContainerEntityManagerFactoryBean progreSQLEntityManagerFactory(
+  @Bean(name = "postgreSQLEntityManagerFactory")
+  public LocalContainerEntityManagerFactoryBean postgreSQLEntityManagerFactory(
       EntityManagerFactoryBuilder builder) {
     Map<String, Object> properties = hibernateProperties.determineHibernateProperties(jpaProperties.getProperties(), new HibernateSettings());
-    DataSource dataSource = progreSQLDatasource();
+    DataSource dataSource = postgreSQLDatasource();
     return builder
         .dataSource(dataSource)
-        .packages("com.example.backend.entity.progreSQL")
-        .persistenceUnit("progreSQLEntityManager")
+        .packages("com.example.backend.entity.postgreSQL")
+        .persistenceUnit("postgreSQLEntityManager")
         .properties(properties)
         .build();
   }
 
-  @Bean(name = "progreSQLTransactionManager")
-  public PlatformTransactionManager progreSQLTransactionManager(
-      final @Qualifier("progreSQLEntityManagerFactory") LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean
+  @Bean(name = "postgreSQLTransactionManager")
+  public PlatformTransactionManager postgreSQLTransactionManager(
+      final @Qualifier("postgreSQLEntityManagerFactory") LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean
   ) {
     return new JpaTransactionManager(localContainerEntityManagerFactoryBean.getObject());
   }

@@ -1,4 +1,4 @@
-package com.example.backend.entity.progreSQL;
+package com.example.backend.entity.mariaDB;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,21 +10,24 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.locationtech.jts.geom.Point;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "location")
+@Table(name = "status")
 @Getter
-public class Location {
+public class Status {
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @Column
-  private Point point;
+  private String content;
+
+  @Column
+  private Emotion emotion;
 
   @Builder
-  private Location(Point point){
-    this.point = point;
+  private Status(String content, String emotion) {
+    this.content = content;
+    this.emotion = Emotion.StringToEnum(emotion);
   }
 }

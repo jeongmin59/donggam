@@ -1,8 +1,8 @@
 package com.example.backend.service;
 
 import com.example.backend.dto.LocationDto;
-import com.example.backend.entity.progreSQL.Location;
-import com.example.backend.repository.progreSQL.LocationRepository;
+import com.example.backend.entity.postgreSQL.Location;
+import com.example.backend.repository.postgreSQL.LocationRepository;
 import lombok.RequiredArgsConstructor;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;

@@ -9,18 +9,16 @@ const LocationAnimation = () => {
     animationData: animationData,
     rendererSettings: {
       // 너비 설정
-      preserveAspectRatio: "xMidYMid slice",
+      // preserveAspectRatio: "xMidYMid slice",
     },
   }
 
   return (
-    <div className="flex justify-center">
+    <>
       <Lottie
         options={defaultOptions} 
-        className="absolute top-20"
-        style={{ width: "120%", zIndex: -1 }}
       />
-    </div>
+    </>
   )
 };
 

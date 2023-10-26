@@ -11,11 +11,11 @@ const MainArea = () => {
 
   return(
   <div className='mainArea'>
-    <div className='flex justify-end absolute  top- 0 right-0' style={{ zIndex: 1 }}>
+    <div className='flex justify-end absolute mt-10 right-5' style={{ zIndex: 1 }}>
       <div>
         <img 
           src={ChattingBtn} 
-          className="-mb-10"
+          className="mb-2"
         />
         <img 
           src={MessageBtn}
@@ -23,9 +23,9 @@ const MainArea = () => {
         />
       </div>
     </div> 
-    {/* <div className='h-full absolute top-50'> */}
+    <div className='flex absolute mt-20' style={{ transform: 'scale(2)', zIndex: -1 }}>
       <LocationAnimation />
-    {/* </div>  */}
+    </div> 
   </div>
   )
 }

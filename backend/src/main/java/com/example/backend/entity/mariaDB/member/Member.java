@@ -4,6 +4,8 @@ import com.example.backend.entity.mariaDB.Status;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToOne;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -20,6 +22,9 @@ import javax.persistence.Id;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "member")
 @Getter
+@NamedEntityGraph(name = "member.status", attributeNodes = {
+    @NamedAttributeNode("status")
+})
 public class Member {
     @Id
     private Long id;
@@ -41,14 +46,14 @@ public class Member {
 
     // 위치
     @Column
-    private Long pointId;
+    private Long locationId;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "status_id")
     private Status status;
 
     @Builder
-    private Member(Long id, String nickname, String email, Integer characterId, Authority authority){
+    public Member(Long id, String nickname, String email, Integer characterId, Authority authority){
         this.id = id;
         this.nickname = nickname;
         this.email = email;
@@ -56,8 +61,8 @@ public class Member {
         this.authority = authority;
     }
 
-    private void setPointId(Long pointId) {
-        this.pointId = pointId;
+    public void setLocationId(Long locationId) {
+        this.locationId = locationId;
     }
 
     private void setStatus(Status status) {

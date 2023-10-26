@@ -94,15 +94,7 @@ public class MemberService {
     String email = jsonObject.getJSONObject("kakao_account").getString("email");
 
     Member member = memberRepository.findById(memberId)
-            .orElse(
-                memberRepository.save(Member.builder()
-                    .id(memberId)
-                    .email(email)
-                    .characterId(1)
-                    .nickname("익명의 감자")
-                    .authority(Authority.ROLE_USER)
-                    .build())
-            );
+            .orElse(memberRepository.save(new Member(memberId, "익명의 감자", email, 1, Authority.ROLE_USER)));
 
     LoginDto loginDto = new LoginDto();
     loginDto.setId(memberId);

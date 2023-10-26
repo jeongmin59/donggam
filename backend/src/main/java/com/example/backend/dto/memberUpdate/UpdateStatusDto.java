@@ -1,18 +1,19 @@
 package com.example.backend.dto.memberUpdate;
 
+import com.example.backend.entity.mariaDB.Emotion;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-public class updateNicknameDto {
+public class UpdateStatusDto {
 
   @Data
   @NoArgsConstructor
   @AllArgsConstructor
   public static class Request {
-    private String nickname;
+    private String status;
   }
 
   @Data
@@ -20,7 +21,7 @@ public class updateNicknameDto {
   @AllArgsConstructor
   @Builder
   public static class Response {
-    private String nickname;
+    private String status;
+    private Emotion emotion;
   }
-
 }

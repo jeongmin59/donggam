@@ -30,4 +30,8 @@ public class Status {
     this.content = content;
     this.emotion = Emotion.StringToEnum(emotion);
   }
+
+  public static Status toStatus(String content, String emotion) {
+    return new Status(content, emotion);
+  }
 }

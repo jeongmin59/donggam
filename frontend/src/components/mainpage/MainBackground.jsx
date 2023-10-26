@@ -1,6 +1,7 @@
 import { useState } from "react";
 import UserInfo from "./UserInfo";
 import MainArea from "./MainArea";
+import NumberOfUsers from "./NumberOfUsers";
 // import LocationAnimation from './LocationAnimation';
 
 const MainBackground = () => {
@@ -29,7 +30,8 @@ const MainBackground = () => {
       <div className={backgroundClass} style={{zIndex:3,backgroundSize: "cover" }}>
         <button className="bg-red-200" onClick={changeBackground}>배경변경</button>
         <UserInfo /> 
-        <MainArea />     
+        <MainArea />
+        <NumberOfUsers />
       </div>
       <div className="bottomBG h-screen relative bg-[#abcdf0]" style={{ zIndex: -1 }}>
         <img src="/images/background-image.png"

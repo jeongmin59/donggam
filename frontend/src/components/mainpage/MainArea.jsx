@@ -10,8 +10,8 @@ const MainArea = () => {
   };
 
   return(
-  <div className='mainArea relative '>
-    <div className='flex justify-end absolute right-0' style={{ zIndex: 1 }}>
+  <div className='mainArea'>
+    <div className='flex justify-end absolute  top- 0 right-0' style={{ zIndex: 1 }}>
       <div>
         <img 
           src={ChattingBtn} 
@@ -22,8 +22,10 @@ const MainArea = () => {
           onClick={() => navigateTo('/mailbox/:userId')}
         />
       </div>
-    </div>  
-    <LocationAnimation />
+    </div> 
+    {/* <div className='h-full absolute top-50'> */}
+      <LocationAnimation />
+    {/* </div>  */}
   </div>
   )
 }

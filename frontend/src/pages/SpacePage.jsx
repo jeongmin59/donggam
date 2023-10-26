@@ -1,8 +1,15 @@
+import React from "react";
+import SpaceHeaderTemplate from "../components/spacepage/SpaceHeaderTemplate";
+import ButtonTemplate from "../components/spacepage/ButtonTemplate";
+import MyTrace from "../components/spacepage/MyTrace";
+
 const SpacePage = () => {
   return(
-    <>
-      <h1>공간페이징~</h1>
-    </>
+    <div className="px-5">
+      <SpaceHeaderTemplate />
+      <MyTrace />
+      <ButtonTemplate />
+    </div>
   );
 };
 

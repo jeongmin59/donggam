@@ -1,24 +1,34 @@
 import React, { useState } from "react";
-import UploadButton from "./UploadButton";
+import UploadButton from "../common/UploadButton";
 
 const PhotoUpload = () => {
   const [selectedFile, setSelectedFile] = useState(null);
+  const [previewURL, setPreviewURL] = useState(null);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setSelectedFile(file);
+    
+    // 파일 선택 시 미리보기 생성
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setPreviewURL(e.target.result);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleUpload = () => {
     if (selectedFile) {
       console.log("선택된 파일:", selectedFile);
     } else {
-      alert("파일을 선택하세요.");
+      alert("사진을 첨부해주세요.");
     }
   };
 
   return (
-    <div className="px-5">{/* 패딩 적용 */}
+    <div className="px-5 flex flex-col">
       <div className="mb-4">
         <label className="block text-sm text-gray-700">제목을 입력하세요.</label>
         <input
@@ -34,22 +44,31 @@ const PhotoUpload = () => {
               htmlFor="file-upload"
               className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
             >
-              <p>사진을 올려주세요.</p>
+              <p>사진을 첨부해주세요.</p>
               <input
                 id="file-upload"
                 name="file-upload"
                 type="file"
                 accept="image/*"
                 className="sr-only"
-                onChange={handleFileChange} // 파일 선택 시 handleFileChange 함수 호출
+                onChange={handleFileChange}
               />
             </label>
           </div>
           <p className="text-xs leading-5 text-gray-600">PNG, JPG, GIF up to 10MB</p>
         </div>
       </div>
-
-      <UploadButton onUpload={handleUpload} />
+      {/* 이미지 미리보기 */}
+      {previewURL && (
+        <img
+          src={previewURL}
+          alt="미리보기"
+          className="max-h-40 mx-auto"
+        />
+      )}
+      <div className="fixed bottom-3 left-0 right-0 p-4">
+        <UploadButton onUpload={handleUpload} />
+      </div>
     </div>
   );
 };

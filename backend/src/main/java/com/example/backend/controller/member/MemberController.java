@@ -3,6 +3,7 @@ package com.example.backend.controller.member;
 import com.example.backend.dto.LoginDto;
 import com.example.backend.dto.Response;
 import com.example.backend.dto.memberUpdate.UpdateCharacterDto;
+import com.example.backend.dto.memberUpdate.UpdateDto;
 import com.example.backend.dto.memberUpdate.UpdateNicknameDto;
 import com.example.backend.dto.memberUpdate.UpdateStatusDto;
 import com.example.backend.service.Member.MemberService;
@@ -64,4 +65,13 @@ public class MemberController {
     return new Response<>(200, "상태메시지 변경 성공", memberService.updateStatus(memberId, request.getStatus()));
   }
 
+  @Operation(summary = "전체 회원정보 수정", description = "전체 회원정보 수정")
+  @PostMapping("/update")
+  public Response<UpdateDto.Response> update(
+      @Parameter(hidden = true) @AuthenticationPrincipal UserDetails userDetails,
+      @RequestBody UpdateDto.Request request
+  ) {
+    Long memberId = Long.parseLong(userDetails.getUsername());
+    return new Response<>(200, "회원 정보 수정 성공", memberService.update(memberId, request));
+  }
 }

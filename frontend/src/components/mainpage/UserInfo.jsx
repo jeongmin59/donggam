@@ -19,7 +19,7 @@ const UserInfo = () => {
   // },[])
 
   return(
-    <div className="h-[70px] px-[24px] mx-auto mt-[78px]">
+    <div className="userInfo h-100 px-[24px] mx-auto mt-[60px]">
       <h1 className="username mb-[10px]">사용자 이름</h1>
       <div className="usermsg h-auto bg-white rounded-2xl flex justify-center">
         <p className="px-[40px] py-[20px] text-center ">내 감정! 내 느낌! 달님.. 듣고 있나요?</p>

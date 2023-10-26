@@ -26,9 +26,9 @@ const MainBackground = () => {
   return (
     <div className="h-screen overflow-hidden">
       <div className={backgroundClass} style={{zIndex:3,backgroundSize: "cover" }}>
+        <button className="bg-red-200" onClick={changeBackground}>배경변경</button>
         <UserInfo /> 
         <MainArea />     
-      <button className="bg-red-200" onClick={changeBackground}>배경변경</button>
       </div>
       <div className="bottomBG h-screen relative bg-[#abcdf0]" style={{ zIndex: -1 }}>
         <img src="/images/background-image.png"

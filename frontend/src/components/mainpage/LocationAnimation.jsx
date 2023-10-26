@@ -14,7 +14,7 @@ const LocationAnimation = () => {
   }
 
   return (
-    <div className='flex absolute mt-20' style={{ transform: 'scale(2)', zIndex: -1 }}>
+    <div className='flex absolute mt-20 ' style={{ zIndex: -1 }}>
       <Lottie
         options={defaultOptions} 
       />

@@ -21,10 +21,14 @@ public class Location {
   private Long id;
 
   @Column
-  private Point point;
+  private Double latitude;
+
+  @Column
+  private Double longitude;
 
   @Builder
-  private Location(Point point){
-    this.point = point;
+  public Location(Double latitude, Double longitude){
+    this.latitude = latitude;
+    this.longitude = longitude;
   }
 }

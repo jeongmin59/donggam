@@ -14,7 +14,7 @@ const LoginRediect = () => {
     )
       .then((res) => {
         console.log('성공!!', res.data);
-        window.localStorage.setItem("accessToken", res.data.accessToken); //localStorage에 accessToken 저장하기
+        window.localStorage.setItem("accessToken", res.data.data.accessToken); //localStorage에 accessToken 저장하기
         navigator('/') // 로그인 성공 후 메인페이지로 이동
       })
       .catch(err => {

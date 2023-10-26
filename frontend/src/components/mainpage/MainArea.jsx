@@ -23,9 +23,7 @@ const MainArea = () => {
         />
       </div>
     </div> 
-    <div className='flex absolute mt-20' style={{ transform: 'scale(2)', zIndex: -1 }}>
-      <LocationAnimation />
-    </div> 
+    <LocationAnimation />
   </div>
   )
 }

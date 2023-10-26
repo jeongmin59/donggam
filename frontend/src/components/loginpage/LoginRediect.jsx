@@ -13,6 +13,9 @@ const LoginRediect = () => {
   // REDIRECT_URL의 Params로 온 인가코드 받아오기
   const code = new URL(window.location.href).searchParams.get('code');
 
+  //로그인 요청 후 받아올 수 있는 데이터 목록
+  // accessToken, userId, status, cheracterId, nickname
+
   useEffect(() => {
     axios.get(`http://k9e107.p.ssafy.io/member/login?code=${code}`
     )

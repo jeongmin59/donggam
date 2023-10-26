@@ -1,6 +1,7 @@
 import { useState } from "react";
 import UserInfo from "./UserInfo";
 import MainArea from "./MainArea";
+// import LocationAnimation from './LocationAnimation';
 
 const MainBackground = () => {
   const [selectedBackground, setSelectedBackground] = useState(1);

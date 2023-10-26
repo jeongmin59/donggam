@@ -1,7 +1,7 @@
 import ChattingBtn from '../../assets/icons/chatting-btn.svg';
 import MessageBtn from '../../assets/icons/message-btn.svg';
 import { useNavigate } from 'react-router-dom';
-// import LocationAnimation from './LocationAnimation';
+import LocationAnimation from './LocationAnimation'
 
 const MainArea = () => {
   const navigate = useNavigate()
@@ -11,7 +11,7 @@ const MainArea = () => {
 
   return(
   <div className='mainArea relative '>
-    <div className='flex justify-end ' style={{ zIndex: -1 }}>
+    <div className='flex justify-end absolute right-0' style={{ zIndex: 1 }}>
       <div>
         <img 
           src={ChattingBtn} 
@@ -23,6 +23,7 @@ const MainArea = () => {
         />
       </div>
     </div>  
+    <LocationAnimation />
   </div>
   )
 }

@@ -15,5 +15,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
   boolean existsByEmail(String email);
 
+  @EntityGraph(attributePaths = {"status"})
   List<Member> findByLocationIdIn(List<Long> locationIds);
 }

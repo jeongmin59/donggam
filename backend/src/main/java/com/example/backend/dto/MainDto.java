@@ -1,5 +1,6 @@
 package com.example.backend.dto;
 
+import com.example.backend.entity.mariaDB.Emotion;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,14 +24,12 @@ public class MainDto {
   @NoArgsConstructor
   @Builder
   public static class Response {
-    private String nickname;
-    private String status;
-    private Integer characterId;
+    private Emotion statusWeather;
     private Integer aroundPeopleCount;
     private List<AroundDto.Response> aroundPeople;
   }
 
-  public static Response toMainDtoResponse (String nickname, String status, Integer characterId, Integer aroundPeopleCount, List<AroundDto.Response> aroundPeople) {
-    return new Response(nickname, status, characterId, aroundPeopleCount, aroundPeople);
+  public static Response toMainDtoResponse (Emotion emotion, Integer aroundPeopleCount, List<AroundDto.Response> aroundPeople) {
+    return new Response(emotion, aroundPeopleCount, aroundPeople);
   }
 }

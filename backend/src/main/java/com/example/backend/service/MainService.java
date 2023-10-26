@@ -2,6 +2,7 @@ package com.example.backend.service;
 
 import com.example.backend.dto.AroundDto;
 import com.example.backend.dto.MainDto;
+import com.example.backend.entity.mariaDB.Emotion;
 import com.example.backend.entity.mariaDB.member.Member;
 import com.example.backend.entity.postgreSQL.Location;
 import com.example.backend.exception.ErrorCode;
@@ -12,7 +13,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import org.locationtech.jts.geom.Point;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -36,13 +36,53 @@ public class MainService {
     List<AroundDto.Response> aroundPeople = getAroundPeople(locationId);
     Integer aroundPeopleCount = aroundPeople.isEmpty() ? 0 : aroundPeople.size();
 
-    return MainDto.toMainDtoResponse(
-        member.getNickname(), member.getStatus().getContent(), member.getCharacterId(),
-        aroundPeopleCount, aroundPeople
-    );
+    Emotion statusWeather = getStatusWeather(locationId);
+
+    return MainDto.toMainDtoResponse(statusWeather, aroundPeopleCount, aroundPeople);
   }
 
   private List<AroundDto.Response> getAroundPeople(Long locationId) {
+    List<Member> members = getAroundMembers(locationId);
+
+    if (members.isEmpty()) {
+      return null;
+    }
+    return members.stream()
+        .map(member -> AroundDto.toAroundDtoResponse(member.getId(), member.getCharacterId()))
+        .collect(Collectors.toList());
+  }
+
+  private Emotion getStatusWeather(Long locationId) {
+    List<Member> members = getAroundMembers(locationId);
+
+    int neutralCount = 0;
+    int positiveCount = 0;
+    int negativeCount = 0;
+
+    for (Member member : members) {
+      if (member.getStatus().getEmotion() == Emotion.NEGATIVE) {
+        negativeCount ++;
+      } else if (member.getStatus().getEmotion() == Emotion.POSITIVE) {
+        positiveCount ++;
+      } else if (member.getStatus().getEmotion() == Emotion.NEUTRAL) {
+        neutralCount ++;
+      }
+    }
+
+    if (neutralCount >= 3) {
+      return Emotion.NEUTRAL;
+    } else {
+      if (positiveCount == negativeCount) {
+        return Emotion.NEUTRAL;
+      } else if (positiveCount > negativeCount) {
+        return Emotion.POSITIVE;
+      } else {
+        return Emotion.NEGATIVE;
+      }
+    }
+  }
+
+  private List<Member> getAroundMembers(Long locationId) {
     Location location = locationRepository.findById(locationId)
         .orElseThrow(() -> new CustomException(ErrorCode.ENTITY_NOT_FOUND.getMessage(), ErrorCode.ENTITY_NOT_FOUND));
 
@@ -61,11 +101,7 @@ public class MainService {
 
     List<Long> locationsIds = locations.stream().map(Location::getId).collect(Collectors.toList());
 
-    List<Member> members = memberRepository.findByLocationIdIn(locationsIds);
-
-    return members.stream()
-        .map(member -> AroundDto.toAroundDtoResponse(member.getId(), member.getCharacterId()))
-        .collect(Collectors.toList());
+    return memberRepository.findByLocationIdIn(locationsIds);
   }
 
 }

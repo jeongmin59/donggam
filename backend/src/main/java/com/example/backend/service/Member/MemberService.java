@@ -3,6 +3,7 @@ package com.example.backend.service.Member;
 import com.example.backend.dto.LoginDto;
 import com.example.backend.dto.TokenDto;
 import com.example.backend.dto.memberUpdate.UpdateCharacterDto;
+import com.example.backend.dto.memberUpdate.UpdateDto;
 import com.example.backend.dto.memberUpdate.UpdateNicknameDto;
 import com.example.backend.dto.memberUpdate.UpdateNicknameDto.Response;
 import com.example.backend.dto.memberUpdate.UpdateStatusDto;
@@ -76,6 +77,24 @@ public class MemberService {
     memberRepository.save(member);
 
     return new UpdateStatusDto.Response(status.getContent(), status.getEmotion());
+  }
+
+  public UpdateDto.Response update(Long memberId, UpdateDto.Request request) {
+    Member member = memberRepository.findWithRelatedEntityById(memberId)
+        .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND.getMessage(), ErrorCode.USER_NOT_FOUND));
+
+    String emotion = sentimentAPI(request.getStatus());
+    Status status = statusRepository.findById(member.getStatus().getId())
+        .orElseThrow(() -> new CustomException(ErrorCode.ENTITY_NOT_FOUND.getMessage(), ErrorCode.ENTITY_NOT_FOUND));
+    Status.toStatus(request.getStatus(), emotion);
+    statusRepository.save(status);
+
+    member.setCharacterId(request.getCharacterId());
+    member.setNickname(request.getNickname());
+    member.setStatus(status);
+    memberRepository.save(member);
+
+    return new UpdateDto.Response(member.getNickname(), member.getCharacterId(), status.getContent(), status.getEmotion());
   }
 
   private String kakaoToken(String code) {

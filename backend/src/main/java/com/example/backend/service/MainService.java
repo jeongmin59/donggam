@@ -34,7 +34,7 @@ public class MainService {
     memberRepository.save(member);
 
     List<AroundDto.Response> aroundPeople = getAroundPeople(locationId);
-    Integer aroundPeopleCount = aroundPeople.isEmpty() ? 0 : aroundPeople.size();
+    Integer aroundPeopleCount = aroundPeople == null ? 0 : aroundPeople.size();
 
     Emotion statusWeather = getStatusWeather(locationId);
 

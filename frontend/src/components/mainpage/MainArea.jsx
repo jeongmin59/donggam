@@ -1,18 +1,28 @@
 import ChattingBtn from '../../assets/icons/chatting-btn.svg';
 import MessageBtn from '../../assets/icons/message-btn.svg';
+import { useNavigate } from 'react-router-dom';
 // import LocationAnimation from './LocationAnimation';
 
 const MainArea = () => {
+  const navigate = useNavigate()
+  const navigateTo = (path) => {
+    navigate(path);
+  };
+
   return(
   <div className='mainArea relative '>
     <div className='flex justify-end ' style={{ zIndex: -1 }}>
       <div>
-        <img src={ChattingBtn} className="-mb-10"/>
-        <img src={MessageBtn}/>
+        <img 
+          src={ChattingBtn} 
+          className="-mb-10"
+        />
+        <img 
+          src={MessageBtn}
+          onClick={() => navigateTo('/mailbox/:userId')}
+        />
       </div>
     </div>  
-    {/* <p className="absolute top-10 px-[24px]" style={{ zIndex: 1 }}>여기서 더 생기면 머가 늘어나지?</p> */}
-    {/* <LocationAnimation />  */}
   </div>
   )
 }

@@ -6,11 +6,8 @@ import MailboxPage from "./pages/MailboxPage";
 import TimePage from "./pages/TimePage"
 import TimeUploadpage from "./pages/TimeUploadPage";
 import LoginRediect from "./components/loginpage/LoginRediect";
-<<<<<<< HEAD
 import SpacePage from "./pages/SpacePage";
-=======
 import ProfilePage from "./pages/ProfilePage";
->>>>>>> feature/FE/profile
 
 function App() {
   return (

@@ -17,7 +17,7 @@ const TimeBackground = () => {
       } else if (currentTime >= 11 && currentTime < 14) {
         setTimeClass("bg-gradient-to-b from-orange-200 to-white");  // 주황빛 도는 색
       } else if (currentTime >= 17 && currentTime < 20) {
-        setTimeClass("bg-gradient-to-b from-blue-900 to-white");    // 남색
+        setTimeClass("bg-gradient-to-b from-indigo-400 to-white");    // 남색
       }
     } else {
       // 그 외 시간대에는 연두색 배경 사용

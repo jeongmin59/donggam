@@ -7,9 +7,12 @@ const UploadButton = ({ onUpload }) => {
   };
 
   return (
-    <div className="w-full h-[55px] bg-white rounded-[80px] border-2 border-blue-200 justify-center items-center gap-[12.28px] inline-flex">
+    <div 
+      className="w-full h-[55px] bg-white rounded-[80px] border-2 border-blue-200 justify-center items-center gap-[12.28px] inline-flex"
+      onClick={handleUploadClick}>
+      
       <button
-        className="font-GmarketSanslight font-base text-blue-200" 
+        className="font-['GmarketSansMedium'] font-base text-blue-200" 
         onClick={handleUploadClick}>업로드</button>
     </div>
   );

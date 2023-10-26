@@ -38,7 +38,10 @@ const TimeHeader = ({ currentTime }) => {
       </div>
       {image && (
         <div className="">
-          <img src={image} alt="시간대에 따른 이미지" />
+          <img 
+            src={image} 
+            alt="시간대에 따른 이미지"
+            className="w-20 h-20" />
         </div>
       )}
     </div>

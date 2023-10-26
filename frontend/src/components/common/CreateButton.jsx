@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate  } from "react-router-dom";
 import createBtn from "../../assets/common/createBtn.png";
 
@@ -10,7 +10,10 @@ const CreateButton = ({ to }) => {
   };
 
   return (
-    <button onClick={handleButtonClick}>
+    <button 
+      onClick={handleButtonClick}
+      className="fixed bottom-4 right-4 z-10" // 우하단에 버튼 고정
+    >
       <img src={createBtn} alt="글 작성 버튼" />
     </button>
   );

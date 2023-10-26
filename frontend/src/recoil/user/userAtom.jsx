@@ -1,6 +1,7 @@
 import { atom } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
 
+// 새로 고침 후에도 전역 상태 유지
 const { persistAtom } = recoilPersist({
   key: "User",
   storage: localStorage,

@@ -65,8 +65,16 @@ public class Member {
         this.locationId = locationId;
     }
 
-    private void setStatus(Status status) {
+    public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public void setCharacterId(Integer characterId) {
+        this.characterId = characterId;
     }
 }
 

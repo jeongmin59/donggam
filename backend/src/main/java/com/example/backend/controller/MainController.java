@@ -25,6 +25,6 @@ public class MainController {
   @Operation(summary = "메인 화면 API", description = "메인화면 API")
   @PostMapping
   public Response<MainDto.Response> mainPage(@RequestBody MainDto.Request request) {
-    return new Response<>(200, "메인페이지용 정보", mainService.mainPage(request));
+    return new Response<>(200, "메인페이지 주변 정보", mainService.mainPage(request));
   }
 }

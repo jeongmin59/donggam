@@ -2,7 +2,7 @@ import React from "react";
 import TimeBackground from "../components/timepage/TimeBackground";
 import CreateButton from "../components/common/CreateButton";
 
-const Timepage = () => {
+const TimePage = () => {
   return (
     <>
       <TimeBackground />
@@ -11,4 +11,4 @@ const Timepage = () => {
   );
 };
 
-export default Timepage;
+export default TimePage;

@@ -6,6 +6,7 @@ import MailboxPage from "./pages/MailboxPage";
 import TimePage from "./pages/TimePage"
 import TimeUploadpage from "./pages/TimeUploadPage";
 import LoginRediect from "./components/loginpage/LoginRediect";
+import SpacePage from "./pages/SpacePage";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/mailbox/:userId" element={<MailboxPage />} />
         <Route path="/time" element={<TimePage />} />
         <Route path="/time/upload" element={<TimeUploadpage />} />
+        <Route path="/space" element={<SpacePage />} />
       </Routes>
     </BrowserRouter>
   );

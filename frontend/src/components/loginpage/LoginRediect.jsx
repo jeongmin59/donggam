@@ -1,14 +1,19 @@
 import axios from 'axios';
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MemberIdAtom } from '../../recoil/user/userAtom';
-import { useRecoilState } from 'recoil';
+import { MemberIdAtom, StatusMessageAtom, NicknameAtom, CharacterIdAtom, AccessTokenAtom } from '../../recoil/user/userAtom';
+import { useSetRecoilState } from 'recoil';
 
 
 const LoginRediect = () => {
   const navigator = useNavigate();
 
-  const [memberId, setMemberId] = useRecoilState(MemberIdAtom)
+  const setAccessToken = useSetRecoilState(AccessTokenAtom);
+  const setMemberId = useSetRecoilState(MemberIdAtom);
+  const setStatusMessage = useSetRecoilState(StatusMessageAtom);
+  const setNickname = useSetRecoilState(NicknameAtom);
+  const setCharacterId = useSetRecoilState(CharacterIdAtom);
+
 
   // REDIRECT_URL의 Params로 온 인가코드 받아오기
   const code = new URL(window.location.href).searchParams.get('code');
@@ -21,14 +26,24 @@ const LoginRediect = () => {
     )
       .then((res) => {
         console.log('성공!!', res.data);
-        window.localStorage.setItem("accessToken", res.data.data.accessToken); //localStorage에 accessToken 저장하기
+
+        // res 데이터 받아오기
+        const accessToken = res.data.data.accessToken
+        // const status = res.data.data.status
+        const memberId = res.data.data.memberId
+        const status = "개발 잘하고 싶다.. 어케 함."
+
+        window.localStorage.setItem("accessToken", accessToken); //localStorage에 accessToken 저장하기
+
 
         //userAtom 업데이트
+        setAccessToken(res.data.data.accessToken)
         setMemberId(res.data.data.memberId)
-        // console.log(res.data.data.memberId)
+        // setStatusMessage(res.data.data.status)
+        setStatusMessage(status)
+        setNickname(res.data.data.nickname)
+        setCharacterId(res.data.data.characterId)
 
-        const status = res.data.data.status
-        const memberId = res.data.data.memberId
 
         // 로그인 성공 후 상태 메시지 설정 여부에 따라 네비게이트 해주기
         if (status != null) {

@@ -18,7 +18,7 @@ public class MemberController {
   private final MemberService memberService;
 
   @GetMapping("/login")
-  public Response<TokenDto> login(@RequestParam("code") String code) {
+  public Response<LoginDto.Response> login(@RequestParam("code") String code) {
     return new Response<>(200, "로그인 성공", memberService.login(code));
   }
 

@@ -29,10 +29,9 @@ public class MemberService {
   private final AuthenticationManagerBuilder authenticationManagerBuilder;
   private final TokenProvider tokenProvider;
 
+  public LoginDto.Response login(String code) {
 
-  public TokenDto login(String code) {
-
-     return myToken(kakaoToken(code));
+     return myInfo(kakaoToken(code));
   }
 
   private String kakaoToken(String code) {
@@ -73,7 +72,7 @@ public class MemberService {
   // 카카오에서 회원 정보를 가져와서
   // 이미 존재하는 회원이면 로그인
   // 새로운 회원이면 회원가입 진행
-  private TokenDto myToken(String accessToken) {
+  private LoginDto.Response myInfo(String accessToken) {
     HttpHeaders headers = new HttpHeaders();
     headers.set("Authorization", "Bearer " + accessToken);
     headers.set("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
@@ -93,7 +92,7 @@ public class MemberService {
     Long memberId = jsonObject.getLong("id");
     String email = jsonObject.getJSONObject("kakao_account").getString("email");
 
-    Member member = memberRepository.findById(memberId)
+    Member member = memberRepository.findWithRelatedEntityById(memberId)
             .orElse(memberRepository.save(new Member(memberId, "익명의 감자", email, 1, Authority.ROLE_USER)));
 
     LoginDto loginDto = new LoginDto();
@@ -104,6 +103,8 @@ public class MemberService {
 
     Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
 
-    return tokenProvider.createToken(authentication);
+    TokenDto tokenDto = tokenProvider.createToken(authentication);
+
+    return LoginDto.toLoginDtoResponse(member, tokenDto);
   }
 }

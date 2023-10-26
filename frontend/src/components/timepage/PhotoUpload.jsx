@@ -1,38 +1,75 @@
-import React from "react";
+import React, { useState } from "react";
+import UploadButton from "../common/UploadButton";
 
 const PhotoUpload = () => {
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [previewURL, setPreviewURL] = useState(null);
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setSelectedFile(file);
+    
+    // 파일 선택 시 미리보기 생성
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setPreviewURL(e.target.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleUpload = () => {
+    if (selectedFile) {
+      console.log("선택된 파일:", selectedFile);
+    } else {
+      alert("사진을 첨부해주세요.");
+    }
+  };
+
   return (
-    <>
-      <div className="col-span-full">
-        <label htmlFor="about" className="block text-sm font-medium leading-6 text-gray-900">
-          제목을 입력해주세요.
-        </label>
-        <div className="mt-2">
-          <textarea id="about" name="about" rows="3" className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
-        </div>
-        {/* <p className="mt-3 text-sm leading-6 text-gray-600">Write a few sentences about yourself.</p> */}
+    <div className="px-5 flex flex-col">
+      <div className="mb-4">
+        <label className="block text-sm text-gray-700">제목을 입력하세요.</label>
+        <input
+          type="text"
+          className="w-full px-3 py-2 rounded-md border focus:outline-none focus:ring focus:border-blue-300"
+        />
       </div>
-      <div className="col-span-full">
-        {/* <label htmlFor="cover-photo" className="block text-sm font-medium leading-6 text-gray-900">
-          사진을 올려주세요.
-        </label> */}
-        <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
-          <div className="text-center">
-            <svg className="mx-auto h-12 w-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path fillRule="evenodd" d="M1.5 6a2.25 2.25 0 012.25-2.25h16.5A2.25 2.25 0 0122.5 6v12a2.25 2.25 0 01-2.25 2.25H3.75A2.25 2.25 0 011.5 18V6zM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0021 18v-1.94l-2.69-2.689a1.5 1.5 0 00-2.12 0l-.88.879.97.97a.75.75 0 11-1.06 1.06l-5.16-5.159a1.5 1.5 0 00-2.12 0L3 16.061zm10.125-7.81a1.125 1.125 0 112.25 0 1.125 1.125 0 01-2.25 0z" clipRule="evenodd" />
-            </svg>
-            <div className="mt-4 flex text-sm leading-6 text-gray-600">
-              <label htmlFor="file-upload" className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
-                <span>사진을 올려주세요.</span>
-                <input id="file-upload" name="file-upload" type="file" className="sr-only" />
-              </label>
-              {/* <p className="pl-1">or drag and drop</p> */}
-            </div>
-            <p className="text-xs leading-5 text-gray-600">PNG, JPG, GIF up to 10MB</p>
+
+      <div className="mb-4">
+        <div className="mt-2 flex flex-col items-center justify-center rounded-lg border focus:outline-none focus:ring focus:border-blue-300 px-6 py-10">
+          <div className="mt-4 flex text-sm leading-6 text-gray-600">
+            <label
+              htmlFor="file-upload"
+              className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
+            >
+              <p>사진을 첨부해주세요.</p>
+              <input
+                id="file-upload"
+                name="file-upload"
+                type="file"
+                accept="image/*"
+                className="sr-only"
+                onChange={handleFileChange}
+              />
+            </label>
           </div>
+          <p className="text-xs leading-5 text-gray-600">PNG, JPG, GIF up to 10MB</p>
         </div>
       </div>
-    </>
+      {/* 이미지 미리보기 */}
+      {previewURL && (
+        <img
+          src={previewURL}
+          alt="미리보기"
+          className="max-h-40 mx-auto"
+        />
+      )}
+      <div className="fixed bottom-3 left-0 right-0 p-4">
+        <UploadButton onUpload={handleUpload} />
+      </div>
+    </div>
   );
 };
 

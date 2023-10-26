@@ -31,8 +31,8 @@ const TimeZone = () => {
   }, []);
 
   return (
-    <div>
-      <p>{currentDateTime}</p>
+    <div className="px-5">
+      <h5>{currentDateTime}</h5>
     </div>
   );
 };

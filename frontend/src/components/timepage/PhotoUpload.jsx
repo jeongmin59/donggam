@@ -38,12 +38,20 @@ const PhotoUpload = () => {
       </div>
 
       <div className="mb-4">
-        <div className="mt-2 flex flex-col items-center justify-center rounded-lg border focus:outline-none focus:ring focus:border-blue-300 px-6 py-10">
+        <div className="mt-2 h-80 flex flex-col items-center justify-center rounded-lg border focus:outline-none focus:ring focus:border-blue-300 px-6 py-10">
+          {/* 이미지 미리보기 */}
+          {previewURL && (
+            <img
+              src={previewURL}
+              alt="미리보기"
+              className="mx-auto max-h-40 overflow-y-auto"
+            />
+          )}
           <div className="mt-4 flex text-sm leading-6 text-gray-600">
             <label
               htmlFor="file-upload"
-              className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
-            >
+              className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2focus-within:ring-offset-2 hover:text-indigo-500"
+              >
               <p>사진을 첨부해주세요.</p>
               <input
                 id="file-upload"
@@ -58,14 +66,6 @@ const PhotoUpload = () => {
           <p className="text-xs leading-5 text-gray-600">PNG, JPG, GIF up to 10MB</p>
         </div>
       </div>
-      {/* 이미지 미리보기 */}
-      {previewURL && (
-        <img
-          src={previewURL}
-          alt="미리보기"
-          className="max-h-40 mx-auto"
-        />
-      )}
       <div className="fixed bottom-3 left-0 right-0 p-4">
         <UploadButton onUpload={handleUpload} />
       </div>

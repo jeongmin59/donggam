@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate  } from "react-router-dom";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import createBtn from "../../assets/common/createBtn.png";
 
 const CreateButton = ({ to }) => {

@@ -8,6 +8,7 @@ import com.example.backend.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -29,9 +30,7 @@ public class SecurityConfig{
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     return http
         .csrf().disable()
-        .cors()
 
-        .and()
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
         .and()
@@ -44,6 +43,7 @@ public class SecurityConfig{
         .httpBasic().disable()
 
         .authorizeRequests()
+        .mvcMatchers(HttpMethod.OPTIONS, "/**").permitAll()
         .antMatchers("/member/login").permitAll()
         .antMatchers("/swagger-ui/**").permitAll()
         .antMatchers("/v3/api-docs/**").permitAll()

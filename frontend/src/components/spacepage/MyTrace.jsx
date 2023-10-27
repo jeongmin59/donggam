@@ -2,9 +2,9 @@ import React from "react";
 
 const MyTrace = () => {
   return (
-    <div>
-      내가 등록한 방명록
-    </div>
+    <>
+      <h4 className="px-5 mt-5">내가 등록한 방명록</h4>
+    </>
   );
 };
 

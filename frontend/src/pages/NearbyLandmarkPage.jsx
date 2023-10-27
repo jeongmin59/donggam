@@ -1,9 +1,10 @@
 import React from "react";
+import FindingLandmark from "../components/landmarkpage/FindingLandmark";
 
 const NearbyLandmarkPage = () => {
   return(
     <>
-      <div>근처 랜드마크 페이지</div>
+      <FindingLandmark />
     </>
   );
 };

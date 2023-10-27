@@ -1,6 +1,6 @@
 package com.example.backend.service;
 
-import com.example.backend.dto.ImageDto;
+import com.example.backend.dto.image.ImageDto;
 import com.example.backend.entity.mariaDB.member.Member;
 import com.example.backend.entity.mariaDB.time.Image;
 import com.example.backend.exception.ErrorCode;
@@ -53,6 +53,7 @@ public class TimeService {
             .imageAddress(image.getImageAddress())
             .title(image.getTitle())
             .isLiked(image.getLikeMember().contains(member))
+            .imageId(image.getId())
             .build())
         .collect(Collectors.toList());
   }

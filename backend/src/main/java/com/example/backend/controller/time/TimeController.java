@@ -1,6 +1,6 @@
 package com.example.backend.controller.time;
 
-import com.example.backend.dto.ImageDto;
+import com.example.backend.dto.image.ImageDto;
 import com.example.backend.dto.Response;
 import com.example.backend.service.TimeService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -46,4 +46,8 @@ public class TimeController {
     Long memberId = Long.parseLong(userDetails.getUsername());
     return new Response<>(200, "전체 사진 조회 성공", timeService.getImages(memberId));
   }
+
+//  @Operation(summary = "사진 상세보기", description = "사진 상세보기")
+//  @GetMapping("/{imageId}")
+//  public Response<>
 }

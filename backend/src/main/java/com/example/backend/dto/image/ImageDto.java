@@ -1,4 +1,4 @@
-package com.example.backend.dto;
+package com.example.backend.dto.image;
 
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -14,9 +14,10 @@ public class ImageDto {
   @AllArgsConstructor
   @Builder
   public static class Response {
-    private Long authorId;
+    private Long imageId;
     private String imageAddress;
     private String title;
+    private Long authorId;
     private Boolean isLiked;
   }
 }

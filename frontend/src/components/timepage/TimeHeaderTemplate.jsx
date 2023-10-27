@@ -2,7 +2,7 @@ import React from "react";
 import TimeZone from "./TimeZone";
 import TimeHeader from "./TimeHeader";
 
-const HeaderTemplate = ({ currentTime }) => {
+const TimeHeaderTemplate = ({ currentTime }) => {
   return (
     <div className="mt-3">
       <TimeZone />
@@ -11,4 +11,4 @@ const HeaderTemplate = ({ currentTime }) => {
   );
 };
 
-export default HeaderTemplate;
+export default TimeHeaderTemplate;

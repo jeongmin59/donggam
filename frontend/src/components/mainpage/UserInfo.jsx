@@ -1,6 +1,14 @@
 // import { useState, useEffect } from "react";
 
+import { useRecoilValue } from "recoil";
+import { UserSelector } from "../../recoil/user/userSelector";
+
 const UserInfo = () => {
+  // 전역 user 정보 가져오기
+  const user = useRecoilValue(UserSelector);
+  const nickname = user.nickname
+  const statusMessage = user.statusMessage
+
   // const [latitude, setLatitude] = useState(null);
   // const [longitude, setLongitude] = useState(null);
 
@@ -18,11 +26,11 @@ const UserInfo = () => {
   //   }
   // },[])
 
-  return(
-    <div className="h-[70px] px-[24px] mx-auto mt-[78px]">
-      <h1 className="username mb-[10px]">사용자 이름</h1>
+  return (
+    <div className="userInfo h-100 px-[24px] mx-auto mt-[60px]">
+      <h1 className="username mb-[10px]">유저이름 :{nickname}</h1>
       <div className="usermsg h-auto bg-white rounded-2xl flex justify-center">
-        <p className="px-[40px] py-[20px] text-center ">내 감정! 내 느낌! 달님.. 듣고 있나요?</p>
+        <p className="px-[40px] py-[20px] text-center ">{statusMessage}</p>
       </div>
 
       {/* <p>위도 : {latitude}</p>

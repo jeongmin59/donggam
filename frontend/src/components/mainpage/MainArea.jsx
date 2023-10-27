@@ -61,6 +61,7 @@ const MainArea = () => {
           <div>
             <img 
               src={ChattingBtn} 
+              onClick={() => navigateTo('/chatting/:userId')}
               className="mb-2"
             />
             <img 

@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./index.css";
 import MainPage from "./pages/MainPage";
 import LoginPage from "./pages/LoginPage";
+import ChattingPage from "./pages/ChattinPage";
 import MailboxPage from "./pages/MailboxPage";
 import TimePage from "./pages/TimePage"
 import TimeUploadpage from "./pages/TimeUploadPage";
@@ -20,6 +21,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/profile/:userId" element={<ProfilePage />} />
         <Route path="/kakao/callback" element={<LoginRediect />} />
+        <Route path="/chatting/:userId" element={<ChattingPage />} />
         <Route path="/mailbox/:userId" element={<MailboxPage />} />
         <Route path="/time" element={<TimePage />} />
         <Route path="/time/upload" element={<TimeUploadpage />} />

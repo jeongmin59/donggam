@@ -1,11 +1,17 @@
 package com.example.backend.entity.mariaDB.member;
 
 import com.example.backend.entity.mariaDB.Status;
+import com.example.backend.entity.mariaDB.time.Image;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -51,6 +57,12 @@ public class Member {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "status_id")
     private Status status;
+
+    @ManyToMany(mappedBy = "likeMember")
+    private List<Image> likedImages;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "author", cascade = CascadeType.REMOVE)
+    private List<Image> myImages;
 
     @Builder
     public Member(Long id, String nickname, String email, Integer characterId, Authority authority){

@@ -60,14 +60,14 @@ public class MainService {
     int negativeCount = 0;
 
     for (Member member : members) {
-      if (member.getStatus().getEmotion() == Emotion.NEGATIVE) {
-        negativeCount ++;
-      } else if (member.getStatus().getEmotion() == Emotion.POSITIVE) {
-        positiveCount ++;
-      } else if (member.getStatus().getEmotion() == Emotion.NEUTRAL) {
-        neutralCount ++;
-      }
+      if (member.getStatus().get(0).getEmotion() == Emotion.NEGATIVE) {
+      negativeCount ++;
+    } else if (member.getStatus().get(0).getEmotion() == Emotion.POSITIVE) {
+      positiveCount ++;
+    } else if (member.getStatus().get(0).getEmotion() == Emotion.NEUTRAL) {
+      neutralCount ++;
     }
+  }
 
     if (neutralCount >= 3) {
       return Emotion.NEUTRAL;

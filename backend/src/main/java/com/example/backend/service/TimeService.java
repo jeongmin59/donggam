@@ -1,5 +1,6 @@
 package com.example.backend.service;
 
+import com.example.backend.dto.ImageDto;
 import com.example.backend.entity.mariaDB.member.Member;
 import com.example.backend.entity.mariaDB.time.Image;
 import com.example.backend.exception.ErrorCode;
@@ -7,6 +8,9 @@ import com.example.backend.exception.type.CustomException;
 import com.example.backend.repository.mariaDB.ImageRepository;
 import com.example.backend.repository.mariaDB.MemberRepository;
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,5 +36,24 @@ public class TimeService {
         .createdAt(LocalDateTime.now())
         .author(member)
         .build());
+  }
+
+  public List<ImageDto.Response> getImages(Long memberId) {
+    List<Image> images = imageRepository.findAllWithAuthorAndLikeMember();
+    if (images.isEmpty()) {
+      return Collections.emptyList();
+    }
+
+    Member member = memberRepository.findById(memberId)
+        .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND.getMessage(), ErrorCode.USER_NOT_FOUND));
+
+    return images.stream().map(image ->
+        ImageDto.Response.builder()
+            .authorId(image.getAuthor().getId())
+            .imageAddress(image.getImageAddress())
+            .title(image.getTitle())
+            .isLiked(image.getLikeMember().contains(member))
+            .build())
+        .collect(Collectors.toList());
   }
 }

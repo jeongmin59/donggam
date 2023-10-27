@@ -14,6 +14,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -44,5 +45,13 @@ public class Image {
       joinColumns = @JoinColumn(name = "image_id"),
       inverseJoinColumns = @JoinColumn(name = "member_id"))
   private List<Member> likeMember;
+
+  @Builder
+  public Image(String imageAddress, String title, LocalDateTime createdAt, Member author) {
+    this.imageAddress = imageAddress;
+    this.title = title;
+    this.createdAt = createdAt;
+    this.author = author;
+  }
 
 }

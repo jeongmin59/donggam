@@ -25,10 +25,15 @@ public class MainService {
 
   // 필요한거 : 내 닉네임, 내 상태메시지, 내 캐릭터 id,  주변사람 카운트, 주변 사람들 정보
   public MainDto.Response mainPage(MainDto.Request request) {
-    Long locationId = locationService.saveLocation(request.getLatitude(), request.getLongitude());
-
     Member member = memberRepository.findWithRelatedEntityById(request.getMemberId())
         .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND.getMessage(), ErrorCode.USER_NOT_FOUND));
+
+    Long locationId;
+    if (member.getLocationId() != null) {
+      locationId = locationService.saveLocation(member.getLocationId(), request.getLatitude(), request.getLongitude());
+    } else{
+      locationId = locationService.saveLocation(null, request.getLatitude(), request.getLongitude());
+    }
 
     member.setLocationId(locationId);
     memberRepository.save(member);
@@ -100,6 +105,12 @@ public class MainService {
     }
 
     List<Long> locationsIds = locations.stream().map(Location::getId).collect(Collectors.toList());
+
+//    List<Member> members = memberRepository.findByLocationIdIn(locationsIds);
+//    System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+//    System.out.println(locationsIds);
+//    System.out.println(members);
+//    return members;
 
     return memberRepository.findByLocationIdIn(locationsIds);
   }

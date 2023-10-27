@@ -84,7 +84,7 @@ public class MemberService {
         .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND.getMessage(), ErrorCode.USER_NOT_FOUND));
 
     String emotion = sentimentAPI(request.getStatus());
-    Status status = statusRepository.findById(member.getStatus().getId())
+    Status status = statusRepository.findById(member.getStatus().get(0).getId())
         .orElseThrow(() -> new CustomException(ErrorCode.ENTITY_NOT_FOUND.getMessage(), ErrorCode.ENTITY_NOT_FOUND));
     Status.toStatus(request.getStatus(), emotion);
     statusRepository.save(status);

@@ -54,7 +54,12 @@ public class Message {
     }
 
     public GetMessageDetailDto.Response toMessageDetailDto() {
-
+        return GetMessageDetailDto.Response.builder()
+                .content(this.content)
+                .imgAddress(this.imgAddress)
+                .from(this.from.getNickname())
+                .id(this.id)
+                .build();
     }
 
     public SendMessageDto.Response toSendMessageResponse() {

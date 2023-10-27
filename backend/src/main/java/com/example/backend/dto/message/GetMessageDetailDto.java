@@ -8,12 +8,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import lombok.Builder;
 import lombok.Data;
 
 @Data
 public class GetMessageDetailDto {
 
     @Data
+    @Builder
     public static class Response {
         private Long id;
         private String content;

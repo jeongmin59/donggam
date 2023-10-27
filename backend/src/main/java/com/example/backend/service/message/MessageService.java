@@ -28,7 +28,6 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 public class MessageService {
     private final MessageRepository messageRepository;
-    private final MessageBoxRepository messageBoxRepository;
     private final MemberRepository memberRepository;
     private final StatusRepository statusRepository;
     private final ImageService imageService;
@@ -36,7 +35,6 @@ public class MessageService {
     public Response sendMessage(Long memberId, MultipartFile img, Request request) {
         Member from = memberRepository.findById(memberId).get();
         Member to = memberRepository.findById(request.getMemberId()).get();
-        MessageBox messageBox = messageBoxRepository.findById(request.getMessageBoxId()).get();
 
         if(from == null || to == null) {
             throw new CustomException("존재하지 않는 유저입니다", ErrorCode.NOT_SAME_DATA_VALUE);
@@ -44,7 +42,7 @@ public class MessageService {
 
         String imageAddress = imageService.uploadImage(img);
 
-        Message message = messageRepository.save(request.toMessageEnitty(from, to, imageAddress, messageBox));
+        Message message = messageRepository.save(request.toMessageEnitty(from, to, imageAddress));
 
         return message.toSendMessageResponse();
     }

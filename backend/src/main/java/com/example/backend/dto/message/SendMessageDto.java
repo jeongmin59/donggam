@@ -16,13 +16,12 @@ public class SendMessageDto {
         private Long messageBoxId;
         private String content;
 
-        public Message toMessageEnitty(Member from, Member to, String imageAddress, MessageBox messageBox) {
+        public Message toMessageEnitty(Member from, Member to, String imageAddress) {
             return Message.builder()
                     .from(from)
                     .to(to)
                     .imgAddress(imageAddress)
                     .content(this.content)
-                    .messageBox(messageBox)
                     .build();
         }
     }

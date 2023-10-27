@@ -7,7 +7,6 @@ import Header from "../components/common/Header"
 const SpacePage = () => {
   return(
     <>
-      <Header to="/" />
       <SpaceHeaderTemplate />
       <MyTrace />
       <ButtonTemplate />

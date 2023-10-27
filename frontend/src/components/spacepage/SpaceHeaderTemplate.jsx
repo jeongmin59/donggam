@@ -4,7 +4,7 @@ import CreateTrace from "./CreateTrace";
 
 const SpaceHeaderTemplate = () => {
   return (
-    <div className="px-5 mt-5">
+    <div className="px-5 mt-12">
       <CurrentLocation />
       <CreateTrace to="/space/upload" />
     </div>

@@ -44,3 +44,5 @@ export const updateCharacter = async (characterId) => {
     return err;
   }
 };
+
+

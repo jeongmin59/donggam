@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import { useRecoilValue } from 'recoil';
 import { UserSelector } from '../../recoil/user/userSelector';
 import { locationInfo } from '../../api/locationApi';
+import UserLocation from './UserLocation';
 
 const MainArea = () => {
   // 페이지 이동
@@ -55,7 +56,7 @@ const MainArea = () => {
 
   return(
     <>
-      <div className='mainArea flex-column justify-center' style={{ height: 'calc(100% - 280px)' }}>
+      <div className='mainArea flex-column justify-center ' style={{ height: 'calc(100% - 280px)' }}>
         <div className='flex justify-end absolute mt-10 right-5' style={{ zIndex: 1 }}>
           <div>
             <img 
@@ -68,8 +69,8 @@ const MainArea = () => {
             />
           </div>
         </div>
-     
         <LocationAnimation />
+        <UserLocation />
       </div>
       <NumberOfUsers aroundPeopleCount={aroundPeopleCount}/>
     </>

@@ -5,6 +5,7 @@ const axiosInstance = axios.create({
   baseURL: "http://k9e107.p.ssafy.io",
   headers: {
     // "Content-Type": "application/json",
+    'Access-Control-Allow-Origin': '*'
   },
 });
 

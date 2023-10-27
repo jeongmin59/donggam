@@ -18,7 +18,7 @@ function App() {
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/profile/:userId" element={<ProfilePage />} />
+        <Route path="/profile" element={<ProfilePage />} />
         <Route path="/kakao/callback" element={<LoginRediect />} />
         <Route path="/mailbox/:userId" element={<MailboxPage />} />
         <Route path="/time" element={<TimePage />} />

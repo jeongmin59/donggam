@@ -1,35 +1,73 @@
 import React from 'react';
+import { useRecoilValue } from 'recoil';
+import { UserSelector } from './../recoil/user/userSelector';
 
 const ProfilePage = () => {
+  // 전역상태의 유저 정보 가져오기
+  const user = useRecoilValue(UserSelector);
+
+  // 정보수정 후 전역상태 유저 정보 수정하기
+
+
+  const handleUserUpdateClick = () => {
+    const updatedUser = {
+      nickname: newNickname,
+      status: newStatus,
+      characterId: newCharacterId,
+    };
+    updateUser(updatedUser)
+      .then((res) => {
+        // 업데이트가 성공하면 컴포넌트 상태를 업데이트합니다.
+        setNewNickname(newNickname);
+        setNewStatus(newStatus);
+        setNewCharacterId(newCharacterId);
+
+        // 업데이트가 성공하면 Recoil 상태를 업데이트합니다.
+        setNickname(newNickname);
+        setStatus(newStatus);
+        setCharacter(newCharacterId);
+        console.log('유저 정보 업데이트 성공?', res);
+      })
+      .catch((error) => {
+        console.log('유저 정보 업데이트 실패', error);
+      });
+  };
+
+  const handleStatusChange = (e) => {
+    setNewStatus(e.target.value);
+  };
+
+  const handleNicknameChange = (e) => {
+    setNewNickname(e.target.value);
+  };
+
+  const handleCharacterChange = (e) => {
+    setCharacterId(e.target.value);
+  };
+
   return (
     <div>
-      {/* 헤더 */}
-      <div className="w-[360px] h-[100px] left-0 top-0 absolute rounded-[20px] shadow">
-        <div className="w-[360px] h-[100px] left-0 top-0 absolute bg-white rounded-tl-[20px] rounded-tr-[20px]" />
-        <div className="w-[360px] left-0 top-[56.22px] absolute justify-center items-center gap-28 inline-flex">
-          <div className="text-center text-black text-xl font-bold">내 프로필 만들기</div>
-          <div className="left-[304px] top-[59px] flex text-right">완료</div>
-        </div>
+      <div>
+        <div>현재 닉네임 : {user.nickname}</div>
+        {/* <input
+          type="text"
+          value={newNickname}
+          onChange={handleNicknameChange}
+        /> */}
+        <div>현재 캐릭터 ID : {user.characterId}</div>
+        {/* <input
+          type="number"
+          value={newCharacterId}
+          onChange={handleCharacterChange}
+        /> */}
+        <div>현재 상태 : {user.status}</div>
+        {/* <input
+          type="text"
+          value={newStatus}
+          onChange={handleStatusChange}
+        /> */}
+        {/* <button onClick={handleUserUpdateClick}>확인</button> */}
       </div>
-
-      {/* 닉네임 변경 */}
-      <div className="left-[60px] top-[203px] absolute text-center">익명의 감자</div>
-      <div className="w-[247px] h-[0px] left-[57px] top-[229px] absolute border border-black"></div>
-      <div className="left-[268px] top-[236px] absolute text-center text-black text-sm font-light font-['Gmarket Sans TTF']">6/20</div>
-
-      {/* 캐릭터 변경 */}
-      <div className="left-[138px] top-[476px] absolute text-center">캐릭터 변경하기</div>
-      <img className="w-[120px] h-[168.30px] left-[120px] top-[307px] absolute" src="https://via.placeholder.com/120x168" />
-      <div className="w-8 h-8 left-[208px] top-[443px] absolute">
-        <div className="w-8 h-8 left-0 top-0 absolute bg-zinc-300 rounded-full" />
-      </div>
-
-      {/* 상태메시지 변경 */}
-      <div className="left-[57px] top-[560px] absolute text-center">상태메시지</div>
-      <div className="left-[57px] top-[593px] absolute text-center">마음껏 자신을 소개해보세요!</div>
-      <div className="left-[60px] top-[624px] absolute text-center">*최소 2글자 이상 작성해주세요</div>
-      <div className="w-[247px] h-[0px] left-[57px] top-[617px] absolute border border-black"></div>
-      <div className="left-[268px] top-[624px] absolute text-center text-black text-sm font-light">0/60</div>
     </div>
   );
 };

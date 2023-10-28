@@ -6,17 +6,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-public class ImageDetailDto {
+public class ImageLikeDto {
 
   @Data
   @NoArgsConstructor
   @AllArgsConstructor
   @Builder
   public static class Response {
-    private Long authorId;
-    private Integer authorCharacterId;
-    private String imageAddress;
-    private String title;
     private Integer likeCount;
     private Boolean isLiked;
   }

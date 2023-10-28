@@ -17,7 +17,6 @@ public class ImageDto {
     private Long imageId;
     private String imageAddress;
     private String title;
-    private Long authorId;
     private Boolean isLiked;
   }
 }

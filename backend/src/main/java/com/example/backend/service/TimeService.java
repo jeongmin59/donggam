@@ -1,5 +1,6 @@
 package com.example.backend.service;
 
+import com.example.backend.dto.image.ImageDetailDto;
 import com.example.backend.dto.image.ImageDto;
 import com.example.backend.entity.mariaDB.member.Member;
 import com.example.backend.entity.mariaDB.time.Image;
@@ -49,12 +50,23 @@ public class TimeService {
 
     return images.stream().map(image ->
         ImageDto.Response.builder()
-            .authorId(image.getAuthor().getId())
             .imageAddress(image.getImageAddress())
             .title(image.getTitle())
             .isLiked(image.getLikeMember().contains(member))
             .imageId(image.getId())
             .build())
         .collect(Collectors.toList());
+  }
+
+  public ImageDetailDto.Response getImage(Long memberId, Long imageId) {
+    Image image = imageRepository.findWithAuthorAndLikeMember(imageId);
+
+    return ImageDetailDto.Response.builder()
+        .authorId(image.getAuthor().getId())
+        .authorCharacterId(image.getAuthor().getCharacterId())
+        .imageAddress(image.getImageAddress())
+        .title(image.getTitle())
+        .likeCount(image.getLikeMember().size())
+        .build();
   }
 }

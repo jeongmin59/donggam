@@ -1,5 +1,6 @@
 package com.example.backend.controller.time;
 
+import com.example.backend.dto.image.ImageDetailDto;
 import com.example.backend.dto.image.ImageDto;
 import com.example.backend.dto.Response;
 import com.example.backend.service.TimeService;
@@ -11,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -47,7 +49,13 @@ public class TimeController {
     return new Response<>(200, "전체 사진 조회 성공", timeService.getImages(memberId));
   }
 
-//  @Operation(summary = "사진 상세보기", description = "사진 상세보기")
-//  @GetMapping("/{imageId}")
-//  public Response<>
+  @Operation(summary = "사진 상세보기", description = "사진 상세보기")
+  @GetMapping("/{imageId}")
+  public Response<ImageDetailDto.Response> getImage(
+      @Parameter(hidden = true) @AuthenticationPrincipal UserDetails userDetails,
+      @PathVariable("imageId") Long imageId
+  ) {
+    Long memberId = Long.parseLong(userDetails.getUsername());
+    return new Response<>(200, "사진 상세 조회 성공", timeService.getImage(memberId, imageId));
+  }
 }

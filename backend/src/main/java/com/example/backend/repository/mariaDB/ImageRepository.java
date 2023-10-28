@@ -9,4 +9,7 @@ public interface ImageRepository extends JpaRepository<Image, Long> {
 
   @Query("SELECT DISTINCT i FROM Image i LEFT JOIN FETCH i.author LEFT JOIN FETCH i.likeMember")
   List<Image> findAllWithAuthorAndLikeMember();
+
+  @Query("SELECT i FROM Image i LEFT JOIN FETCH i.author LEFT JOIN FETCH i.likeMember WHERE i.id = ?1")
+  Image findWithAuthorAndLikeMember(Long imageId);
 }

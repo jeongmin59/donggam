@@ -16,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
@@ -30,7 +31,8 @@ public class ImageService {
   private String bucket;
 
   public String uploadImage(MultipartFile multipartFile, String dirName) throws IOException {
-    File uploadFile = convert(multipartFile);  // 파일 변환할 수 없으면 에러
+    File uploadFile = convert(multipartFile)
+        .orElseThrow(()->new IllegalArgumentException("MultipartFile -> File 변환 실패"));
     return upload(uploadFile, dirName);
   }
 
@@ -57,9 +59,15 @@ public class ImageService {
   }
 
   // 로컬에 파일 업로드 하기
-  private File convert(MultipartFile multipartFile) throws IOException {
-    File file = new File(multipartFile.getOriginalFilename());
-    multipartFile.transferTo(file);
-    return file;
+  private Optional<File> convert(MultipartFile file) throws IOException {
+    File convertFile = new File(System.currentTimeMillis() + StringUtils.cleanPath(file.getOriginalFilename()));
+
+    if(convertFile.createNewFile()){
+      try(FileOutputStream fos = new FileOutputStream(convertFile)){
+        fos.write(file.getBytes());
+      }
+      return Optional.of(convertFile);
+    }
+    return Optional.empty();
   }
 }

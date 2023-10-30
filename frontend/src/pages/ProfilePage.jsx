@@ -58,7 +58,7 @@ const ProfilePage = () => {
   return (
     <div>
       <div>
-        <label for="nickname" className="block text-sm font-medium leading-6 text-gray-900">닉네임</label>
+        <label htmlFor="nickname" className="block text-sm font-medium leading-6 text-gray-900">닉네임</label>
         <div className="relative mt-2 rounded-md shadow-sm">
           <input
             type="text"
@@ -67,26 +67,32 @@ const ProfilePage = () => {
             onChange={handleNicknameChange}
             className="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             placeholder={nickName} />
-          <div className="absolute inset-y-0 right-0 flex items-center">
-          </div>
         </div>
 
-        <div className="flex justify-center items-center" style={{ height: "100" }}>
-          <img src={myCharacter} alt={`${characterId}번 캐릭터`} />
+        <div>
+          <label htmlFor="status" className="block text-sm font-medium leading-6 text-gray-900">상태메시지</label>
+          <div className="relative mt-2 rounded-md shadow-sm">
+            <input
+              type="text"
+              id="status"
+              value={newStatus}
+              onChange={handleStatusChange}
+              className="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              placeholder={status} />
+          </div>
+
+          <div className="flex justify-center items-center" style={{ height: "100" }}>
+            <img src={myCharacter} alt={`${characterId}번 캐릭터`} />
+          </div>
+          <div>현재 캐릭터 : {characterId}</div>
+          <input
+            type="number"
+            value={newCharacterId}
+            onChange={handleCharacterChange}
+          />
+
+          <button onClick={handleUserUpdateClick}>확인</button>
         </div>
-        <div>현재 캐릭터 : {characterId}</div>
-        <input
-          type="number"
-          value={newCharacterId}
-          onChange={handleCharacterChange}
-        />
-        <div>현재 상태메시지 : {status}</div>
-        <input
-          type="text"
-          value={newStatus}
-          onChange={handleStatusChange}
-        />
-        <button onClick={handleUserUpdateClick}>확인</button>
       </div>
     </div>
   );

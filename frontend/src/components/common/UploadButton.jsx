@@ -1,9 +1,13 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
-const UploadButton = ({ onUpload }) => {
-  const handleUploadClick = () => {
+const UploadButton = ({ onUpload, to }) => {
+  const navigate = useNavigate();
+  const handleUploadClick = (event) => {
+    event.preventDefault(); // 중복 이벤트 실행 방지
     // 업로드 버튼 클릭 시 업로드 시작하는 함수 호출함
     onUpload();
+    navigate(to);
   };
 
   return (

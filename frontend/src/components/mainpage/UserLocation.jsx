@@ -11,10 +11,10 @@ const UserLocation = ({aroundPeople}) => {
   const myCharacter =  `/character/${characterId}.svg`
 
   const [userCharacters, setUserCharacters] = useState([]);
-  // useEffect(() => {
-  //   const characters = aroundPeople.map((person) => person.characterId);
-  //   setUserCharacters(characters);
-  // }, [aroundPeople]);
+  useEffect(() => {
+    const characters = aroundPeople.map((person) => person.characterId);
+    setUserCharacters(characters);
+  }, []);
 
   const defaultOptions = {
     loop: true,

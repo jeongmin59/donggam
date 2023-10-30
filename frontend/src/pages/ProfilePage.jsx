@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { CharacterIdAtom, NicknameAtom, StatusMessageAtom } from '../recoil/user/userAtom';
 import { updateUser } from '../api/userApi';
+import { useNavigate } from 'react-router-dom';
 
 const ProfilePage = () => {
   // 전역상태의 유저 정보 가져오기
@@ -17,6 +18,9 @@ const ProfilePage = () => {
   // 캐릭터 이미지 주소
   const myCharacter = `/character/${characterId}.svg`
 
+  // 유저 정보 업데이트 후 네비게이트 해주기
+  const navigator = useNavigate();
+
 
 
   const handleUserUpdateClick = () => {
@@ -28,12 +32,12 @@ const ProfilePage = () => {
     }
     updateUser(updatedUser)
 
-      // updateNickname(newNickname)
-
       .then((res) => {
         setNickname(newNickname)
         setCharterId(newCharacterId)
         setStatus(newStatus)
+
+        navigator('/') // 정보 수정 후 메인페이지 이동
         console.log('유저정보 변경', res)
       })
       .catch((err) => {

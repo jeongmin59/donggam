@@ -31,6 +31,7 @@ public class LocationService {
           .orElseThrow(() -> new CustomException(ErrorCode.NOT_SAME_DATA_VALUE.getMessage(), ErrorCode.NOT_SAME_DATA_VALUE));
       location.setLatitude(latitude);
       location.setLongitude(longitude);
+      locationRepository.save(location);
       return location.getId();
     }
   }

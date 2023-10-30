@@ -72,7 +72,7 @@ public class MemberService {
   }
 
   public UpdateStatusDto.Response updateStatus(Long memberId, String newStatus) {
-    Member member = memberRepository.findWithStatus(memberId)
+    Member member = memberRepository.findById(memberId)
         .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND.getMessage(), ErrorCode.USER_NOT_FOUND));
 
     // 네이버 클로바 센티멘트 API의 감정 분석 결과
@@ -81,7 +81,9 @@ public class MemberService {
     // 새로운 status 생성 후 member와 연결
     Status status = statusRepository.save(Status.builder()
         .content(newStatus)
-        .emotion(emotion).build());
+        .emotion(emotion)
+        .member(member)
+        .build());
 
     member.getStatus().add(status);
     Member savedMember = memberRepository.save(member);
@@ -90,13 +92,14 @@ public class MemberService {
   }
 
   public UpdateDto.Response update(Long memberId, UpdateDto.Request request) {
-    Member member = memberRepository.findWithStatus(memberId)
+    Member member = memberRepository.findById(memberId)
         .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND.getMessage(), ErrorCode.USER_NOT_FOUND));
 
     String emotion = sentimentAPI(request.getStatus());
     Status status = statusRepository.save(Status.builder()
         .content(request.getStatus())
         .emotion(emotion)
+        .member(member)
         .build());
 
     member.setCharacterId(request.getCharacterId());

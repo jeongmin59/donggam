@@ -4,11 +4,9 @@ import axiosInstance from "./axiosConfig";
 export const updateUser = async ({ nickname, status, characterId }) => {
   try {
     const res = await axiosInstance.post(`/member/update`, {
-      params: {
-        nickname: nickname,
-        status: status,
-        characterId: characterId
-      }
+      nickname: nickname,
+      status: status,
+      characterId: characterId
     });
     return res.data;
   } catch (err) {
@@ -21,10 +19,10 @@ export const updateUser = async ({ nickname, status, characterId }) => {
 export const updateNickname = async (nickname) => {
   try {
     const res = await axiosInstance.post(`/member/nickname`, {
-      params: {
-        nickname: nickname
-      }
+      nickname: nickname
     });
+    console.log(' 닉네임 변경 됏나', res)
+    console.log('nickname', nickname)
     return res.data;
   } catch (err) {
     console.log('닉네임 변경 실패!', err)
@@ -36,9 +34,7 @@ export const updateNickname = async (nickname) => {
 export const updateStatus = async (status) => {
   try {
     const res = await axiosInstance.post(`/member/status`, {
-      params: {
-        status: status
-      }
+      status: status
     });
     return res.data;
   } catch (err) {
@@ -51,9 +47,7 @@ export const updateStatus = async (status) => {
 export const updateCharacter = async (characterId) => {
   try {
     const res = await axiosInstance.post(`/member/character`, {
-      params: {
-        characterId: characterId
-      }
+      characterId: characterId
     });
     return res.data;
   } catch (err) {

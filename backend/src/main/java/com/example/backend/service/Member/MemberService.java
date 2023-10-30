@@ -72,7 +72,7 @@ public class MemberService {
     String emotion = sentimentAPI(newStatus);
 
     // 새로운 status 생성 후 member와 연결
-    Status status = statusRepository.save(Status.toStatus(newStatus, emotion));
+    Status status = statusRepository.save(Status.builder().content(newStatus).emotion(emotion).build());
     member.setStatus(status);
     Member savedMember = memberRepository.save(member);
 

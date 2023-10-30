@@ -10,6 +10,7 @@ import com.example.backend.exception.ErrorCode;
 import com.example.backend.exception.type.CustomException;
 import com.example.backend.repository.mariaDB.ImageRepository;
 import com.example.backend.repository.mariaDB.MemberRepository;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
@@ -26,9 +27,9 @@ public class TimeService {
   private final MemberRepository memberRepository;
   private final ImageRepository imageRepository;
 
-  public void postImage(Long memberId, MultipartFile img, String title) {
+  public void postImage(Long memberId, MultipartFile img, String title) throws IOException {
 
-    String imageAddress = imageService.uploadImage(img);
+    String imageAddress = imageService.uploadImage(img, "exhibition");
 
     Member member = memberRepository.findById(memberId)
         .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND.getMessage(), ErrorCode.USER_NOT_FOUND));

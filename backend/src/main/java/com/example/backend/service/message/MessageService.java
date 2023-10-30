@@ -17,6 +17,7 @@ import com.example.backend.repository.mariaDB.StatusRepository;
 import com.example.backend.repository.mariaDB.message.MessageBoxRepository;
 import com.example.backend.repository.mariaDB.message.MessageRepository;
 import com.example.backend.service.ImageService;
+import java.io.IOException;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -32,7 +33,8 @@ public class MessageService {
     private final StatusRepository statusRepository;
     private final ImageService imageService;
 
-    public Response sendMessage(Long memberId, MultipartFile img, Request request) {
+    public Response sendMessage(Long memberId, MultipartFile img, Request request)
+        throws IOException {
         Member from = memberRepository.findById(memberId).get();
         Member to = memberRepository.findById(request.getMemberId()).get();
 
@@ -40,7 +42,7 @@ public class MessageService {
             throw new CustomException("존재하지 않는 유저입니다", ErrorCode.NOT_SAME_DATA_VALUE);
         }
 
-        String imageAddress = imageService.uploadImage(img);
+        String imageAddress = imageService.uploadImage(img, "message");
 
         Message message = messageRepository.save(request.toMessageEnitty(from, to, imageAddress));
 

@@ -17,7 +17,7 @@ const MainBackground = () => {
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
 
-  const [selectedBackground, setSelectedBackground] = useState(1); // 날씨 배경 
+  const [selectedBackground, setSelectedBackground] = useState(''); // 날씨 배경 
   const [aroundPeople, setAroundPeople] = useState([]) // 주변 사용자 
   const [aroundPeopleCount, setAroundPeopleCount] = useState(0); // 주변 사용자 수
 
@@ -41,31 +41,25 @@ const MainBackground = () => {
       locationInfo(memberId, latitude, longitude)
         .then((data) => {
           if (data) {
+            setSelectedBackground(data.data.statusWeather);
             setAroundPeople(data.data.aroundPeople);
             setAroundPeopleCount(data.data.aroundPeopleCount);
           }
           console.log('위치 API 응답:', data.data)
-
-          // data.data.aroundPeople.map(person => {
-          //   console.log(person)
-          // });
         });
     }
   }, [memberId, latitude, longitude]);
 
-  // BG 
-  const changeBackground = () => {
-    setSelectedBackground((prevBackground) => (prevBackground % 3) +1);
-  };
 
+  // 날씨 배경 
   const backgroundClass = `w-full h-screen absolute ${
-    selectedBackground === 1 ? "bg-positive"
-    : selectedBackground ===2 ? "bg-neutral"
+    selectedBackground === 'POSITIVE' ? "bg-positive"
+    : selectedBackground ==='NEUTRAL' ? "bg-neutral"
     : "bg-negative"
   }`;
   // const backgroundClass = `w-full h-full absolute ${
-  //   selectedBackground === 1 ? "bg-gradient-1"
-  //   : selectedBackground ===2 ? "bg-gradient-2"
+  //   selectedBackground === 'POSITIVE' ? "bg-gradient-1"
+  //   : selectedBackground ==='NEUTRAL ? "bg-gradient-2"
   //   : "bg-gradient-3"
   // }`;
 
@@ -74,8 +68,8 @@ const MainBackground = () => {
   return (
     <div className="h-screen overflow-hidden">
       <div className={backgroundClass} style={{zIndex:3, backgroundSize: "cover" }}>
-        <button className="bg-red-200" onClick={changeBackground}>배경변경</button>
-        <UserInfo /> 
+        {/* <button className="bg-red-200" onClick={changeBackground}>배경변경</button> */}
+        <UserInfo selectedBackground={selectedBackground}/> 
         <MainArea aroundPeople={aroundPeople}/>
         <NumberOfUsers aroundPeopleCount={aroundPeopleCount}/>
       </div>

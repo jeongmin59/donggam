@@ -58,7 +58,7 @@ const UserLocation = ({aroundPeople}) => {
               left: getRandomPosition(20,70), 
               top: getRandomPosition(15,75), 
             }}>
-              <img src={`/character/${characters}.svg`} style={{ width: '80%' }}/>
+              <img src={`/character/${characters}.svg`} style={{ width: '70%' }}/>
               {/* <span>{`${characters}번 유저`}</span> */}
             </div>
           ))}

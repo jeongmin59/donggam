@@ -49,9 +49,9 @@ public class MemberService {
         .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND.getMessage(), ErrorCode.USER_NOT_FOUND));
 
     member.setNickname(newNickname);
-    memberRepository.save(member);
+    Member savedMember = memberRepository.save(member);
 
-    return new UpdateNicknameDto.Response(newNickname);
+    return new UpdateNicknameDto.Response(savedMember.getNickname());
   }
 
   public UpdateCharacterDto.Response updateCharacter(Long memberId, Integer newCharacterId) {
@@ -59,9 +59,9 @@ public class MemberService {
         .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND.getMessage(), ErrorCode.USER_NOT_FOUND));
 
     member.setCharacterId(newCharacterId);
-    memberRepository.save(member);
+    Member savedMember = memberRepository.save(member);
 
-    return new UpdateCharacterDto.Response(newCharacterId);
+    return new UpdateCharacterDto.Response(savedMember.getCharacterId());
   }
 
   public UpdateStatusDto.Response updateStatus(Long memberId, String newStatus) {
@@ -74,7 +74,7 @@ public class MemberService {
     // 새로운 status 생성 후 member와 연결
     Status status = statusRepository.save(Status.toStatus(newStatus, emotion));
     member.setStatus(status);
-    memberRepository.save(member);
+    Member savedMember = memberRepository.save(member);
 
     return new UpdateStatusDto.Response(status.getContent(), status.getEmotion());
   }

@@ -53,8 +53,7 @@ public class Member {
     @Column
     private Long locationId;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "status_id")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<Status> status;
 
     @ManyToMany(mappedBy = "likeMember")

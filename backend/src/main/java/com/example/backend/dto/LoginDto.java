@@ -45,7 +45,7 @@ public class LoginDto {
   public static Response toLoginDtoResponse(Member member, TokenDto tokenDto) {
     Long memberId = member.getId();
     String nickname = member.getNickname();
-    String status = member.getStatus().isEmpty() ? null : member.getStatus().get(0).getContent();
+    String status = member.getStatus() == null ? null : member.getStatus().get(0).getContent();
     Integer characterId = member.getCharacterId();
     String grandType = tokenDto.getGrantType();
     String accessToken = tokenDto.getAccessToken();

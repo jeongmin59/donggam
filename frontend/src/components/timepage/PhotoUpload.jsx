@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import axios from "axios";
 import UploadButton from "../common/UploadButton";
 import { useRecoilValue } from "recoil";
 import { AccessTokenAtom } from "../../recoil/user/userAtom";
+import axiosInstance from "../../api/axiosConfig";
 
 const PhotoUpload = () => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -34,14 +34,14 @@ const PhotoUpload = () => {
         // FormData 객체를 생성
         const formData = new FormData();
         formData.append("title", title);
-        formData.append("image", selectedFile);
+        formData.append("img", selectedFile);
 
-        const response = await axios.post(
-          import.meta.env.REACT_APP_API_URL + `/time`, formData, 
+        const response = await axiosInstance.post(
+          `/time`, formData, 
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data", // FormData로 지정
+            "Content-Type": "multipart/form-data", // form-data로 지정
           },
         });
 
@@ -96,7 +96,7 @@ const PhotoUpload = () => {
         </div>
       </div>
       <div className="fixed bottom-3 left-0 right-0 p-4">
-        <UploadButton onUpload={handleUpload} />
+        <UploadButton onUpload={handleUpload} to="/time" />
       </div>
     </div>
   );

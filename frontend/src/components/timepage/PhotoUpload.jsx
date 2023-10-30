@@ -44,7 +44,7 @@ const PhotoUpload = () => {
             "Content-Type": "multipart/form-data", // form-data로 지정
           },
         });
-
+        
         console.log("업로드 성공:", response.data);
       } else {
         alert("사진을 첨부해주세요.");

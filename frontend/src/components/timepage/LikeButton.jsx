@@ -6,13 +6,14 @@ import fullLikeImg from "../../assets/like/full_heart.png";
 const LikeButton = ({ imageId, isLiked, likeCount }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [newIsLiked, setNewIsLiked] = useState(isLiked);
-  const [newLikeCount, setNewLikeCount] = useState(likeCount);
+  // const [newLikeCount, setNewLikeCount] = useState(likeCount);
 
   const handleLikeToggle = async () => {
     if (isLoading) {
       return;
     }
     setIsLoading(true);
+    window.location.reload();
 
     try {
       const response = await axiosInstance.post(`/time/${imageId}`);
@@ -21,7 +22,7 @@ const LikeButton = ({ imageId, isLiked, likeCount }) => {
         // 새로운 likeCount 및 isLiked를 가져옴
         const { likeCount: updatedLikeCount, isLiked: updatedIsLiked } = response.data.data;
         setNewIsLiked(updatedIsLiked);
-        setNewLikeCount(updatedLikeCount);
+        // setNewLikeCount(updatedLikeCount);
       }
     } catch (error) {
       console.error("에러", error);
@@ -39,7 +40,7 @@ const LikeButton = ({ imageId, isLiked, likeCount }) => {
           <img src={emptyLikeImg} alt="Empty Heart" />
         )}
       </button>
-      <span>{newLikeCount} Likes</span>
+      {/* <span>{newLikeCount} Likes</span> */}
     </div>
   );
 };

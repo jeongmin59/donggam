@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import BackBtn from "../../assets/common/back-btn.svg";
 
-const Header = ({title}) => {
+const Header = ({ title, to }) => {
   const navigate = useNavigate();
   const handleGoBack = () => {
-    navigate(-1);
+    navigate(to);
   };
 
   return(

@@ -1,9 +1,14 @@
 import React, { useState } from "react";
+import axios from "axios";
 import UploadButton from "../common/UploadButton";
+import { useRecoilValue } from "recoil";
+import { AccessTokenAtom } from "../../recoil/user/userAtom";
 
 const PhotoUpload = () => {
   const [selectedFile, setSelectedFile] = useState(null);
+  const [title, setTitle] = useState("");
   const [previewURL, setPreviewURL] = useState(null);
+  const token = useRecoilValue(AccessTokenAtom);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -18,12 +23,34 @@ const PhotoUpload = () => {
       reader.readAsDataURL(file);
     }
   };
+  
+  const handleTitleChange = (event) => {
+    setTitle(event.target.value);
+  };
 
-  const handleUpload = () => {
-    if (selectedFile) {
-      console.log("선택된 파일:", selectedFile);
-    } else {
-      alert("사진을 첨부해주세요.");
+  const handleUpload = async () => {
+    try {
+      if (selectedFile) {
+        // FormData 객체를 생성
+        const formData = new FormData();
+        formData.append("title", title);
+        formData.append("image", selectedFile);
+
+        const response = await axios.post(
+          import.meta.env.REACT_APP_API_URL + `/time`, formData, 
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data", // FormData로 지정
+          },
+        });
+
+        console.log("업로드 성공:", response.data);
+      } else {
+        alert("사진을 첨부해주세요.");
+      }
+    } catch (error) {
+      console.error("에러:", error);
     }
   };
 
@@ -34,6 +61,8 @@ const PhotoUpload = () => {
         <input
           type="text"
           className="w-full px-3 py-2 rounded-md border focus:outline-none focus:ring focus:border-blue-300"
+          value={title}
+          onChange={handleTitleChange}
         />
       </div>
 

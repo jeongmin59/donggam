@@ -54,9 +54,9 @@ public class Member {
     @Column
     private Long locationId;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "status_id")
-    private Status status;
+    private List<Status> status;
 
     @ManyToMany(mappedBy = "likeMember")
     private List<Image> likedImages;
@@ -78,7 +78,7 @@ public class Member {
     }
 
     public void setStatus(Status status) {
-        this.status = status;
+        this.status.add(status);
     }
 
     public void setNickname(String nickname) {

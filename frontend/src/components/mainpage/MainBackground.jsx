@@ -18,7 +18,7 @@ const MainBackground = () => {
   const [longitude, setLongitude] = useState(null);
 
   const [selectedBackground, setSelectedBackground] = useState(1); // 날씨 배경 
-  // const [aroundPeople, setAroundPeople] = useState([])
+  const [aroundPeople, setAroundPeople] = useState([]) // 주변 사용자 
   const [aroundPeopleCount, setAroundPeopleCount] = useState(0); // 주변 사용자 수
 
   useEffect(() => {
@@ -41,18 +41,17 @@ const MainBackground = () => {
       locationInfo(memberId, latitude, longitude)
         .then((data) => {
           if (data) {
-            // setAroundPeople(data.data.aroundPeople);
+            setAroundPeople(data.data.aroundPeople);
             setAroundPeopleCount(data.data.aroundPeopleCount);
           }
           console.log('위치 API 응답:', data.data)
 
-          data.data.aroundPeople.map(person => {
-            console.log(person)
-          });
+          // data.data.aroundPeople.map(person => {
+          //   console.log(person)
+          // });
         });
     }
   }, [memberId, latitude, longitude]);
-
 
   // BG 
   const changeBackground = () => {
@@ -77,7 +76,7 @@ const MainBackground = () => {
       <div className={backgroundClass} style={{zIndex:3, backgroundSize: "cover" }}>
         <button className="bg-red-200" onClick={changeBackground}>배경변경</button>
         <UserInfo /> 
-        <MainArea />
+        <MainArea aroundPeople={aroundPeople}/>
         <NumberOfUsers aroundPeopleCount={aroundPeopleCount}/>
       </div>
       <div className="bottomBG h-screen relative bg-[#abcdf0]" style={{ zIndex: -1 }}>

@@ -26,6 +26,6 @@ public class UpdateDto {
     private String nickname;
     private Integer characterId;
     private String status;
-    private Emotion emotion;
+    private String emotion;
   }
 }

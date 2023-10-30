@@ -93,7 +93,10 @@ public class MainService {
         .orElseThrow(() -> new CustomException(ErrorCode.ENTITY_NOT_FOUND.getMessage(), ErrorCode.ENTITY_NOT_FOUND));
 
     // 반경 1km이내의 사용자들 탐색
-    List<Location> locations = locationRepository.findWithinRadius(location.getLatitude(), location.getLongitude(), 10000d);
+    List<Location> locations = locationRepository.findWithinRadius(location.getLatitude(), location.getLongitude(), 10000d).stream()
+        .filter(l -> !l.getId().equals(locationId))
+        .collect(Collectors.toList());
+    ;
 
     if (locations.isEmpty()) {
       return Collections.emptyList();

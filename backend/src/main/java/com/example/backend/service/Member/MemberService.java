@@ -155,8 +155,18 @@ public class MemberService {
     Long memberId = jsonObject.getLong("id");
     String email = jsonObject.getJSONObject("kakao_account").getString("email");
 
-    Member member = memberRepository.findWithRelatedEntityById(memberId)
-            .orElse(memberRepository.save(new Member(memberId, "익명의 감자", email, 1, Authority.ROLE_USER)));
+    Member member = memberRepository.findWithRelatedEntityById(memberId).orElse(null);
+//            .orElse(memberRepository.save(new Member(memberId, "익명의 감자", email, 1, Authority.ROLE_USER)));
+
+    if (member == null) {
+      member = memberRepository.save(Member.builder()
+          .id(memberId)
+          .nickname("익명의 감자")
+          .email(email)
+          .characterId(1)
+          .authority(Authority.ROLE_USER)
+          .build());
+    }
 
     LoginDto loginDto = new LoginDto();
     loginDto.setId(memberId);

@@ -15,6 +15,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.aspectj.weaver.AjcMemberMaker;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -35,13 +36,10 @@ public class Status {
   private Member member;
 
   @Builder
-  private Status(String content, String emotion) {
+  private Status(String content, String emotion, Member member) {
     this.content = content;
     this.emotion = Emotion.StringToEnum(emotion);
-  }
-
-  public static Status toStatus(String content, String emotion) {
-    return new Status(content, emotion);
+    this.member = member;
   }
 
   public StatusDto toStatusDto() {

@@ -4,7 +4,8 @@ const axiosInstance = axios.create({
   // baseURL: process.env.REACT_APP_API_URL,  // 추후 .env 파일에 생성
   baseURL: "http://k9e107.p.ssafy.io",
   headers: {
-    // "Content-Type": "application/json",
+    "Content-Type": "application/json",
+    'Access-Control-Allow-Origin': '*'
   },
 });
 

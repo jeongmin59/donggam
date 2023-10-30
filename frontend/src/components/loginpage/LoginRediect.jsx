@@ -29,17 +29,17 @@ const LoginRediect = () => {
 
         // res 데이터 받아오기
         const accessToken = res.data.data.accessToken
-        // const status = res.data.data.status
-        const memberId = res.data.data.memberId
-        const status = "개발 잘하고 싶다.. 어케 함."
+        const status = res.data.data.status
+        // const status = "개발 잘하고 싶다.. 어케 함."
 
-        window.localStorage.setItem("accessToken", accessToken); //localStorage에 accessToken 저장하기
+        //localStorage에 accessToken 저장하기
+        window.localStorage.setItem("accessToken", accessToken);
 
 
         //userAtom 업데이트
-        setAccessToken(res.data.data.accessToken)
+        setAccessToken(accessToken)
         setMemberId(res.data.data.memberId)
-        // setStatusMessage(res.data.data.status)
+        setStatusMessage(res.data.data.status)
         setStatusMessage(status)
         setNickname(res.data.data.nickname)
         setCharacterId(res.data.data.characterId)
@@ -50,7 +50,7 @@ const LoginRediect = () => {
           navigator(`/`) // 메인페이지 이동
         }
         else {
-          navigator(`/profile/${memberId}`) // 프로필 설정 페이지 이동
+          navigator(`/profile`) // 프로필 설정 페이지 이동
         }
       })
       .catch(err => {

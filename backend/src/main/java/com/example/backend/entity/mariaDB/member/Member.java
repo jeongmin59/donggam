@@ -23,14 +23,13 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import lombok.Setter;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "member")
 @Getter
-@NamedEntityGraph(name = "member.status", attributeNodes = {
-    @NamedAttributeNode("status")
-})
+@Setter
 public class Member {
     @Id
     private Long id;

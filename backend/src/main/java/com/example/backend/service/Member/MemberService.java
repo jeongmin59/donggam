@@ -65,7 +65,7 @@ public class MemberService {
   }
 
   public UpdateStatusDto.Response updateStatus(Long memberId, String newStatus) {
-    Member member = memberRepository.findWithRelatedEntityById(memberId)
+    Member member = memberRepository.findWithStatus(memberId)
         .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND.getMessage(), ErrorCode.USER_NOT_FOUND));
 
     // 네이버 클로바 센티멘트 API의 감정 분석 결과
@@ -76,25 +76,24 @@ public class MemberService {
     member.setStatus(status);
     Member savedMember = memberRepository.save(member);
 
-    return new UpdateStatusDto.Response(status.getContent(), status.getEmotion());
+    return new UpdateStatusDto.Response(savedMember.getStatus().get(0).getContent(), savedMember.getStatus().get(0).getEmotion());
   }
 
   public UpdateDto.Response update(Long memberId, UpdateDto.Request request) {
-    Member member = memberRepository.findWithRelatedEntityById(memberId)
+    Member member = memberRepository.findWithStatus(memberId)
         .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND.getMessage(), ErrorCode.USER_NOT_FOUND));
 
     String emotion = sentimentAPI(request.getStatus());
-    Status status = statusRepository.findById(member.getStatus().get(0).getId())
-        .orElseThrow(() -> new CustomException(ErrorCode.ENTITY_NOT_FOUND.getMessage(), ErrorCode.ENTITY_NOT_FOUND));
-    Status.toStatus(request.getStatus(), emotion);
-    statusRepository.save(status);
+//    Status status = statusRepository.findById(member.getStatus().get(0).getId())
+//        .orElseThrow(() -> new CustomException(ErrorCode.ENTITY_NOT_FOUND.getMessage(), ErrorCode.ENTITY_NOT_FOUND));
+    Status status = statusRepository.save(Status.builder().content(request.getStatus()).emotion(emotion).build());
 
     member.setCharacterId(request.getCharacterId());
     member.setNickname(request.getNickname());
     member.setStatus(status);
-    memberRepository.save(member);
+    Member savedMember = memberRepository.save(member);
 
-    return new UpdateDto.Response(member.getNickname(), member.getCharacterId(), status.getContent(), status.getEmotion());
+    return new UpdateDto.Response(savedMember.getNickname(), savedMember.getCharacterId(), savedMember.getStatus().get(0).getContent(), savedMember.getStatus().get(0).getEmotion());
   }
 
   private String kakaoToken(String code) {
@@ -155,7 +154,7 @@ public class MemberService {
     Long memberId = jsonObject.getLong("id");
     String email = jsonObject.getJSONObject("kakao_account").getString("email");
 
-    Member member = memberRepository.findWithRelatedEntityById(memberId).orElse(null);
+    Member member = memberRepository.findWithStatus(memberId).orElse(null);
 //            .orElse(memberRepository.save(new Member(memberId, "익명의 감자", email, 1, Authority.ROLE_USER)));
 
     if (member == null) {

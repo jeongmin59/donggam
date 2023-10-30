@@ -25,7 +25,7 @@ public class MainService {
 
   // 필요한거 : 내 닉네임, 내 상태메시지, 내 캐릭터 id,  주변사람 카운트, 주변 사람들 정보
   public MainDto.Response mainPage(MainDto.Request request) {
-    Member member = memberRepository.findWithRelatedEntityById(request.getMemberId())
+    Member member = memberRepository.findWithStatus(request.getMemberId())
         .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND.getMessage(), ErrorCode.USER_NOT_FOUND));
 
     Long locationId;
@@ -41,8 +41,8 @@ public class MainService {
     List<AroundDto.Response> aroundPeople = getAroundPeople(locationId);
     Integer aroundPeopleCount = aroundPeople == null ? 0 : aroundPeople.size();
 
-//    Emotion statusWeather = getStatusWeather(locationId);
-    Emotion statusWeather = Emotion.POSITIVE;
+    Emotion statusWeather = getStatusWeather(locationId);
+//    Emotion statusWeather = Emotion.POSITIVE;
 
     return MainDto.toMainDtoResponse(statusWeather, aroundPeopleCount, aroundPeople);
   }
@@ -58,35 +58,35 @@ public class MainService {
         .collect(Collectors.toList());
   }
 
-//  private Emotion getStatusWeather(Long locationId) {
-//    List<Member> members = getAroundMembers(locationId);
-//
-//    int neutralCount = 0;
-//    int positiveCount = 0;
-//    int negativeCount = 0;
-//
-//    for (Member member : members) {
-//      if (member.getStatus().get(0).getEmotion() == Emotion.NEGATIVE) {
-//      negativeCount ++;
-//    } else if (member.getStatus().get(0).getEmotion() == Emotion.POSITIVE) {
-//      positiveCount ++;
-//    } else if (member.getStatus().get(0).getEmotion() == Emotion.NEUTRAL) {
-//      neutralCount ++;
-//    }
-//  }
-//
-//    if (neutralCount >= 3) {
-//      return Emotion.NEUTRAL;
-//    } else {
-//      if (positiveCount == negativeCount) {
-//        return Emotion.NEUTRAL;
-//      } else if (positiveCount > negativeCount) {
-//        return Emotion.POSITIVE;
-//      } else {
-//        return Emotion.NEGATIVE;
-//      }
-//    }
-//  }
+  private Emotion getStatusWeather(Long locationId) {
+    List<Member> members = getAroundMembers(locationId);
+
+    int neutralCount = 0;
+    int positiveCount = 0;
+    int negativeCount = 0;
+
+    for (Member member : members) {
+      if (member.getStatus().get(0).getEmotion() == Emotion.NEGATIVE) {
+      negativeCount ++;
+    } else if (member.getStatus().get(0).getEmotion() == Emotion.POSITIVE) {
+      positiveCount ++;
+    } else if (member.getStatus().get(0).getEmotion() == Emotion.NEUTRAL) {
+      neutralCount ++;
+    }
+  }
+
+    if (neutralCount >= 3) {
+      return Emotion.NEUTRAL;
+    } else {
+      if (positiveCount == negativeCount) {
+        return Emotion.NEUTRAL;
+      } else if (positiveCount > negativeCount) {
+        return Emotion.POSITIVE;
+      } else {
+        return Emotion.NEGATIVE;
+      }
+    }
+  }
 
   private List<Member> getAroundMembers(Long locationId) {
     Location location = locationRepository.findById(locationId)

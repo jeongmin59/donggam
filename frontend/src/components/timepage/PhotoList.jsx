@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axiosInstance from "../../api/axiosConfig";
+import { Link } from "react-router-dom";
 
 const PhotoList = () => {
   const [photos, setPhotos] = useState([]);
@@ -11,6 +12,7 @@ const PhotoList = () => {
         const response = await axiosInstance.get("/time");
         if (response.data && response.data.data) {
           setPhotos(response.data.data);
+          console.log('왔니?', response)
         }
         setLoading(false);
       } catch (error) {
@@ -30,9 +32,11 @@ const PhotoList = () => {
         <div>
           {photos.map((photo) => (
             <div key={photo.imageId}>
-              <img src={photo.imageAddress} alt={photo.title} />
-              <h3>{photo.title}</h3>
-              <p>{photo.isLiked ? "Liked" : "Not Liked"}</p>
+              <Link to={`/time/${photo.imageId}`}>
+                <img src={photo.imageAddress} alt={photo.title} />
+                <h3>{photo.title}</h3>
+                <p>{photo.isLiked ? "Liked" : "Not Liked"}</p>
+              </Link>
             </div>
           ))}
         </div>

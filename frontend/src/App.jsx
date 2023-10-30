@@ -3,8 +3,9 @@ import "./index.css";
 import MainPage from "./pages/MainPage";
 import LoginPage from "./pages/LoginPage";
 import MailboxPage from "./pages/MailboxPage";
-import TimePage from "./pages/TimePage"
-import TimeUploadpage from "./pages/TimeUploadPage";
+import TimePage from "./pages/timepage/TimePage"
+import PhotoUploadPage from "./pages/timepage/PhotoUploadPage";
+import PhotoDetailPage from "./pages/timepage/PhotoDetailPage";
 import LoginRediect from "./components/loginpage/LoginRediect";
 import SpacePage from "./pages/SpacePage";
 import ProfilePage from "./pages/ProfilePage";
@@ -22,7 +23,8 @@ function App() {
         <Route path="/kakao/callback" element={<LoginRediect />} />
         <Route path="/mailbox/:userId" element={<MailboxPage />} />
         <Route path="/time" element={<TimePage />} />
-        <Route path="/time/upload" element={<TimeUploadpage />} />
+        <Route path="/time/upload" element={<PhotoUploadPage />} />
+        <Route path="/time/:imageId" element={<PhotoDetailPage />} />
         <Route path="/space" element={<SpacePage />} />
         <Route path="/space/trace" element={<NearbyTracePage />} />
         <Route path="/space/landmark" element={<NearbyLandmarkPage />} />

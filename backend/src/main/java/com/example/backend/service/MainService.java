@@ -41,7 +41,8 @@ public class MainService {
     List<AroundDto.Response> aroundPeople = getAroundPeople(locationId);
     Integer aroundPeopleCount = aroundPeople == null ? 0 : aroundPeople.size();
 
-    Emotion statusWeather = getStatusWeather(locationId);
+//    Emotion statusWeather = getStatusWeather(locationId);
+    Emotion statusWeather = Emotion.POSITIVE;
 
     return MainDto.toMainDtoResponse(statusWeather, aroundPeopleCount, aroundPeople);
   }
@@ -57,44 +58,42 @@ public class MainService {
         .collect(Collectors.toList());
   }
 
-  private Emotion getStatusWeather(Long locationId) {
-    List<Member> members = getAroundMembers(locationId);
-
-    int neutralCount = 0;
-    int positiveCount = 0;
-    int negativeCount = 0;
-
-    for (Member member : members) {
-      if (member.getStatus().get(0).getEmotion() == Emotion.NEGATIVE) {
-      negativeCount ++;
-    } else if (member.getStatus().get(0).getEmotion() == Emotion.POSITIVE) {
-      positiveCount ++;
-    } else if (member.getStatus().get(0).getEmotion() == Emotion.NEUTRAL) {
-      neutralCount ++;
-    }
-  }
-
-    if (neutralCount >= 3) {
-      return Emotion.NEUTRAL;
-    } else {
-      if (positiveCount == negativeCount) {
-        return Emotion.NEUTRAL;
-      } else if (positiveCount > negativeCount) {
-        return Emotion.POSITIVE;
-      } else {
-        return Emotion.NEGATIVE;
-      }
-    }
-  }
+//  private Emotion getStatusWeather(Long locationId) {
+//    List<Member> members = getAroundMembers(locationId);
+//
+//    int neutralCount = 0;
+//    int positiveCount = 0;
+//    int negativeCount = 0;
+//
+//    for (Member member : members) {
+//      if (member.getStatus().get(0).getEmotion() == Emotion.NEGATIVE) {
+//      negativeCount ++;
+//    } else if (member.getStatus().get(0).getEmotion() == Emotion.POSITIVE) {
+//      positiveCount ++;
+//    } else if (member.getStatus().get(0).getEmotion() == Emotion.NEUTRAL) {
+//      neutralCount ++;
+//    }
+//  }
+//
+//    if (neutralCount >= 3) {
+//      return Emotion.NEUTRAL;
+//    } else {
+//      if (positiveCount == negativeCount) {
+//        return Emotion.NEUTRAL;
+//      } else if (positiveCount > negativeCount) {
+//        return Emotion.POSITIVE;
+//      } else {
+//        return Emotion.NEGATIVE;
+//      }
+//    }
+//  }
 
   private List<Member> getAroundMembers(Long locationId) {
     Location location = locationRepository.findById(locationId)
         .orElseThrow(() -> new CustomException(ErrorCode.ENTITY_NOT_FOUND.getMessage(), ErrorCode.ENTITY_NOT_FOUND));
 
     // 반경 1km이내의 사용자들 탐색
-    List<Location> locations = locationRepository.findWithinRadius(location.getLatitude(), location.getLongitude(), 1000d).stream()
-        .filter(l -> !l.getId().equals(locationId))
-        .collect(Collectors.toList());;
+    List<Location> locations = locationRepository.findWithinRadius(location.getLatitude(), location.getLongitude(), 10000d);
 
     if (locations.isEmpty()) {
       return Collections.emptyList();

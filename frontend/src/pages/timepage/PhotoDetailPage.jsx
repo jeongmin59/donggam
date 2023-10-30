@@ -1,12 +1,12 @@
 import React from "react";
 import PhotoDetail from "../../components/timepage/PhotoDetail";
-// import LikeButton from "../../components/timepage/LikeButton";
+import TimeBackground from "../../components/timepage/TimeBackground";
 
 const PhotoDetailPage= () => {
   return (
     <>
+      <TimeBackground />
       <PhotoDetail />
-      {/* <LikeButton /> */}
     </>
   );
 };

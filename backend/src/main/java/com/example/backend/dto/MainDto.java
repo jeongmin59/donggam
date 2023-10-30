@@ -28,8 +28,4 @@ public class MainDto {
     private Integer aroundPeopleCount;
     private List<AroundDto.Response> aroundPeople;
   }
-
-  public static Response toMainDtoResponse (Emotion emotion, Integer aroundPeopleCount, List<AroundDto.Response> aroundPeople) {
-    return new Response(emotion, aroundPeopleCount, aroundPeople);
-  }
 }

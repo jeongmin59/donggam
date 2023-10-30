@@ -49,10 +49,6 @@ public class Member {
     @Column
     private Integer characterId;
 
-    // 위치
-    @Column
-    private Long locationId;
-
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<Status> status;
 

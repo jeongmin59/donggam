@@ -16,6 +16,8 @@ import com.example.backend.exception.type.CustomException;
 import com.example.backend.jwt.TokenProvider;
 import com.example.backend.repository.mariaDB.MemberRepository;
 import com.example.backend.repository.mariaDB.StatusRepository;
+import java.util.List;
+import java.util.Random;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.http.HttpEntity;
@@ -39,6 +41,11 @@ public class MemberService {
   private final StatusRepository statusRepository;
   private final AuthenticationManagerBuilder authenticationManagerBuilder;
   private final TokenProvider tokenProvider;
+
+  private static final String[] nicknames = {"", "익명의 병아리", "익명의 고양이", "익명의 여우", "익명의 북극곰",
+                                              "익명의 강아지", "익명의 토끼", "익명의 고슴도치", "익명의 쥐",
+                                              "익명의 물개", "익명의 펭귄", "익명의 공룡", "익명의 고래"};
+
 
   public LoginDto.Response login(String code) {
      return myInfo(kakaoToken(code));
@@ -72,11 +79,14 @@ public class MemberService {
     String emotion = sentimentAPI(newStatus);
 
     // 새로운 status 생성 후 member와 연결
-    Status status = statusRepository.save(Status.builder().content(newStatus).emotion(emotion).build());
-    member.setStatus(status);
+    Status status = statusRepository.save(Status.builder()
+        .content(newStatus)
+        .emotion(emotion).build());
+
+    member.getStatus().add(status);
     Member savedMember = memberRepository.save(member);
 
-    return new UpdateStatusDto.Response(savedMember.getStatus().get(0).getContent(), savedMember.getStatus().get(0).getEmotion());
+    return new UpdateStatusDto.Response(savedMember.getStatus().get(0).getContent(), savedMember.getStatus().get(0).getEmotion().name());
   }
 
   public UpdateDto.Response update(Long memberId, UpdateDto.Request request) {
@@ -84,16 +94,17 @@ public class MemberService {
         .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND.getMessage(), ErrorCode.USER_NOT_FOUND));
 
     String emotion = sentimentAPI(request.getStatus());
-//    Status status = statusRepository.findById(member.getStatus().get(0).getId())
-//        .orElseThrow(() -> new CustomException(ErrorCode.ENTITY_NOT_FOUND.getMessage(), ErrorCode.ENTITY_NOT_FOUND));
-    Status status = statusRepository.save(Status.builder().content(request.getStatus()).emotion(emotion).build());
+    Status status = statusRepository.save(Status.builder()
+        .content(request.getStatus())
+        .emotion(emotion)
+        .build());
 
     member.setCharacterId(request.getCharacterId());
     member.setNickname(request.getNickname());
-    member.setStatus(status);
+    member.getStatus().add(status);
     Member savedMember = memberRepository.save(member);
 
-    return new UpdateDto.Response(savedMember.getNickname(), savedMember.getCharacterId(), savedMember.getStatus().get(0).getContent(), savedMember.getStatus().get(0).getEmotion());
+    return new UpdateDto.Response(savedMember.getNickname(), savedMember.getCharacterId(), savedMember.getStatus().get(0).getContent(), savedMember.getStatus().get(0).getEmotion().name());
   }
 
   private String kakaoToken(String code) {
@@ -154,17 +165,25 @@ public class MemberService {
     Long memberId = jsonObject.getLong("id");
     String email = jsonObject.getJSONObject("kakao_account").getString("email");
 
+    Random random = new Random();
+    int randomNumber = random.nextInt(12) + 1;
+
     Member member = memberRepository.findWithStatus(memberId).orElse(null);
-//            .orElse(memberRepository.save(new Member(memberId, "익명의 감자", email, 1, Authority.ROLE_USER)));
+//            .orElse(memberRepository.save(new Member(memberId, nicknames[randomNumber], email, randomNumber, Authority.ROLE_USER)));
 
     if (member == null) {
       member = memberRepository.save(Member.builder()
           .id(memberId)
-          .nickname("익명의 감자")
+          .nickname(nicknames[randomNumber])
           .email(email)
-          .characterId(1)
+          .characterId(randomNumber)
           .authority(Authority.ROLE_USER)
           .build());
+    } else {
+      List<Status> statusList = member.getStatus();
+      if (statusList.isEmpty()) {
+        member.setStatus(null);
+      }
     }
 
     LoginDto loginDto = new LoginDto();

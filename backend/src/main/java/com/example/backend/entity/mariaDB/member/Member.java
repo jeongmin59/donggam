@@ -70,21 +70,5 @@ public class Member {
         this.characterId = characterId;
         this.authority = authority;
     }
-
-    public void setLocationId(Long locationId) {
-        this.locationId = locationId;
-    }
-
-    public void setStatus(Status status) {
-        this.status.add(status);
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
-    public void setCharacterId(Integer characterId) {
-        this.characterId = characterId;
-    }
 }
 

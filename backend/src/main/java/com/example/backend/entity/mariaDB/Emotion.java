@@ -8,13 +8,6 @@ public enum Emotion {
   NEGATIVE;
 
   public static Emotion StringToEnum(String text) {
-//    if (Objects.equals(text, "negative")) {
-//      return NEGATIVE;
-//    } else if (Objects.equals(text, "neutral")) {
-//      return NEUTRAL;
-//    } else {
-//      return POSITIVE;
-//    }
     return Emotion.valueOf(text.toUpperCase());
   }
 }

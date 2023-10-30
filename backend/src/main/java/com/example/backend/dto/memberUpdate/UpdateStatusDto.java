@@ -22,6 +22,6 @@ public class UpdateStatusDto {
   @Builder
   public static class Response {
     private String status;
-    private Emotion emotion;
+    private String emotion;
   }
 }

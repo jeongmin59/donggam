@@ -8,6 +8,7 @@ import com.example.backend.dto.Response;
 import com.example.backend.service.message.MessageBoxService;
 import com.example.backend.service.message.MessageService;
 import io.swagger.v3.oas.annotations.Parameter;
+import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -30,7 +31,7 @@ public class MessageController {
     public Response<SendMessageDto.Response> sendMessage(
             @Parameter(hidden = true) @AuthenticationPrincipal UserDetails userDetails,
             @RequestBody SendMessageDto.Request request, @RequestParam MultipartFile img
-    ) {
+    ) throws IOException {
         Long memberId = Long.parseLong(userDetails.getUsername());
         SendMessageDto.Response response = messageService.sendMessage(memberId, img, request);
         return new Response<>(201, "메세지 전송 완료", response);

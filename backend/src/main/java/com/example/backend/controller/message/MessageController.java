@@ -7,7 +7,9 @@ import com.example.backend.dto.message.SendMessageDto;
 import com.example.backend.dto.Response;
 import com.example.backend.service.message.MessageBoxService;
 import com.example.backend.service.message.MessageService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+@Tag(name = "쪽지 API", description = "쪽지 API")
 @RestController
 @RequiredArgsConstructor
 public class MessageController {
@@ -26,6 +29,7 @@ public class MessageController {
     private final MessageBoxService messageBoxService;
     private final MessageService messageService;
 
+    @Operation(summary = "쪽지 전송 API", description = "쪽지 전송 API")
     @PostMapping(path = "/message/send", consumes = "multipart/form-data")
     public Response<SendMessageDto.Response> sendMessage(
             @Parameter(hidden = true) @AuthenticationPrincipal UserDetails userDetails,
@@ -36,6 +40,7 @@ public class MessageController {
         return new Response<>(201, "메세지 전송 완료", response);
     }
 
+    @Operation(summary = "메세지, 상태 목록 조회 API", description = "메세지, 상태 목록 조회 API")
     @GetMapping("/message/status/list")
     public Response<GetMessageAndStatusListDto.Response> getMessageList(
             @Parameter(hidden = true) @AuthenticationPrincipal UserDetails userDetails) {
@@ -44,12 +49,14 @@ public class MessageController {
         return new Response<>(200, "메세지, 상태 목록 조회 완료", response);
     }
 
+    @Operation(summary = "메세지 목록 조회 API", description = "메세지 목록 조회 API")
     @GetMapping("/message/list/{statusId}")
     public Response<GetMessageListDto.Response> getMessageList(@PathVariable Long statusId) {
         GetMessageListDto.Response response = messageService.getMessageList(statusId);
         return new Response<>(200, "메세지 목록 조회 완료", response);
     }
 
+    @Operation(summary = "메세지 상세보기 API", description = "메세지 상세보기 API")
     @GetMapping("/message/detail/{messageId}")
     public Response<GetMessageDetailDto.Response> getMessageDetail(@PathVariable Long messageId) {
         GetMessageDetailDto.Response response = messageService.getMessageDetail(messageId);

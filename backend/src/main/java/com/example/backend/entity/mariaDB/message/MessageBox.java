@@ -1,6 +1,6 @@
 package com.example.backend.entity.mariaDB.message;
 
-import com.example.backend.entity.mariaDB.Status;
+import com.example.backend.entity.mariaDB.status.Status;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

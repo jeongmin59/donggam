@@ -1,12 +1,7 @@
 package com.example.backend.service;
 
-import com.example.backend.dto.LocationDto;
-import com.example.backend.dto.LocationDto.Response;
-import com.example.backend.entity.mariaDB.member.Member;
 import com.example.backend.entity.postgreSQL.MemberLocation;
 import com.example.backend.repository.postgreSQL.MemberLocationRepository;
-import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

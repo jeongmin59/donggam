@@ -1,6 +1,6 @@
 package com.example.backend.repository.mariaDB;
 
-import com.example.backend.entity.mariaDB.Status;
+import com.example.backend.entity.mariaDB.status.Status;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 

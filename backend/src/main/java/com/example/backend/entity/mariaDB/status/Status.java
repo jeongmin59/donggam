@@ -1,9 +1,11 @@
-package com.example.backend.entity.mariaDB;
+package com.example.backend.entity.mariaDB.status;
 
 import com.example.backend.dto.message.StatusDto;
 import com.example.backend.entity.mariaDB.member.Member;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,7 +17,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.aspectj.weaver.AjcMemberMaker;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -29,7 +30,7 @@ public class Status {
   @Column
   private String content;
 
-  @Column
+  @Enumerated(EnumType.STRING)
   private Emotion emotion;
 
   @ManyToOne(fetch = FetchType.LAZY)

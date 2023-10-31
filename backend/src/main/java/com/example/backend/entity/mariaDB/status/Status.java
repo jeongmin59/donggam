@@ -1,9 +1,11 @@
-package com.example.backend.entity.mariaDB;
+package com.example.backend.entity.mariaDB.status;
 
 import com.example.backend.dto.message.StatusDto;
 import com.example.backend.entity.mariaDB.member.Member;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,11 +16,13 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "status")
 @Getter
+@Setter
 public class Status {
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -26,20 +30,17 @@ public class Status {
   @Column
   private String content;
 
-  @Column
+  @Enumerated(EnumType.STRING)
   private Emotion emotion;
 
   @ManyToOne(fetch = FetchType.LAZY)
   private Member member;
 
   @Builder
-  private Status(String content, String emotion) {
+  private Status(String content, String emotion, Member member) {
     this.content = content;
     this.emotion = Emotion.StringToEnum(emotion);
-  }
-
-  public static Status toStatus(String content, String emotion) {
-    return new Status(content, emotion);
+    this.member = member;
   }
 
   public StatusDto toStatusDto() {

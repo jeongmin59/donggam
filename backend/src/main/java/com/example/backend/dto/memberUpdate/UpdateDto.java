@@ -1,6 +1,5 @@
 package com.example.backend.dto.memberUpdate;
 
-import com.example.backend.entity.mariaDB.Emotion;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,6 +25,6 @@ public class UpdateDto {
     private String nickname;
     private Integer characterId;
     private String status;
-    private Emotion emotion;
+    private String emotion;
   }
 }

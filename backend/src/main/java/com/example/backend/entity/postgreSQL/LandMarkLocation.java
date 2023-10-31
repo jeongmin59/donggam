@@ -7,18 +7,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.locationtech.jts.geom.Point;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "location")
+@Table(name = "land_mark_location")
 @Getter
 @Setter
-public class Location {
+public class LandMarkLocation {
+
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
@@ -28,9 +27,4 @@ public class Location {
   @Column
   private Double longitude;
 
-  @Builder
-  public Location(Double latitude, Double longitude){
-    this.latitude = latitude;
-    this.longitude = longitude;
-  }
 }

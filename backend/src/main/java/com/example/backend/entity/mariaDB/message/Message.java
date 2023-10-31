@@ -3,7 +3,7 @@ package com.example.backend.entity.mariaDB.message;
 import com.example.backend.dto.message.GetMessageDetailDto;
 import com.example.backend.dto.message.MessageDto;
 import com.example.backend.dto.message.SendMessageDto;
-import com.example.backend.entity.mariaDB.Status;
+import com.example.backend.entity.mariaDB.status.Status;
 import com.example.backend.entity.mariaDB.member.Member;
 import java.time.LocalDate;
 import javax.persistence.Column;

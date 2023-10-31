@@ -41,17 +41,4 @@ public class LoginDto {
     private String accessToken;
     private Long accessTokenExpiration;
   }
-
-  public static Response toLoginDtoResponse(Member member, TokenDto tokenDto) {
-    Long memberId = member.getId();
-    String nickname = member.getNickname();
-    String status = member.getStatus() != null ? member.getStatus().get(0).getContent() : null;
-    Integer characterId = member.getCharacterId();
-    String grandType = tokenDto.getGrantType();
-    String accessToken = tokenDto.getAccessToken();
-    Long accessTokenExpiration = tokenDto.getAccessTokenExpiration();
-
-    return new Response(memberId, nickname, status, characterId, grandType, accessToken, accessTokenExpiration);
-  }
-
 }

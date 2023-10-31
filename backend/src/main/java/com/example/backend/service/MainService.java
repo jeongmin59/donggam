@@ -2,13 +2,16 @@ package com.example.backend.service;
 
 import com.example.backend.dto.AroundDto;
 import com.example.backend.dto.MainDto;
-import com.example.backend.entity.mariaDB.Emotion;
+import com.example.backend.dto.MemberDetailDto;
+import com.example.backend.entity.mariaDB.status.Emotion;
 import com.example.backend.entity.mariaDB.member.Member;
-import com.example.backend.entity.postgreSQL.Location;
+import com.example.backend.entity.mariaDB.status.Status;
+import com.example.backend.entity.postgreSQL.MemberLocation;
 import com.example.backend.exception.ErrorCode;
 import com.example.backend.exception.type.CustomException;
 import com.example.backend.repository.mariaDB.MemberRepository;
-import com.example.backend.repository.postgreSQL.LocationRepository;
+import com.example.backend.repository.postgreSQL.MemberLocationRepository;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,61 +23,102 @@ import org.springframework.stereotype.Service;
 public class MainService {
 
   private final MemberRepository memberRepository;
-  private final LocationRepository locationRepository;
+  private final MemberLocationRepository memberLocationRepository;
   private final LocationService locationService;
 
   // 필요한거 : 내 닉네임, 내 상태메시지, 내 캐릭터 id,  주변사람 카운트, 주변 사람들 정보
   public MainDto.Response mainPage(MainDto.Request request) {
-    Member member = memberRepository.findWithRelatedEntityById(request.getMemberId())
+    Long memberId = request.getMemberId();
+    Member member = memberRepository.findById(memberId)
         .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND.getMessage(), ErrorCode.USER_NOT_FOUND));
 
-    Long locationId;
-    if (member.getLocationId() != null) {
-      locationId = locationService.saveLocation(member.getLocationId(), request.getLatitude(), request.getLongitude());
-    } else{
-      locationId = locationService.saveLocation(null, request.getLatitude(), request.getLongitude());
+    member.setLastUpdateTime(LocalDateTime.now());
+    member = memberRepository.save(member);
+
+    locationService.saveLocation(memberId, request.getLatitude(), request.getLongitude());
+
+    List<Member> members = getAroundMembers(memberId);
+    
+    // 주변에 다른 사용자를 찾지 못했을 때
+    if (members.isEmpty()) {
+      return MainDto.Response.builder()
+          .statusWeather(member.getStatus().get(member.getStatus().size() - 1).getEmotion())
+          .aroundPeopleCount(0)
+          .aroundPeople(null)
+          .build();
     }
 
-    member.setLocationId(locationId);
-    memberRepository.save(member);
+    // 다른 사용자를 찾았을 때
+    List<AroundDto.Response> aroundPeople = getAroundPeople(members);
+    Integer aroundPeopleCount = aroundPeople.size();
+    Emotion statusWeather = getStatusWeather(member, members);
 
-    List<AroundDto.Response> aroundPeople = getAroundPeople(locationId);
-    Integer aroundPeopleCount = aroundPeople == null ? 0 : aroundPeople.size();
-
-    Emotion statusWeather = getStatusWeather(locationId);
-
-    return MainDto.toMainDtoResponse(statusWeather, aroundPeopleCount, aroundPeople);
+    return MainDto.Response.builder()
+        .statusWeather(statusWeather)
+        .aroundPeopleCount(aroundPeopleCount)
+        .aroundPeople(aroundPeople)
+        .build();
   }
 
-  private List<AroundDto.Response> getAroundPeople(Long locationId) {
-    List<Member> members = getAroundMembers(locationId);
+  public MemberDetailDto.Response otherMember(Long memberId) {
+    Member member = memberRepository.findById(memberId)
+        .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND.getMessage(), ErrorCode.USER_NOT_FOUND));
 
-    if (members.isEmpty()) {
-      return null;
-    }
+    return MemberDetailDto.Response.builder()
+        .nickname(member.getNickname())
+        .characterId(member.getCharacterId())
+        .status(member.getStatus().get(member.getStatus().size() - 1).getContent())
+        .build();
+  }
+
+  // 주변사람들의 회원id와 캐릭터id를 가져오는 메서드
+  private List<AroundDto.Response> getAroundPeople(List<Member> members) {
     return members.stream()
-        .map(member -> AroundDto.toAroundDtoResponse(member.getId(), member.getCharacterId()))
+        .map(member -> AroundDto.Response.builder()
+            .memberId(member.getId())
+            .characterId(member.getCharacterId())
+            .build())
         .collect(Collectors.toList());
   }
 
-  private Emotion getStatusWeather(Long locationId) {
-    List<Member> members = getAroundMembers(locationId);
-
+  // 감정 날씨 분석 메서드
+  private Emotion getStatusWeather(Member me, List<Member> members) {
     int neutralCount = 0;
     int positiveCount = 0;
     int negativeCount = 0;
 
     for (Member member : members) {
-      if (member.getStatus().get(0).getEmotion() == Emotion.NEGATIVE) {
-      negativeCount ++;
-    } else if (member.getStatus().get(0).getEmotion() == Emotion.POSITIVE) {
-      positiveCount ++;
-    } else if (member.getStatus().get(0).getEmotion() == Emotion.NEUTRAL) {
-      neutralCount ++;
+      List<Status> statuses = member.getStatus();
+      Emotion lastEmotion = statuses.get(statuses.size() - 1).getEmotion();
+      switch (lastEmotion) {
+        case NEUTRAL:
+          neutralCount++;
+          break;
+        case POSITIVE:
+          positiveCount++;
+          break;
+        case NEGATIVE:
+          negativeCount++;
+          break;
+      }
     }
-  }
 
-    if (neutralCount >= 3) {
+    Emotion myEmotion = me.getStatus().get(me.getStatus().size() - 1).getEmotion();
+    switch (myEmotion) {
+      case NEUTRAL:
+        neutralCount++;
+        break;
+      case POSITIVE:
+        positiveCount++;
+        break;
+      case NEGATIVE:
+        negativeCount++;
+        break;
+    }
+
+    int totalCount = positiveCount + negativeCount + neutralCount;
+
+    if (neutralCount >= (totalCount / 2) + 1) {
       return Emotion.NEUTRAL;
     } else {
       if (positiveCount == negativeCount) {
@@ -87,32 +131,28 @@ public class MainService {
     }
   }
 
+  // 반경 10km이내의 회원을 탐색하는 메서드
   private List<Member> getAroundMembers(Long locationId) {
-    Location location = locationRepository.findById(locationId)
+    // 현재 자신의 위치 정보를 가져 옴
+    MemberLocation location = memberLocationRepository.findById(locationId)
         .orElseThrow(() -> new CustomException(ErrorCode.ENTITY_NOT_FOUND.getMessage(), ErrorCode.ENTITY_NOT_FOUND));
 
-    // 반경 1km이내의 사용자들 탐색
-    List<Location> locations = locationRepository.findWithinRadius(location.getLatitude(), location.getLongitude(), 1000d).stream()
-        .filter(l -> !l.getId().equals(locationId))
-        .collect(Collectors.toList());;
+    // 위치 정보를 기반으로 반경 10km이내의 사용자들의 id를 탐색
+    List<Long> locationIds = memberLocationRepository.findWithinRadius(location.getLatitude(), location.getLongitude(), 10000d).stream()
+        .map(MemberLocation::getId)
+        .filter(id -> !id.equals(locationId))
+        .collect(Collectors.toList());
 
-    if (locations.isEmpty()) {
+    // 주변에 다른 사용자가 없으면 빈 리스트 반환
+    if (locationIds.isEmpty()) {
       return Collections.emptyList();
+      // 다른 사용자가 있을 경우에는 랜덤으로 섞어서 최대 5명 반환
     } else {
-      Collections.shuffle(locations);
-      int number = Math.min(locations.size(), 5); // 5와 리스트의 크기 중 작은 값을 선택
-      locations = locations.subList(0, number); // 무작위로 선택된 요소만 포함하는 새 리스트 생성
+      Collections.shuffle(locationIds);
+      int number = Math.min(locationIds.size(), 5); // 5와 리스트의 크기 중 작은 값을 선택
+      locationIds = locationIds.subList(0, number); // 무작위로 선택된 요소만 포함하는 새 리스트 생성
     }
 
-    List<Long> locationsIds = locations.stream().map(Location::getId).collect(Collectors.toList());
-
-//    List<Member> members = memberRepository.findByLocationIdIn(locationsIds);
-//    System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-//    System.out.println(locationsIds);
-//    System.out.println(members);
-//    return members;
-
-    return memberRepository.findByLocationIdIn(locationsIds);
+    return memberRepository.findByIdInAndLastUpdateTimeAfter(locationIds, LocalDateTime.now().minusMinutes(10));
   }
-
 }

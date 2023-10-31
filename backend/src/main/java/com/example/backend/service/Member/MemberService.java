@@ -5,10 +5,9 @@ import com.example.backend.dto.TokenDto;
 import com.example.backend.dto.memberUpdate.UpdateCharacterDto;
 import com.example.backend.dto.memberUpdate.UpdateDto;
 import com.example.backend.dto.memberUpdate.UpdateNicknameDto;
-import com.example.backend.dto.memberUpdate.UpdateNicknameDto.Response;
 import com.example.backend.dto.memberUpdate.UpdateStatusDto;
 import com.example.backend.entity.OauthToken;
-import com.example.backend.entity.mariaDB.Status;
+import com.example.backend.entity.mariaDB.status.Status;
 import com.example.backend.entity.mariaDB.member.Authority;
 import com.example.backend.entity.mariaDB.member.Member;
 import com.example.backend.exception.ErrorCode;
@@ -16,6 +15,7 @@ import com.example.backend.exception.type.CustomException;
 import com.example.backend.jwt.TokenProvider;
 import com.example.backend.repository.mariaDB.MemberRepository;
 import com.example.backend.repository.mariaDB.StatusRepository;
+import java.util.Random;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.http.HttpEntity;
@@ -40,6 +40,11 @@ public class MemberService {
   private final AuthenticationManagerBuilder authenticationManagerBuilder;
   private final TokenProvider tokenProvider;
 
+  // 최초 로그인시 랜덤배정하는 닉네임
+  private static final String[] nicknames = {"", "익명의 병아리", "익명의 고양이", "익명의 여우", "익명의 북극곰",
+                                              "익명의 강아지", "익명의 토끼", "익명의 고슴도치", "익명의 쥐",
+                                              "익명의 물개", "익명의 펭귄", "익명의 공룡", "익명의 고래"};
+
   public LoginDto.Response login(String code) {
      return myInfo(kakaoToken(code));
   }
@@ -49,9 +54,9 @@ public class MemberService {
         .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND.getMessage(), ErrorCode.USER_NOT_FOUND));
 
     member.setNickname(newNickname);
-    memberRepository.save(member);
+    Member savedMember = memberRepository.save(member);
 
-    return new UpdateNicknameDto.Response(newNickname);
+    return new UpdateNicknameDto.Response(savedMember.getNickname());
   }
 
   public UpdateCharacterDto.Response updateCharacter(Long memberId, Integer newCharacterId) {
@@ -59,44 +64,51 @@ public class MemberService {
         .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND.getMessage(), ErrorCode.USER_NOT_FOUND));
 
     member.setCharacterId(newCharacterId);
-    memberRepository.save(member);
+    Member savedMember = memberRepository.save(member);
 
-    return new UpdateCharacterDto.Response(newCharacterId);
+    return new UpdateCharacterDto.Response(savedMember.getCharacterId());
   }
 
   public UpdateStatusDto.Response updateStatus(Long memberId, String newStatus) {
-    Member member = memberRepository.findWithRelatedEntityById(memberId)
+    Member member = memberRepository.findById(memberId)
         .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND.getMessage(), ErrorCode.USER_NOT_FOUND));
 
     // 네이버 클로바 센티멘트 API의 감정 분석 결과
     String emotion = sentimentAPI(newStatus);
 
     // 새로운 status 생성 후 member와 연결
-    Status status = statusRepository.save(Status.toStatus(newStatus, emotion));
-    member.setStatus(status);
-    memberRepository.save(member);
+    Status status = statusRepository.save(Status.builder()
+        .content(newStatus)
+        .emotion(emotion)
+        .member(member)
+        .build());
 
-    return new UpdateStatusDto.Response(status.getContent(), status.getEmotion());
+    member.getStatus().add(status);
+    Member savedMember = memberRepository.save(member);
+
+    return new UpdateStatusDto.Response(savedMember.getStatus().get(0).getContent(), savedMember.getStatus().get(0).getEmotion().name());
   }
 
   public UpdateDto.Response update(Long memberId, UpdateDto.Request request) {
-    Member member = memberRepository.findWithRelatedEntityById(memberId)
+    Member member = memberRepository.findById(memberId)
         .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND.getMessage(), ErrorCode.USER_NOT_FOUND));
 
     String emotion = sentimentAPI(request.getStatus());
-    Status status = statusRepository.findById(member.getStatus().get(0).getId())
-        .orElseThrow(() -> new CustomException(ErrorCode.ENTITY_NOT_FOUND.getMessage(), ErrorCode.ENTITY_NOT_FOUND));
-    Status.toStatus(request.getStatus(), emotion);
-    statusRepository.save(status);
+    Status status = statusRepository.save(Status.builder()
+        .content(request.getStatus())
+        .emotion(emotion)
+        .member(member)
+        .build());
 
     member.setCharacterId(request.getCharacterId());
     member.setNickname(request.getNickname());
-    member.setStatus(status);
-    memberRepository.save(member);
+    member.getStatus().add(status);
+    Member savedMember = memberRepository.save(member);
 
-    return new UpdateDto.Response(member.getNickname(), member.getCharacterId(), status.getContent(), status.getEmotion());
+    return new UpdateDto.Response(savedMember.getNickname(), savedMember.getCharacterId(), savedMember.getStatus().get(0).getContent(), savedMember.getStatus().get(0).getEmotion().name());
   }
 
+  // 클라이언트에서 전달받은 code를 사용해서 카카오에서 accessToken 발급
   private String kakaoToken(String code) {
     RestTemplate rt = new RestTemplate();
 
@@ -132,7 +144,7 @@ public class MemberService {
     return jsonObject.getString("access_token");
   }
 
-  // 카카오에서 회원 정보를 가져와서
+  // 카카오 accessToken으로 카카오에서 회원 정보를 가져와서
   // 이미 존재하는 회원이면 로그인
   // 새로운 회원이면 회원가입 진행
   private LoginDto.Response myInfo(String accessToken) {
@@ -155,20 +167,30 @@ public class MemberService {
     Long memberId = jsonObject.getLong("id");
     String email = jsonObject.getJSONObject("kakao_account").getString("email");
 
-    Member member = memberRepository.findWithRelatedEntityById(memberId)
-            .orElse(memberRepository.save(new Member(memberId, "익명의 감자", email, 1, Authority.ROLE_USER)));
+    Random random = new Random();
+    int randomNumber = random.nextInt(12) + 1;
+
+    Member member = memberRepository.findById(memberId)
+            .orElseGet(() -> memberRepository.save(new Member(memberId, nicknames[randomNumber], email, randomNumber, Authority.ROLE_USER)));
 
     LoginDto loginDto = new LoginDto();
     loginDto.setId(memberId);
     loginDto.setEmail(email);
 
     UsernamePasswordAuthenticationToken authenticationToken = loginDto.toAuthentication();
-
     Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-
     TokenDto tokenDto = tokenProvider.createToken(authentication);
 
-    return LoginDto.toLoginDtoResponse(member, tokenDto);
+//    return LoginDto.toLoginDtoResponse(member, tokenDto);
+    return LoginDto.Response.builder()
+        .memberId(member.getId())
+        .nickname(member.getNickname())
+        .status(member.getStatus() == null ? null : member.getStatus().get(member.getStatus().size() - 1).getContent())
+        .characterId(member.getCharacterId())
+        .grantType(tokenDto.getGrantType())
+        .accessToken(tokenDto.getAccessToken())
+        .accessTokenExpiration(tokenDto.getAccessTokenExpiration())
+        .build();
   }
 
   private String sentimentAPI(String status) {

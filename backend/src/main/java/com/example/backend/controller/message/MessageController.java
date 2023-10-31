@@ -5,11 +5,11 @@ import com.example.backend.dto.message.GetMessageDetailDto;
 import com.example.backend.dto.message.GetMessageListDto;
 import com.example.backend.dto.message.SendMessageDto;
 import com.example.backend.dto.Response;
-import com.example.backend.service.message.MessageBoxService;
 import com.example.backend.service.message.MessageService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,7 +26,6 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 public class MessageController {
 
-    private final MessageBoxService messageBoxService;
     private final MessageService messageService;
 
     @Operation(summary = "쪽지 전송 API", description = "쪽지 전송 API")
@@ -34,7 +33,7 @@ public class MessageController {
     public Response<SendMessageDto.Response> sendMessage(
             @Parameter(hidden = true) @AuthenticationPrincipal UserDetails userDetails,
             @RequestBody SendMessageDto.Request request, @RequestParam MultipartFile img
-    ) {
+    ) throws IOException {
         Long memberId = Long.parseLong(userDetails.getUsername());
         SendMessageDto.Response response = messageService.sendMessage(memberId, img, request);
         return new Response<>(201, "메세지 전송 완료", response);

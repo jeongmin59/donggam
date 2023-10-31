@@ -8,6 +8,7 @@ import com.example.backend.service.TimeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.io.IOException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -34,7 +35,7 @@ public class TimeController {
   public Response<String> postImage(
       @AuthenticationPrincipal UserDetails userDetails,
       String title,
-      @RequestParam MultipartFile img) {
+      @RequestParam MultipartFile img) throws IOException {
     Long memberId = Long.parseLong(userDetails.getUsername());
 
     timeService.postImage(memberId, img, title);
@@ -70,5 +71,14 @@ public class TimeController {
     Long memberId = Long.parseLong(userDetails.getUsername());
 
     return new Response<>(200, "사진 공감/공감 취소 성공", timeService.likeImage(memberId, imageId));
+  }
+
+  @Operation(summary = "베스트 사진 목록", description = "베스트 사진 목록")
+  @GetMapping("/best")
+  public Response<List<ImageDto.Response>> bestImages(
+      @Parameter(hidden = true) @AuthenticationPrincipal UserDetails userDetails
+  ) {
+    Long memberId = Long.parseLong(userDetails.getUsername());
+    return new Response<>(200, "베스트 사진 조회 성공", timeService.bestImages(memberId));
   }
 }

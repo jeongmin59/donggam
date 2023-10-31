@@ -2,10 +2,8 @@ package com.example.backend.dto.message;
 
 import com.example.backend.entity.mariaDB.member.Member;
 import com.example.backend.entity.mariaDB.message.Message;
-import com.example.backend.entity.mariaDB.message.MessageBox;
 import lombok.Builder;
 import lombok.Data;
-import lombok.Setter;
 
 @Data
 public class SendMessageDto {

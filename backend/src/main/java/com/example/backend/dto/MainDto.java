@@ -1,6 +1,6 @@
 package com.example.backend.dto;
 
-import com.example.backend.entity.mariaDB.Emotion;
+import com.example.backend.entity.mariaDB.status.Emotion;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,9 +27,5 @@ public class MainDto {
     private Emotion statusWeather;
     private Integer aroundPeopleCount;
     private List<AroundDto.Response> aroundPeople;
-  }
-
-  public static Response toMainDtoResponse (Emotion emotion, Integer aroundPeopleCount, List<AroundDto.Response> aroundPeople) {
-    return new Response(emotion, aroundPeopleCount, aroundPeople);
   }
 }

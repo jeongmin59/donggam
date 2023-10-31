@@ -1,18 +1,14 @@
 package com.example.backend.entity.mariaDB.member;
 
-import com.example.backend.entity.mariaDB.Status;
+import com.example.backend.entity.mariaDB.status.Status;
 import com.example.backend.entity.mariaDB.time.Image;
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
-import javax.persistence.NamedAttributeNode;
-import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Table;
@@ -23,14 +19,13 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import lombok.Setter;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "member")
 @Getter
-@NamedEntityGraph(name = "member.status", attributeNodes = {
-    @NamedAttributeNode("status")
-})
+@Setter
 public class Member {
     @Id
     private Long id;
@@ -50,12 +45,10 @@ public class Member {
     @Column
     private Integer characterId;
 
-    // 위치
     @Column
-    private Long locationId;
+    private LocalDateTime lastUpdateTime;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "status_id")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<Status> status;
 
     @ManyToMany(mappedBy = "likeMember")
@@ -71,22 +64,6 @@ public class Member {
         this.email = email;
         this.characterId = characterId;
         this.authority = authority;
-    }
-
-    public void setLocationId(Long locationId) {
-        this.locationId = locationId;
-    }
-
-    public void setStatus(Status status) {
-        this.status.add(status);
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
-    public void setCharacterId(Integer characterId) {
-        this.characterId = characterId;
     }
 }
 

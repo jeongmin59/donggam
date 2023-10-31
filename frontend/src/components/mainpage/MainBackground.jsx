@@ -50,30 +50,29 @@ const MainBackground = () => {
     }
   }, [memberId, latitude, longitude]);
 
+  // 유저 캐릭터 정보 
+  const [userCharacters, setUserCharacters] = useState([]);
+  useEffect(() => {
+    const characters = aroundPeople.map((person) => person.characterId);
+    setUserCharacters(characters);
+  }, [aroundPeople]);
+
 
   // 날씨 배경 
-  const backgroundClass = `w-full h-screen absolute ${
-    selectedBackground === 'POSITIVE' ? "bg-positive"
-    : selectedBackground ==='NEUTRAL' ? "bg-neutral"
-    : "bg-negative"
+  const backgroundClass = `w-full h-full absolute ${
+    selectedBackground === 'POSITIVE' ? "bg-gradient-1"
+    : selectedBackground === 'NEUTRAL' ? "bg-gradient-2"
+    : "bg-gradient-3"
   }`;
-  // const backgroundClass = `w-full h-full absolute ${
-  //   selectedBackground === 'POSITIVE' ? "bg-gradient-1"
-  //   : selectedBackground ==='NEUTRAL ? "bg-gradient-2"
-  //   : "bg-gradient-3"
-  // }`;
-
-
 
   return (
     <div className="h-screen overflow-hidden">
       <div className={backgroundClass} style={{zIndex:3, backgroundSize: "cover" }}>
-        {/* <button className="bg-red-200" onClick={changeBackground}>배경변경</button> */}
         <UserInfo selectedBackground={selectedBackground}/> 
-        <MainArea aroundPeople={aroundPeople}/>
+        <MainArea userCharacters={userCharacters}/>
         <NumberOfUsers aroundPeopleCount={aroundPeopleCount}/>
       </div>
-      <div className="bottomBG h-screen relative bg-[#abcdf0]" style={{ zIndex: -1 }}>
+      <div className="bottomBG h-screen flex justify-center  relative bg-[#abcdf0]" style={{ zIndex: -1 }}>
         <img src={MainBackgroundImage}
           className="h-full absolute top-40 object-cover opacity-60 " />
       </div>

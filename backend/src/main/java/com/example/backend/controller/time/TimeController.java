@@ -72,4 +72,13 @@ public class TimeController {
 
     return new Response<>(200, "사진 공감/공감 취소 성공", timeService.likeImage(memberId, imageId));
   }
+
+  @Operation(summary = "베스트 사진 목록", description = "베스트 사진 목록")
+  @GetMapping("/best")
+  public Response<List<ImageDto.Response>> bestImages(
+      @Parameter(hidden = true) @AuthenticationPrincipal UserDetails userDetails
+  ) {
+    Long memberId = Long.parseLong(userDetails.getUsername());
+    return new Response<>(200, "베스트 사진 조회 성공", timeService.bestImages(memberId));
+  }
 }

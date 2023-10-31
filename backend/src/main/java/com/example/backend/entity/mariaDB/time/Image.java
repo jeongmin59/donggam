@@ -17,9 +17,11 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Image {
 
@@ -35,11 +37,16 @@ public class Image {
   @Column
   private LocalDateTime createdAt;
 
+  // 사진 업로드 한 멤버
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "author_id")
   private Member author;
 
-  // 사진 업로드 한 멤버
+  // 삭제 되었는지 유무
+  @Column
+  private Boolean isActive;
+
+  // 사진을 좋아요 한 회원
   @ManyToMany
   @JoinTable(name = "image_like",
       joinColumns = @JoinColumn(name = "image_id"),
@@ -47,11 +54,12 @@ public class Image {
   private List<Member> likeMember;
 
   @Builder
-  public Image(String imageAddress, String title, LocalDateTime createdAt, Member author) {
+  public Image(String imageAddress, String title, LocalDateTime createdAt, Member author, Boolean isActive) {
     this.imageAddress = imageAddress;
     this.title = title;
     this.createdAt = createdAt;
     this.author = author;
+    this.isActive = isActive;
   }
 
 }

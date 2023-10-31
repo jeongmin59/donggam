@@ -38,11 +38,12 @@ public class TimeService {
         .title(title)
         .createdAt(LocalDateTime.now())
         .author(member)
+        .isActive(true)
         .build());
   }
 
   public List<ImageDto.Response> getImages(Long memberId) {
-    List<Image> images = imageRepository.findAllWithAuthorAndLikeMember();
+    List<Image> images = imageRepository.findAllWithAuthorAndLikeMemberByIsActive(true);
     if (images.isEmpty()) {
       return Collections.emptyList();
     }
@@ -61,7 +62,7 @@ public class TimeService {
   }
 
   public ImageDetailDto.Response getImage(Long memberId, Long imageId) {
-    Image image = imageRepository.findWithAuthorAndLikeMember(imageId);
+    Image image = imageRepository.findWithAuthorAndLikeMemberByIdAndIsActive(imageId, true);
 
     Member member = memberRepository.findById(memberId)
         .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND.getMessage(), ErrorCode.USER_NOT_FOUND));
@@ -77,7 +78,7 @@ public class TimeService {
   }
 
   public ImageLikeDto.Response likeImage(Long memberId, Long imageId) {
-    Image image = imageRepository.findWithAuthorAndLikeMember(imageId);
+    Image image = imageRepository.findWithAuthorAndLikeMemberByIdAndIsActive(imageId, true);
 
     Member member = memberRepository.findById(memberId)
         .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND.getMessage(), ErrorCode.USER_NOT_FOUND));
@@ -94,5 +95,26 @@ public class TimeService {
         .likeCount(image.getLikeMember().size())
         .isLiked(image.getLikeMember().contains(member))
         .build();
+  }
+
+  public List<ImageDto.Response> bestImages(Long memberId) {
+    List<Image> images = imageRepository.findTop3ByOrderByLikeMemberDescAndIsActive(true);
+    if (images.isEmpty()) {
+      return Collections.emptyList();
+    }
+
+    Member member = memberRepository.findById(memberId)
+        .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND.getMessage(), ErrorCode.USER_NOT_FOUND));
+
+    Collections.shuffle(images);
+
+    return images.stream().map(image ->
+            ImageDto.Response.builder()
+                .imageAddress(image.getImageAddress())
+                .title(image.getTitle())
+                .isLiked(image.getLikeMember().contains(member))
+                .imageId(image.getId())
+                .build())
+        .collect(Collectors.toList());
   }
 }

@@ -11,11 +11,27 @@ const UserInfo = ({selectedBackground}) => {
   const nickname = user.nickname
   const statusMessage = user.statusMessage
 
+  let backgroundImage;
+
+  if (selectedBackground === "POSITIVE") {
+    backgroundImage = PositiveImg;
+  } else if (selectedBackground === "NEUTRAL") {
+    backgroundImage = NeutralImg;
+  } else {
+    backgroundImage = NegativeImg;
+  }
+
+  const imageStyle = {
+    position: "absolute",
+    top: "-70px",
+    right: "5%", 
+    zIndex: "-1",
+  };
 
   return (
-    <div className="userInfo h-100 px-[24px] mx-auto mt-[60px]">
+    <div className="userInfo h-100 px-[24px] mx-auto mt-[60px] relative">
       <h2 className="username mb-[10px] pl-3">{nickname}</h2>
-      {/* <img src={PositiveImg}/> */}
+      <img src={backgroundImage} alt={selectedBackground} style={imageStyle}/>
       <div className="usermsg h-auto bg-white rounded-2xl flex justify-center">
         <p className="px-[40px] py-[20px] text-center ">{statusMessage}</p>
       </div>

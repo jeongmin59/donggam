@@ -6,6 +6,7 @@ import com.example.backend.entity.mariaDB.chat.ChatRoom;
 import com.example.backend.entity.mariaDB.member.Member;
 import com.example.backend.exception.ErrorCode;
 import com.example.backend.exception.type.CustomException;
+import com.example.backend.repository.mariaDB.MemberRepository;
 import com.example.backend.repository.mariaDB.chat.ChatRepository;
 import com.example.backend.repository.mariaDB.chat.ChatRoomRepository;
 import com.example.backend.type.MessageType;
@@ -21,14 +22,19 @@ public class ChatMessageService {
 
     private final ChatRoomRepository chatRoomRepository;
     private final ChatRepository chatRepository;
+    private final MemberRepository memberRepository;
     private final RedisTemplate redisTemplate;
     private final ChannelTopic channelTopic;
 
     @Transactional
-    public void sendMessage(SendChatMessageDto.Request request, Member member) {
+    public SendChatMessageDto.Response sendMessage(SendChatMessageDto.Request request) {
         ChatRoom chatRoom = chatRoomRepository.findById(request.getRoomId()).get();
         if (chatRoom == null) {
             throw new CustomException("존재하지 않는 채팅방입니다.", ErrorCode.NOT_SAME_DATA_VALUE);
+        }
+        Member member = memberRepository.findById(request.getSenderId()).get();
+        if (member == null) {
+            throw new CustomException("존재하지 않는 회원입니다.", ErrorCode.USER_NOT_FOUND);
         }
 
         //채팅 생성 및 저장
@@ -49,6 +55,7 @@ public class ChatMessageService {
             // 그륩 채팅일 경우
             redisTemplate.convertAndSend(topic, request);
         }
+        return request.toResponse();
     }
 
 }

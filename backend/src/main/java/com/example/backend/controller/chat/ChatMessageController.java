@@ -9,6 +9,7 @@ import com.example.backend.service.chat.ChatMessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
@@ -18,18 +19,12 @@ import org.springframework.stereotype.Controller;
 public class ChatMessageController {
 
     private final ChatMessageService chatMessageService;
-    private final MemberRepository memberRepository;
 
     @MessageMapping("/chat/message")
-    public void message(
-            SendChatMessageDto.Request request,
-            @AuthenticationPrincipal UserDetails userDetails
+    public SendChatMessageDto.Response message(
+            SendChatMessageDto.Request request
     ) {
-        Long memberId = Long.parseLong(userDetails.getUsername());
-        Member member = memberRepository.findById(memberId).get();
-        if (member == null) {
-            throw new CustomException("존재하지 않는 회원입니다.", ErrorCode.USER_NOT_FOUND);
-        }
-        chatMessageService.sendMessage(request, member);
+        SendChatMessageDto.Response response = chatMessageService.sendMessage(request);
+        return response;
     }
 }

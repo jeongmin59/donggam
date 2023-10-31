@@ -29,7 +29,7 @@ public class RedisSubscriber implements MessageListener {
             SendChatMessageDto.Request request = objectMapper.readValue(publishMessage, SendChatMessageDto.Request.class);
 
             if (request.getType().equals(MessageType.TALK)) {
-                SendChatMessageDto.Response response = new SendChatMessageDto.Response(request);
+                SendChatMessageDto.Response response = request.toResponse();
                 messagingTemplate.convertAndSend("/sub/chat/room/" + request.getRoomId(), response);
             }
         } catch (Exception e) {

@@ -1,6 +1,4 @@
-package com.example.backend.entity.mariaDB;
-
-import java.util.Objects;
+package com.example.backend.entity.mariaDB.status;
 
 public enum Emotion {
   POSITIVE,

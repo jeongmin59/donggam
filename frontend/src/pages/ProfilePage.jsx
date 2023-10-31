@@ -3,6 +3,7 @@ import { useRecoilState } from 'recoil';
 import { CharacterIdAtom, NicknameAtom, StatusMessageAtom } from '../recoil/user/userAtom';
 import { updateUser } from '../api/userApi';
 import { useNavigate } from 'react-router-dom';
+import CharacterModal from '../components/character/characterModal';
 
 const ProfilePage = () => {
   // 전역상태의 유저 정보 가져오기
@@ -15,12 +16,16 @@ const ProfilePage = () => {
   const [newCharacterId, setNewCharacterId] = useState(characterId);
   const [newStatus, setNewStatus] = useState(status);
 
+  console.log(newCharacterId)
+
   // 캐릭터 이미지 주소
   const myCharacter = `/character/${characterId}.svg`
 
   // 유저 정보 업데이트 후 네비게이트 해주기
   const navigator = useNavigate();
 
+  // 모달 열고 닫기
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
 
   const handleUserUpdateClick = () => {
@@ -41,7 +46,7 @@ const ProfilePage = () => {
         console.log('유저정보 변경', res)
       })
       .catch((err) => {
-        console.log('유정 정보 변경 안됨 ㄱ-', err)
+        console.log('유저 정보 변경 안됨 ㄱ-', err)
       })
   }
 
@@ -49,14 +54,22 @@ const ProfilePage = () => {
     setNewNickname(e.target.value);
   };
 
-  const handleCharacterChange = (e) => {
-    setNewCharacterId(e.target.value);
+  const handleCharacterChange = (characterId) => {
+    setNewCharacterId(characterId);
   };
 
   const handleStatusChange = (e) => {
     setNewStatus(e.target.value);
   };
 
+  // 모달 관련 로직
+  const modalOpen = () => {
+    setIsModalOpen(true)
+  }
+
+  const modalClose = () => {
+    setIsModalOpen(false)
+  }
 
 
   return (
@@ -84,17 +97,21 @@ const ProfilePage = () => {
               className="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               placeholder={status} />
           </div>
+          <div className=' text-gray-500'> 최소 2글자 이상 작성해주세요. </div>
 
-          <div className="flex justify-center items-center" style={{ height: "100" }}>
-            <img src={myCharacter} alt={`${characterId}번 캐릭터`} />
+
+          <div
+            onClick={modalOpen}
+            className="flex justify-center items-center" style={{ height: "100" }}>
+            <img src={myCharacter} alt={`${newCharacterId}번 캐릭터`} />
           </div>
-          <div>현재 캐릭터 : {characterId}</div>
-          <input
-            type="number"
-            value={newCharacterId}
-            onChange={handleCharacterChange}
-          />
 
+          <div>
+            {isModalOpen && (
+              <CharacterModal onClose={modalClose} changeCharacter={handleCharacterChange}
+                nowCharacterId={newCharacterId} />
+            )}
+          </div>
           <button onClick={handleUserUpdateClick}>확인</button>
         </div>
       </div>

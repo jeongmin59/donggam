@@ -50,6 +50,13 @@ const MainBackground = () => {
     }
   }, [memberId, latitude, longitude]);
 
+  // 유저 캐릭터 정보 
+  const [userCharacters, setUserCharacters] = useState([]);
+  useEffect(() => {
+    const characters = aroundPeople.map((person) => person.characterId);
+    setUserCharacters(characters);
+  }, [aroundPeople]);
+
 
   // 날씨 배경 
   const backgroundClass = `w-full h-screen absolute ${
@@ -70,7 +77,7 @@ const MainBackground = () => {
       <div className={backgroundClass} style={{zIndex:3, backgroundSize: "cover" }}>
         {/* <button className="bg-red-200" onClick={changeBackground}>배경변경</button> */}
         <UserInfo selectedBackground={selectedBackground}/> 
-        <MainArea aroundPeople={aroundPeople}/>
+        <MainArea userCharacters={userCharacters}/>
         <NumberOfUsers aroundPeopleCount={aroundPeopleCount}/>
       </div>
       <div className="bottomBG h-screen relative bg-[#abcdf0]" style={{ zIndex: -1 }}>

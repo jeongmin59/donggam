@@ -5,22 +5,20 @@ import { useState, useEffect } from "react";
 import Lottie from "react-lottie"
 import animationData from "../../assets/animation/location-animation.json";
 
-const UserLocation = ({aroundPeople}) => {
+const UserLocation = ({userCharacters}) => {
   const user = useRecoilValue(UserSelector);
   const characterId = user.characterId
   const myCharacter =  `/character/${characterId}.svg`
 
-  const [userCharacters, setUserCharacters] = useState([]);
-  useEffect(() => {
-    const characters = aroundPeople.map((person) => person.characterId);
-    setUserCharacters(characters);
-  }, [aroundPeople]);
+  // 유저 캐릭터 정보 
+  // const [userCharacters, setUserCharacters] = useState([]);
   // useEffect(() => {
   //   const characters = aroundPeople.map((person) => person.characterId);
   //   setUserCharacters(characters);
   // }, [aroundPeople]);
 
-  console.log('되나용',userCharacters);
+
+  // console.log('되나용',userCharacters);
 
   const defaultOptions = {
     loop: true,

@@ -1,12 +1,12 @@
 import Sidebuttons from './SideButtons';
 import UserLocation from './UserLocation';
 
-const MainArea = ({userCharacters}) => {
+const MainArea = ({otherUserInfo}) => {
   return(
     <>
       <div className='mainArea flex-column justify-center ' style={{ height: 'calc(100% - 280px)' }}>
         <Sidebuttons />
-        <UserLocation userCharacters={userCharacters}/>
+        <UserLocation otherUserInfo={otherUserInfo}/>
       </div>  
     </>
   )

@@ -173,21 +173,6 @@ public class MemberService {
     Member member = memberRepository.findById(memberId)
             .orElseGet(() -> memberRepository.save(new Member(memberId, nicknames[randomNumber], email, randomNumber, Authority.ROLE_USER)));
 
-//    if (member == null) {
-//      member = memberRepository.save(Member.builder()
-//          .id(memberId)
-//          .nickname(nicknames[randomNumber])
-//          .email(email)
-//          .characterId(randomNumber)
-//          .authority(Authority.ROLE_USER)
-//          .build());
-//    } else {
-//      List<Status> statusList = member.getStatus();
-//      if (statusList.isEmpty()) {
-//        member.setStatus(null);
-//      }
-//    }
-
     LoginDto loginDto = new LoginDto();
     loginDto.setId(memberId);
     loginDto.setEmail(email);

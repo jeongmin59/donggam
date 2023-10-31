@@ -1,7 +1,7 @@
 package com.example.backend.entity.mariaDB.chat;
 
-import com.example.backend.entity.mariaDB.chat.ChatRoom;
 import com.example.backend.entity.mariaDB.member.Member;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;

@@ -1,13 +1,6 @@
 package com.example.backend.dto.message;
 
-import com.example.backend.entity.mariaDB.Status;
-import com.example.backend.entity.mariaDB.member.Member;
 import java.time.LocalDate;
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import lombok.Builder;
 import lombok.Data;
 

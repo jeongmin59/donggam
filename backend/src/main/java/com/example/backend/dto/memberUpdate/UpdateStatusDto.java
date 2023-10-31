@@ -1,6 +1,5 @@
 package com.example.backend.dto.memberUpdate;
 
-import com.example.backend.entity.mariaDB.Emotion;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

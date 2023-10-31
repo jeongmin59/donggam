@@ -3,7 +3,6 @@ package com.example.backend.service;
 import com.example.backend.dto.image.ImageDetailDto;
 import com.example.backend.dto.image.ImageDto;
 import com.example.backend.dto.image.ImageLikeDto;
-import com.example.backend.dto.image.ImageLikeDto.Response;
 import com.example.backend.entity.mariaDB.member.Member;
 import com.example.backend.entity.mariaDB.time.Image;
 import com.example.backend.exception.ErrorCode;

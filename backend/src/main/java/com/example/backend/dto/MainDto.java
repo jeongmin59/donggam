@@ -1,6 +1,6 @@
 package com.example.backend.dto;
 
-import com.example.backend.entity.mariaDB.Emotion;
+import com.example.backend.entity.mariaDB.status.Emotion;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

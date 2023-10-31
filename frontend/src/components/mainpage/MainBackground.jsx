@@ -72,7 +72,7 @@ const MainBackground = () => {
         <MainArea userCharacters={userCharacters}/>
         <NumberOfUsers aroundPeopleCount={aroundPeopleCount}/>
       </div>
-      <div className="bottomBG h-screen relative bg-[#abcdf0]" style={{ zIndex: -1 }}>
+      <div className="bottomBG h-screen flex justify-center  relative bg-[#abcdf0]" style={{ zIndex: -1 }}>
         <img src={MainBackgroundImage}
           className="h-full absolute top-40 object-cover opacity-60 " />
       </div>

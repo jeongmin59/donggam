@@ -32,6 +32,8 @@ public class MainService {
     locationService.saveLocation(memberId, request.getLatitude(), request.getLongitude());
 
     List<Member> members = getAroundMembers(memberId);
+    
+    // 주변에 다른 사용자를 찾지 못했을 때
     if (members.isEmpty()) {
       return MainDto.Response.builder()
           .statusWeather(member.getStatus().get(member.getStatus().size() - 1).getEmotion())
@@ -40,9 +42,9 @@ public class MainService {
           .build();
     }
 
+    // 다른 사용자를 찾았을 때
     List<AroundDto.Response> aroundPeople = getAroundPeople(members);
-    Integer aroundPeopleCount = aroundPeople == null ? 0 : aroundPeople.size();
-
+    Integer aroundPeopleCount = aroundPeople.size();
     Emotion statusWeather = getStatusWeather(members);
 
     return MainDto.Response.builder()
@@ -77,7 +79,7 @@ public class MainService {
     }
   }
 
-    if (neutralCount >= (positiveCount + neutralCount) / 2 + 1) {
+    if (neutralCount >= (positiveCount + negativeCount) / 2 + 1) {
       return Emotion.NEUTRAL;
     } else {
       if (positiveCount == negativeCount) {
@@ -91,17 +93,20 @@ public class MainService {
   }
 
   private List<Member> getAroundMembers(Long locationId) {
+    // 현재 자신의 위치 정보를 가져 옴
     MemberLocation location = memberLocationRepository.findById(locationId)
         .orElseThrow(() -> new CustomException(ErrorCode.ENTITY_NOT_FOUND.getMessage(), ErrorCode.ENTITY_NOT_FOUND));
 
-    // 반경 10km이내의 사용자들의 id를 탐색
+    // 위치 정보를 기반으로 반경 10km이내의 사용자들의 id를 탐색
     List<Long> locationIds = memberLocationRepository.findWithinRadius(location.getLatitude(), location.getLongitude(), 10000d).stream()
         .map(MemberLocation::getId)
         .filter(id -> !id.equals(locationId))
         .collect(Collectors.toList());
 
+    // 주변에 다른 사용자가 없으면 빈 리스트 반환
     if (locationIds.isEmpty()) {
       return Collections.emptyList();
+      // 다른 사용자가 있을 경우에는 랜덤으로 섞어서 최대 5명 반환
     } else {
       Collections.shuffle(locationIds);
       int number = Math.min(locationIds.size(), 5); // 5와 리스트의 크기 중 작은 값을 선택

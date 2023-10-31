@@ -15,6 +15,10 @@ const UserLocation = ({ otherUserInfo }) => {
   const myCharacter = `/character/${characterId}.svg`;
 
   // 상대방 정보
+  const [otherNickname, setOtherNickname] = useState('');
+  const [otherStatus, setOtherStatus] = useState('');
+  const [otherCharacter, setOtherCharacter] = useState(0);
+  
   useEffect(() => {
     // otherUserInfo 배열 내의 각 사용자 정보로부터 memberId를 추출하여 get 요청을 수행
     otherUserInfo.map((otherUser) => {
@@ -23,7 +27,9 @@ const UserLocation = ({ otherUserInfo }) => {
       getOtherUserInfo(OtherMemberId)
         .then((data) => {
           console.log("상대방 정보:", data);
-          // 여기서 상대방 정보를 처리하거나 상태에 저장할 수 있습니다.
+          setOtherNickname(data.data.nickname);
+          setOtherStatus(data.data.status);
+          setOtherCharacter(data.data.characterId);
         })
         .catch((error) => {
           console.error("상대방 정보 가져오기 실패!", error);
@@ -55,9 +61,9 @@ const UserLocation = ({ otherUserInfo }) => {
       {isModalOpen && (
         <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
           {/* 모달 내용 */}
-          <div>유저 이름</div>
-          <div>유저 상메</div>
-          <div>유저 캐릭터</div>
+          <div>{otherNickname}</div>
+          <div>{otherStatus}</div>
+          <div><img src={`/character/${otherCharacter}.svg`}/></div>
           <div>
             <span>버튼1</span>
             <span>버튼2</span>

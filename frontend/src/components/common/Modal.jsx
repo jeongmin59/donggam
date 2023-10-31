@@ -2,7 +2,7 @@ import React from "react";
 
 
 const Modal = ({isOpen, onClose, children}) => {
-  console.log(children)
+  // console.log(children)
 
   // 모달 밖 클릭 시 모달 닫힘 
   const handleBackgroundClick = (e) => {

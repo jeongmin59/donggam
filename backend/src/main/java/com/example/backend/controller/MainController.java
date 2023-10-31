@@ -2,6 +2,7 @@ package com.example.backend.controller;
 
 
 import com.example.backend.dto.MainDto;
+import com.example.backend.dto.MemberDetailDto;
 import com.example.backend.dto.Response;
 import com.example.backend.service.MainService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -9,6 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,5 +28,11 @@ public class MainController {
   @PostMapping
   public Response<MainDto.Response> mainPage(@RequestBody MainDto.Request request) {
     return new Response<>(200, "메인페이지 주변 정보", mainService.mainPage(request));
+  }
+
+  @Operation(summary = "상대방 정보 반환 API", description = "상대방 정보 반환 API")
+  @GetMapping("/{memberId}")
+  public Response<MemberDetailDto.Response> otherMember(@PathVariable("memberId") Long memberId) {
+    return new Response<>(200, "상대방 정보 조회 성공", mainService.otherMember(memberId));
   }
 }

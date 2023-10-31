@@ -2,6 +2,7 @@ package com.example.backend.service;
 
 import com.example.backend.dto.AroundDto;
 import com.example.backend.dto.MainDto;
+import com.example.backend.dto.MemberDetailDto;
 import com.example.backend.entity.mariaDB.status.Emotion;
 import com.example.backend.entity.mariaDB.member.Member;
 import com.example.backend.entity.mariaDB.status.Status;
@@ -56,6 +57,17 @@ public class MainService {
         .statusWeather(statusWeather)
         .aroundPeopleCount(aroundPeopleCount)
         .aroundPeople(aroundPeople)
+        .build();
+  }
+
+  public MemberDetailDto.Response otherMember(Long memberId) {
+    Member member = memberRepository.findById(memberId)
+        .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND.getMessage(), ErrorCode.USER_NOT_FOUND));
+
+    return MemberDetailDto.Response.builder()
+        .nickname(member.getNickname())
+        .characterId(member.getCharacterId())
+        .status(member.getStatus().get(member.getStatus().size() - 1).getContent())
         .build();
   }
 

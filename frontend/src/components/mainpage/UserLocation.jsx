@@ -62,8 +62,12 @@ const UserLocation = ({ userCharacters }) => {
     },
   };
 
+  const animationStyle = {
+    transform: "scale(2)", // 2배 크기로 확대
+  };
+
   return (
-    <div className="flex justify-center items-center" style={{ width: "100%", height: "100%", zIndex: -1 }}>
+    <div className="flex justify-center items-center overflow-hidden" style={{ width: "100%", height: "100%", zIndex: -1 }}>
       <div className="nya relative flex justify-center items-center" style={{ width: "100%", height: "100%", zIndex: 1 }}>
         <div>
           <img src={myCharacter} alt={`${characterId}번 캐릭터`} />
@@ -73,7 +77,9 @@ const UserLocation = ({ userCharacters }) => {
         ))}
       </div>
       <div className="flex absolute" style={{ height: "calc(100% - 280px)", zIndex: -1 }}>
-        <Lottie options={defaultOptions} />
+        <div className="overflow-hidden">
+          <Lottie options={defaultOptions} style={animationStyle} />
+        </div>
       </div>
     </div>
   );

@@ -1,14 +1,17 @@
 package com.example.backend.controller.chat;
 
 import com.example.backend.dto.Response;
+import com.example.backend.dto.chat.GetChatListDto;
 import com.example.backend.dto.chat.GetRoomListDto;
 import com.example.backend.service.chat.ChatRoomService;
+import com.example.backend.service.chat.ChatService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @Tag(name = "채팅방 API")
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ChatRoomController {
 
     private final ChatRoomService chatRoomService;
+    private final ChatService chatService;
 
     @Operation(summary = "채팅방 목록 조회 API", description = "채팅방 목록 조회 API")
     @GetMapping("/room/list")
@@ -26,4 +30,11 @@ public class ChatRoomController {
         return new Response<>(200, "채팅방 조회 완료", response);
     }
 
+
+    @Operation(summary = "채팅 내용 조회", description = "채팅 내용 조회")
+    @GetMapping("/chat/list/{roomId}")
+    public Response<GetChatListDto.Response> getChatList(@PathVariable Long roomId) {
+        GetChatListDto.Response response = chatService.getChatList(roomId);
+        return new Response<>(200, "채팅 내용 조회 완료", response);
+    }
 }

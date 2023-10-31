@@ -1,5 +1,6 @@
 package com.example.backend.entity.mariaDB.chat;
 
+import com.example.backend.dto.chat.ChatDto;
 import com.example.backend.entity.mariaDB.member.Member;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,5 +36,13 @@ public class Chat {
         this.content = content;
         this.sender = sender;
         this.chatRoom = chatRoom;
+    }
+
+    public ChatDto toChatDto() {
+        return ChatDto.builder()
+                .id(this.id)
+                .content(this.content)
+                .sender(this.sender.getNickname())
+                .build();
     }
 }

@@ -14,7 +14,13 @@ const UserLocation = ({aroundPeople}) => {
   useEffect(() => {
     const characters = aroundPeople.map((person) => person.characterId);
     setUserCharacters(characters);
-  }, []);
+  }, [aroundPeople]);
+  // useEffect(() => {
+  //   const characters = aroundPeople.map((person) => person.characterId);
+  //   setUserCharacters(characters);
+  // }, [aroundPeople]);
+
+  console.log('되나용',userCharacters);
 
   const defaultOptions = {
     loop: true,

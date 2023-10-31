@@ -41,9 +41,11 @@ const UserCharacter = ({ character, existingCharacters }) => {
         position: "absolute",
         left: positionX + "%",
         top: positionY + "%",
+        width: "30%", // 이미지 크기에 따라 설정
+        padding: "10px",
       }}
     >
-      <img src={`/character/${character}.svg`} style={{ width: "60%" }} />
+      <img src={`/character/${character}.svg`} style={{ width: "100%" }} />
     </div>
   );
 };

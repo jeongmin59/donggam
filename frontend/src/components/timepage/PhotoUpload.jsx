@@ -92,7 +92,7 @@ const PhotoUpload = () => {
               />
             </label>
           </div>
-          <p className="text-xs leading-5 text-gray-600">PNG, JPG, GIF up to 10MB</p>
+          <p className="text-xs leading-5 text-gray-600"></p>
         </div>
       </div>
       <div className="fixed bottom-3 left-0 right-0 p-4">

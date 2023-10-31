@@ -4,6 +4,7 @@ import com.example.backend.dto.AroundDto;
 import com.example.backend.dto.MainDto;
 import com.example.backend.entity.mariaDB.status.Emotion;
 import com.example.backend.entity.mariaDB.member.Member;
+import com.example.backend.entity.mariaDB.status.Status;
 import com.example.backend.entity.postgreSQL.MemberLocation;
 import com.example.backend.exception.ErrorCode;
 import com.example.backend.exception.type.CustomException;
@@ -45,7 +46,7 @@ public class MainService {
     // 다른 사용자를 찾았을 때
     List<AroundDto.Response> aroundPeople = getAroundPeople(members);
     Integer aroundPeopleCount = aroundPeople.size();
-    Emotion statusWeather = getStatusWeather(members);
+    Emotion statusWeather = getStatusWeather(member, members);
 
     return MainDto.Response.builder()
         .statusWeather(statusWeather)
@@ -54,6 +55,7 @@ public class MainService {
         .build();
   }
 
+  // 주변사람들의 회원id와 캐릭터id를 가져오는 메서드
   private List<AroundDto.Response> getAroundPeople(List<Member> members) {
     return members.stream()
         .map(member -> AroundDto.Response.builder()
@@ -63,23 +65,44 @@ public class MainService {
         .collect(Collectors.toList());
   }
 
-  private Emotion getStatusWeather(List<Member> members) {
+  // 감정 날씨 분석 메서드
+  private Emotion getStatusWeather(Member me, List<Member> members) {
     int neutralCount = 0;
     int positiveCount = 0;
     int negativeCount = 0;
 
     for (Member member : members) {
-      int lastStatusIndex = member.getStatus().size() - 1;
-      if (member.getStatus().get(lastStatusIndex).getEmotion() == Emotion.NEGATIVE) {
-      negativeCount ++;
-    } else if (member.getStatus().get(lastStatusIndex).getEmotion() == Emotion.POSITIVE) {
-      positiveCount ++;
-    } else if (member.getStatus().get(lastStatusIndex).getEmotion() == Emotion.NEUTRAL) {
-      neutralCount ++;
+      List<Status> statuses = member.getStatus();
+      Emotion lastEmotion = statuses.get(statuses.size() - 1).getEmotion();
+      switch (lastEmotion) {
+        case NEUTRAL:
+          neutralCount++;
+          break;
+        case POSITIVE:
+          positiveCount++;
+          break;
+        case NEGATIVE:
+          negativeCount++;
+          break;
+      }
     }
-  }
 
-    if (neutralCount >= (positiveCount + negativeCount) / 2 + 1) {
+    Emotion myEmotion = me.getStatus().get(me.getStatus().size() - 1).getEmotion();
+    switch (myEmotion) {
+      case NEUTRAL:
+        neutralCount++;
+        break;
+      case POSITIVE:
+        positiveCount++;
+        break;
+      case NEGATIVE:
+        negativeCount++;
+        break;
+    }
+
+    int totalCount = positiveCount + negativeCount + neutralCount;
+
+    if (neutralCount >= (totalCount / 2) + 1) {
       return Emotion.NEUTRAL;
     } else {
       if (positiveCount == negativeCount) {
@@ -92,6 +115,7 @@ public class MainService {
     }
   }
 
+  // 반경 10km이내의 회원을 탐색하는 메서드
   private List<Member> getAroundMembers(Long locationId) {
     // 현재 자신의 위치 정보를 가져 옴
     MemberLocation location = memberLocationRepository.findById(locationId)

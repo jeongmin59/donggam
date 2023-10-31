@@ -2,6 +2,7 @@ package com.example.backend.entity.mariaDB.member;
 
 import com.example.backend.entity.mariaDB.status.Status;
 import com.example.backend.entity.mariaDB.time.Image;
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -43,6 +44,9 @@ public class Member {
     // 프로필 캐릭터 id
     @Column
     private Integer characterId;
+
+    @Column
+    private LocalDateTime lastUpdateTime;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<Status> status;

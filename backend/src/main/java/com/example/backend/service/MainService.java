@@ -10,6 +10,7 @@ import com.example.backend.exception.ErrorCode;
 import com.example.backend.exception.type.CustomException;
 import com.example.backend.repository.mariaDB.MemberRepository;
 import com.example.backend.repository.postgreSQL.MemberLocationRepository;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,6 +30,9 @@ public class MainService {
     Long memberId = request.getMemberId();
     Member member = memberRepository.findById(memberId)
         .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND.getMessage(), ErrorCode.USER_NOT_FOUND));
+
+    member.setLastUpdateTime(LocalDateTime.now());
+    member = memberRepository.save(member);
 
     locationService.saveLocation(memberId, request.getLatitude(), request.getLongitude());
 
@@ -137,7 +141,6 @@ public class MainService {
       locationIds = locationIds.subList(0, number); // 무작위로 선택된 요소만 포함하는 새 리스트 생성
     }
 
-    return memberRepository.findByIdIn(locationIds);
+    return memberRepository.findByIdInAndLastUpdateTimeAfter(locationIds, LocalDateTime.now().minusMinutes(10));
   }
-
 }

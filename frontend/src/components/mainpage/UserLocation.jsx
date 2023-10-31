@@ -1,5 +1,6 @@
 import { useRecoilValue } from "recoil";
 import { UserSelector } from "../../recoil/user/userSelector";
+import { useState } from "react";
 import Lottie from "react-lottie";
 import animationData from "../../assets/animation/location-animation.json";
 import UserCharacter from "./UserCharacter";
@@ -82,6 +83,8 @@ const UserLocation = ({ userCharacters }) => {
           <Lottie options={defaultOptions} style={animationStyle} />
         </div>
       </div>
+
+
     </div>
   );
 };

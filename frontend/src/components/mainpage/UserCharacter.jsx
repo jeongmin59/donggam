@@ -21,6 +21,7 @@ const UserCharacter = ({ character, existingCharacters }) => {
     }
   } while (isOverlapping);
 
+
   return (
     <div
       className="user-element"

@@ -53,7 +53,7 @@ const MainBackground = () => {
   // 유저 캐릭터 정보 
   const [userCharacters, setUserCharacters] = useState([]);
   useEffect(() => {
-    const characters = aroundPeople.map((person) => person.characterId);
+    const characters = aroundPeople ? aroundPeople.map((person) => person.characterId ) : [];
     setUserCharacters(characters);
   }, [aroundPeople]);
 

@@ -19,12 +19,8 @@ import lombok.Setter;
 @Setter
 public class LandMarkLocation {
 
-  @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Id
   private Long id;
-  
-  // 장소 이름
-  @Column
-  private String name;
 
   @Column
   private Double latitude;
@@ -33,8 +29,8 @@ public class LandMarkLocation {
   private Double longitude;
 
   @Builder
-  public LandMarkLocation(String name, Double latitude, Double longitude) {
-    this.name = name;
+  public LandMarkLocation(Long id, Double latitude, Double longitude) {
+    this.id = id;
     this.latitude = latitude;
     this.longitude = longitude;
   }

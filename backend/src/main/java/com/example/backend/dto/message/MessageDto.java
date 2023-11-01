@@ -1,5 +1,6 @@
 package com.example.backend.dto.message;
 
+import java.time.LocalDate;
 import lombok.Builder;
 import lombok.Data;
 
@@ -12,4 +13,5 @@ public class MessageDto {
     private String sender;
     private Boolean isLiked;
     private Boolean isRead;
+    private LocalDate localDate;
 }

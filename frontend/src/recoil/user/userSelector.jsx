@@ -1,5 +1,5 @@
 import { selector } from 'recoil';
-import { AccessTokenAtom, MemberIdAtom, NicknameAtom, CharacterIdAtom, StatusMessageAtom } from './userAtom';
+import { AccessTokenAtom, MemberIdAtom, NicknameAtom, CharacterIdAtom, StatusMessageAtom, StatusMessageIdAtom } from './userAtom';
 
 export const UserSelector = selector({
   key: 'UserSelector',
@@ -9,6 +9,7 @@ export const UserSelector = selector({
     const nickname = get(NicknameAtom);
     const characterId = get(CharacterIdAtom);
     const statusMessage = get(StatusMessageAtom);
+    const StatusMessageId = get(StatusMessageIdAtom);
 
     const user = {
       accessToken,
@@ -16,6 +17,7 @@ export const UserSelector = selector({
       nickname,
       characterId,
       statusMessage,
+      StatusMessageId
     };
 
     return user;

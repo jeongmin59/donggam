@@ -11,17 +11,17 @@ const Sidebuttons = () => {
     navigate(path);
   };
 
-  return(
+  return (
     <>
       <div className='flex-column justify-end absolute mt-5 right-5' style={{ zIndex: 3 }}>
-        <img 
-          src={ChattingBtn} 
+        <img
+          src={ChattingBtn}
           onClick={() => navigateTo('/chatting/:userId')}
           className="mb-2"
         />
-        <img 
+        <img
           src={MessageBtn}
-          onClick={() => navigateTo('/mailbox/:userId')}
+          onClick={() => navigateTo('/mailbox')}
         />
       </div>
     </>

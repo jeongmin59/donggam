@@ -20,6 +20,7 @@ public class UpdateStatusDto {
   @AllArgsConstructor
   @Builder
   public static class Response {
+    private Long statusId;
     private String status;
     private String emotion;
   }

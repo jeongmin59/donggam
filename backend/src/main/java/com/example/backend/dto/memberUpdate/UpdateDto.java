@@ -24,6 +24,7 @@ public class UpdateDto {
   public static class Response {
     private String nickname;
     private Integer characterId;
+    private Long statusId;
     private String status;
     private String emotion;
   }

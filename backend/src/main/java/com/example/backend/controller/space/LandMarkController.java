@@ -50,4 +50,8 @@ public class LandMarkController {
     return new Response<>(200, "랜드마크 방명록 목록 조회 성공", landMarkService.landMarkRecords(landMarkId));
   }
 
+//  @Operation(summary = "랜드마크 방명록 댓글 작성", description = "랜드마크 방명록 댓글 작성")
+//  @GetMapping("/{recordId}")
+//  public
+
 }

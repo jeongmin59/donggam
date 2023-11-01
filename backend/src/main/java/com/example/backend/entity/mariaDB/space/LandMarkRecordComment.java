@@ -1,6 +1,8 @@
 package com.example.backend.entity.mariaDB.space;
 
 import com.example.backend.entity.mariaDB.member.Member;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -25,6 +27,9 @@ public class LandMarkRecordComment {
 
   @Column
   private String content;
+
+  @Column
+  private LocalDateTime createdAt;
 
   // 댓글 작성자
   @ManyToOne(fetch = FetchType.LAZY)

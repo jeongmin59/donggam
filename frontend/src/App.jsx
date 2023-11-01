@@ -9,10 +9,11 @@ import PhotoUploadPage from "./pages/timepage/PhotoUploadPage";
 import PhotoDetailPage from "./pages/timepage/PhotoDetailPage";
 import LoginRediect from "./components/loginpage/LoginRediect";
 import SpacePage from "./pages/SpacePage";
-import ProfilePage from "./pages/ProfilePage";
 import NearbyTracePage from "./pages/NearbyTracePage";
 import NearbyLandmarkPage from "./pages/NearbyLandmarkPage";
 import SpaceUploadpage from "./pages/SpaceUploadPage";
+import ProfilePage from "./pages/ProfilePage";
+
 
 function App() {
   return (

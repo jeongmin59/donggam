@@ -15,6 +15,7 @@ import com.example.backend.exception.type.CustomException;
 import com.example.backend.jwt.TokenProvider;
 import com.example.backend.repository.mariaDB.MemberRepository;
 import com.example.backend.repository.mariaDB.StatusRepository;
+import java.util.Objects;
 import java.util.Random;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
@@ -99,12 +100,15 @@ public class MemberService {
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND.getMessage(),
                         ErrorCode.USER_NOT_FOUND));
 
-        String emotion = sentimentAPI(request.getStatus());
-        Status status = statusRepository.save(Status.builder()
-                .content(request.getStatus())
-                .emotion(emotion)
-                .member(member)
-                .build());
+        Status status = member.getStatus().get(member.getStatus().size() - 1);
+        if (!Objects.equals(request.getStatus(), status.getContent())) {
+            String emotion = sentimentAPI(request.getStatus());
+            status = statusRepository.save(Status.builder()
+                    .content(request.getStatus())
+                    .emotion(emotion)
+                    .member(member)
+                    .build());
+        }
 
         member.setCharacterId(request.getCharacterId());
         member.setNickname(request.getNickname());

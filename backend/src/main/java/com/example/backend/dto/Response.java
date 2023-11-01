@@ -11,4 +11,9 @@ public class Response<T> {
   private int code;
   private String message;
   private T data;
+
+  public Response(Integer code, String message) {
+    this.code = code;
+    this.message = message;
+  }
 }

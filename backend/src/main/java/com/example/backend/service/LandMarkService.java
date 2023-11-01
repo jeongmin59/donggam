@@ -2,10 +2,14 @@ package com.example.backend.service;
 
 import com.example.backend.dto.landmark.LandMarkCommentDto;
 import com.example.backend.dto.landmark.LandMarkRecordDto;
+import com.example.backend.dto.landmark.SearchLandmarkDto;
+import com.example.backend.dto.landmark.SearchLandmarkDto.Request;
+import com.example.backend.dto.landmark.SearchLandmarkDto.Response;
 import com.example.backend.entity.mariaDB.member.Member;
 import com.example.backend.entity.mariaDB.space.LandMark;
 import com.example.backend.entity.mariaDB.space.LandMarkRecord;
 import com.example.backend.entity.mariaDB.space.LandMarkRecordComment;
+import com.example.backend.entity.postgreSQL.LandMarkLocation;
 import com.example.backend.exception.ErrorCode;
 import com.example.backend.exception.type.CustomException;
 import com.example.backend.repository.mariaDB.landmark.LandMarkRecordCommentRepository;
@@ -17,6 +21,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,67 +31,88 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 public class LandMarkService {
 
-  private final MemberRepository memberRepository;
-  private final LandMarkRepository landMarkRepository;
-  private final LandMarkRecordRepository landMarkRecordRepository;
-  private final LandMarkRecordCommentRepository landMarkRecordCommentRepository;
-  private final LandMarkLocationRepository landMarkLocationRepository;
-  private final ImageService imageService;
+    private final MemberRepository memberRepository;
+    private final LandMarkRepository landMarkRepository;
+    private final LandMarkRecordRepository landMarkRecordRepository;
+    private final LandMarkRecordCommentRepository landMarkRecordCommentRepository;
+    private final LandMarkLocationRepository landMarkLocationRepository;
+    private final ImageService imageService;
 
-  public String createLandMarkRecord(Long memberId, Long landMarkId, String content, MultipartFile image)
-      throws IOException {
-    Member member = memberRepository.findById(memberId)
-        .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND.getMessage(), ErrorCode.USER_NOT_FOUND));
+    public String createLandMarkRecord(Long memberId, Long landMarkId, String content,
+            MultipartFile image)
+            throws IOException {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND.getMessage(),
+                        ErrorCode.USER_NOT_FOUND));
 
-    LandMark landMark = landMarkRepository.findById(landMarkId)
-        .orElseThrow(() -> new CustomException(ErrorCode.ENTITY_NOT_FOUND.getMessage(), ErrorCode.ENTITY_NOT_FOUND));
+        LandMark landMark = landMarkRepository.findById(landMarkId)
+                .orElseThrow(() -> new CustomException(ErrorCode.ENTITY_NOT_FOUND.getMessage(),
+                        ErrorCode.ENTITY_NOT_FOUND));
 
-    String imageAddress = null;
-    if (image != null) {
-      imageAddress = imageService.uploadImage(image, "landmark-record");
+        String imageAddress = null;
+        if (image != null) {
+            imageAddress = imageService.uploadImage(image, "landmark-record");
+        }
+
+        landMarkRecordRepository.save(LandMarkRecord.builder()
+                .content(content)
+                .imageAddress(imageAddress)
+                .createdAt(LocalDateTime.now())
+                .landMark(landMark)
+                .member(member)
+                .build()
+        );
+
+        return "방명록 작성 성공";
     }
 
-    landMarkRecordRepository.save(LandMarkRecord.builder()
-        .content(content)
-        .imageAddress(imageAddress)
-        .createdAt(LocalDateTime.now())
-        .landMark(landMark)
-        .member(member)
-        .build()
-    );
+    public List<LandMarkRecordDto.Response> landMarkRecords(Long landMarkId) {
+        LandMark landMark = landMarkRepository.findById(landMarkId)
+                .orElseThrow(() -> new CustomException(ErrorCode.ENTITY_NOT_FOUND.getMessage(),
+                        ErrorCode.ENTITY_NOT_FOUND));
 
-    return "방명록 작성 성공";
-  }
+        if (landMark.getRecords() == null) {
+            return Collections.emptyList();
+        }
 
-  public List<LandMarkRecordDto.Response> landMarkRecords(Long landMarkId) {
-    LandMark landMark = landMarkRepository.findById(landMarkId)
-        .orElseThrow(() -> new CustomException(ErrorCode.ENTITY_NOT_FOUND.getMessage(), ErrorCode.ENTITY_NOT_FOUND));
+        List<LandMarkRecord> records = landMark.getRecords();
+        Collections.shuffle(records);
 
-    if (landMark.getRecords() == null) {
-      return Collections.emptyList();
+        return records.stream().map(LandMarkRecordDto::toRecordDto)
+                .collect(Collectors.toList());
     }
 
-    List<LandMarkRecord> records = landMark.getRecords();
-    Collections.shuffle(records);
+    public LandMarkCommentDto.Response createComment(Long memberId, Long recordId,
+            LandMarkCommentDto.Request request) {
+        LandMarkRecord landMarkRecord = landMarkRecordRepository.findById(recordId)
+                .orElseThrow(() -> new CustomException(ErrorCode.ENTITY_NOT_FOUND.getMessage(),
+                        ErrorCode.ENTITY_NOT_FOUND));
 
-    return records.stream().map(LandMarkRecordDto::toRecordDto)
-        .collect(Collectors.toList());
-  }
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND.getMessage(),
+                        ErrorCode.USER_NOT_FOUND));
 
-  public LandMarkCommentDto.Response createComment(Long memberId, Long recordId, LandMarkCommentDto.Request request) {
-    LandMarkRecord landMarkRecord = landMarkRecordRepository.findById(recordId)
-        .orElseThrow(() -> new CustomException(ErrorCode.ENTITY_NOT_FOUND.getMessage(), ErrorCode.ENTITY_NOT_FOUND));
+        LandMarkRecordComment comment = landMarkRecordCommentRepository.save(
+                LandMarkRecordComment.builder()
+                        .content(request.getContent())
+                        .createdAt(LocalDateTime.now())
+                        .member(member)
+                        .record(landMarkRecord)
+                        .build());
 
-    Member member = memberRepository.findById(memberId)
-        .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND.getMessage(), ErrorCode.USER_NOT_FOUND));
+        return LandMarkCommentDto.toCommentDto(comment);
+    }
 
-    LandMarkRecordComment comment = landMarkRecordCommentRepository.save(LandMarkRecordComment.builder()
-        .content(request.getContent())
-        .createdAt(LocalDateTime.now())
-        .member(member)
-        .record(landMarkRecord)
-        .build());
+    public SearchLandmarkDto.Response searchLandmark(Request request) {
+        Optional<LandMarkLocation> OptionalLandMarkLocation = landMarkLocationRepository.findNearestWithinRadius(
+                request.getLatitude(), request.getLongitude(), 10000d);
+        if (OptionalLandMarkLocation == null) {
+            return null;
+        }
+        LandMarkLocation landMarkLocation = OptionalLandMarkLocation.get();
+        Long landMarkId = landMarkLocation.getId();
 
-    return LandMarkCommentDto.toCommentDto(comment);
-  }
+        LandMark landMark = landMarkRepository.findById(landMarkId).get();
+        return landMark.toSearchLandMarkDto(landMarkLocation);
+    }
 }

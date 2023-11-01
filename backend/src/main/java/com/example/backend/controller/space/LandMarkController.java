@@ -3,6 +3,8 @@ package com.example.backend.controller.space;
 import com.example.backend.dto.Response;
 import com.example.backend.dto.landmark.LandMarkCommentDto;
 import com.example.backend.dto.landmark.LandMarkRecordDto;
+import com.example.backend.exception.ErrorCode;
+import com.example.backend.exception.type.CustomException;
 import com.example.backend.service.LandMarkService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -38,8 +40,13 @@ public class LandMarkController {
   public Response<String> createLandMarkRecords(
       @Parameter(hidden = true) @AuthenticationPrincipal UserDetails userDetails,
       @PathVariable("landMarkId") Long landMarkId,
-      @RequestBody(required = false) String content,
+      @RequestParam(required = false) String content,
       @RequestParam(required = false) MultipartFile image) throws IOException {
+
+    if (content == null && image == null) {
+      throw new CustomException(ErrorCode.INVALID_INPUT_VALUE.getMessage(), ErrorCode.INVALID_INPUT_VALUE);
+    }
+
     Long memberId = Long.parseLong(userDetails.getUsername());
     return new Response<>(201, "랜드마크 방명록 작성 성공", landMarkService.createLandMarkRecord(memberId, landMarkId, content, image));
   }
@@ -52,7 +59,7 @@ public class LandMarkController {
   }
 
   @Operation(summary = "랜드마크 방명록 댓글 작성", description = "랜드마크 방명록 댓글 작성")
-  @GetMapping("/{recordId}")
+  @PostMapping("/comment/{recordId}")
   public Response<LandMarkCommentDto.Response> createdComment(
       @Parameter(hidden = true) @AuthenticationPrincipal UserDetails userDetails,
       @RequestBody LandMarkCommentDto.Request request,

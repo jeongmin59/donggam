@@ -5,12 +5,11 @@ import lombok.Builder;
 import lombok.Data;
 
 @Data
-public class GetMessageAndStatusListDto {
+public class GetStatusListDto {
 
     @Data
     @Builder
     public static class Response {
-        private MessageDto message;
         private List<StatusDto> statusList;
     }
 }

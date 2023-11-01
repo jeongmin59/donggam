@@ -1,8 +1,9 @@
 package com.example.backend.service.message;
 
-import com.example.backend.dto.message.GetMessageAndStatusListDto;
+import com.example.backend.dto.message.GetStatusListDto;
 import com.example.backend.dto.message.GetMessageDetailDto;
 import com.example.backend.dto.message.GetMessageListDto;
+import com.example.backend.dto.message.LikeMessageDto;
 import com.example.backend.dto.message.MessageDto;
 import com.example.backend.dto.message.SendMessageDto.Request;
 import com.example.backend.dto.message.SendMessageDto.Response;
@@ -33,6 +34,10 @@ public class MessageService {
 
     public Response sendMessage(Long memberId, MultipartFile img, Request request)
         throws IOException {
+
+        if(img == null && request.getContent() == null) {
+            throw new CustomException("내용이 없습니다.", ErrorCode.INVALID_INPUT_VALUE);
+        }
         Member from = memberRepository.findById(memberId).get();
         Member to = memberRepository.findById(request.getMemberId()).get();
 
@@ -47,25 +52,20 @@ public class MessageService {
         return message.toSendMessageResponse();
     }
 
-    public GetMessageAndStatusListDto.Response getMessageAndStatusList(Long memberId) {
-        Member member = memberRepository.findById(memberId).get();
+    public GetStatusListDto.Response getMessageAndStatusList(Long memberId) {
+
         List<Status> statusList = statusRepository.findAllByMemberId(memberId);
 
         if(statusList.size() == 0) throw new NoSuchElementException("상태 메세지가 없습니다");
 
-        int last = statusList.size() - 1;
-        Status lastStatus = statusList.get(last);
-        Long lastStatusId = lastStatus.getId();
-        Message message = messageRepository.findByStatusId(lastStatusId);
-        return GetMessageAndStatusListDto.Response.builder()
-                .message(message.toMessageDto(lastStatus))
+        return GetStatusListDto.Response.builder()
                 .statusList(statusList.stream().map(Status::toStatusDto).collect(Collectors.toList()))
                 .build();
     }
 
     public GetMessageListDto.Response getMessageList(Long statusId) {
         List<Message> list = messageRepository.findAllByStatusId(statusId);
-        List<MessageDto> messageList = list.stream().map(Message::toMessageDtos).collect(Collectors.toList());
+        List<MessageDto> messageList = list.stream().map(Message::toMessageDto).collect(Collectors.toList());
         return GetMessageListDto.Response.builder()
                 .messageList(messageList)
                 .build();
@@ -77,5 +77,17 @@ public class MessageService {
             throw new CustomException("메세지가 존재하지 않습니다.", ErrorCode.NOT_SAME_DATA_VALUE);
         }
         return message.toMessageDetailDto();
+    }
+
+    public void readMessage(Long messageId) {
+        Message message= messageRepository.findById(messageId).get();
+        message.setRead(true);
+        messageRepository.save(message);
+    }
+
+    public void likeMessage(LikeMessageDto.Request request) {
+        Message message = messageRepository.findById(request.getMessageId()).get();
+        message.setLiked(request.getIsLiked());
+        messageRepository.save(message);
     }
 }

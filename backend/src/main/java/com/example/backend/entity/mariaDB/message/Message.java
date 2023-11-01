@@ -34,6 +34,12 @@ public class Message {
     @Column
     private LocalDate localDate = LocalDate.now();
 
+    @Column
+    private Boolean isLiked;
+
+    @Column
+    private Boolean isRead;
+
     @ManyToOne
     private Member from;
 
@@ -44,10 +50,12 @@ public class Message {
     private Status status;
 
     @Builder
-    public Message(String content, String imgAddress, Member from, Member to,
+    public Message(String content, String imgAddress, Boolean isLiked, Boolean isRead, Member from, Member to,
             Status status) {
         this.content = content;
         this.imgAddress = imgAddress;
+        this.isLiked = isLiked;
+        this.isRead = isRead;
         this.from = from;
         this.to = to;
         this.status = status;
@@ -69,19 +77,22 @@ public class Message {
                 .build();
     }
 
-    public MessageDto toMessageDto(Status status) {
+    public MessageDto toMessageDto() {
         return MessageDto.builder()
-                .statusId(status.getId())
-                .status(status.getContent())
+                .isLiked(this.isLiked)
+                .isRead(this.isRead)
+                .senderId(this.from.getId())
+                .sender(this.from.getNickname())
                 .messageId(this.id)
                 .content(this.content)
                 .build();
     }
 
-    public MessageDto toMessageDtos() {
-        return MessageDto.builder()
-                .messageId(this.id)
-                .content(this.content)
-                .build();
+    public void setLiked(Boolean liked) {
+        isLiked = liked;
+    }
+
+    public void setRead(Boolean read) {
+        isRead = read;
     }
 }

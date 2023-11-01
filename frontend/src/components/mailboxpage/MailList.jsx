@@ -1,15 +1,12 @@
 import React from 'react';
 import MailItem from './MailItem';
 
-const MailList = () => {
+const MailList = (mail) => {
+  const mailId = mail.mail.messageId
   return (
     <div>
-      <h2>메일 리스트</h2>
-      <MailItem />
-      <MailItem />
-      <MailItem />
-      <MailItem />
-      <MailItem />
+      <h2>{mail.mail.content}</h2>
+      <MailItem mailId={mailId} />
     </div>
   );
 };

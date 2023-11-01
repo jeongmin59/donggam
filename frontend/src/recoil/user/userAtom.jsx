@@ -41,3 +41,10 @@ export const StatusMessageAtom = atom({
   default: '',
   effects_UNSTABLE: [persistAtom]
 });
+
+// 상태 메시지 id
+export const StatusMessageIdAtom = atom({
+  key: 'StatusMessageIdAtom',
+  default: null,
+  effects_UNSTABLE: [persistAtom]
+});

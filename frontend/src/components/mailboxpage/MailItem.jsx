@@ -1,9 +1,10 @@
 import React from 'react';
 
-const MailItem = () => {
+const MailItem = (mailId) => {
+  // console.log(mailId.mailId)
   return (
     <div>
-      메일 아이템
+      모른다 ㄱ-
     </div>
   );
 };

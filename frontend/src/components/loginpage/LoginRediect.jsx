@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MemberIdAtom, StatusMessageAtom, NicknameAtom, CharacterIdAtom, AccessTokenAtom } from '../../recoil/user/userAtom';
+import { MemberIdAtom, StatusMessageAtom, NicknameAtom, CharacterIdAtom, AccessTokenAtom, StatusMessageIdAtom } from '../../recoil/user/userAtom';
 import { useSetRecoilState } from 'recoil';
 
 
@@ -11,6 +11,7 @@ const LoginRediect = () => {
   const setAccessToken = useSetRecoilState(AccessTokenAtom);
   const setMemberId = useSetRecoilState(MemberIdAtom);
   const setStatusMessage = useSetRecoilState(StatusMessageAtom);
+  const setStatusMessageId = useSetRecoilState(StatusMessageIdAtom);
   const setNickname = useSetRecoilState(NicknameAtom);
   const setCharacterId = useSetRecoilState(CharacterIdAtom);
 
@@ -30,7 +31,6 @@ const LoginRediect = () => {
         // res 데이터 받아오기
         const accessToken = res.data.data.accessToken
         const status = res.data.data.status
-        // const status = "개발 잘하고 싶다.. 어케 함."
 
         //localStorage에 accessToken 저장하기
         window.localStorage.setItem("accessToken", accessToken);
@@ -43,6 +43,7 @@ const LoginRediect = () => {
         setStatusMessage(status)
         setNickname(res.data.data.nickname)
         setCharacterId(res.data.data.characterId)
+        setStatusMessageId(res.data.data.statusId)
 
 
         // 로그인 성공 후 상태 메시지 설정 여부에 따라 네비게이트 해주기

@@ -5,7 +5,11 @@ const StatusItem = ({ status, changeStatus }) => {
 
   const handleStatusChange = () => {
     // 클릭 시 changeStatus 함수 실행
-    changeStatus(statusItem.status);
+    changeStatus({
+      selectedStatus: statusItem.status,
+      selectedStatusId: statusItem.id,
+    });
+
   };
 
   return (

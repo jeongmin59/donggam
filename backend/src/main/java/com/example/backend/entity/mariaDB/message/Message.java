@@ -44,20 +44,16 @@ public class Message {
     private Member from;
 
     @ManyToOne
-    private Member to;
-
-    @ManyToOne
     private Status status;
 
     @Builder
-    public Message(String content, String imgAddress, Boolean isLiked, Boolean isRead, Member from, Member to,
+    public Message(String content, String imgAddress, Boolean isLiked, Boolean isRead, Member from,
             Status status) {
         this.content = content;
         this.imgAddress = imgAddress;
         this.isLiked = isLiked;
         this.isRead = isRead;
         this.from = from;
-        this.to = to;
         this.status = status;
     }
 

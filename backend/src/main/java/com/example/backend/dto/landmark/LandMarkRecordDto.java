@@ -1,6 +1,11 @@
 package com.example.backend.dto.landmark;
 
 import com.example.backend.entity.mariaDB.member.Member;
+import com.example.backend.entity.mariaDB.space.LandMarkRecord;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,5 +23,17 @@ public class LandMarkRecordDto {
     private String content;
     private String imageAddress;
     private Long authorId;
+    private List<LandMarkCommentDto.Response> comments;
+  }
+
+  public static Response toRecordDto(LandMarkRecord record) {
+    return Response.builder()
+        .recordId(record.getId())
+        .content(record.getContent())
+        .imageAddress(record.getImageAddress())
+        .authorId(record.getMember().getId())
+        .comments(record.getComments() != null ? record.getComments().stream().map(LandMarkCommentDto::toCommentDto)
+            .collect(Collectors.toList()) : Collections.emptyList())
+        .build();
   }
 }

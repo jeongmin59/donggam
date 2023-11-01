@@ -1,5 +1,6 @@
 package com.example.backend.service;
 
+import com.example.backend.dto.landmark.LandMarkCommentDto;
 import com.example.backend.dto.landmark.LandMarkRecordDto;
 import com.example.backend.entity.mariaDB.member.Member;
 import com.example.backend.entity.mariaDB.space.LandMark;
@@ -67,13 +68,7 @@ public class LandMarkService {
     List<LandMarkRecord> records = landMark.getRecords();
     Collections.shuffle(records);
 
-    return records.stream().map(record ->
-        LandMarkRecordDto.Response.builder()
-            .recordId(record.getId())
-            .content(record.getContent() == null ? null : record.getImageAddress())
-            .imageAddress(record.getImageAddress() == null ? null : record.getImageAddress())
-            .authorId(record.getMember().getId())
-            .build())
+    return records.stream().map(LandMarkRecordDto::toRecordDto)
         .collect(Collectors.toList());
   }
 }

@@ -8,35 +8,34 @@ import UserCharacter from "./UserCharacter";
 import Modal from "../common/Modal";
 import SmallButton from "../common/SmallButton";
 
-// const UserLocation = ({ otherMemberIds, userCharacters }) => {
+
 const UserLocation = ({ otherUserInfo }) => {
   // 유저 정보
   const user = useRecoilValue(UserSelector);
   const characterId = user.characterId;
   const myCharacter = `/character/${characterId}.svg`;
 
-  // 상대방 정보
-  const [otherNickname, setOtherNickname] = useState('');
-  const [otherStatus, setOtherStatus] = useState('');
-  const [otherCharacter, setOtherCharacter] = useState(0);
-  
-  useEffect(() => {
-    // otherUserInfo 배열 내의 각 사용자 정보로부터 memberId를 추출하여 get 요청을 수행
-    otherUserInfo.map((otherUser) => {
-      const OtherMemberId = otherUser.memberId;
-      // memberId를 사용해 get 요청 수행
-      getOtherUserInfo(OtherMemberId)
+  const [modalInfo, setModalInfo] = useState(null);
+  const handleModal = (otherUser) => {
+    if (modalInfo) {
+      // 모달이 이미 열려있는 경우, 닫고 초기화
+      setModalInfo(null);
+    } else {
+      // 모달 열기
+      getOtherUserInfo(otherUser.memberId)
         .then((data) => {
-          console.log("상대방 정보:", data);
-          setOtherNickname(data.data.nickname);
-          setOtherStatus(data.data.status);
-          setOtherCharacter(data.data.characterId);
+          const modalData = {
+            otherNickname: data.data.nickname,
+            otherStatus: data.data.status,
+            otherCharacterId: data.data.characterId
+          };
+          setModalInfo(modalData);
         })
         .catch((error) => {
-          console.error("상대방 정보 가져오기 실패!", error);
+          console.error('상대방 정보 가져오기 실패!', error);
         });
-    });
-  }, [otherUserInfo]);
+    }
+  }
 
   // 애니메이션 
   const defaultOptions = {
@@ -51,23 +50,16 @@ const UserLocation = ({ otherUserInfo }) => {
     transform: "scale(2)", // 2배 크기
   };
 
-  // 모달 처리
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
-  };
-
   return (
     <>
-      {isModalOpen && (
-        <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-          {/* 모달 내용 */}
-          <h2>{otherNickname}</h2>
-          <div className="bg-gray-100">{otherStatus}</div>
-          <div><img src={`/character/${otherCharacter}.svg`}/></div>
-          <div>
-            <span><SmallButton title='채팅하기' /></span>
-            <span><SmallButton title='채팅하기' /></span>
+      {modalInfo && (
+        <Modal isOpen={true} onClose={() => setModalInfo(null)}>
+          <h2>{modalInfo.otherNickname}</h2>
+          <div className="bg-gray-100">{modalInfo.otherStatus}</div>
+          <div><img src={`/character/${modalInfo.otherCharacterId}.svg`}/></div>
+          <div className="">
+            <SmallButton title='채팅하기' />
+            <SmallButton title='채팅하기' />
           </div>
         </Modal>
       )}
@@ -81,7 +73,7 @@ const UserLocation = ({ otherUserInfo }) => {
               key={index} 
               otherCharacterId={otherUser.characterId} 
               existingCharacters={otherUserInfo}
-              onCharacterClick={handleOpenModal}
+              onCharacterClick={() => handleModal(otherUser)}
             />
           ))}
         </div>

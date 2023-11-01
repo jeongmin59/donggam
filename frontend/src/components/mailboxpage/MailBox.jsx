@@ -29,12 +29,10 @@ const MailBox = () => {
 
       .then((res) => {
         setStatusList(res.statusList)
-        // console.log('상메리스트 가져오기 성공', res.statusList)
         return getMailList(selectedStatusId)
       })
       .then((res) => {
         setMailList(res.data.messageList);
-        // console.log('두 번째 요청 성공', res.data);
       })
       .catch((err) => {
         console.log('status리스트 가져오기 실패ㄱ-', err)
@@ -42,7 +40,7 @@ const MailBox = () => {
   }, [selectedStatusId])
 
 
-  // 현재 상메 바꿔주는 함수
+  // 선택된 상메 바꿔주는 함수
   const handleStatusChange = ({ selectedStatus, selectedStatusId }) => {
     setStatus(selectedStatus);
     setSelectedStatusId(selectedStatusId)
@@ -52,8 +50,10 @@ const MailBox = () => {
     <div>
       <div className="p-8">
         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={openModal}>현재상태메시지: {status}</button>
+
         <StatusList isOpen={isModalOpen} onClose={closeModal} statusList={statusList} changeStatus={handleStatusChange} />
       </div>
+
       {mailList.map((mail, index) => (
         <MailList key={index} mail={mail} />
       ))}

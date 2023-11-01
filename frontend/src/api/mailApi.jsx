@@ -25,3 +25,18 @@ export const getMailList = async (statusId) => {
     return err;
   }
 };
+
+
+// 쪽지 상세 조회
+export const getMailDetail = async (messageId) => {
+  try {
+    const res = await axiosInstance.get(`/message/detail/${messageId}`, {
+      params: { messageId },
+    });
+    // console.log('쪽지디테일axios 가져오기 성공', res.data.data)
+    return res.data.data;
+  } catch (err) {
+    console.log('쪽지디테일 axios 실패!', err)
+    return err;
+  }
+};

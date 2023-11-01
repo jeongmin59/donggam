@@ -40,3 +40,33 @@ export const getMailDetail = async (messageId) => {
     return err;
   }
 };
+
+// 쪽지 좋아요
+export const postMailLike = async (messageId) => {
+  try {
+    const res = await axiosInstance.post(`/message/like`, {
+      messageId: messageId,
+      isLiked: true,
+    });
+    console.log('쪽지 성공', res.data.data)
+    return res.data;
+  } catch (err) {
+    console.log('쪽지 좋아요 실패!', err)
+    return err;
+  }
+};
+
+// 쪽지 읽음 처리
+export const postMailRead = async (messageId) => {
+  try {
+    const res = await axiosInstance.post(`/message/read/${messageId}`, {
+      params: { messageId },
+    });
+    console.log('쪽지 읽음 처리 성공', res.data.data)
+    return res.data;
+  } catch (err) {
+    console.log('쪽지 읽음 처리 실패!', err)
+    return err;
+  }
+};
+

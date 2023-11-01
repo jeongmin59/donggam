@@ -1,5 +1,6 @@
 package com.example.backend.dto;
 
+import com.example.backend.entity.mariaDB.member.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,6 +16,16 @@ public class MemberDetailDto {
   public static class Response {
     private String nickname;
     private Integer characterId;
+    private Long statusId;
     private String status;
+  }
+
+  public static Response toDto(Member member) {
+    return Response.builder()
+            .nickname(member.getNickname())
+            .characterId(member.getCharacterId())
+            .statusId(member.getStatus().get(member.getStatus().size() - 1).getId())
+            .status(member.getStatus().get(member.getStatus().size() - 1).getContent())
+            .build();
   }
 }

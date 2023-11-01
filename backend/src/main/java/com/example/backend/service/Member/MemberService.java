@@ -185,7 +185,7 @@ public class MemberService {
     return LoginDto.Response.builder()
         .memberId(member.getId())
         .nickname(member.getNickname())
-        .status(member.getStatus() == null ? null : member.getStatus().get(member.getStatus().size() - 1).getContent())
+        .status(member.getStatus().isEmpty() ? null : member.getStatus().get(member.getStatus().size() - 1).getContent())
         .characterId(member.getCharacterId())
         .grantType(tokenDto.getGrantType())
         .accessToken(tokenDto.getAccessToken())

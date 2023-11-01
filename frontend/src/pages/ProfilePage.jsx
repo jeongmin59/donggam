@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useRecoilState } from 'recoil';
-import { CharacterIdAtom, NicknameAtom, StatusMessageAtom } from '../recoil/user/userAtom';
+import { CharacterIdAtom, NicknameAtom, StatusMessageAtom, StatusMessageIdAtom } from '../recoil/user/userAtom';
 import { updateUser } from '../api/userApi';
 import { useNavigate } from 'react-router-dom';
 import CharacterModal from '../components/character/CharacterModal';
@@ -33,7 +33,7 @@ const ProfilePage = () => {
     const updatedUser = {
       nickname: newNickname,
       status: newStatus,
-      characterId: newCharacterId
+      characterId: newCharacterId,
     }
     updateUser(updatedUser)
 

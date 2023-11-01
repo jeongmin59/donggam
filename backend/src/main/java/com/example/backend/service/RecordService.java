@@ -2,18 +2,23 @@ package com.example.backend.service;
 
 import com.example.backend.dto.record.RecordCommentDto;
 import com.example.backend.dto.record.RecordDetailDto;
+import com.example.backend.dto.record.RecordDto;
 import com.example.backend.entity.mariaDB.member.Member;
 import com.example.backend.entity.mariaDB.space.Record;
 import com.example.backend.entity.mariaDB.space.RecordComment;
+import com.example.backend.entity.postgreSQL.MemberLocation;
 import com.example.backend.entity.postgreSQL.RecordLocation;
 import com.example.backend.exception.ErrorCode;
 import com.example.backend.exception.type.CustomException;
 import com.example.backend.repository.mariaDB.MemberRepository;
 import com.example.backend.repository.mariaDB.record.RecordCommentRepository;
 import com.example.backend.repository.mariaDB.record.RecordRepository;
+import com.example.backend.repository.postgreSQL.MemberLocationRepository;
 import com.example.backend.repository.postgreSQL.RecordLocationRepository;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,6 +29,7 @@ public class RecordService {
 
     private final ImageService imageService;
     private final MemberRepository memberRepository;
+    private final MemberLocationRepository memberLocationRepository;
     private final RecordRepository recordRepository;
     private final RecordLocationRepository recordLocationRepository;
     private final RecordCommentRepository recordCommentRepository;
@@ -70,6 +76,21 @@ public class RecordService {
                 .build());
 
         return RecordCommentDto.toCommentDto(recordComment);
+    }
 
+    public List<RecordDto.Response> aroundRecords(Long memberId) {
+        MemberLocation location = memberLocationRepository.findById(memberId)
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND.getMessage(), ErrorCode.USER_NOT_FOUND));
+
+        List<RecordLocation> recordLocations = recordLocationRepository.findWithinRadius(location.getLatitude(),
+                location.getLongitude(), 10000d);
+
+        List<Long> locationIds = recordLocations.stream().map(RecordLocation::getId)
+                .collect(Collectors.toList());
+
+        List<Record> records = recordRepository.findByIdIn(locationIds);
+
+        return records.stream().map(RecordDto::toRecordDto)
+                .collect(Collectors.toList());
     }
 }

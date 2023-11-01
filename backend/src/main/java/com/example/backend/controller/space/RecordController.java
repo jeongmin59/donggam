@@ -3,14 +3,17 @@ package com.example.backend.controller.space;
 import com.example.backend.dto.Response;
 import com.example.backend.dto.record.RecordCommentDto;
 import com.example.backend.dto.record.RecordDetailDto;
+import com.example.backend.dto.record.RecordDto;
 import com.example.backend.service.RecordService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.io.IOException;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -49,5 +52,14 @@ public class RecordController {
 
         return new Response<>(201, "방명록 댓글 작성 성공",
                 recordService.createComment(memberId, recordId, request.getContent()));
+    }
+
+    @Operation(summary = "주변 방명록 조회", description = "주변 방명록 조회")
+    @GetMapping
+    public Response<List<RecordDto.Response>> aroundRecords(
+            @Parameter(hidden = true) @AuthenticationPrincipal UserDetails userDetails
+    ) {
+        Long memberId = Long.parseLong(userDetails.getUsername());
+        return new Response<>(200, "주변 방명록 조회 성공", recordService.aroundRecords(memberId));
     }
 }

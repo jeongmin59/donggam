@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getMailDetail } from '../../api/mailApi';
 
-
 const MailItem = ({ isOpen, onClose, mailData }) => {
-  // 모달 밖 클릭 시 모달 닫힘 
   const handleBackgroundClick = (e) => {
     if (e.target === e.currentTarget) {
       onClose();
@@ -11,25 +9,30 @@ const MailItem = ({ isOpen, onClose, mailData }) => {
   };
 
   if (!isOpen) return null;
-  // 
-  const mailId = mailData.messageId
-  const content = mailData.content
 
-  // 쪽지 data
-  const [mailDetail, setMailDetail] = useState(content);
+  const mailId = mailData.messageId;
+
+  const [mailDetail, setMailDetail] = useState({});
+  const [liked, setLiked] = useState(false);
 
   useEffect(() => {
     getMailDetail(mailId)
-
       .then((res) => {
-        setMailDetail(res.content)
-        // console.log('정신차리라', res)
+        setMailDetail(res);
       })
       .catch((err) => {
-        console.log('쪽지 detail 가져오기 실패ㄱ-', err)
-      })
-  }, [])
+        console.log('쪽지 detail 가져오기 실패:', err);
+      });
+  }, []);
 
+  const handleLikeClick = () => {
+    // 좋아요 버튼을 클릭했을 때 로직을 추가하세요.
+    setLiked(!liked);
+  };
+
+  const handleReportClick = () => {
+    // 신고하기 버튼을 클릭했을 때 로직을 추가하세요.
+  };
 
   return (
     <>
@@ -43,21 +46,40 @@ const MailItem = ({ isOpen, onClose, mailData }) => {
         }}
         onClick={handleBackgroundClick}
       >
-        {/* 모달 컨텐츠 */}
         <div
           style={{
             backgroundColor: 'white',
             borderRadius: '20px',
             width: '100%',
             height: '55%',
-            margin: 'auto'
-          }}>
-          <h1>{mailDetail} </h1>
+            margin: 'auto',
+          }}
+        >
+          <div>
+            <p className="text-center text-sm text-gray-500 mt-2">쪽지 작성 일자</p>
+          </div>
+          <div>
+            {/* 쪽지 내용 */}
+            <h1 className="text-center mt-4">{mailDetail.content}</h1>
+          </div>
+          <div>
+            {/* 보낸 사람 이름 */}
+            <p className="text-center mt-4">{mailDetail.from}</p>
+          </div>
+          <div>
+            {/* 신고하기 버튼 */}
+            <button onClick={handleReportClick} className="text-center mt-4 bg-red-500 text-white py-2 px-4 rounded-full">신고하기</button>
+          </div>
+          <div>
+            {/* 좋아요 버튼 */}
+            <button onClick={handleLikeClick} className={`text-center mt-4 ${liked ? 'bg-blue-500' : 'bg-blue-300'} text-white py-2 px-4 rounded-full`}>
+              {liked ? '좋아요 취소' : '좋아요'}
+            </button>
+          </div>
         </div>
       </div>
     </>
   );
 };
-
 
 export default MailItem;

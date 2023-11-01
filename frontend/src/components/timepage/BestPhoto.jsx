@@ -11,7 +11,7 @@ const BestPhoto = () => {
         const response = await axiosInstance.get("/time/best");
         if (response.data && response.data.data) {
           setPhotos(response.data.data);
-          console.log('왔니?', response);
+          console.log('왔니 베스트컷?', response);
         }
         setLoading(false);
       } catch (error) {

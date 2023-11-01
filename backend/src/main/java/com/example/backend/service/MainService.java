@@ -64,11 +64,7 @@ public class MainService {
     Member member = memberRepository.findById(memberId)
         .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND.getMessage(), ErrorCode.USER_NOT_FOUND));
 
-    return MemberDetailDto.Response.builder()
-        .nickname(member.getNickname())
-        .characterId(member.getCharacterId())
-        .status(member.getStatus().get(member.getStatus().size() - 1).getContent())
-        .build();
+    return MemberDetailDto.toDto(member);
   }
 
   // 주변사람들의 회원id와 캐릭터id를 가져오는 메서드

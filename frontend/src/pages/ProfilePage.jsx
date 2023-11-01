@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { CharacterIdAtom, NicknameAtom, StatusMessageAtom, StatusMessageIdAtom } from '../recoil/user/userAtom';
 import { updateUser } from '../api/userApi';
 import { useNavigate } from 'react-router-dom';
@@ -10,6 +10,7 @@ const ProfilePage = () => {
   const [nickName, setNickname] = useRecoilState(NicknameAtom);
   const [characterId, setCharterId] = useRecoilState(CharacterIdAtom);
   const [status, setStatus] = useRecoilState(StatusMessageAtom);
+  const setStatusId = useSetRecoilState(StatusMessageIdAtom);
 
   // useState를 통한 유저 정보 업데이트
   const [newNickname, setNewNickname] = useState(nickName);
@@ -41,6 +42,7 @@ const ProfilePage = () => {
         setNickname(newNickname)
         setCharterId(newCharacterId)
         setStatus(newStatus)
+        setStatusId(res.data.statusId)
 
         navigator('/') // 정보 수정 후 메인페이지 이동
         console.log('유저정보 변경', res)

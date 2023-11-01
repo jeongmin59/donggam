@@ -1,6 +1,8 @@
 package com.example.backend.entity.mariaDB.chat;
 
+import com.example.backend.dto.chat.ChatDto;
 import com.example.backend.entity.mariaDB.member.Member;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -14,25 +16,33 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @NoArgsConstructor
-public class Chatting {
+public class Chat {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Member from;
+    @Column
+    private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Member to;
+    private Member sender;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private ChattingRoom chattingRoom;
+    private ChatRoom chatRoom;
 
     @Builder
-    public Chatting(Member from, Member to, ChattingRoom chattingRoom) {
-        this.from = from;
-        this.to = to;
-        this.chattingRoom = chattingRoom;
+    public Chat(String content, Member sender, ChatRoom chatRoom) {
+        this.content = content;
+        this.sender = sender;
+        this.chatRoom = chatRoom;
+    }
+
+    public ChatDto toChatDto() {
+        return ChatDto.builder()
+                .id(this.id)
+                .content(this.content)
+                .sender(this.sender.getNickname())
+                .build();
     }
 }

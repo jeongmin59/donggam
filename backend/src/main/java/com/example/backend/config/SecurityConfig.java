@@ -19,49 +19,51 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-public class SecurityConfig{
+public class SecurityConfig {
 
-  private final TokenProvider tokenProvider;
-  private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-  private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
-  private final CustomAuthenticationProvider authenticationProvider;
+    private final TokenProvider tokenProvider;
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
+    private final CustomAuthenticationProvider authenticationProvider;
 
-  @Bean
-  public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-    return http
-        .csrf().disable()
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        return http
+                .csrf().disable()
 
-        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
-        .and()
-        .exceptionHandling()
-        .authenticationEntryPoint(jwtAuthenticationEntryPoint)
-        .accessDeniedHandler(jwtAccessDeniedHandler)
+                .and()
+                .exceptionHandling()
+                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                .accessDeniedHandler(jwtAccessDeniedHandler)
 
-        .and()
-        .formLogin().disable()
-        .httpBasic().disable()
+                .and()
+                .formLogin().disable()
+                .httpBasic().disable()
 
-        .authorizeRequests()
-        .mvcMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-        .antMatchers("/member/login").permitAll()
-        .antMatchers("/swagger-ui/**").permitAll()
-        .antMatchers("/v3/api-docs/**").permitAll()
-        .antMatchers("/profile").permitAll()
-        .antMatchers("/location/**").permitAll()
-        .anyRequest().authenticated()
+                .authorizeRequests()
+                .mvcMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                .antMatchers("/member/login").permitAll()
+                .antMatchers("/swagger-ui/**").permitAll()
+                .antMatchers("/v3/api-docs/**").permitAll()
+                .antMatchers("/profile").permitAll()
+                .antMatchers("/location/**").permitAll()
+                .antMatchers("/stomp/chat/**").permitAll()
+                .anyRequest().authenticated()
 
-        .and()
-        .apply(new JwtSecurityConfig(tokenProvider))
+                .and()
+                .apply(new JwtSecurityConfig(tokenProvider))
 
-        .and()
-        .build();
-  }
+                .and()
+                .build();
+    }
 
-  @Bean
-  public AuthenticationManager authManager(HttpSecurity http) throws Exception {
-    AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
-    authenticationManagerBuilder.authenticationProvider(authenticationProvider);
-    return authenticationManagerBuilder.build();
-  }
+    @Bean
+    public AuthenticationManager authManager(HttpSecurity http) throws Exception {
+        AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(
+                AuthenticationManagerBuilder.class);
+        authenticationManagerBuilder.authenticationProvider(authenticationProvider);
+        return authenticationManagerBuilder.build();
+    }
 }

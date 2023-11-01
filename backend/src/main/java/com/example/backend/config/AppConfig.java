@@ -20,6 +20,10 @@ public class AppConfig {
   @PersistenceContext(unitName = "postgreSQLEntityManager")
   private EntityManager postgreSQLEntityManager;
 
+  // redis EntityManager 등록
+//  @PersistenceContext(unitName = "redisEntityManager")
+//  private EntityManager redisEntityManager;
+
   // querydsl 관련 설정
   @Primary
   @Bean
@@ -33,4 +37,9 @@ public class AppConfig {
     return new JPAQueryFactory(postgreSQLEntityManager);
   }
 
+//  @Bean
+//  @Qualifier("redisQueryFactory")
+//  public JPAQueryFactory redisQueryFactory() {
+//    return new JPAQueryFactory(redisEntityManager);
+//  }
 }

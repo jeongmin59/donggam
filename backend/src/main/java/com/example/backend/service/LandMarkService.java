@@ -5,6 +5,7 @@ import com.example.backend.dto.landmark.LandMarkRecordDto;
 import com.example.backend.entity.mariaDB.member.Member;
 import com.example.backend.entity.mariaDB.space.LandMark;
 import com.example.backend.entity.mariaDB.space.LandMarkRecord;
+import com.example.backend.entity.mariaDB.space.LandMarkRecordComment;
 import com.example.backend.exception.ErrorCode;
 import com.example.backend.exception.type.CustomException;
 import com.example.backend.repository.mariaDB.landmark.LandMarkRecordCommentRepository;
@@ -70,5 +71,22 @@ public class LandMarkService {
 
     return records.stream().map(LandMarkRecordDto::toRecordDto)
         .collect(Collectors.toList());
+  }
+
+  public LandMarkCommentDto.Response createComment(Long memberId, Long recordId, LandMarkCommentDto.Request request) {
+    LandMarkRecord landMarkRecord = landMarkRecordRepository.findById(recordId)
+        .orElseThrow(() -> new CustomException(ErrorCode.ENTITY_NOT_FOUND.getMessage(), ErrorCode.ENTITY_NOT_FOUND));
+
+    Member member = memberRepository.findById(memberId)
+        .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND.getMessage(), ErrorCode.USER_NOT_FOUND));
+
+    LandMarkRecordComment comment = landMarkRecordCommentRepository.save(LandMarkRecordComment.builder()
+        .content(request.getContent())
+        .createdAt(LocalDateTime.now())
+        .member(member)
+        .record(landMarkRecord)
+        .build());
+
+    return LandMarkCommentDto.toCommentDto(comment);
   }
 }

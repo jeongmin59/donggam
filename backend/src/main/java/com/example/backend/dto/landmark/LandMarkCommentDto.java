@@ -13,8 +13,16 @@ public class LandMarkCommentDto {
   @Data
   @NoArgsConstructor
   @AllArgsConstructor
+  public static class Request {
+    private String content;
+  }
+
+  @Data
+  @NoArgsConstructor
+  @AllArgsConstructor
   @Builder
   public static class Response {
+    private Long commentId;
     private String content;
     private Long commentAuthorId;
     private LocalDateTime createdAt;
@@ -22,6 +30,7 @@ public class LandMarkCommentDto {
 
   public static Response toCommentDto(LandMarkRecordComment comment) {
     return Response.builder()
+        .commentId(comment.getId())
         .content(comment.getContent())
         .commentAuthorId(comment.getMember().getId())
         .createdAt(comment.getCreatedAt())

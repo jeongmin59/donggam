@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -40,5 +41,13 @@ public class LandMarkRecordComment {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "land_mark_record_id")
   private LandMarkRecord landMarkRecord;
+
+  @Builder
+  public LandMarkRecordComment(String content, LocalDateTime createdAt, Member member, LandMarkRecord record) {
+    this.content = content;
+    this.createdAt = createdAt;
+    this.member = member;
+    this.landMarkRecord = record;
+  }
 
 }

@@ -1,6 +1,7 @@
 package com.example.backend.controller.space;
 
 import com.example.backend.dto.Response;
+import com.example.backend.dto.landmark.LandMarkCommentDto;
 import com.example.backend.dto.landmark.LandMarkRecordDto;
 import com.example.backend.service.LandMarkService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -50,8 +51,15 @@ public class LandMarkController {
     return new Response<>(200, "랜드마크 방명록 목록 조회 성공", landMarkService.landMarkRecords(landMarkId));
   }
 
-//  @Operation(summary = "랜드마크 방명록 댓글 작성", description = "랜드마크 방명록 댓글 작성")
-//  @GetMapping("/{recordId}")
-//  public
+  @Operation(summary = "랜드마크 방명록 댓글 작성", description = "랜드마크 방명록 댓글 작성")
+  @GetMapping("/{recordId}")
+  public Response<LandMarkCommentDto.Response> createdComment(
+      @Parameter(hidden = true) @AuthenticationPrincipal UserDetails userDetails,
+      @RequestBody LandMarkCommentDto.Request request,
+      @PathVariable("recordId") Long recordId
+  ) {
+    Long memberId = Long.parseLong(userDetails.getUsername());
+    return new Response<>(201, "댓글 작성 성공", landMarkService.createComment(memberId, recordId, request));
+  }
 
 }

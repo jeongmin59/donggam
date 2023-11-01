@@ -64,7 +64,10 @@ public class LandMarkService {
       return Collections.emptyList();
     }
 
-    return landMark.getRecords().stream().map(record ->
+    List<LandMarkRecord> records = landMark.getRecords();
+    Collections.shuffle(records);
+
+    return records.stream().map(record ->
         LandMarkRecordDto.Response.builder()
             .recordId(record.getId())
             .content(record.getContent() == null ? null : record.getImageAddress())

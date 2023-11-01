@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -38,16 +39,25 @@ public class MessageService {
         if(img == null && request.getContent() == null) {
             throw new CustomException("내용이 없습니다.", ErrorCode.INVALID_INPUT_VALUE);
         }
-        Member from = memberRepository.findById(memberId).get();
-        Member to = memberRepository.findById(request.getMemberId()).get();
+        Long statusId = request.getStatusId();
+        Status status = statusRepository.findById(statusId).get();
+        if(status == null) {
+            throw new CustomException("상태 메세지가 존재하지 않습니다.", ErrorCode.NOT_SAME_DATA_VALUE);
+        }
 
-        if(from == null || to == null) {
+        Member from = memberRepository.findById(memberId).get();
+
+        if(from == null) {
             throw new CustomException("존재하지 않는 유저입니다", ErrorCode.NOT_SAME_DATA_VALUE);
         }
 
-        String imageAddress = imageService.uploadImage(img, "message");
+        String imageAddress = null;
 
-        Message message = messageRepository.save(request.toMessageEnitty(from, to, imageAddress));
+        if(img != null){
+            imageAddress = imageService.uploadImage(img, "message");
+        }
+
+        Message message = messageRepository.save(request.toMessageEnitty(from, imageAddress, status));
 
         return message.toSendMessageResponse();
     }

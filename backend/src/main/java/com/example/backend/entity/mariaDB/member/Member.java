@@ -1,6 +1,7 @@
 package com.example.backend.entity.mariaDB.member;
 
 import com.example.backend.entity.mariaDB.space.LandMarkRecord;
+import com.example.backend.entity.mariaDB.space.Record;
 import com.example.backend.entity.mariaDB.status.Status;
 import com.example.backend.entity.mariaDB.time.Image;
 import java.time.LocalDateTime;
@@ -60,6 +61,9 @@ public class Member {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<LandMarkRecord> landMarkRecords;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.REMOVE)
+    private List<Record> records;
 
     @Builder
     public Member(Long id, String nickname, String email, Integer characterId, Authority authority){

@@ -1,103 +1,81 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
+import TitleInput from "./TitleInput";
+import FileInput from "./FileInput";
 import UploadButton from "../common/UploadButton";
 import { useRecoilValue } from "recoil";
 import { AccessTokenAtom } from "../../recoil/user/userAtom";
 import axiosInstance from "../../api/axiosConfig";
+import imageCompression from 'browser-image-compression';
+import { useNavigate } from 'react-router-dom';
 
 const PhotoUpload = () => {
+  const [title, setTitle] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
-  const [title, setTitle] = useState("");
-  const [previewURL, setPreviewURL] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState('');
   const token = useRecoilValue(AccessTokenAtom);
+  const navigate = useNavigate();
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    setSelectedFile(file);
-    
-    // 파일 선택 시 미리보기 생성
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setPreviewURL(e.target.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-  
+  // 제목 바뀌는 거 관련
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
   };
 
+  // 사진 관련
+  const handleFileChange = async (event) => {
+    const file = event.target.files[0];
+
+    const maxSizeInBytes = 10 * 1024 * 1024; // 10MB
+    const maxWidth = 800;  // 최대 너비
+    const maxHeight = 600; // 최대 높이
+
+    if (file) {
+      try {
+        const options = {
+          maxSizeMB: maxSizeInBytes / (1024 * 1024), // 이미지 크기 제한 (10MB)
+          maxWidthOrHeight: Math.max(maxWidth, maxHeight),
+        };
+
+        const compressedFile = await imageCompression(file, options);   // 압축된 파일
+        const previewUrl = URL.createObjectURL(compressedFile);   // 미리보기 저장
+
+        setPreviewUrl(previewUrl);
+        setSelectedFile(compressedFile);
+      } catch (error) {
+        console.error("이미지 압축 중 에러", error);
+      }
+    }
+  };
+
   const handleUpload = async () => {
     try {
-      if (selectedFile) {
-        // FormData 객체를 생성
-        const formData = new FormData();
-        formData.append("title", title);
-        formData.append("img", selectedFile);
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("img", selectedFile);
 
-        const response = await axiosInstance.post(
-          `/time`, formData, 
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data", // form-data로 지정
-          },
-        });
-        
-        console.log("업로드 성공:", response.data);
-      } else {
-        alert("사진을 첨부해주세요.");
-      }
+      const response = await axiosInstance.post(`/time`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      console.log("업로드 성공!!", response.data);
+      
+      navigate('/time');
     } catch (error) {
-      console.error("에러:", error);
+      console.error("에러", error);
     }
   };
 
   return (
     <div className="px-5 flex flex-col">
-      <div className="mb-4">
-        <label className="block text-sm text-gray-700">제목을 입력하세요.</label>
-        <input
-          type="text"
-          className="w-full px-3 py-2 rounded-md border focus:outline-none focus:ring focus:border-blue-300"
-          value={title}
-          onChange={handleTitleChange}
-        />
-      </div>
+      <TitleInput title={title} onTitleChange={handleTitleChange} />
+      <FileInput previewUrl={previewUrl} onFileChange={handleFileChange} />
 
-      <div className="mb-4">
-        <div className="mt-2 h-80 flex flex-col items-center justify-center rounded-lg border focus:outline-none focus:ring focus:border-blue-300 px-6 py-10">
-          {/* 이미지 미리보기 */}
-          {previewURL && (
-            <img
-              src={previewURL}
-              alt="미리보기"
-              className="mx-auto max-h-40 overflow-y-auto"
-            />
-          )}
-          <div className="mt-4 flex text-sm leading-6 text-gray-600">
-            <label
-              htmlFor="file-upload"
-              className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2focus-within:ring-offset-2 hover:text-indigo-500"
-              >
-              <p>사진을 첨부해주세요.</p>
-              <input
-                id="file-upload"
-                name="file-upload"
-                type="file"
-                accept="image/*"
-                className="sr-only"
-                onChange={handleFileChange}
-              />
-            </label>
-          </div>
-          <p className="text-xs leading-5 text-gray-600"></p>
+      {title && selectedFile && (
+        <div className="fixed bottom-3 left-0 right-0 p-4">
+          <UploadButton onUpload={handleUpload} />
         </div>
-      </div>
-      <div className="fixed bottom-3 left-0 right-0 p-4">
-        <UploadButton onUpload={handleUpload} to="/time" />
-      </div>
+      )}
     </div>
   );
 };

@@ -12,15 +12,18 @@ const MainBackground = () => {
   // user 정보
   const user = useRecoilValue(UserSelector);
   const memberId = user.memberId;
-  
+
   // 위치 정보
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
 
+  // 주변 정보 
   const [selectedBackground, setSelectedBackground] = useState(''); // 날씨 배경 
   const [aroundPeople, setAroundPeople] = useState([]) // 주변 사용자 
   const [aroundPeopleCount, setAroundPeopleCount] = useState(0); // 주변 사용자 수
 
+
+  // 위도 경도 전송
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -36,6 +39,7 @@ const MainBackground = () => {
     }
   },[]);
 
+  // 위치 기반 정보(날씨, 주변 유저, 주변 유저 수)
   useEffect(() => {
     if (memberId && latitude !== null && longitude !== null){
       locationInfo(memberId, latitude, longitude)
@@ -50,13 +54,6 @@ const MainBackground = () => {
     }
   }, [memberId, latitude, longitude]);
 
-  // 유저 캐릭터 정보 
-  const [userCharacters, setUserCharacters] = useState([]);
-  useEffect(() => {
-    const characters = aroundPeople.map((person) => person.characterId);
-    setUserCharacters(characters);
-  }, [aroundPeople]);
-
 
   // 날씨 배경 
   const backgroundClass = `w-full h-full absolute ${
@@ -69,7 +66,7 @@ const MainBackground = () => {
     <div className="h-screen overflow-hidden">
       <div className={backgroundClass} style={{zIndex:3, backgroundSize: "cover" }}>
         <UserInfo selectedBackground={selectedBackground}/> 
-        <MainArea userCharacters={userCharacters}/>
+        <MainArea aroundPeople={aroundPeople}/>
         <NumberOfUsers aroundPeopleCount={aroundPeopleCount}/>
       </div>
       <div className="bottomBG h-screen flex justify-center  relative bg-[#abcdf0]" style={{ zIndex: -1 }}>

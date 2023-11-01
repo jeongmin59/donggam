@@ -1,60 +1,43 @@
+import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { UserSelector } from "../../recoil/user/userSelector";
-import React from "react";
+import { getOtherUserInfo } from "../../api/userApi";
 import Lottie from "react-lottie";
 import animationData from "../../assets/animation/location-animation.json";
+import UserCharacter from "./UserCharacter";
+import Modal from "../common/Modal";
 
-const getRandomPosition = (min, max, exceptions = []) => {
-  let position;
-  do {
-    position = Math.floor(Math.random() * (max - min) + min) + "%";
-  } while (exceptions.includes(position));
-  return position;
-};
-
-const UserCharacter = ({ character, existingCharacters }) => {
-  let positionX, positionY;
-  let isOverlapping;
-
-  do {
-    isOverlapping = false;
-    positionX = Math.floor(Math.random() * (70 - 20) + 20);
-    positionY = Math.floor(Math.random() * (75 - 15) + 15);
-
-    for (const existingCharacter of existingCharacters) {
-      const charX = existingCharacter.left;
-      const charY = existingCharacter.top;
-      const dx = Math.abs(positionX - parseInt(charX));
-      const dy = Math.abs(positionY - parseInt(charY));
-
-      if (dx < 200 && dy < 200) {
-        isOverlapping = true;
-        break;
-      }
-    }
-  } while (isOverlapping);
-
-  return (
-    <div
-      className="user-element"
-      style={{
-        position: "absolute",
-        left: positionX + "%",
-        top: positionY + "%",
-        width: "30%", // 이미지 크기에 따라 설정
-        padding: "10px",
-      }}
-    >
-      <img src={`/character/${character}.svg`} style={{ width: "100%" }} />
-    </div>
-  );
-};
-
-const UserLocation = ({ userCharacters }) => {
+// const UserLocation = ({ otherMemberIds, userCharacters }) => {
+const UserLocation = ({ otherUserInfo }) => {
+  // 유저 정보
   const user = useRecoilValue(UserSelector);
   const characterId = user.characterId;
   const myCharacter = `/character/${characterId}.svg`;
 
+  // 상대방 정보
+  const [otherNickname, setOtherNickname] = useState('');
+  const [otherStatus, setOtherStatus] = useState('');
+  const [otherCharacter, setOtherCharacter] = useState(0);
+  
+  useEffect(() => {
+    // otherUserInfo 배열 내의 각 사용자 정보로부터 memberId를 추출하여 get 요청을 수행
+    otherUserInfo.map((otherUser) => {
+      const OtherMemberId = otherUser.memberId;
+      // memberId를 사용해 get 요청 수행
+      getOtherUserInfo(OtherMemberId)
+        .then((data) => {
+          console.log("상대방 정보:", data);
+          setOtherNickname(data.data.nickname);
+          setOtherStatus(data.data.status);
+          setOtherCharacter(data.data.characterId);
+        })
+        .catch((error) => {
+          console.error("상대방 정보 가져오기 실패!", error);
+        });
+    });
+  }, [otherUserInfo]);
+
+  // 애니메이션 
   const defaultOptions = {
     loop: true,
     autoplay: true,
@@ -63,27 +46,52 @@ const UserLocation = ({ userCharacters }) => {
       preserveAspectRatio: "xMidYMid meet",
     },
   };
-
   const animationStyle = {
-    transform: "scale(2)", // 2배 크기로 확대
+    transform: "scale(2)", // 2배 크기
+  };
+
+  // 모달 처리
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
   };
 
   return (
-    <div className="flex justify-center items-center overflow-hidden" style={{ width: "100%", height: "100%", zIndex: -1 }}>
-      <div className="nya relative flex justify-center items-center" style={{ width: "100%", height: "100%", zIndex: 1 }}>
-        <div>
-          <img src={myCharacter} alt={`${characterId}번 캐릭터`} />
+    <>
+      {isModalOpen && (
+        <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+          {/* 모달 내용 */}
+          <div>{otherNickname}</div>
+          <div>{otherStatus}</div>
+          <div><img src={`/character/${otherCharacter}.svg`}/></div>
+          <div>
+            <span>버튼1</span>
+            <span>버튼2</span>
+          </div>
+        </Modal>
+      )}
+      <div className="flex justify-center items-center overflow-hidden" style={{ width: "100%", height: "100%", zIndex: -1 }}>
+        <div className="nya relative flex justify-center items-center" style={{ width: "100%", height: "100%", zIndex: 1 }}>
+          <div>
+            <img src={myCharacter} alt={`${characterId}번 캐릭터`} />
+          </div>
+          {otherUserInfo.map((otherUser, index) => (
+            <UserCharacter 
+              key={index} 
+              otherCharacterId={otherUser.characterId} 
+              existingCharacters={otherUserInfo}
+              onCharacterClick={handleOpenModal}
+            />
+          ))}
         </div>
-        {userCharacters.map((character, index) => (
-          <UserCharacter key={index} character={character} existingCharacters={userCharacters} />
-        ))}
-      </div>
-      <div className="flex absolute" style={{ height: "calc(100% - 280px)", zIndex: -1 }}>
-        <div className="overflow-hidden">
-          <Lottie options={defaultOptions} style={animationStyle} />
+        <div className="flex absolute" style={{ height: "calc(100% - 280px)", zIndex: -1 }}>
+          <div className="overflow-hidden">
+            <Lottie options={defaultOptions} style={animationStyle} />
+          </div>
         </div>
       </div>
-    </div>
+      
+    </>
   );
 };
 

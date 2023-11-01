@@ -56,4 +56,14 @@ export const updateCharacter = async (characterId) => {
   }
 };
 
+// 상대 정보 반환 
+export const getOtherUserInfo = async (memberId) => {
+  try {
+    const res = await axiosInstance.get(`/main/${memberId}`)
+    return res.data;
+  } catch(err) {
+    console.log('상대방 정보 가져오기 실패!', err);
+    return err;
+  }
+}
 

@@ -51,12 +51,34 @@ const MainBackground = () => {
   }, [memberId, latitude, longitude]);
 
   // 유저 캐릭터 정보 
-  const [userCharacters, setUserCharacters] = useState([]);
+  // const [otherMemberIds, setOtherMemberIds] = useState([]);
+  // const [userCharacters, setUserCharacters] = useState([]);
+  // useEffect(() => {
+  //   if (aroundPeople) {
+  //     const characters = aroundPeople.map((person) => {
+  //       const { characterId, memberId } = person;
+  //       setOtherMemberIds((prevOtherMemberIds) => [...prevOtherMemberIds, memberId]);
+  //       return characterId;
+  //     });
+  //     setUserCharacters(characters);
+  //   }
+  // }, [aroundPeople]);
+  // 유저 캐릭터 정보
+  const [otherUserInfo, setOtherUserInfo] = useState([]);
   useEffect(() => {
-    const characters = aroundPeople.map((person) => person.characterId);
-    setUserCharacters(characters);
+    if (aroundPeople) {
+      const characterInfo = aroundPeople.map((person) => {
+        return {
+          memberId: person.memberId,
+          characterId: person.characterId,
+        };
+      });
+      setOtherUserInfo(characterInfo);
+    }
   }, [aroundPeople]);
+  console.log(otherUserInfo);
 
+  // console.log('상대방 아이디',otherMemberIds);
 
   // 날씨 배경 
   const backgroundClass = `w-full h-full absolute ${
@@ -69,7 +91,7 @@ const MainBackground = () => {
     <div className="h-screen overflow-hidden">
       <div className={backgroundClass} style={{zIndex:3, backgroundSize: "cover" }}>
         <UserInfo selectedBackground={selectedBackground}/> 
-        <MainArea userCharacters={userCharacters}/>
+        <MainArea otherUserInfo={otherUserInfo}/>
         <NumberOfUsers aroundPeopleCount={aroundPeopleCount}/>
       </div>
       <div className="bottomBG h-screen flex justify-center  relative bg-[#abcdf0]" style={{ zIndex: -1 }}>

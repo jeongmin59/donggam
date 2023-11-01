@@ -1,20 +1,11 @@
 import React from "react";
 
 const SmallButton = ({ title, onClick }) => {
-  const buttonStyle = {
-    backgroundColor: "var(--mainColor)",
-    color: "white",
-    border: "none",
-    padding: "10px 20px", // 패딩을 상하 10px, 좌우 20px로 설정
-  
-  };
-
   return(
     <>
       <button 
         onClick={onClick} 
-        className="rounded-[73.68px]"
-        style={buttonStyle}>
+        className="w-[100%] px-[12px] py-[10px] rounded-[100px] bg-mainColor">
         {title}
       </button>
     </>

@@ -11,6 +11,7 @@ import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,11 +39,15 @@ public class RecordController {
                 recordService.createRecord(memberId, request, image));
     }
 
-//    @Operation(summary = "방명록 댓글 작성", description = "방명록 댓글 작성")
-//    @PostMapping("/space/{recordId}")
-//    public Response<RecordCommentDto.Response> createComment(
-//            @Parameter(hidden = true) @AuthenticationPrincipal UserDetails userDetails,
-//            @RequestBody RecordCommentDto.Request request) {
-//        Long memberId = Long
-//    }
+    @Operation(summary = "방명록 댓글 작성", description = "방명록 댓글 작성")
+    @PostMapping("/{recordId}")
+    public Response<RecordCommentDto.Response> createComment(
+            @Parameter(hidden = true) @AuthenticationPrincipal UserDetails userDetails,
+            @RequestBody RecordCommentDto.Request request,
+            @PathVariable("recordId") Long recordId) {
+        Long memberId = Long.parseLong(userDetails.getUsername());
+
+        return new Response<>(201, "방명록 댓글 작성 성공",
+                recordService.createComment(memberId, recordId, request.getContent()));
+    }
 }

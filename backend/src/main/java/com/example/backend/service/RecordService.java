@@ -2,9 +2,9 @@ package com.example.backend.service;
 
 import com.example.backend.dto.record.RecordCommentDto;
 import com.example.backend.dto.record.RecordDetailDto;
-import com.example.backend.dto.record.RecordDto;
 import com.example.backend.entity.mariaDB.member.Member;
 import com.example.backend.entity.mariaDB.space.Record;
+import com.example.backend.entity.mariaDB.space.RecordComment;
 import com.example.backend.entity.postgreSQL.RecordLocation;
 import com.example.backend.exception.ErrorCode;
 import com.example.backend.exception.type.CustomException;
@@ -53,5 +53,23 @@ public class RecordService {
                 .build());
 
         return RecordDetailDto.toDetailDto(record, recordLocation);
+    }
+
+    public RecordCommentDto.Response createComment(Long memberId, Long recordId, String content) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND.getMessage(), ErrorCode.USER_NOT_FOUND));
+
+        Record record = recordRepository.findById(recordId)
+                .orElseThrow(() -> new CustomException(ErrorCode.ENTITY_NOT_FOUND.getMessage(), ErrorCode.ENTITY_NOT_FOUND));
+
+        RecordComment recordComment = recordCommentRepository.save(RecordComment.builder()
+                .content(content)
+                .createdAt(LocalDateTime.now())
+                .member(member)
+                .record(record)
+                .build());
+
+        return RecordCommentDto.toCommentDto(recordComment);
+
     }
 }

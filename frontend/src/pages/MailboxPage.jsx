@@ -5,7 +5,7 @@ import MailBox from './../components/mailboxpage/MailBox';
 const MailboxPage = () => {
   return (
     <div>
-      <Header title="쪽지함페이지" />
+      <Header title="쪽지" />
       <MailBox />
     </div>
   );

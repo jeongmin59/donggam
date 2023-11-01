@@ -24,7 +24,7 @@ function App() {
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/kakao/callback" element={<LoginRediect />} />
         <Route path="/chatting/:userId" element={<ChattingPage />} />
-        <Route path="/mailbox/:userId" element={<MailboxPage />} />
+        <Route path="/mailbox" element={<MailboxPage />} />
         <Route path="/time" element={<TimePage />} />
         <Route path="/time/upload" element={<PhotoUploadPage />} />
         <Route path="/time/:imageId" element={<PhotoDetailPage />} />

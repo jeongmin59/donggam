@@ -1,0 +1,27 @@
+import axiosInstance from "./axiosConfig";
+
+// 전체 status 리스트 가져오기
+export const getStatusList = async () => {
+  try {
+    const res = await axiosInstance.get(`/message/status/list`);
+    // console.log('상메axios 가져오기 성공', res)
+    return res.data.data;
+  } catch (err) {
+    console.log('상메 axios 실패!', err)
+    return err;
+  }
+};
+
+// status에 따른 쪽지 목록 가져오기
+export const getMailList = async (statusId) => {
+  try {
+    const res = await axiosInstance.get(`/message/list/${statusId}`, {
+      params: { statusId },
+    });
+    // console.log('쪽지axios 가져오기 성공', res.data)
+    return res.data;
+  } catch (err) {
+    console.log('쪽지 axios 실패!', err)
+    return err;
+  }
+};

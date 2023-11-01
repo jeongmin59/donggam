@@ -35,6 +35,7 @@ public class LoginDto {
   public static class Response {
     private Long memberId;
     private String nickname;
+    private Long statusId;
     private String status;
     private Integer characterId;
     private String grantType;

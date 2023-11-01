@@ -3,7 +3,7 @@ import { useRecoilState } from 'recoil';
 import { CharacterIdAtom, NicknameAtom, StatusMessageAtom } from '../recoil/user/userAtom';
 import { updateUser } from '../api/userApi';
 import { useNavigate } from 'react-router-dom';
-import CharacterModal from '../components/character/characterModal';
+import CharacterModal from '../components/character/CharacterModal';
 
 const ProfilePage = () => {
   // 전역상태의 유저 정보 가져오기

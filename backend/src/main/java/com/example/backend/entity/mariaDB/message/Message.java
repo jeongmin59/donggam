@@ -81,6 +81,7 @@ public class Message {
                 .sender(this.from.getNickname())
                 .messageId(this.id)
                 .content(this.content)
+                .localDate(this.localDate)
                 .build();
     }
 

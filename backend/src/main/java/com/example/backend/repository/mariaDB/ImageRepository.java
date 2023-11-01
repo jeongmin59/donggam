@@ -13,7 +13,7 @@ public interface ImageRepository extends JpaRepository<Image, Long> {
   @Query("SELECT i FROM Image i LEFT JOIN FETCH i.author LEFT JOIN FETCH i.likeMember WHERE i.id = ?1")
   Image findWithAuthorAndLikeMemberByIdAndIsActive(Long imageId, Boolean isActive);
 
-  @Query("SELECT i FROM Image i ORDER BY COALESCE(SIZE(i.likeMember), 0) DESC")
+  @Query("SELECT i FROM Image i ORDER BY COALESCE(SIZE(i.likeMember), 0) DESC limit 3")
   List<Image> findTop3ByOrderByLikeMemberDescAndIsActive(Boolean isActive);
 
   List<Image> findAllByIsActive(Boolean isActive);

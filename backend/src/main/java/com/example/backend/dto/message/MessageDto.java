@@ -6,8 +6,10 @@ import lombok.Data;
 @Data
 @Builder
 public class MessageDto {
-    private Long statusId;
-    private String status;
     private Long messageId;
     private String content;
+    private Long senderId;
+    private String sender;
+    private Boolean isLiked;
+    private Boolean isRead;
 }

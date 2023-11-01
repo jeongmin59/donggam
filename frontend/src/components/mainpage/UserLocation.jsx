@@ -6,6 +6,7 @@ import Lottie from "react-lottie";
 import animationData from "../../assets/animation/location-animation.json";
 import UserCharacter from "./UserCharacter";
 import Modal from "../common/Modal";
+import SmallButton from "../common/SmallButton";
 
 // const UserLocation = ({ otherMemberIds, userCharacters }) => {
 const UserLocation = ({ otherUserInfo }) => {
@@ -61,12 +62,12 @@ const UserLocation = ({ otherUserInfo }) => {
       {isModalOpen && (
         <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
           {/* 모달 내용 */}
-          <div>{otherNickname}</div>
-          <div>{otherStatus}</div>
+          <h2>{otherNickname}</h2>
+          <div className="bg-gray-100">{otherStatus}</div>
           <div><img src={`/character/${otherCharacter}.svg`}/></div>
           <div>
-            <span>버튼1</span>
-            <span>버튼2</span>
+            <span><SmallButton title='채팅하기' /></span>
+            <span><SmallButton title='채팅하기' /></span>
           </div>
         </Modal>
       )}

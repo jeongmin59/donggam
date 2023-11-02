@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { getMailDetail, postMailLike } from '../../api/mailApi';
 import like from '../../assets/like/full_heart.png'
 import dislike from '../../assets/like/empty_heart.png'
+import alertIcon from '../../assets/icons/alert.png'
+import ToastModal from './../common/ToastModal';
 
 
 const MailItem = ({ isOpen, onClose, mailData }) => {
@@ -15,13 +17,15 @@ const MailItem = ({ isOpen, onClose, mailData }) => {
 
   const mailId = mailData.messageId;
 
+
   const [mailDetail, setMailDetail] = useState({});
-  const [isLiked, setIsLiked] = useState(false);
+  const [isLiked, setIsLiked] = useState();
 
   useEffect(() => {
     getMailDetail(mailId)
       .then((res) => {
         setMailDetail(res);
+        setIsLiked(res.isLiked);
         console.log('쪽지디테일내놧!', res)
       })
       .catch((err) => {
@@ -30,12 +34,14 @@ const MailItem = ({ isOpen, onClose, mailData }) => {
   }, []);
 
   const handleLikeClick = () => {
-    postMailLike(mailId)
+    postMailLike(mailId, !isLiked)
     setIsLiked(!isLiked);
   };
 
+  const [showToast, setShowToast] = useState(false);
+
   const handleReportClick = () => {
-    // 신고하기 버튼을 클릭했을 때 로직을 추가하세요.
+    setShowToast(true);
   };
 
   return (
@@ -72,8 +78,10 @@ const MailItem = ({ isOpen, onClose, mailData }) => {
           </div>
           <div>
             {/* 신고하기 버튼 */}
-            <button onClick={handleReportClick} className="text-center mt-4 bg-red-500 text-white py-2 px-4 rounded-full">신고하기</button>
+            <img src={alertIcon} onClick={handleReportClick} />
           </div>
+          {showToast && <ToastModal message="쪽지가 신고되었습니다." onClose={setShowToast} />}
+
           <div>
             {/* 좋아요 버튼 */}
             {isLiked ? (

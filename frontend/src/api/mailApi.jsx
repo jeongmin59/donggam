@@ -42,11 +42,11 @@ export const getMailDetail = async (messageId) => {
 };
 
 // 쪽지 좋아요
-export const postMailLike = async (messageId) => {
+export const postMailLike = async (messageId, isLiked) => {
   try {
     const res = await axiosInstance.post(`/message/like`, {
       messageId: messageId,
-      isLiked: true,
+      isLiked: isLiked,
     });
     console.log('쪽지 성공', res.data)
     return res.data;

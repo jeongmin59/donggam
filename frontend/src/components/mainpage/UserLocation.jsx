@@ -17,7 +17,7 @@ const UserLocation = ({ otherUserInfo }) => {
 
   // 주변 유저 정보 모달 
   const [modalInfo, setModalInfo] = useState(null); // 유저 모달
-  // const [mailModalInfo, setMailModalInfo] = useState(null); // (예정) 쪽지 모달 
+  const [mailModalInfo, setMailModalInfo] = useState(null); // (예정) 쪽지 모달 
 
   const handleModal = (otherUser) => {
     if (modalInfo) {
@@ -30,8 +30,8 @@ const UserLocation = ({ otherUserInfo }) => {
           const modalData = {
             otherNickname: data.data.nickname,
             otherStatus: data.data.status,
-            otherCharacterId: data.data.characterId
-            // otherStatusId: data.data.statusId //(예정)
+            otherCharacterId: data.data.characterId,
+            otherStatusId: data.data.statusId //(예정)
           };
           setModalInfo(modalData);
         })
@@ -41,13 +41,17 @@ const UserLocation = ({ otherUserInfo }) => {
     }
   }
 
-  // (예정) 쪽지 모달 열기
-  // const openMailModal = (statusId) => {
-  //   setMailModalInfo({
-  //     statusId,
-  //   });
-  // }
+  //(예정) 쪽지 모달 열기
+  const openMailModal = (otherStatusId) => {
+    setModalInfo(null);
+    setMailModalInfo({
+      otherStatusId,
+    });
+  }
 
+  const 
+
+  console.log('스테터스 아이디 불러와', mailModalInfo);
   // 애니메이션 
   const defaultOptions = {
     loop: true,
@@ -74,20 +78,27 @@ const UserLocation = ({ otherUserInfo }) => {
             <SmallButton title='채팅하기' />
             <SmallButton 
               title='쪽지쓰기' 
-              // onClick={() => openMailModal(modalInfo.otherStatusId)} // (예정)
+              onClick={() => openMailModal(modalInfo.otherStatusId)} // (예정)
             />
           </div>
         </Modal>
       )}
 
-      {/* {mailModalInfo && (
+      {mailModalInfo && (
         <Modal isOpen={true} onClose={() => setMailModalInfo(null)}>
-          <div>{mailModalInfo.otherStatusId}</div>
-          <div>쪽지 쓰기</div>
-          <div>인풋박스</div>
-          <button>쪽지 전송하기</button>
+          <div className="w-[100%] space-y-3">
+            <h2 className="mx-2">{mailModalInfo.otherStatusId}쪽지 쓰기</h2>
+            
+            {/* <div className="bg-gray-100 px-5 py-5 rounded-[16px]">인풋박스</div> */}
+          </div>
+          <div className="mt-10 flex ">
+            <SmallButton 
+              title='쪽지쓰기' 
+              onClick={() => openMailModal(modalInfo.otherStatusId)} // (예정)
+            />
+          </div>
         </Modal>
-      )} */}
+      )}
 
       <div className="flex justify-center items-center overflow-hidden" style={{ width: "100%", height: "100%", zIndex: -1 }}>
         <div className="nya relative flex justify-center items-center" style={{ width: "100%", height: "100%", zIndex: 1 }}>

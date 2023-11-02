@@ -11,6 +11,7 @@ import com.example.backend.entity.mariaDB.space.LandMarkRecordComment;
 import com.example.backend.entity.postgreSQL.LandMarkLocation;
 import com.example.backend.exception.ErrorCode;
 import com.example.backend.exception.type.CustomException;
+import com.example.backend.repository.mariaDB.landmark.CustomLandMarkRepository;
 import com.example.backend.repository.mariaDB.landmark.LandMarkRecordCommentRepository;
 import com.example.backend.repository.mariaDB.landmark.LandMarkRecordRepository;
 import com.example.backend.repository.mariaDB.landmark.LandMarkRepository;
@@ -32,6 +33,7 @@ public class LandMarkService {
 
     private final MemberRepository memberRepository;
     private final LandMarkRepository landMarkRepository;
+    private final CustomLandMarkRepository customLandMarkRepository;
     private final LandMarkRecordRepository landMarkRecordRepository;
     private final LandMarkRecordCommentRepository landMarkRecordCommentRepository;
     private final LandMarkLocationRepository landMarkLocationRepository;
@@ -66,7 +68,7 @@ public class LandMarkService {
     }
 
     public List<LandMarkRecordDto.Response> landMarkRecords(Long landMarkId) {
-        LandMark landMark = landMarkRepository.findById(landMarkId)
+        LandMark landMark = customLandMarkRepository.findById(landMarkId)
                 .orElseThrow(() -> new CustomException(ErrorCode.ENTITY_NOT_FOUND.getMessage(),
                         ErrorCode.ENTITY_NOT_FOUND));
 

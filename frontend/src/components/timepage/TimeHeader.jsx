@@ -20,7 +20,7 @@ const TimeHeader = ({ currentTime }) => {
       image =afternoonImage
 
     } else if (currentTime >= 17 && currentTime < 20) {
-      contentText = "수고했어 오늘도";
+      contentText = "수고했어~ 오늘도...~";
       titleText = "퇴근길 모먼트";
       image = nightImage
     

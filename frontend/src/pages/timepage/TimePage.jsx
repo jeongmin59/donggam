@@ -2,15 +2,17 @@ import React from "react";
 import TimeBackground from "../../components/timepage/TimeBackground";
 import CreateButton from "../../components/common/CreateButton";
 import PhotoList from "../../components/timepage/PhotoList";
+import BestPhoto from "../../components/timepage/BestPhoto";
 
-const TimePage = () => {
+const TimePage = ({ currentTime }) => {
   return (
     <>
-      <TimeBackground />
-      <PhotoList />
+      <TimeBackground currentTime={currentTime} />
+      {(currentTime >= 10 && currentTime < 11) || (currentTime >= 14 && currentTime < 17) || (currentTime >= 20) ? <BestPhoto /> : <PhotoList />}
       <CreateButton to="/time/upload" />
     </>
   );
 };
+
 
 export default TimePage;

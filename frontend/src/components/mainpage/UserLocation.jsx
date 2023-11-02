@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRecoilValue } from "recoil";
 import { UserSelector } from "../../recoil/user/userSelector";
 import { getOtherUserInfo } from "../../api/userApi";
@@ -6,8 +6,8 @@ import Lottie from "react-lottie";
 import animationData from "../../assets/animation/location-animation.json";
 import UserCharacter from "./UserCharacter";
 import Modal from "../common/Modal";
-import SmallButton from "../common/SmallButton";
-
+import UserModal from "./UserModal";
+import MailModal from "./MailModal";
 
 const UserLocation = ({ otherUserInfo }) => {
   // 유저 정보
@@ -66,38 +66,19 @@ const UserLocation = ({ otherUserInfo }) => {
     <>
       {modalInfo && (
         <Modal isOpen={true} onClose={() => setModalInfo(null)}>
-          <div className="w-[100%] space-y-3">
-            <h2 className="mx-2">{modalInfo.otherNickname}</h2>
-            <div className="bg-gray-100 px-5 py-5 rounded-[16px]">{modalInfo.otherStatus}</div>
-            <div className='flex justify-center'><img src={`/character/${modalInfo.otherCharacterId}.svg`}/></div>
-          </div>
-          <div className="mt-10 flex space-x-2 ">
-            <SmallButton title='채팅하기' />
-            <SmallButton 
-              title='쪽지쓰기' 
-              onClick={() => openMailModal(modalInfo.otherStatusId)} // (예정)
-            />
-          </div>
+          <UserModal
+            modalInfo={modalInfo}
+            openMailModal={openMailModal}
+          />
         </Modal>
       )}
 
       {mailModalInfo && (
         <Modal isOpen={true} onClose={() => setMailModalInfo(null)}>
-          <div className="w-[100%] h-[100%] space-y-3">
-            <h2 className="mx-2">{mailModalInfo.otherStatusId}쪽지 쓰기</h2>
-            <textarea
-              type="text"
-              placeholder="쪽지 내용을 입력하세요"
-              // onChange={}
-              className="bg-gray-100 w-[100%] h-60 px-5 py-5 text-left"
-            />
-          </div>
-          <div className="mt-5 flex ">
-            <SmallButton 
-              title='쪽지쓰기' 
-              onClick={() => openMailModal(modalInfo.otherStatusId)} // (예정)
-            />
-          </div>
+          <MailModal
+            mailModalInfo={mailModalInfo}
+            openMailModal={openMailModal}
+          />
         </Modal>
       )}
 

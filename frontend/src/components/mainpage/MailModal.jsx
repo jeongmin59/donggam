@@ -1,7 +1,7 @@
 import SmallButton from "../common/SmallButton";
 import { sendMail } from "../../api/mailApi";
 import addPhotoIcon from "../../assets/icons/addPhoto-icon.svg"
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 const MailModal = ({mailModalInfo, openMailModal}) => {
   // const [buttonText, setButtonText] = useState("사진첨부");
@@ -17,6 +17,10 @@ const MailModal = ({mailModalInfo, openMailModal}) => {
   const statusId = mailModalInfo.otherStatusId
   const [content, setContent] = useState("");
   const [selectedImage, setSelectedImage] = useState(null);
+  const [isEditingImage, setIsEditingImage] = useState(false);
+  const [imageSrc, setImageSrc]= useState(null);
+
+  const imageInputRef = useRef(null);
 
   const handleSendMailClick = async () => {
     if (!content) {
@@ -33,6 +37,21 @@ const MailModal = ({mailModalInfo, openMailModal}) => {
     }
   }
 
+  const handleImageInputChange = (e) => {
+    if (e.target.files.length >0) {
+      setSelectedImage(e.target.files[0]);
+      setIsEditingImage(true);
+
+      // 미리보기
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        setImageSrc(reader.result || null);
+      };
+    }
+  };
+
   console.log(statusId, content, selectedImage)
 
   return(
@@ -42,9 +61,30 @@ const MailModal = ({mailModalInfo, openMailModal}) => {
           <h2 className="mx-2">{mailModalInfo.otherStatusId}쪽지 쓰기</h2>
           <div className="flex item-center">
             <div><img src={addPhotoIcon}/></div>
-            <p>사진첨부</p>
+            {isEditingImage ? (
+              <button
+                onClick={() => imageInputRef.current.click()}>
+                  사진 수정
+                </button>
+            ) : (
+              <label 
+                // className="signup-profileImg-label" 
+                htmlFor="addPhoto">
+                  사진 등록
+              </label>
+
+            )}
+            <input
+              className="hidden"
+              type="file"
+              accept="image/*"
+              id="addPhoto"
+              ref={imageInputRef}
+              onChange={handleImageInputChange}
+            />
           </div>
         </div>
+        {imageSrc && <img src={imageSrc} width="100%" alt="미리보기 이미지" />}
         <textarea
           type="text"
           placeholder="쪽지 내용을 입력하세요"

@@ -14,10 +14,9 @@ export const sendMail =async (statusId, content, imageFile) => {
     const res = await axiosInstance.post(`/message/send`, formData,{
       headers: {
         'Content-Type': 'multipart/form-data',
-        // "Content-Type": "application/json",
       },
     });
-    console.log('쪽지 전송 axios 성공', res.data);
+    // console.log('쪽지 전송 axios 성공', res.data);
     return res.data;
   } catch (err) {
     console.log('쪽지 전송 axios 실패', err)

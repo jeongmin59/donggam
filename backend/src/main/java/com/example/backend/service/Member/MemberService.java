@@ -13,7 +13,8 @@ import com.example.backend.entity.mariaDB.member.Member;
 import com.example.backend.exception.ErrorCode;
 import com.example.backend.exception.type.CustomException;
 import com.example.backend.jwt.TokenProvider;
-import com.example.backend.repository.mariaDB.MemberRepository;
+import com.example.backend.repository.mariaDB.member.CustomMemberRepository;
+import com.example.backend.repository.mariaDB.member.MemberRepository;
 import com.example.backend.repository.mariaDB.StatusRepository;
 import java.util.Objects;
 import java.util.Random;
@@ -37,6 +38,7 @@ import org.springframework.web.client.RestTemplate;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final CustomMemberRepository customMemberRepository;
     private final StatusRepository statusRepository;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final TokenProvider tokenProvider;
@@ -73,9 +75,7 @@ public class MemberService {
     }
 
     public UpdateStatusDto.Response updateStatus(Long memberId, String newStatus) {
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND.getMessage(),
-                        ErrorCode.USER_NOT_FOUND));
+        Member member = customMemberRepository.findById(memberId);
 
         // 네이버 클로바 센티멘트 API의 감정 분석 결과
         String emotion = sentimentAPI(newStatus);
@@ -96,9 +96,7 @@ public class MemberService {
     }
 
     public UpdateDto.Response update(Long memberId, UpdateDto.Request request) {
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND.getMessage(),
-                        ErrorCode.USER_NOT_FOUND));
+        Member member = customMemberRepository.findById(memberId);
 
         Status status = member.getStatus().get(member.getStatus().size() - 1);
         if (!Objects.equals(request.getStatus(), status.getContent())) {
@@ -184,7 +182,7 @@ public class MemberService {
         Random random = new Random();
         int randomNumber = random.nextInt(12) + 1;
 
-        Member member = memberRepository.findById(memberId)
+        Member member = customMemberRepository.findOptionalById(memberId)
                 .orElseGet(() -> memberRepository.save(
                         new Member(memberId, nicknames[randomNumber], email, randomNumber,
                                 Authority.ROLE_USER)));
@@ -198,19 +196,7 @@ public class MemberService {
                 .authenticate(authenticationToken);
         TokenDto tokenDto = tokenProvider.createToken(authentication);
 
-//    return LoginDto.toLoginDtoResponse(member, tokenDto);
-        return LoginDto.Response.builder()
-                .memberId(member.getId())
-                .nickname(member.getNickname())
-                .statusId(member.getStatus().isEmpty() ? null
-                        : member.getStatus().get(member.getStatus().size() - 1).getId())
-                .status(member.getStatus().isEmpty() ? null
-                        : member.getStatus().get(member.getStatus().size() - 1).getContent())
-                .characterId(member.getCharacterId())
-                .grantType(tokenDto.getGrantType())
-                .accessToken(tokenDto.getAccessToken())
-                .accessTokenExpiration(tokenDto.getAccessTokenExpiration())
-                .build();
+        return LoginDto.toDto(member, tokenDto);
     }
 
     private String sentimentAPI(String status) {

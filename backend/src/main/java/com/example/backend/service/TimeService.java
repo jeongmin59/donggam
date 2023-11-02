@@ -8,7 +8,7 @@ import com.example.backend.entity.mariaDB.time.Image;
 import com.example.backend.exception.ErrorCode;
 import com.example.backend.exception.type.CustomException;
 import com.example.backend.repository.mariaDB.ImageRepository;
-import com.example.backend.repository.mariaDB.MemberRepository;
+import com.example.backend.repository.mariaDB.member.MemberRepository;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Collections;

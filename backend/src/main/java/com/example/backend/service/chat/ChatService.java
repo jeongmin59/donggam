@@ -8,7 +8,7 @@ import com.example.backend.entity.mariaDB.chat.ChatRoom;
 import com.example.backend.entity.mariaDB.member.Member;
 import com.example.backend.exception.ErrorCode;
 import com.example.backend.exception.type.CustomException;
-import com.example.backend.repository.mariaDB.MemberRepository;
+import com.example.backend.repository.mariaDB.member.MemberRepository;
 import com.example.backend.repository.mariaDB.chat.ChatRepository;
 import com.example.backend.repository.mariaDB.chat.ChatRoomRepository;
 import java.util.List;

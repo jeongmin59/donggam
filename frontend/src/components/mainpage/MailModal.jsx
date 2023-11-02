@@ -3,17 +3,7 @@ import { sendMail } from "../../api/mailApi";
 import addPhotoIcon from "../../assets/icons/addPhoto-icon.svg"
 import { useState, useRef } from "react";
 
-const MailModal = ({mailModalInfo, openMailModal}) => {
-  // const [buttonText, setButtonText] = useState("사진첨부");
-
-  // // 사진 첨부
-  // const handleFileSelect = () => {
-  //   const fileInput = document.getElementById("fileInput");
-  //   if (fileInput) {
-  //     fileInput.click();
-  //     setButtonText('사진수정')
-  //   }
-  // }
+const MailModal = ({mailModalInfo, closeMailModal}) => {
   const statusId = mailModalInfo.otherStatusId
   const [content, setContent] = useState("");
   const [selectedImage, setSelectedImage] = useState(null);
@@ -30,6 +20,7 @@ const MailModal = ({mailModalInfo, openMailModal}) => {
     try {
       const res = await sendMail(statusId, content, selectedImage);
       if (res) {
+        closeMailModal();
         console.log('쪽지 전송 성공', res.data);
       }
     } catch (err) {
@@ -37,6 +28,7 @@ const MailModal = ({mailModalInfo, openMailModal}) => {
     }
   }
 
+  // 사진 첨부 
   const handleImageInputChange = (e) => {
     if (e.target.files.length >0) {
       setSelectedImage(e.target.files[0]);
@@ -52,7 +44,7 @@ const MailModal = ({mailModalInfo, openMailModal}) => {
     }
   };
 
-  console.log(statusId, content, selectedImage)
+  // console.log(statusId, content, selectedImage)
 
   return(
     <>

@@ -41,12 +41,17 @@ const UserLocation = ({ otherUserInfo }) => {
     }
   }
 
-  //(예정) 쪽지 모달 열기
+  // 쪽지 모달 열기
   const openMailModal = (otherStatusId) => {
     setModalInfo(null);
     setMailModalInfo({
       otherStatusId,
     });
+  }
+  
+  // 쪽지 모달 닫기 
+  const closeMailModal = () => {
+    setMailModalInfo(null)
   }
 
   // 애니메이션 
@@ -77,7 +82,7 @@ const UserLocation = ({ otherUserInfo }) => {
         <Modal isOpen={true} onClose={() => setMailModalInfo(null)}>
           <MailModal
             mailModalInfo={mailModalInfo}
-            openMailModal={openMailModal}
+            closeMailModal={closeMailModal}
           />
         </Modal>
       )}

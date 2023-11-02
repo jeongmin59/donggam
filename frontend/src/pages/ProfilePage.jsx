@@ -4,6 +4,7 @@ import { CharacterIdAtom, NicknameAtom, StatusMessageAtom, StatusMessageIdAtom }
 import { updateUser } from '../api/userApi';
 import { useNavigate } from 'react-router-dom';
 import CharacterModal from '../components/character/CharacterModal';
+import Header from '../components/common/Header';
 
 const ProfilePage = () => {
   // 전역상태의 유저 정보 가져오기
@@ -76,7 +77,8 @@ const ProfilePage = () => {
 
   return (
     <div>
-      <div>
+      <Header title="내 프로필 만들기"/>
+      <div className='px-5'>
         <label htmlFor="nickname" className="block text-sm font-medium leading-6 text-gray-900">닉네임</label>
         <div className="relative mt-2 rounded-md shadow-sm">
           <input

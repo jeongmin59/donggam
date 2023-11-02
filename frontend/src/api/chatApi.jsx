@@ -1,9 +1,13 @@
 import axiosInstance from "./axiosConfig";
 
-// 전체 status 리스트 가져오기
-export const getStatusList = async () => {
+// 전체 채팅방 가져오기
+export const getChatList = async () => {
   try {
-    const res = await axiosInstance.get(`/message/status/list`);
+    const res = await axiosInstance.get(`/room/list/${userDetails}`, {
+      params: {
+
+      }
+    });
     // console.log('상메axios 가져오기 성공', res)
     return res.data.data;
   } catch (err) {

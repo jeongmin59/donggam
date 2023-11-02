@@ -49,9 +49,6 @@ const UserLocation = ({ otherUserInfo }) => {
     });
   }
 
-  const 
-
-  console.log('스테터스 아이디 불러와', mailModalInfo);
   // 애니메이션 
   const defaultOptions = {
     loop: true,
@@ -86,12 +83,16 @@ const UserLocation = ({ otherUserInfo }) => {
 
       {mailModalInfo && (
         <Modal isOpen={true} onClose={() => setMailModalInfo(null)}>
-          <div className="w-[100%] space-y-3">
+          <div className="w-[100%] h-[100%] space-y-3">
             <h2 className="mx-2">{mailModalInfo.otherStatusId}쪽지 쓰기</h2>
-            
-            {/* <div className="bg-gray-100 px-5 py-5 rounded-[16px]">인풋박스</div> */}
+            <textarea
+              type="text"
+              placeholder="쪽지 내용을 입력하세요"
+              // onChange={}
+              className="bg-gray-100 w-[100%] h-60 px-5 py-5 text-left"
+            />
           </div>
-          <div className="mt-10 flex ">
+          <div className="mt-5 flex ">
             <SmallButton 
               title='쪽지쓰기' 
               onClick={() => openMailModal(modalInfo.otherStatusId)} // (예정)

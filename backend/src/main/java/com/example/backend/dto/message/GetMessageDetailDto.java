@@ -15,5 +15,7 @@ public class GetMessageDetailDto {
         private String imgAddress;
         private LocalDate localDate = LocalDate.now();
         private String from;
+        private Boolean isLiked;
+        private Boolean isRead;
     }
 }

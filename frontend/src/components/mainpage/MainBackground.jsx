@@ -46,8 +46,8 @@ const MainBackground = () => {
         .then((data) => {
           if (data) {
             setSelectedBackground(data.data.statusWeather);
-            setAroundPeople(data.data.aroundPeople);
             setAroundPeopleCount(data.data.aroundPeopleCount);
+            setAroundPeople(data.data.aroundPeople);
           }
           console.log('위치 API 응답:', data.data)
         });

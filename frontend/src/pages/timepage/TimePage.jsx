@@ -5,14 +5,14 @@ import PhotoList from "../../components/timepage/PhotoList";
 import BestPhoto from "../../components/timepage/BestPhoto";
 
 const TimePage = ({ currentTime }) => {
-
   return (
     <>
       <TimeBackground currentTime={currentTime} />
-      {(currentTime >= 7 && currentTime < 10) || (currentTime >= 11 && currentTime < 14) || (currentTime >= 17 && currentTime < 20) ? <PhotoList /> : <BestPhoto />}
+      {(currentTime >= 10 && currentTime < 11) || (currentTime >= 14 && currentTime < 17) || (currentTime >= 20) ? <BestPhoto /> : <PhotoList />}
       <CreateButton to="/time/upload" />
     </>
   );
 };
+
 
 export default TimePage;

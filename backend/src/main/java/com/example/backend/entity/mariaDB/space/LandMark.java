@@ -1,5 +1,7 @@
 package com.example.backend.entity.mariaDB.space;
 
+import com.example.backend.dto.landmark.SearchLandmarkDto;
+import com.example.backend.entity.postgreSQL.LandMarkLocation;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -43,4 +45,13 @@ public class LandMark {
     this.imageAddress = imageAddress;
   }
 
+  public SearchLandmarkDto.Response toSearchLandMarkDto(LandMarkLocation landMarkLocation) {
+    return SearchLandmarkDto.Response.builder()
+            .landMarkId(this.getId())
+            .imgUrl(this.getImageAddress())
+            .name(this.getName())
+            .latitude(landMarkLocation.getLatitude())
+            .longitude(landMarkLocation.getLongitude())
+            .build();
+  }
 }

@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./index.css";
 import MainPage from "./pages/MainPage";
 import LoginPage from "./pages/LoginPage";
-import ChattingPage from "./pages/ChattinPage";
 import MailboxPage from "./pages/MailboxPage";
 import TimePage from "./pages/timepage/TimePage"
 import PhotoUploadPage from "./pages/timepage/PhotoUploadPage";
@@ -13,6 +12,8 @@ import NearbyTracePage from "./pages/NearbyTracePage";
 import NearbyLandmarkPage from "./pages/NearbyLandmarkPage";
 import SpaceUploadpage from "./pages/SpaceUploadPage";
 import ProfilePage from "./pages/ProfilePage";
+import ChatRoomPage from "./pages/ChatRoomPage";
+import ChattingPage from './pages/ChattingPage';
 
 
 function App() {
@@ -23,7 +24,8 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/kakao/callback" element={<LoginRediect />} />
-        <Route path="/chatting/:userId" element={<ChattingPage />} />
+        <Route path="/chatroom" element={<ChatRoomPage />} />
+        <Route path="/chatting/:roomId" element={<ChattingPage />} />
         <Route path="/mailbox" element={<MailboxPage />} />
         <Route path="/time" element={<TimePage />} />
         <Route path="/time/upload" element={<PhotoUploadPage />} />

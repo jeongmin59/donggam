@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { getMailDetail } from '../../api/mailApi';
+import { getMailDetail, postMailLike } from '../../api/mailApi';
+import like from '../../assets/like/full_heart.png'
+import dislike from '../../assets/like/empty_heart.png'
+
 
 const MailItem = ({ isOpen, onClose, mailData }) => {
   const handleBackgroundClick = (e) => {
@@ -13,12 +16,13 @@ const MailItem = ({ isOpen, onClose, mailData }) => {
   const mailId = mailData.messageId;
 
   const [mailDetail, setMailDetail] = useState({});
-  const [liked, setLiked] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
 
   useEffect(() => {
     getMailDetail(mailId)
       .then((res) => {
         setMailDetail(res);
+        console.log('쪽지디테일내놧!', res)
       })
       .catch((err) => {
         console.log('쪽지 detail 가져오기 실패:', err);
@@ -26,8 +30,8 @@ const MailItem = ({ isOpen, onClose, mailData }) => {
   }, []);
 
   const handleLikeClick = () => {
-    // 좋아요 버튼을 클릭했을 때 로직을 추가하세요.
-    setLiked(!liked);
+    postMailLike(mailId)
+    setIsLiked(!isLiked);
   };
 
   const handleReportClick = () => {
@@ -72,12 +76,14 @@ const MailItem = ({ isOpen, onClose, mailData }) => {
           </div>
           <div>
             {/* 좋아요 버튼 */}
-            <button onClick={handleLikeClick} className={`text-center mt-4 ${liked ? 'bg-blue-500' : 'bg-blue-300'} text-white py-2 px-4 rounded-full`}>
-              {liked ? '좋아요 취소' : '좋아요'}
-            </button>
+            {isLiked ? (
+              <img src={like} onClick={handleLikeClick} />
+            ) : (
+              <img src={dislike} onClick={handleLikeClick} />
+            )}
           </div>
         </div>
-      </div>
+      </div >
     </>
   );
 };

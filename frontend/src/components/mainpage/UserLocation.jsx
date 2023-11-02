@@ -15,7 +15,10 @@ const UserLocation = ({ otherUserInfo }) => {
   const characterId = user.characterId;
   const myCharacter = `/character/${characterId}.svg`;
 
-  const [modalInfo, setModalInfo] = useState(null);
+  // 주변 유저 정보 모달 
+  const [modalInfo, setModalInfo] = useState(null); // 유저 모달
+  // const [mailModalInfo, setMailModalInfo] = useState(null); // (예정) 쪽지 모달 
+
   const handleModal = (otherUser) => {
     if (modalInfo) {
       // 모달이 이미 열려있는 경우, 닫고 초기화
@@ -28,6 +31,7 @@ const UserLocation = ({ otherUserInfo }) => {
             otherNickname: data.data.nickname,
             otherStatus: data.data.status,
             otherCharacterId: data.data.characterId
+            // otherStatusId: data.data.statusId //(예정)
           };
           setModalInfo(modalData);
         })
@@ -36,6 +40,13 @@ const UserLocation = ({ otherUserInfo }) => {
         });
     }
   }
+
+  // (예정) 쪽지 모달 열기
+  // const openMailModal = (statusId) => {
+  //   setMailModalInfo({
+  //     statusId,
+  //   });
+  // }
 
   // 애니메이션 
   const defaultOptions = {
@@ -47,7 +58,7 @@ const UserLocation = ({ otherUserInfo }) => {
     },
   };
   const animationStyle = {
-    transform: "scale(2)", // 2배 크기
+    transform: "scale(2)", // 2배
   };
 
   return (
@@ -61,10 +72,23 @@ const UserLocation = ({ otherUserInfo }) => {
           </div>
           <div className="mt-10 flex space-x-2 ">
             <SmallButton title='채팅하기' />
-            <SmallButton title='쪽지쓰기' />
+            <SmallButton 
+              title='쪽지쓰기' 
+              // onClick={() => openMailModal(modalInfo.otherStatusId)} // (예정)
+            />
           </div>
         </Modal>
       )}
+
+      {/* {mailModalInfo && (
+        <Modal isOpen={true} onClose={() => setMailModalInfo(null)}>
+          <div>{mailModalInfo.otherStatusId}</div>
+          <div>쪽지 쓰기</div>
+          <div>인풋박스</div>
+          <button>쪽지 전송하기</button>
+        </Modal>
+      )} */}
+
       <div className="flex justify-center items-center overflow-hidden" style={{ width: "100%", height: "100%", zIndex: -1 }}>
         <div className="nya relative flex justify-center items-center" style={{ width: "100%", height: "100%", zIndex: 1 }}>
           <div>

@@ -26,8 +26,9 @@ public class CustomMemberRepository extends QuerydslRepositorySupport {
 
     public List<Member> findByIdInAndLastUpdateTimeAfter(List<Long> memberIds, LocalDateTime time) {
         return queryFactory
-                .selectFrom(member)
-                .join(member.status, status)
+                .selectDistinct(member)
+                .from(member)
+                .leftJoin(member.status, status)
                 .where(member.id.in(memberIds).and(member.lastUpdateTime.after(time)))
                 .fetch();
     }

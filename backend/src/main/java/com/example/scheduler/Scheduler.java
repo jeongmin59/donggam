@@ -1,7 +1,7 @@
 package com.example.scheduler;
 
 import com.example.backend.entity.mariaDB.time.Image;
-import com.example.backend.repository.mariaDB.ImageRepository;
+import com.example.backend.repository.mariaDB.image.ImageRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;

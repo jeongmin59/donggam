@@ -11,6 +11,7 @@ import com.example.backend.entity.postgreSQL.RecordLocation;
 import com.example.backend.exception.ErrorCode;
 import com.example.backend.exception.type.CustomException;
 import com.example.backend.repository.mariaDB.member.MemberRepository;
+import com.example.backend.repository.mariaDB.record.CustomRecordRepository;
 import com.example.backend.repository.mariaDB.record.RecordCommentRepository;
 import com.example.backend.repository.mariaDB.record.RecordRepository;
 import com.example.backend.repository.postgreSQL.MemberLocationRepository;
@@ -31,6 +32,7 @@ public class RecordService {
     private final MemberRepository memberRepository;
     private final MemberLocationRepository memberLocationRepository;
     private final RecordRepository recordRepository;
+    private final CustomRecordRepository customRecordRepository;
     private final RecordLocationRepository recordLocationRepository;
     private final RecordCommentRepository recordCommentRepository;
 
@@ -95,7 +97,7 @@ public class RecordService {
     }
 
     public RecordDetailDto.Response record(Long recordId) {
-        Record record = recordRepository.findById(recordId)
+        Record record = customRecordRepository.findById(recordId)
                 .orElseThrow(() -> new CustomException(ErrorCode.ENTITY_NOT_FOUND.getMessage(), ErrorCode.ENTITY_NOT_FOUND));
 
         RecordLocation recordLocation = recordLocationRepository.findById(recordId)

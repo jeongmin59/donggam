@@ -26,7 +26,7 @@ const MailItem = ({ isOpen, onClose, mailData }) => {
       .then((res) => {
         setMailDetail(res);
         setIsLiked(res.isLiked);
-        console.log('쪽지디테일내놧!', res)
+        // console.log('쪽지디테일내놧!', res)
       })
       .catch((err) => {
         console.log('쪽지 detail 가져오기 실패:', err);
@@ -66,7 +66,7 @@ const MailItem = ({ isOpen, onClose, mailData }) => {
           }}
         >
           <div>
-            <p className="text-center text-sm text-gray-500 mt-2">쪽지 작성 일자</p>
+            <p className="text-center text-sm text-gray-500 mt-2">{mailDetail.localDate}</p>
           </div>
           <div>
             {/* 쪽지 내용 */}

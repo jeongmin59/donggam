@@ -9,7 +9,8 @@ import com.example.backend.entity.mariaDB.status.Status;
 import com.example.backend.entity.postgreSQL.MemberLocation;
 import com.example.backend.exception.ErrorCode;
 import com.example.backend.exception.type.CustomException;
-import com.example.backend.repository.mariaDB.MemberRepository;
+import com.example.backend.repository.mariaDB.member.CustomMemberRepository;
+import com.example.backend.repository.mariaDB.member.MemberRepository;
 import com.example.backend.repository.postgreSQL.MemberLocationRepository;
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -23,14 +24,14 @@ import org.springframework.stereotype.Service;
 public class MainService {
 
   private final MemberRepository memberRepository;
+  private final CustomMemberRepository customMemberRepository;
   private final MemberLocationRepository memberLocationRepository;
   private final LocationService locationService;
 
   // 필요한거 : 내 닉네임, 내 상태메시지, 내 캐릭터 id,  주변사람 카운트, 주변 사람들 정보
   public MainDto.Response mainPage(MainDto.Request request) {
     Long memberId = request.getMemberId();
-    Member member = memberRepository.findById(memberId)
-        .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND.getMessage(), ErrorCode.USER_NOT_FOUND));
+    Member member = customMemberRepository.findById(memberId);
 
     member.setLastUpdateTime(LocalDateTime.now());
     member = memberRepository.save(member);
@@ -61,8 +62,7 @@ public class MainService {
   }
 
   public MemberDetailDto.Response otherMember(Long memberId) {
-    Member member = memberRepository.findById(memberId)
-        .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND.getMessage(), ErrorCode.USER_NOT_FOUND));
+    Member member = customMemberRepository.findById(memberId);
 
     return MemberDetailDto.toDto(member);
   }
@@ -149,6 +149,6 @@ public class MainService {
       locationIds = locationIds.subList(0, number); // 무작위로 선택된 요소만 포함하는 새 리스트 생성
     }
 
-    return memberRepository.findByIdInAndLastUpdateTimeAfter(locationIds, LocalDateTime.now().minusMinutes(10));
+    return customMemberRepository.findByIdInAndLastUpdateTimeAfter(locationIds, LocalDateTime.now().minusMinutes(10));
   }
 }

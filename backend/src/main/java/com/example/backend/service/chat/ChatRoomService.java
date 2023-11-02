@@ -4,7 +4,7 @@ import com.example.backend.dto.chat.GetRoomListDto;
 import com.example.backend.dto.chat.RoomDto;
 import com.example.backend.entity.mariaDB.chat.ChatRoom;
 import com.example.backend.entity.mariaDB.member.Member;
-import com.example.backend.repository.mariaDB.MemberRepository;
+import com.example.backend.repository.mariaDB.member.MemberRepository;
 import com.example.backend.repository.mariaDB.chat.ChatRoomRepository;
 import java.util.List;
 import java.util.stream.Collectors;

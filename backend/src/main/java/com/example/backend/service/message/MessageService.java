@@ -12,8 +12,9 @@ import com.example.backend.entity.mariaDB.member.Member;
 import com.example.backend.entity.mariaDB.message.Message;
 import com.example.backend.exception.ErrorCode;
 import com.example.backend.exception.type.CustomException;
-import com.example.backend.repository.mariaDB.MemberRepository;
+import com.example.backend.repository.mariaDB.member.MemberRepository;
 import com.example.backend.repository.mariaDB.StatusRepository;
+import com.example.backend.repository.mariaDB.message.CustomMessageRepository;
 import com.example.backend.repository.mariaDB.message.MessageRepository;
 import com.example.backend.service.ImageService;
 import java.io.IOException;
@@ -21,7 +22,6 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class MessageService {
     private final MessageRepository messageRepository;
     private final MemberRepository memberRepository;
+    private final CustomMessageRepository customMessageRepository;
     private final StatusRepository statusRepository;
     private final ImageService imageService;
 
@@ -74,7 +75,7 @@ public class MessageService {
     }
 
     public GetMessageListDto.Response getMessageList(Long statusId) {
-        List<Message> list = messageRepository.findAllByStatusId(statusId);
+        List<Message> list = customMessageRepository.findAllByStatusId(statusId);
         List<MessageDto> messageList = list.stream().map(Message::toMessageDto).collect(Collectors.toList());
         return GetMessageListDto.Response.builder()
                 .messageList(messageList)

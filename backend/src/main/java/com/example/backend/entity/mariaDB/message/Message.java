@@ -65,6 +65,7 @@ public class Message {
                 .id(this.id)
                 .isLiked(this.isLiked)
                 .isRead(this.isRead)
+                .localDate(this.localDate)
                 .build();
     }
 

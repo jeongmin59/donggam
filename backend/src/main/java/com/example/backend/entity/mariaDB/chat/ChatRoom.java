@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -26,6 +27,12 @@ public class ChatRoom {
 
     @ManyToOne
     private Member member2;
+
+    @Builder
+    public ChatRoom(Member member1, Member member2) {
+        this.member1 = member1;
+        this.member2 = member2;
+    }
 
     public RoomDto toRoomDto(Member member) {
         String name = "";

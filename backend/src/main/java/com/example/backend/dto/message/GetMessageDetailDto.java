@@ -13,7 +13,7 @@ public class GetMessageDetailDto {
         private Long id;
         private String content;
         private String imgAddress;
-        private LocalDate localDate = LocalDate.now();
+        private LocalDate localDate;
         private String from;
         private Boolean isLiked;
         private Boolean isRead;

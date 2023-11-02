@@ -10,7 +10,7 @@ import com.example.backend.entity.postgreSQL.MemberLocation;
 import com.example.backend.entity.postgreSQL.RecordLocation;
 import com.example.backend.exception.ErrorCode;
 import com.example.backend.exception.type.CustomException;
-import com.example.backend.repository.mariaDB.MemberRepository;
+import com.example.backend.repository.mariaDB.member.MemberRepository;
 import com.example.backend.repository.mariaDB.record.RecordCommentRepository;
 import com.example.backend.repository.mariaDB.record.RecordRepository;
 import com.example.backend.repository.postgreSQL.MemberLocationRepository;

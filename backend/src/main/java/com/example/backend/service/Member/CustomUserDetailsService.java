@@ -1,7 +1,7 @@
 package com.example.backend.service.Member;
 
 import com.example.backend.entity.mariaDB.member.Member;
-import com.example.backend.repository.mariaDB.MemberRepository;
+import com.example.backend.repository.mariaDB.member.MemberRepository;
 import java.util.Collections;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;

@@ -1,7 +1,7 @@
 package com.example.backend.jwt;
 
 import com.example.backend.entity.mariaDB.member.Member;
-import com.example.backend.repository.mariaDB.MemberRepository;
+import com.example.backend.repository.mariaDB.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;

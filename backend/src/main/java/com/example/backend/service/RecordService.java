@@ -93,4 +93,14 @@ public class RecordService {
         return records.stream().map(RecordDto::toRecordDto)
                 .collect(Collectors.toList());
     }
+
+    public RecordDetailDto.Response record(Long recordId) {
+        Record record = recordRepository.findById(recordId)
+                .orElseThrow(() -> new CustomException(ErrorCode.ENTITY_NOT_FOUND.getMessage(), ErrorCode.ENTITY_NOT_FOUND));
+
+        RecordLocation recordLocation = recordLocationRepository.findById(recordId)
+                .orElseThrow(() -> new CustomException(ErrorCode.ENTITY_NOT_FOUND.getMessage(), ErrorCode.ENTITY_NOT_FOUND));
+
+        return RecordDetailDto.toDetailDto(record, recordLocation);
+    }
 }

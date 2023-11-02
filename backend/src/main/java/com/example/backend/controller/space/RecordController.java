@@ -54,6 +54,12 @@ public class RecordController {
                 recordService.createComment(memberId, recordId, request.getContent()));
     }
 
+    @Operation(summary = "방명록 상세보기", description = "방명록 상세보기")
+    @GetMapping("/{recordId}")
+    public Response<RecordDetailDto.Response> record(@PathVariable("recordId") Long recordId) {
+        return new Response<>(200, "방명록 상세보기 성공", recordService.record(recordId));
+    }
+
     @Operation(summary = "주변 방명록 조회", description = "주변 방명록 조회")
     @GetMapping
     public Response<List<RecordDto.Response>> aroundRecords(

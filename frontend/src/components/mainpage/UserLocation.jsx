@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRecoilValue } from "recoil";
 import { UserSelector } from "../../recoil/user/userSelector";
 import { getOtherUserInfo } from "../../api/userApi";
@@ -6,8 +6,8 @@ import Lottie from "react-lottie";
 import animationData from "../../assets/animation/location-animation.json";
 import UserCharacter from "./UserCharacter";
 import Modal from "../common/Modal";
-import SmallButton from "../common/SmallButton";
-
+import UserModal from "./UserModal";
+import MailModal from "./MailModal";
 
 const UserLocation = ({ otherUserInfo }) => {
   // 유저 정보
@@ -17,7 +17,7 @@ const UserLocation = ({ otherUserInfo }) => {
 
   // 주변 유저 정보 모달 
   const [modalInfo, setModalInfo] = useState(null); // 유저 모달
-  // const [mailModalInfo, setMailModalInfo] = useState(null); // (예정) 쪽지 모달 
+  const [mailModalInfo, setMailModalInfo] = useState(null); // (예정) 쪽지 모달 
 
   const handleModal = (otherUser) => {
     if (modalInfo) {
@@ -30,8 +30,8 @@ const UserLocation = ({ otherUserInfo }) => {
           const modalData = {
             otherNickname: data.data.nickname,
             otherStatus: data.data.status,
-            otherCharacterId: data.data.characterId
-            // otherStatusId: data.data.statusId //(예정)
+            otherCharacterId: data.data.characterId,
+            otherStatusId: data.data.statusId //(예정)
           };
           setModalInfo(modalData);
         })
@@ -41,12 +41,13 @@ const UserLocation = ({ otherUserInfo }) => {
     }
   }
 
-  // (예정) 쪽지 모달 열기
-  // const openMailModal = (statusId) => {
-  //   setMailModalInfo({
-  //     statusId,
-  //   });
-  // }
+  //(예정) 쪽지 모달 열기
+  const openMailModal = (otherStatusId) => {
+    setModalInfo(null);
+    setMailModalInfo({
+      otherStatusId,
+    });
+  }
 
   // 애니메이션 
   const defaultOptions = {
@@ -65,29 +66,21 @@ const UserLocation = ({ otherUserInfo }) => {
     <>
       {modalInfo && (
         <Modal isOpen={true} onClose={() => setModalInfo(null)}>
-          <div className="w-[100%] space-y-3">
-            <h2 className="mx-2">{modalInfo.otherNickname}</h2>
-            <div className="bg-gray-100 px-5 py-5 rounded-[16px]">{modalInfo.otherStatus}</div>
-            <div className='flex justify-center'><img src={`/character/${modalInfo.otherCharacterId}.svg`}/></div>
-          </div>
-          <div className="mt-10 flex space-x-2 ">
-            <SmallButton title='채팅하기' />
-            <SmallButton 
-              title='쪽지쓰기' 
-              // onClick={() => openMailModal(modalInfo.otherStatusId)} // (예정)
-            />
-          </div>
+          <UserModal
+            modalInfo={modalInfo}
+            openMailModal={openMailModal}
+          />
         </Modal>
       )}
 
-      {/* {mailModalInfo && (
+      {mailModalInfo && (
         <Modal isOpen={true} onClose={() => setMailModalInfo(null)}>
-          <div>{mailModalInfo.otherStatusId}</div>
-          <div>쪽지 쓰기</div>
-          <div>인풋박스</div>
-          <button>쪽지 전송하기</button>
+          <MailModal
+            mailModalInfo={mailModalInfo}
+            openMailModal={openMailModal}
+          />
         </Modal>
-      )} */}
+      )}
 
       <div className="flex justify-center items-center overflow-hidden" style={{ width: "100%", height: "100%", zIndex: -1 }}>
         <div className="nya relative flex justify-center items-center" style={{ width: "100%", height: "100%", zIndex: 1 }}>

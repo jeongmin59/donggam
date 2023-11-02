@@ -48,7 +48,7 @@ export const postMailLike = async (messageId, isLiked) => {
       messageId: messageId,
       isLiked: isLiked,
     });
-    console.log('쪽지 성공', res.data)
+    // console.log('쪽지 성공', res.data)
     return res.data;
   } catch (err) {
     console.log('쪽지 좋아요 실패!', err)
@@ -62,7 +62,7 @@ export const postMailRead = async (messageId) => {
     const res = await axiosInstance.post(`/message/read/${messageId}`, {
       params: { messageId },
     });
-    console.log('쪽지 읽음 처리 성공', res.data)
+    // console.log('쪽지 읽음 처리 성공', res.data)
     return res.data;
   } catch (err) {
     console.log('쪽지 읽음 처리 실패!', err)

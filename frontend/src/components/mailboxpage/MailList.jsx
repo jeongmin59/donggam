@@ -22,7 +22,6 @@ const MailList = (mail) => {
   const handleMailClick = () => {
     if (!isRead) {
       postMailRead(mailId);
-      console.log('읽음처리 요청!!!!!!!!!!!!!!!')
     }
     openModal();
   };

@@ -66,7 +66,7 @@ const MailItem = ({ isOpen, onClose, mailData }) => {
           }}
         >
           <div>
-            <p className="text-center text-sm text-gray-500 mt-2">쪽지 작성 일자</p>
+            <p className="text-center text-sm text-gray-500 mt-2">{mailDetail.localDate}</p>
           </div>
           <div>
             {/* 쪽지 내용 */}

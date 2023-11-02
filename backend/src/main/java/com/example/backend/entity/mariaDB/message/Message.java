@@ -63,6 +63,8 @@ public class Message {
                 .imgAddress(this.imgAddress)
                 .from(this.from.getNickname())
                 .id(this.id)
+                .isLiked(this.isLiked)
+                .isRead(this.isRead)
                 .build();
     }
 

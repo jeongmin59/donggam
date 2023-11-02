@@ -28,13 +28,7 @@ const Modal = ({isOpen, onClose, children}) => {
       >
         {/* 모달 컨텐츠 */}
         <div
-          style = {{
-            backgroundColor: 'white',
-            borderRadius: '20px',
-            width:'100%',
-            height:'55%',
-            margin: 'auto'
-          }}>
+          className="w-[100%] m-auto bg-white rounded-[20px] px-7 py-[15%] flex-column justify-center item-center">
           {children}
         </div>
       </div>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRecoilValue } from "recoil";
 import { UserSelector } from "../../recoil/user/userSelector";
 import { getOtherUserInfo } from "../../api/userApi";
@@ -6,37 +6,48 @@ import Lottie from "react-lottie";
 import animationData from "../../assets/animation/location-animation.json";
 import UserCharacter from "./UserCharacter";
 import Modal from "../common/Modal";
-import SmallButton from "../common/SmallButton";
+import UserModal from "./UserModal";
+import MailModal from "./MailModal";
 
-// const UserLocation = ({ otherMemberIds, userCharacters }) => {
 const UserLocation = ({ otherUserInfo }) => {
   // 유저 정보
   const user = useRecoilValue(UserSelector);
   const characterId = user.characterId;
   const myCharacter = `/character/${characterId}.svg`;
 
-  // 상대방 정보
-  const [otherNickname, setOtherNickname] = useState('');
-  const [otherStatus, setOtherStatus] = useState('');
-  const [otherCharacter, setOtherCharacter] = useState(0);
-  
-  useEffect(() => {
-    // otherUserInfo 배열 내의 각 사용자 정보로부터 memberId를 추출하여 get 요청을 수행
-    otherUserInfo.map((otherUser) => {
-      const OtherMemberId = otherUser.memberId;
-      // memberId를 사용해 get 요청 수행
-      getOtherUserInfo(OtherMemberId)
+  // 주변 유저 정보 모달 
+  const [modalInfo, setModalInfo] = useState(null); // 유저 모달
+  const [mailModalInfo, setMailModalInfo] = useState(null); // (예정) 쪽지 모달 
+
+  const handleModal = (otherUser) => {
+    if (modalInfo) {
+      // 모달이 이미 열려있는 경우, 닫고 초기화
+      setModalInfo(null);
+    } else {
+      // 모달 열기
+      getOtherUserInfo(otherUser.memberId)
         .then((data) => {
-          console.log("상대방 정보:", data);
-          setOtherNickname(data.data.nickname);
-          setOtherStatus(data.data.status);
-          setOtherCharacter(data.data.characterId);
+          const modalData = {
+            otherNickname: data.data.nickname,
+            otherStatus: data.data.status,
+            otherCharacterId: data.data.characterId,
+            otherStatusId: data.data.statusId //(예정)
+          };
+          setModalInfo(modalData);
         })
         .catch((error) => {
-          console.error("상대방 정보 가져오기 실패!", error);
+          console.error('상대방 정보 가져오기 실패!', error);
         });
+    }
+  }
+
+  //(예정) 쪽지 모달 열기
+  const openMailModal = (otherStatusId) => {
+    setModalInfo(null);
+    setMailModalInfo({
+      otherStatusId,
     });
-  }, [otherUserInfo]);
+  }
 
   // 애니메이션 
   const defaultOptions = {
@@ -48,29 +59,29 @@ const UserLocation = ({ otherUserInfo }) => {
     },
   };
   const animationStyle = {
-    transform: "scale(2)", // 2배 크기
-  };
-
-  // 모달 처리
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
+    transform: "scale(2)", // 2배
   };
 
   return (
     <>
-      {isModalOpen && (
-        <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-          {/* 모달 내용 */}
-          <h2>{otherNickname}</h2>
-          <div className="bg-gray-100">{otherStatus}</div>
-          <div><img src={`/character/${otherCharacter}.svg`}/></div>
-          <div>
-            <span><SmallButton title='채팅하기' /></span>
-            <span><SmallButton title='채팅하기' /></span>
-          </div>
+      {modalInfo && (
+        <Modal isOpen={true} onClose={() => setModalInfo(null)}>
+          <UserModal
+            modalInfo={modalInfo}
+            openMailModal={openMailModal}
+          />
         </Modal>
       )}
+
+      {mailModalInfo && (
+        <Modal isOpen={true} onClose={() => setMailModalInfo(null)}>
+          <MailModal
+            mailModalInfo={mailModalInfo}
+            openMailModal={openMailModal}
+          />
+        </Modal>
+      )}
+
       <div className="flex justify-center items-center overflow-hidden" style={{ width: "100%", height: "100%", zIndex: -1 }}>
         <div className="nya relative flex justify-center items-center" style={{ width: "100%", height: "100%", zIndex: 1 }}>
           <div>
@@ -81,7 +92,7 @@ const UserLocation = ({ otherUserInfo }) => {
               key={index} 
               otherCharacterId={otherUser.characterId} 
               existingCharacters={otherUserInfo}
-              onCharacterClick={handleOpenModal}
+              onCharacterClick={() => handleModal(otherUser)}
             />
           ))}
         </div>

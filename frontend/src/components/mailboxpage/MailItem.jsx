@@ -26,7 +26,7 @@ const MailItem = ({ isOpen, onClose, mailData }) => {
       .then((res) => {
         setMailDetail(res);
         setIsLiked(res.isLiked);
-        console.log('쪽지디테일내놧!', res)
+        // console.log('쪽지디테일내놧!', res)
       })
       .catch((err) => {
         console.log('쪽지 detail 가져오기 실패:', err);

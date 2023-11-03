@@ -54,9 +54,12 @@ const MailBox = () => {
         <StatusList isOpen={isModalOpen} onClose={closeModal} statusList={statusList} changeStatus={handleStatusChange} />
       </div>
 
-      {mailList.map((mail, index) => (
-        <MailList key={index} mail={mail} />
-      ))}
+      <div className='px-5 grid grid-cols-3'>
+        {mailList.map((mail, index) => (
+          <MailList key={index} mail={mail} />
+        ))}
+
+      </div>
     </div>
   );
 };

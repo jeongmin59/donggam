@@ -48,22 +48,24 @@ const MailItem = ({ isOpen, onClose, mailData }) => {
   return (
     <>
       <div
-        className={`${isOpen ? 'show' : ''} 
-        top-0 left-0 w-full h-full fixed flex justify-center align-center`}
-        style={{
-          backgroundColor: 'rgba(0, 0, 0, 0.2)',
-          padding: '0 28px 0',
-          zIndex: 3,
-        }}
+        className={`${
+          isOpen ? 'block' : 'hidden'
+        } fixed top-0 left-0 w-full h-full bg-opacity-20 bg-black flex items-center justify-center`}
         onClick={handleBackgroundClick}
       >
-        <div className="bg-white rounded-2xl w-full h-3/5 max-w-md mx-auto my-auto p-4 z-30 flex flex-col items-center">
-
+        <div
+          style={{
+            backgroundColor: 'white',
+            borderRadius: '20px',
+            width: '100%',
+            height: '55%',
+            margin: 'auto',
+          }}
+        >
           <div>
-            <h4 className="text-center text-sm text-gray-500 mt-2">{mailDetail.localDate}</h4>
+            <p className="text-center text-sm text-gray-500 mt-2">{mailDetail.localDate}</p>
           </div>
-
-          <div className='mt-2 w-2/3 h-1/2'>
+          <div className='w-2/3 h-1/2'>
             {/* 쪽지 사진 */}
             <img src={mailDetail.imgAddress} />
           </div>

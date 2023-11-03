@@ -30,11 +30,11 @@ const BestPhoto = () => {
       {loading ? (
         <h5>Loading...</h5>
       ) : (
-        <Carousel showThumbs={false} className="mt-4" autoPlay={true} infiniteLoop={true} interval={5000}>
+        <Carousel showThumbs={false} className="mt-10 p-8" autoPlay={true} infiniteLoop={true} interval={5000}>
           {photos.map((photo) => (
-            <div key={photo.imageId}>
-              <img src={photo.imageAddress} alt={photo.title} className="rounded-lg max-w-md max-h-2/3" />
-              <h4 className="legend">{photo.title}</h4>
+            <div key={photo.imageId} className="flex flex-col items-center">
+              <img src={photo.imageAddress} alt={photo.title} className="mb-6 rounded-lg" />
+              <h4 className="mb-12 text-center">{photo.title}</h4>
             </div>
           ))}
         </Carousel>

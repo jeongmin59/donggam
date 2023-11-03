@@ -31,12 +31,12 @@ const Deadline = () => {
         timeDifference = eveningDeadline - now;
         nextDeadline = "오후 8시";
       } else {
-        // 마감 지나고 다음날 오전 10시까지 시간 차이
+        // 마감 지나고 다음날 오전 7시까지 시간 차이
         const nextMorningDeadline = new Date(now);
         nextMorningDeadline.setDate(nextMorningDeadline.getDate() + 1);
-        nextMorningDeadline.setHours(10, 0, 0, 0);
+        nextMorningDeadline.setHours(7, 0, 0, 0);
         timeDifference = nextMorningDeadline - now;
-        nextDeadline = "오전 10시";
+        nextDeadline = "오전 7시";
       }
 
       // 시간, 분 변환

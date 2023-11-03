@@ -34,7 +34,7 @@ public class LandMarkController {
 
     // 가장 가까운 랜드마크 검색
     @Operation(summary = "가까운 랜드마크 검색", description = "가까운 랜드마크 검색")
-    @PostMapping("/search/landmark")
+    @PostMapping("/search")
     public Response<SearchLandmarkDto.Response> searchLandmark(
             @RequestBody SearchLandmarkDto.Request request) {
         SearchLandmarkDto.Response response = landMarkService.searchLandmark(request);

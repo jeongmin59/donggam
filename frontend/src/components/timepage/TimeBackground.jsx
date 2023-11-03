@@ -1,15 +1,10 @@
-// 같은 시간, 다른 공간 페이지 배경
 import React, { useEffect, useState } from "react";
 import TimeHeaderTemplate from "./TimeHeaderTemplate";
 
-const TimeBackground = () => {
+const TimeBackground = ({ currentTime }) => {
   const [timeClass, setTimeClass] = useState("bg-gradient-to-b from-blue-200 to-white");
-  const [currentTime, setCurrentTime] = useState(new Date().getHours());  // 현재 시간 상태로 관리
 
   useEffect(() => {
-    setCurrentTime(new Date().getHours());
-    console.log("현재 시간은??", currentTime);
-
     if ((currentTime >= 7 && currentTime < 10) || (currentTime >= 11 && currentTime < 14) || (currentTime >= 17 && currentTime < 20)) {
       // 오전 7시~10시, 오전 11시~오후 2시, 오후 5시~8시에 배경색 변경
       if (currentTime >= 7 && currentTime < 10) {
@@ -28,12 +23,10 @@ const TimeBackground = () => {
   return (
     <div className="h-[25vh] overflow-hidden">
       <div className={`pt-5 h-full ${timeClass}`}>
-        <TimeHeaderTemplate currentTime={ currentTime } />
+        <TimeHeaderTemplate currentTime={currentTime} />
       </div>
     </div>
   );
 };
 
 export default TimeBackground;
-
-

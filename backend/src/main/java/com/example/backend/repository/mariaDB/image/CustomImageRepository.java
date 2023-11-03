@@ -40,7 +40,8 @@ public class CustomImageRepository extends QuerydslRepositorySupport {
 
     public List<Image> findTop3ByIsActiveOrderByLikeMemberDesc(Boolean isActive) {
         return queryFactory
-                .selectFrom(image)
+                .selectDistinct(image)
+                .from(image)
                 .leftJoin(image.author, member)
                 .leftJoin(image.likeMember, member)
                 .orderBy(image.likeMember.size().coalesce(0).desc())

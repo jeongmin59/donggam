@@ -15,7 +15,7 @@ import com.example.backend.exception.type.CustomException;
 import com.example.backend.jwt.TokenProvider;
 import com.example.backend.repository.mariaDB.member.CustomMemberRepository;
 import com.example.backend.repository.mariaDB.member.MemberRepository;
-import com.example.backend.repository.mariaDB.StatusRepository;
+import com.example.backend.repository.mariaDB.status.StatusRepository;
 import java.util.Objects;
 import java.util.Random;
 import lombok.RequiredArgsConstructor;

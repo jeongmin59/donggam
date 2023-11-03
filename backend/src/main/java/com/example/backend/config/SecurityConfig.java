@@ -43,12 +43,10 @@ public class SecurityConfig {
                 .httpBasic().disable()
 
                 .authorizeRequests()
-                .mvcMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .antMatchers("/member/login").permitAll()
                 .antMatchers("/swagger-ui/**").permitAll()
                 .antMatchers("/v3/api-docs/**").permitAll()
                 .antMatchers("/profile").permitAll()
-                .antMatchers("/location/**").permitAll()
                 .antMatchers("/stomp/chat/**").permitAll()
                 .anyRequest().authenticated()
 

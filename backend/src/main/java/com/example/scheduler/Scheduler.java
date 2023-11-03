@@ -21,8 +21,8 @@ public class Scheduler {
     List<Image> activeImages = imageRepository.findAllByIsActive(true);
     for (Image image : activeImages) {
       image.setIsActive(false);
+      imageRepository.save(image);
     }
-    imageRepository.saveAll(activeImages);
   }
 
   // 매주 월요일 오전 6시 59분에 isActive가 false인 사진들 삭제

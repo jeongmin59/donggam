@@ -6,8 +6,9 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 @RequiredArgsConstructor
 public class Scheduler {
 
@@ -16,7 +17,7 @@ public class Scheduler {
 
   // 매일 오전 7시, 오전 11시, 오후 5시에 실행될 작업
   // 사진 목록 삭제(초기화)
-  @Scheduled(cron = "0 0 7,11,17 * * ?")
+  @Scheduled(cron = "0 35 7,11,17 * * ?")
   public void deactivateImages() {
     List<Image> activeImages = imageRepository.findAllByIsActive(true);
     for (Image image : activeImages) {

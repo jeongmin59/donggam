@@ -2,7 +2,6 @@ package com.example.backend.entity.mariaDB.status;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
-import com.example.backend.type.Emotion;
 import com.querydsl.core.types.dsl.*;
 
 import com.querydsl.core.types.PathMetadata;
@@ -25,7 +24,7 @@ public class QStatus extends EntityPathBase<Status> {
 
     public final StringPath content = createString("content");
 
-    public final EnumPath<Emotion> emotion = createEnum("emotion", Emotion.class);
+    public final EnumPath<com.example.backend.type.Emotion> emotion = createEnum("emotion", com.example.backend.type.Emotion.class);
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 

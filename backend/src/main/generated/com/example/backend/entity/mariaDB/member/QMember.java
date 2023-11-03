@@ -2,7 +2,6 @@ package com.example.backend.entity.mariaDB.member;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
-import com.example.backend.type.Authority;
 import com.querydsl.core.types.dsl.*;
 
 import com.querydsl.core.types.PathMetadata;
@@ -21,7 +20,7 @@ public class QMember extends EntityPathBase<Member> {
 
     public static final QMember member = new QMember("member1");
 
-    public final EnumPath<Authority> authority = createEnum("authority", Authority.class);
+    public final EnumPath<com.example.backend.type.Authority> authority = createEnum("authority", com.example.backend.type.Authority.class);
 
     public final NumberPath<Integer> characterId = createNumber("characterId", Integer.class);
 

@@ -1,4 +1,4 @@
-package com.example.backend.entity.mariaDB.status;
+package com.example.backend.type;
 
 public enum Emotion {
   POSITIVE,

@@ -4,6 +4,7 @@ import com.example.backend.entity.mariaDB.space.LandMarkRecord;
 import com.example.backend.entity.mariaDB.space.Record;
 import com.example.backend.entity.mariaDB.status.Status;
 import com.example.backend.entity.mariaDB.time.Image;
+import com.example.backend.type.Authority;
 import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.CascadeType;

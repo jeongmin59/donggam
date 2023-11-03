@@ -17,6 +17,7 @@ import com.example.backend.repository.mariaDB.landmark.LandMarkRecordRepository;
 import com.example.backend.repository.mariaDB.landmark.LandMarkRepository;
 import com.example.backend.repository.mariaDB.member.MemberRepository;
 import com.example.backend.repository.postgreSQL.LandMarkLocationRepository;
+import com.example.backend.util.ImageUtil;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -37,7 +38,7 @@ public class LandMarkService {
     private final LandMarkRecordRepository landMarkRecordRepository;
     private final LandMarkRecordCommentRepository landMarkRecordCommentRepository;
     private final LandMarkLocationRepository landMarkLocationRepository;
-    private final ImageService imageService;
+    private final ImageUtil imageUtil;
 
     public String createLandMarkRecord(Long memberId, Long landMarkId, String content,
             MultipartFile image)
@@ -52,7 +53,7 @@ public class LandMarkService {
 
         String imageAddress = null;
         if (image != null) {
-            imageAddress = imageService.uploadImage(image, "landmark-record");
+            imageAddress = imageUtil.uploadImage(image, "landmark-record");
         }
 
         landMarkRecordRepository.save(LandMarkRecord.builder()

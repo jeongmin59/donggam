@@ -1,4 +1,4 @@
-package com.example.backend.repository.mariaDB;
+package com.example.backend.repository.mariaDB.status;
 
 import com.example.backend.entity.mariaDB.status.Status;
 import java.util.List;

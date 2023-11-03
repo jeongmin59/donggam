@@ -24,6 +24,7 @@ public class MainDto {
   @NoArgsConstructor
   @Builder
   public static class Response {
+    private Integer unreadMessageCount;
     private Emotion statusWeather;
     private Integer aroundPeopleCount;
     private List<AroundDto.Response> aroundPeople;

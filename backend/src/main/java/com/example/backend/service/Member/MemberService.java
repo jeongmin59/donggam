@@ -97,20 +97,31 @@ public class MemberService {
 
     public UpdateDto.Response update(Long memberId, UpdateDto.Request request) {
         Member member = customMemberRepository.findById(memberId);
-
-        Status status = member.getStatus().get(member.getStatus().size() - 1);
-        if (!Objects.equals(request.getStatus(), status.getContent())) {
+        
+        // 현재 아직 상태메시지가 없을 때
+        if (member.getStatus().isEmpty()) {
             String emotion = sentimentAPI(request.getStatus());
-            status = statusRepository.save(Status.builder()
+            Status status = statusRepository.save(Status.builder()
                     .content(request.getStatus())
                     .emotion(emotion)
                     .member(member)
                     .build());
+            member.getStatus().add(status);
+        } else {
+            Status status = member.getStatus().get(member.getStatus().size() - 1);
+            if (!Objects.equals(request.getStatus(), status.getContent())) {
+                String emotion = sentimentAPI(request.getStatus());
+                status = statusRepository.save(Status.builder()
+                        .content(request.getStatus())
+                        .emotion(emotion)
+                        .member(member)
+                        .build());
+                member.getStatus().add(status);
+            }
         }
 
         member.setCharacterId(request.getCharacterId());
         member.setNickname(request.getNickname());
-        member.getStatus().add(status);
         Member savedMember = memberRepository.save(member);
 
         Status lastStatus = savedMember.getStatus().get(savedMember.getStatus().size() - 1);

@@ -30,6 +30,8 @@ public class QStatus extends EntityPathBase<Status> {
 
     public final com.example.backend.entity.mariaDB.member.QMember member;
 
+    public final ListPath<com.example.backend.entity.mariaDB.message.Message, com.example.backend.entity.mariaDB.message.QMessage> message = this.<com.example.backend.entity.mariaDB.message.Message, com.example.backend.entity.mariaDB.message.QMessage>createList("message", com.example.backend.entity.mariaDB.message.Message.class, com.example.backend.entity.mariaDB.message.QMessage.class, PathInits.DIRECT2);
+
     public QStatus(String variable) {
         this(Status.class, forVariable(variable), INITS);
     }

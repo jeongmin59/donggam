@@ -3,7 +3,7 @@ package com.example.backend.service;
 import com.example.backend.dto.AroundDto;
 import com.example.backend.dto.MainDto;
 import com.example.backend.dto.MemberDetailDto;
-import com.example.backend.entity.mariaDB.status.Emotion;
+import com.example.backend.type.Emotion;
 import com.example.backend.entity.mariaDB.member.Member;
 import com.example.backend.entity.mariaDB.status.Status;
 import com.example.backend.entity.postgreSQL.MemberLocation;

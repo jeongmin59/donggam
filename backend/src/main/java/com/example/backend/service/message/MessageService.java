@@ -16,7 +16,7 @@ import com.example.backend.repository.mariaDB.member.MemberRepository;
 import com.example.backend.repository.mariaDB.StatusRepository;
 import com.example.backend.repository.mariaDB.message.CustomMessageRepository;
 import com.example.backend.repository.mariaDB.message.MessageRepository;
-import com.example.backend.service.ImageService;
+import com.example.backend.util.ImageUtil;
 import java.io.IOException;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -32,7 +32,7 @@ public class MessageService {
     private final MemberRepository memberRepository;
     private final CustomMessageRepository customMessageRepository;
     private final StatusRepository statusRepository;
-    private final ImageService imageService;
+    private final ImageUtil imageUtil;
 
     public Response sendMessage(Long memberId, MultipartFile img, Request request)
         throws IOException {
@@ -55,7 +55,7 @@ public class MessageService {
         String imageAddress = null;
 
         if(img != null){
-            imageAddress = imageService.uploadImage(img, "message");
+            imageAddress = imageUtil.uploadImage(img, "message");
         }
 
         Message message = messageRepository.save(request.toMessageEnitty(from, imageAddress, status));

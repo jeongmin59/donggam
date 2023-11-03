@@ -1,6 +1,6 @@
 package com.example.backend.dto;
 
-import com.example.backend.entity.mariaDB.member.Authority;
+import com.example.backend.type.Authority;
 import com.example.backend.entity.mariaDB.member.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

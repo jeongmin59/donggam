@@ -1,11 +1,8 @@
-package com.example.backend.service;
+package com.example.backend.util;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
-import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.example.backend.exception.ErrorCode;
-import com.example.backend.exception.type.CustomException;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -23,7 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 @Slf4j
 @Component
-public class ImageService {
+public class ImageUtil {
 
   private final AmazonS3Client amazonS3Client;
 

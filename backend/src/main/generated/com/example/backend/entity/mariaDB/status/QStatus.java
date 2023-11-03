@@ -2,6 +2,7 @@ package com.example.backend.entity.mariaDB.status;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
+import com.example.backend.type.Emotion;
 import com.querydsl.core.types.dsl.*;
 
 import com.querydsl.core.types.PathMetadata;

@@ -10,6 +10,7 @@ import com.example.backend.exception.type.CustomException;
 import com.example.backend.repository.mariaDB.image.CustomImageRepository;
 import com.example.backend.repository.mariaDB.image.ImageRepository;
 import com.example.backend.repository.mariaDB.member.MemberRepository;
+import com.example.backend.util.ImageUtil;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -23,14 +24,14 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 public class TimeService {
 
-    private final ImageService imageService;
+    private final ImageUtil imageUtil;
     private final MemberRepository memberRepository;
     private final ImageRepository imageRepository;
     private final CustomImageRepository customImageRepository;
 
     public void postImage(Long memberId, MultipartFile img, String title) throws IOException {
 
-        String imageAddress = imageService.uploadImage(img, "exhibition");
+        String imageAddress = imageUtil.uploadImage(img, "exhibition");
 
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND.getMessage(),

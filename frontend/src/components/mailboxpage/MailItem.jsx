@@ -7,6 +7,7 @@ import ToastModal from './../common/ToastModal';
 
 
 const MailItem = ({ isOpen, onClose, mailData }) => {
+  // 모달 영역 밖 클릭 시 모달 닫기
   const handleBackgroundClick = (e) => {
     if (e.target === e.currentTarget) {
       onClose();
@@ -73,12 +74,16 @@ const MailItem = ({ isOpen, onClose, mailData }) => {
             <img src={mailDetail.imgAddress} />
           </div>
           <div>
+            {/* 쪽지 사진 */}
+            <img src={mailDetail.imgAddress} />
+          </div>
+          <div>
             {/* 쪽지 내용 */}
             <h1 className="text-center mt-4">{mailDetail.content}</h1>
           </div>
           <div>
             {/* 보낸 사람 이름 */}
-            <p className="text-center mt-4">{mailDetail.from}</p>
+            <p className="text-center mt-4">From: {mailDetail.from}</p>
           </div>
           <div>
             {/* 신고하기 버튼 */}

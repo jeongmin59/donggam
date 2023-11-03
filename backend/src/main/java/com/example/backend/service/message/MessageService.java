@@ -13,7 +13,7 @@ import com.example.backend.entity.mariaDB.message.Message;
 import com.example.backend.exception.ErrorCode;
 import com.example.backend.exception.type.CustomException;
 import com.example.backend.repository.mariaDB.member.MemberRepository;
-import com.example.backend.repository.mariaDB.StatusRepository;
+import com.example.backend.repository.mariaDB.status.StatusRepository;
 import com.example.backend.repository.mariaDB.message.CustomMessageRepository;
 import com.example.backend.repository.mariaDB.message.MessageRepository;
 import com.example.backend.util.ImageUtil;

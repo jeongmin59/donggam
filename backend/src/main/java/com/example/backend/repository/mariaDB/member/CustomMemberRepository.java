@@ -36,7 +36,7 @@ public class CustomMemberRepository extends QuerydslRepositorySupport {
     public Member findById(Long memberId) {
         return queryFactory
                 .selectFrom(member)
-                .leftJoin(member.status, status)
+                .leftJoin(member.status, status).fetchJoin()
                 .where(member.id.eq(memberId))
                 .fetchOne();
     }

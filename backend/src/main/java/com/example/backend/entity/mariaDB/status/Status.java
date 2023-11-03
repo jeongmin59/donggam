@@ -2,6 +2,7 @@ package com.example.backend.entity.mariaDB.status;
 
 import com.example.backend.dto.message.StatusDto;
 import com.example.backend.entity.mariaDB.member.Member;
+import com.example.backend.type.Emotion;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;

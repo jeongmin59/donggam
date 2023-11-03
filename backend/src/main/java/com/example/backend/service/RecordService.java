@@ -16,6 +16,7 @@ import com.example.backend.repository.mariaDB.record.RecordCommentRepository;
 import com.example.backend.repository.mariaDB.record.RecordRepository;
 import com.example.backend.repository.postgreSQL.MemberLocationRepository;
 import com.example.backend.repository.postgreSQL.RecordLocationRepository;
+import com.example.backend.util.ImageUtil;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -28,7 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 public class RecordService {
 
-    private final ImageService imageService;
+    private final ImageUtil imageUtil;
     private final MemberRepository memberRepository;
     private final MemberLocationRepository memberLocationRepository;
     private final RecordRepository recordRepository;
@@ -43,7 +44,7 @@ public class RecordService {
 
         String imageAddress = null;
         if (image != null) {
-            imageAddress = imageService.uploadImage(image, "record");
+            imageAddress = imageUtil.uploadImage(image, "record");
         }
 
         Record record = recordRepository.save(Record.builder()

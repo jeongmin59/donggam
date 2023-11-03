@@ -4,11 +4,14 @@ import com.example.backend.entity.mariaDB.time.Image;
 import com.example.backend.repository.mariaDB.image.ImageRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 @Service
+@Component
+@Slf4j
 @RequiredArgsConstructor
 public class Scheduler {
 
@@ -17,9 +20,10 @@ public class Scheduler {
 
   // 매일 오전 7시, 오전 11시, 오후 5시에 실행될 작업
   // 사진 목록 삭제(초기화)
-  @Scheduled(cron = "0 35 7,11,17 * * ?")
+  @Scheduled(cron = "0 0 7,11,17 * * *", zone = "Asia/Seoul")
   public void deactivateImages() {
-    List<Image> activeImages = imageRepository.findAllByIsActive(true);
+    log.info("사진 삭제 스케줄러 실행");
+    List<Image> activeImages = imageRepository.findByIsActiveTrue();
     for (Image image : activeImages) {
       image.setIsActive(false);
       imageRepository.save(image);

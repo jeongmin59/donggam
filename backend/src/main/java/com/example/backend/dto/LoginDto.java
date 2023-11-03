@@ -48,9 +48,9 @@ public class LoginDto {
         return Response.builder()
                 .memberId(member.getId())
                 .nickname(member.getNickname())
-                .statusId(member.getStatus() == null ? null
+                .statusId(member.getStatus() == null || member.getStatus().isEmpty() ? null
                         : member.getStatus().get(member.getStatus().size() - 1).getId())
-                .status(member.getStatus() == null ? null
+                .status(member.getStatus() == null || member.getStatus().isEmpty() ? null
                         : member.getStatus().get(member.getStatus().size() - 1).getContent())
                 .characterId(member.getCharacterId())
                 .grantType(tokenDto.getGrantType())

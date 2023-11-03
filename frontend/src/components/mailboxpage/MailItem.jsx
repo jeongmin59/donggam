@@ -70,6 +70,10 @@ const MailItem = ({ isOpen, onClose, mailData }) => {
             <p className="text-center text-sm text-gray-500 mt-2">{mailDetail.localDate}</p>
           </div>
           <div>
+            {/* 쪽지 사진 */}
+            <img src={mailDetail.imgAddress} />
+          </div>
+          <div>
             {/* 쪽지 내용 */}
             <h1 className="text-center mt-4">{mailDetail.content}</h1>
           </div>

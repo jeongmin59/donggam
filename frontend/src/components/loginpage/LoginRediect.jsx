@@ -51,7 +51,7 @@ const LoginRediect = () => {
           navigator(`/`) // 메인페이지 이동
         }
         else {
-          navigator(`/profile`) // 프로필 설정 페이지 이동
+          navigator(`/tutorial`) // 튜토리얼 페이지 이동
         }
       })
       .catch(err => {

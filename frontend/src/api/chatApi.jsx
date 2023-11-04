@@ -3,7 +3,7 @@ import axiosInstance from "./axiosConfig";
 // 전체 채팅방 가져오기
 export const getChatList = async () => {
   try {
-    const res = await axiosInstance.get(`/room/list/${userDetails}`, {
+    const res = await axiosInstance.get(`/room/list`, {
       params: {
 
       }

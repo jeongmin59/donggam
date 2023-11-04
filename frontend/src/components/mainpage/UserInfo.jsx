@@ -41,7 +41,7 @@ const UserInfo = ({selectedBackground}) => {
   return (
     <div className="userInfo h-100 px-[24px] mx-auto mt-[60px] relative">
       <div className="flex justify-between mb-2">
-        <h2 className="username mb-[10px] pl-3 flex mb-0">{nickname}</h2>
+        <h2 className="username pl-3 flex mb-0">{nickname}</h2>
         <img 
           src={SettingIcon}
           onClick={() => navigateTo('/profile')}

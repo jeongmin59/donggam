@@ -15,11 +15,7 @@ export default {
       backgroundColor:{
         'mainColor' : 'var(--mainColor)',
       }
-      // backgroundImage:{
-      //   'positive': "url('./assets/images/positive-bg.png')",
-      //   'neutral': "url('./assets/images/neutral-bg.png')",
-      //   'negative': "url('./assets/images/negative-bg.png')",
-      // }
+
     },
   },
   plugins: [],

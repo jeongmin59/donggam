@@ -20,7 +20,7 @@ public class ChatRoomService {
 
     public GetRoomListDto.Response getRoomList(Long memberId) {
         Member member = memberRepository.findById(memberId).get();
-        List<ChatRoom> chatRoomList = chatRoomRepository.findAllByMemberId(member);
+        List<ChatRoom> chatRoomList = chatRoomRepository.findAllByMemberId(memberId);
         List<RoomDto> chatRoomDtoList = chatRoomList.stream()
                 .map(chatRoom -> chatRoom.toRoomDto(member)).collect(
                         Collectors.toList());

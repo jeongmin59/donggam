@@ -2,6 +2,7 @@ package com.example.backend.service.chat;
 
 import com.example.backend.dto.chat.ChatDto;
 import com.example.backend.dto.chat.GetChatListDto;
+import com.example.backend.dto.chat.InviteChatDto;
 import com.example.backend.dto.chat.InviteChatDto.Request;
 import com.example.backend.entity.mariaDB.chat.Chat;
 import com.example.backend.entity.mariaDB.chat.ChatRoom;
@@ -33,17 +34,25 @@ public class ChatService {
                 .build();
     }
 
-    public void inviteChat(Request request, Long memberId) {
+    public InviteChatDto.Response inviteChat(Request request, Long memberId) {
+        // 상대방
         Member member1 = memberRepository.findById(request.getMemberId()).get();
+        // 나
         Member member2 = memberRepository.findById(memberId).get();
 
         if (member1 == null || member2 == null) {
             throw new CustomException("존재하지 않는 유저입니다.", ErrorCode.USER_NOT_FOUND);
         }
+//        ChatRoom chatRoom = ChatRoom.builder()
+//                .member1(member1)
+//                .member2(member2)
+//                .build();
+//        chatRoomRepository.save(chatRoom);
         ChatRoom chatRoom = ChatRoom.builder()
                 .member1(member1)
                 .member2(member2)
                 .build();
-        chatRoomRepository.save(chatRoom);
+
+        return InviteChatDto.Response.builder().roomId(chatRoom.getId()).build();
     }
 }

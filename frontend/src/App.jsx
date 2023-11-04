@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "./index.css";
 import MainPage from "./pages/MainPage";
 import LoginPage from "./pages/LoginPage";
@@ -14,26 +14,38 @@ import SpaceUploadpage from "./pages/SpaceUploadPage";
 import ProfilePage from "./pages/ProfilePage";
 import ChatRoomPage from "./pages/ChatRoomPage";
 import ChattingPage from './pages/ChattingPage';
-
+import { AccessTokenAtom } from './recoil/user/userAtom';
+import { useRecoilValue } from "recoil";
 
 function App() {
+  const isLoggedIn = useRecoilValue(AccessTokenAtom)
+
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<MainPage />} />
+        {/* 로그인이 필요한 페이지 */}
+        {isLoggedIn ? (
+          <>
+            <Route path="/" element={<MainPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/chatroom" element={<ChatRoomPage />} />
+            <Route path="/chatting/:roomId" element={<ChattingPage />} />
+            <Route path="/mailbox" element={<MailboxPage />} />
+            <Route path="/time" element={<TimePage />} />
+            <Route path="/time/upload" element={<PhotoUploadPage />} />
+            <Route path="/time/:imageId" element={<PhotoDetailPage />} />
+            <Route path="/space" element={<SpacePage />} />
+            <Route path="/space/trace" element={<NearbyTracePage />} />
+            <Route path="/space/landmark" element={<NearbyLandmarkPage />} />
+            <Route path="/space/upload" element={<SpaceUploadpage />} />
+          </>
+        ) : (
+          <Route path="/*" element={<Navigate to="/login" replace />} />
+        )}
+
+        {/* 로그인 없이 접근 가능한 페이지 */}
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/profile" element={<ProfilePage />} />
         <Route path="/kakao/callback" element={<LoginRediect />} />
-        <Route path="/chatroom" element={<ChatRoomPage />} />
-        <Route path="/chatting/:roomId" element={<ChattingPage />} />
-        <Route path="/mailbox" element={<MailboxPage />} />
-        <Route path="/time" element={<TimePage />} />
-        <Route path="/time/upload" element={<PhotoUploadPage />} />
-        <Route path="/time/:imageId" element={<PhotoDetailPage />} />
-        <Route path="/space" element={<SpacePage />} />
-        <Route path="/space/trace" element={<NearbyTracePage />} />
-        <Route path="/space/landmark" element={<NearbyLandmarkPage />} />
-        <Route path="/space/upload" element={<SpaceUploadpage />} />
       </Routes>
     </BrowserRouter>
   );

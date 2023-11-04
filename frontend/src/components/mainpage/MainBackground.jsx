@@ -6,7 +6,7 @@ import UserInfo from "./UserInfo";
 import MainArea from "./MainArea";
 import MainBackgroundImage from "../../assets/images/background-image.png"
 import NumberOfUsers from "./NumberOfUsers";
-
+import { getLocationInfo } from "../common/GetLocationInfo";
 
 const MainBackground = () => {
   // user 정보
@@ -23,21 +23,29 @@ const MainBackground = () => {
   const [aroundPeopleCount, setAroundPeopleCount] = useState(0); // 주변 사용자 수
 
 
-  // 위도 경도 전송
+  // // 위도 경도 전송
+  const handleLocationChange = (position) => {
+    setLatitude(position.coords.latitude);
+    setLongitude(position.coords.longitude);
+  }
   useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-        setLatitude(position.coords.latitude);
-        setLongitude(position.coords.longitude);
-      }, 
-      (e) => {
-        console.log(e.message)
-      });
-    } else {
-      console.log('위치 정보를 지원하지 않는 브라우저입니다.')
-    }
-  },[]);
+    getLocationInfo(handleLocationChange);
+  }, []);
+  
+  // useEffect(() => {
+  //   if (navigator.geolocation) {
+  //     navigator.geolocation.getCurrentPosition(
+  //       (position) => {
+  //       setLatitude(position.coords.latitude);
+  //       setLongitude(position.coords.longitude);
+  //     }, 
+  //     (e) => {
+  //       console.log(e.message)
+  //     });
+  //   } else {
+  //     console.log('위치 정보를 지원하지 않는 브라우저입니다.')
+  //   }
+  // },[]);
 
   // 위치 기반 정보(날씨, 주변 유저, 주변 유저 수)
   useEffect(() => {

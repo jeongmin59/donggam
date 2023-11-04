@@ -16,6 +16,7 @@ import ChatRoomPage from "./pages/ChatRoomPage";
 import ChattingPage from './pages/ChattingPage';
 import { AccessTokenAtom } from './recoil/user/userAtom';
 import { useRecoilValue } from "recoil";
+import TutorialPage from "./pages/TutorialPage";
 
 function App() {
   const isLoggedIn = useRecoilValue(AccessTokenAtom)
@@ -27,6 +28,7 @@ function App() {
         {isLoggedIn ? (
           <>
             <Route path="/" element={<MainPage />} />
+            <Route path="/tutorial" element={<TutorialPage />} />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/chatroom" element={<ChatRoomPage />} />
             <Route path="/chatting/:roomId" element={<ChattingPage />} />

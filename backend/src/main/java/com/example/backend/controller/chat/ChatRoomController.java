@@ -45,10 +45,9 @@ public class ChatRoomController {
 
     @Operation(summary = "채팅 신청", description = "채팅 신청")
     @PostMapping("/chat/invite")
-    public Response inviteChat(@RequestBody InviteChatDto.Request request,
+    public Response<InviteChatDto.Response> inviteChat(@RequestBody InviteChatDto.Request request,
             @Parameter(hidden = true) @AuthenticationPrincipal UserDetails userDetails) {
         Long memberId = Long.parseLong(userDetails.getUsername());
-        chatService.inviteChat(request, memberId);
-        return new Response<>(201, "채팅 신청 완료");
+        return new Response<>(201, "채팅 신청 완료", chatService.inviteChat(request, memberId));
     }
 }

@@ -2,6 +2,7 @@ package com.example.backend.entity.mariaDB.chat;
 
 import com.example.backend.dto.chat.ChatDto;
 import com.example.backend.entity.mariaDB.member.Member;
+import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -25,6 +26,9 @@ public class Chat {
     @Column
     private String content;
 
+    @Column
+    private LocalDateTime createdAt;
+
     @ManyToOne(fetch = FetchType.LAZY)
     private Member sender;
 
@@ -32,10 +36,11 @@ public class Chat {
     private ChatRoom chatRoom;
 
     @Builder
-    public Chat(String content, Member sender, ChatRoom chatRoom) {
+    public Chat(String content, Member sender, ChatRoom chatRoom, LocalDateTime createdAt) {
         this.content = content;
         this.sender = sender;
         this.chatRoom = chatRoom;
+        this.createdAt = createdAt;
     }
 
     public ChatDto toChatDto() {

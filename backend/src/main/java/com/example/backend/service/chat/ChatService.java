@@ -43,16 +43,26 @@ public class ChatService {
         if (member1 == null || member2 == null) {
             throw new CustomException("존재하지 않는 유저입니다.", ErrorCode.USER_NOT_FOUND);
         }
-//        ChatRoom chatRoom = ChatRoom.builder()
-//                .member1(member1)
-//                .member2(member2)
-//                .build();
-//        chatRoomRepository.save(chatRoom);
-        ChatRoom chatRoom = ChatRoom.builder()
+
+        ChatRoom chatRoom1 = chatRoomRepository.findByMember1IdAndMember2Id(member1.getId(), member2.getId()).orElse(null);
+        ChatRoom chatRoom2 = chatRoomRepository.findByMember1IdAndMember2Id(member2.getId(), member1.getId()).orElse(null);
+
+        // 이미 해당 회원과 같이 참여된 채팅방이 있을 경우
+        if (chatRoom1 != null) {
+            return InviteChatDto.Response.builder().roomId(chatRoom1.getId()).build();
+        } else if (chatRoom2 != null) {
+            return InviteChatDto.Response.builder().roomId(chatRoom2.getId()).build();
+        }
+
+        // 처음 채팅하는 사람일 경우
+        ChatRoom chatRoom = chatRoomRepository.save(ChatRoom.builder()
                 .member1(member1)
                 .member2(member2)
-                .build();
+                .isMember1Active(true)
+                .isMember2Active(true)
+                .build());
 
         return InviteChatDto.Response.builder().roomId(chatRoom.getId()).build();
+
     }
 }

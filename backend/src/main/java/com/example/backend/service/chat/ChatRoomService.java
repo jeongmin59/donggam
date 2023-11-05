@@ -39,6 +39,8 @@ public class ChatRoomService {
                                     ? room.getMember2()
                                     .getNickname() : room.getMember1().getNickname())
                             .isActive(isActive)
+                            .unReadChatCount(
+                                    (int) room.getChat().stream().filter(chat -> !chat.getIsRead()).count())
                             .lastChatTime(room.getLastChatTime())
                             .build();
                 }).collect(Collectors.toList());
@@ -77,6 +79,8 @@ public class ChatRoomService {
                                     .getNickname() : room.getMember1().getNickname())
                             .isActive(isActive)
                             .lastChatTime(room.getLastChatTime())
+                            .unReadChatCount(
+                                    (int) room.getChat().stream().filter(chat -> !chat.getIsRead()).count())
                             .build();
                 }).collect(Collectors.toList());
     }

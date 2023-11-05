@@ -3,7 +3,7 @@ import UserLocation from './UserLocation';
 import { useState, useEffect } from 'react';
 
 
-const MainArea = ({aroundPeople}) => {
+const MainArea = ({aroundPeople, unreadChatCount, unreadMessageCount}) => {
 
   // 근처 유저 정보
   const [otherUserInfo, setOtherUserInfo] = useState([]);
@@ -24,7 +24,7 @@ const MainArea = ({aroundPeople}) => {
   return(
     <>
       <div className='mainArea flex-column justify-center ' style={{ height: 'calc(100% - 280px)' }}>
-        <Sidebuttons />
+        <Sidebuttons unreadChatCount={unreadChatCount} unreadMessageCount={unreadMessageCount} />
         <UserLocation otherUserInfo={otherUserInfo}/>
       </div>  
     </>

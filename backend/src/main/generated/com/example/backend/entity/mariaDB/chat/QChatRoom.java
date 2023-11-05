@@ -22,7 +22,15 @@ public class QChatRoom extends EntityPathBase<ChatRoom> {
 
     public static final QChatRoom chatRoom = new QChatRoom("chatRoom");
 
+    public final ListPath<Chat, QChat> chat = this.<Chat, QChat>createList("chat", Chat.class, QChat.class, PathInits.DIRECT2);
+
     public final NumberPath<Long> id = createNumber("id", Long.class);
+
+    public final BooleanPath isMember1Active = createBoolean("isMember1Active");
+
+    public final BooleanPath isMember2Active = createBoolean("isMember2Active");
+
+    public final DateTimePath<java.time.LocalDateTime> lastChatTime = createDateTime("lastChatTime", java.time.LocalDateTime.class);
 
     public final com.example.backend.entity.mariaDB.member.QMember member1;
 

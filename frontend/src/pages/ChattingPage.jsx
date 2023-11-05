@@ -14,6 +14,7 @@ const ChattingPage = () => {
   const user = useRecoilValue(UserSelector);
   const senderId = user.memberId;
   const sender = user.nickname;
+  const isActive = searchParams.get('isActive');
 
   const updateChatList = async () => {
     const res = await axiosInstance.get(`/chat/list/${roomId}`)
@@ -22,7 +23,8 @@ const ChattingPage = () => {
 
   // Spring 서버와 채팅 연결
   const updateStompClient = () => {
-    const socket = new WebSocket(`ws://localhost:8080/stomp/chat`);
+    // const socket = new WebSocket(`ws://localhost:8080/stomp/chat`);
+    const socket = new WebSocket(`wss://k9e107.p.ssafy.io/stomp/chat`);
     const stompClient = Stomp.over(socket);
     SetStompClient(stompClient);
 
@@ -38,6 +40,7 @@ const ChattingPage = () => {
   useEffect(() => {
     updateChatList();
     updateStompClient();
+    console.log(isActive);
   }, [])
 
   // 메시지 전송
@@ -58,7 +61,7 @@ const ChattingPage = () => {
       <div className="chatting h-screen bg-gradient-to-b from-[#e5f3ff] to-white">
         <Header title="1:1 채팅방" />
         <ul>
-          {chatList.length && chatList.map(chat => (
+          {chatList.length > 0 && chatList.map(chat => (
             <li key={chat.id}>{chat.sender} : {chat.content}</li>
           ))}
         </ul>

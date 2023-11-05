@@ -13,7 +13,7 @@ export const getTraceList = async () => {
 };
 
 // 방명록 작성
-export const postTrace = async (title, content, imageFile, latitude, longitude) => {
+export const postTrace = async ({ title, content, latitude, longitude, imageFile }) => {
   try {
     const trace = {
       "title": title,

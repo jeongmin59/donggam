@@ -1,4 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
+
+
+// const UploadSpaceContent = () => {
+//   // 랜드마크
+//   const [content, setContent] = useState("");
+//   const maxCharacterLimit = 60;
+
+//   const handleContentChange = (e) => {
+//     const text = e.target.value;
+//     if (text.length <= maxCharacterLimit) {
+//       setContent(text);
+//     }
+//   }
+//   return(
 
 const UploadSpaceContent = ({ content, setContent }) => {
   const handleContentChange = (e) => {
@@ -8,7 +22,7 @@ const UploadSpaceContent = ({ content, setContent }) => {
   return (
     <>
       <label className="pl-2">
-        해당 장소와 관련된 방명록을 작성해주세요
+        방명록을 작성해주세요(*최대 60글자)
       </label>
       <textarea
         className="input-style"

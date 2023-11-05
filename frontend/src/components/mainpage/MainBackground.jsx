@@ -6,9 +6,9 @@ import UserInfo from "./UserInfo";
 import MainArea from "./MainArea";
 import MainBackgroundImage from "../../assets/images/background-image.png"
 import NumberOfUsers from "./NumberOfUsers";
+// import { getLocationInfo } from "../common/GetLocationInfo";
 import { useSetRecoilState } from "recoil";
 import { LatitudeAtom, LongitudeAtom } from "../../recoil/location/locationAtom";
-
 
 
 const MainBackground = () => {
@@ -32,7 +32,28 @@ const MainBackground = () => {
 
 
   // 위도 경도 전송
+  const handleLocationChange = (position) => {
+    setLatitude(position.coords.latitude);
+    setLongitude(position.coords.longitude);
+  }
   useEffect(() => {
+  //   getLocationInfo(handleLocationChange);
+  // }, []);
+
+  // useEffect(() => {
+  //   if (navigator.geolocation) {
+  //     navigator.geolocation.getCurrentPosition(
+  //       (position) => {
+  //       setLatitude(position.coords.latitude);
+  //       setLongitude(position.coords.longitude);
+  //     }, 
+  //     (e) => {
+  //       console.log(e.message)
+  //     });
+  //   } else {
+  //     console.log('위치 정보를 지원하지 않는 브라우저입니다.')
+  //   }
+  // },[]);
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {

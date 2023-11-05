@@ -13,6 +13,7 @@ public class ChatRoomDto {
         private Long roomId;
         private String name;
         private Boolean isActive;
+        private Integer unReadChatCount;
         private LocalDateTime lastChatTime;
     }
 

@@ -29,6 +29,9 @@ public class Chat {
     @Column
     private LocalDateTime createdAt;
 
+    @Column
+    private Boolean isRead;
+
     @ManyToOne(fetch = FetchType.LAZY)
     private Member sender;
 
@@ -36,11 +39,12 @@ public class Chat {
     private ChatRoom chatRoom;
 
     @Builder
-    public Chat(String content, Member sender, ChatRoom chatRoom, LocalDateTime createdAt) {
+    public Chat(String content, Member sender, ChatRoom chatRoom, LocalDateTime createdAt, Boolean isRead) {
         this.content = content;
         this.sender = sender;
         this.chatRoom = chatRoom;
         this.createdAt = createdAt;
+        this.isRead = isRead;
     }
 
     public ChatDto toChatDto() {
@@ -48,6 +52,7 @@ public class Chat {
                 .id(this.id)
                 .content(this.content)
                 .sender(this.sender.getNickname())
+                .isRead(this.isRead)
                 .build();
     }
 }

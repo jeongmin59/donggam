@@ -38,8 +38,6 @@ const TraceUpload = () => {
     }
   };
 
-
-
   return (
     <>
       <div className="mt-3 px-5 pb-10">

@@ -7,7 +7,7 @@ import MainArea from "./MainArea";
 import MainBackgroundImage from "../../assets/images/background-image.png"
 import NumberOfUsers from "./NumberOfUsers";
 import { useSetRecoilState } from "recoil";
-import { LatitudeAtom, LongitudeAtom } from "../../recoil/locationAtom";
+import { LatitudeAtom, LongitudeAtom } from "../../recoil/location/locationAtom";
 
 
 

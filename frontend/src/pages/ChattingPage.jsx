@@ -1,17 +1,15 @@
 import Header from "../components/common/Header";
 import React, { useState, useEffect, useRef } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { UserSelector } from '../recoil/user/userSelector';
 import axiosInstance from "../api/axiosConfig";
 import Stomp from 'stompjs';
 import SockJS from 'sockjs-client/dist/sockjs';
 
-const ChattingPage = () => {
+const ChattingPage = (props) => {
   const { roomId } = useParams();
-  const location = useLocation();
-  const { state } = location;
-  const isActive = state ? state.isActive : false ;
+  const { isActive } =  props;
   const [chatList, setChatList] = useState([]);
   const [stompClient, SetStompClient] = useState(null);
   const [message, setMessage] = useState('');
@@ -71,7 +69,7 @@ const ChattingPage = () => {
 
   return (
       <div className="chatting h-screen bg-gradient-to-b from-[#e5f3ff] to-white">
-        <Header title="1:1 채팅방" />
+        <Header title="1:1 채팅방" to="/chatroom"/>
         <ul>
           {chatList.length > 0 && chatList.map(chat => (
             <li key={chat.id}>{chat.sender} : {chat.content} - 읽음유무 : {chat.isRead ? '읽음' : '안읽음'}</li>

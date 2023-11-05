@@ -1,6 +1,6 @@
 import React from 'react';
 
-// 위치 정보를 가져오는 함수
+// 위치 정보 보내는 함수
 export const getLocationInfo = (onLocationChange) => {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(

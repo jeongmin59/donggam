@@ -23,7 +23,7 @@ const MainBackground = () => {
   const [aroundPeopleCount, setAroundPeopleCount] = useState(0); // 주변 사용자 수
 
 
-  // // 위도 경도 전송
+  // 위도 경도 전송
   const handleLocationChange = (position) => {
     setLatitude(position.coords.latitude);
     setLongitude(position.coords.longitude);
@@ -31,7 +31,7 @@ const MainBackground = () => {
   useEffect(() => {
     getLocationInfo(handleLocationChange);
   }, []);
-  
+
   // useEffect(() => {
   //   if (navigator.geolocation) {
   //     navigator.geolocation.getCurrentPosition(

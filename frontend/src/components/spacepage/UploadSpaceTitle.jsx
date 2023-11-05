@@ -1,6 +1,6 @@
 import React from "react";
 
-const UploadSpaceTitle = ({title}) => {
+const UploadSpaceTitle = ({ title, landmarkName }) => {
   return(
     <>
       <label 
@@ -9,12 +9,18 @@ const UploadSpaceTitle = ({title}) => {
       >
         {title}
       </label>
+      {landmarkName ? (
+        <div className="input-style">
+          {landmarkName}
+        </div>
+      ):(
       <input
         className="input-style"
         type="text"
         id="uploadTitle"
         placeholder="불꽃축제 숨은 명당"
       />    
+      )}
     </>
   );
 };

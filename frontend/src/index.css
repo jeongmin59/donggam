@@ -31,6 +31,16 @@
   src: url("../src/assets/fonts/GmarketSansTTFLight.ttf") format("woff");
 }
 
+@font-face {
+  font-family: "ownglyph";
+  font-style: normal;
+  font-weight: 300;
+  src: url("../src/assets/fonts/ownglyph.ttf") format("woff");
+}
+
+.ownglyph-text {
+  font-family: 'ownglyph';
+}
 
 @layer base {
   h1 {

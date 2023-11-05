@@ -48,13 +48,13 @@ const MailBox = () => {
 
   return (
     <div className='px-5'>
-      <div className="my-8 h-16">
+      <div className="my-8 h-20">
         <button className="w-full h-full bg-stone-50 rounded-2xl justify-center items-center gap-2.5 inline-flex" onClick={openModal}>{status}</button>
 
         <StatusList isOpen={isModalOpen} onClose={closeModal} statusList={statusList} changeStatus={handleStatusChange} />
       </div>
 
-      <div className='grid grid-cols-3 gap-5'>
+      <div className='grid grid-cols-3 gap-4'>
         {mailList.map((mail, index) => (
           <MailList key={index} mail={mail} />
         ))}

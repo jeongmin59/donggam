@@ -72,7 +72,7 @@ const MailItem = ({ isOpen, onClose, mailData }) => {
             <img src={mailDetail.imgAddress} style={{ maxWidth: '100%', maxHeight: '100%' }} />
             <div className="mt-2 text-center">
               {/* 쪽지 내용 */}
-              <h3>{mailDetail.content}</h3>
+              <div className='ownglyph-text text-xl'>{mailDetail.content}</div>
             </div>
           </div>
           

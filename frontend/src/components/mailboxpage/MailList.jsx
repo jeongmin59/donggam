@@ -10,6 +10,7 @@ import mintMail from '../../assets/mail/6_mint.svg'
 import violetMail from '../../assets/mail/7_violet.svg'
 import blueMail from '../../assets/mail/8_blue.svg'
 import beigeMail from '../../assets/mail/9_beige.svg'
+import likedImg from '../../assets/like/liked.png'
 
 
 const MailList = (mail) => {
@@ -46,13 +47,15 @@ const MailList = (mail) => {
 
   return (
     <div className='flex flex-col justify-center items-center'>
-      <img 
-        onClick={handleMailClick} 
-        src={randomMailIcon}
-        alt="Mail Icon" 
-        className='w-24 h-24' />
+      <div>
+        <img 
+          onClick={handleMailClick} 
+          src={randomMailIcon}
+          alt="Mail Icon" 
+          className='w-24 h-24' />
+      </div>
       {/* <p>읽음 여부 : {isRead ? "읽음" : "안읽음"}</p> */}
-      {/* <p> 좋아요 여부: {isLiked ? "좋아요" : "싫어요"}</p> */}
+      {isLiked ? <img src={likedImg} alt="Liked Icon" /> : <p></p>}
       <MailItem isOpen={isModalOpen} onClose={closeModal} mailData={mailData} />
     </div>
   );

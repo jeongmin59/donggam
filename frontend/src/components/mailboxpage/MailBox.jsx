@@ -47,14 +47,14 @@ const MailBox = () => {
   };
 
   return (
-    <div>
-      <div className="p-8">
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={openModal}>현재상태메시지: {status}</button>
+    <div className='px-5'>
+      <div className="my-8 h-16">
+        <button className="w-full h-full bg-stone-50 rounded-2xl justify-center items-center gap-2.5 inline-flex" onClick={openModal}>{status}</button>
 
         <StatusList isOpen={isModalOpen} onClose={closeModal} statusList={statusList} changeStatus={handleStatusChange} />
       </div>
 
-      <div className='px-5 grid grid-cols-3'>
+      <div className='grid grid-cols-3 gap-5'>
         {mailList.map((mail, index) => (
           <MailList key={index} mail={mail} />
         ))}

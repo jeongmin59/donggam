@@ -26,6 +26,7 @@ const UploadSpaceTitle = ({ title, setTitle, landmarkName }) => {
         value={title}
         onChange={handleTitleChange}
       />
+      )}
     </>
   );
 };

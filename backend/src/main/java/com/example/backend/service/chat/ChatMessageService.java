@@ -44,6 +44,7 @@ public class ChatMessageService {
                 .sender(member)
                 .content(request.getContent())
                 .createdAt(LocalDateTime.now())
+                .isRead(request.getIsRead())
                 .build();
 
         chatRepository.save(chat);

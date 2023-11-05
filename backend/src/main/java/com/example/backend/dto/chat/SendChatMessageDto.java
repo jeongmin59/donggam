@@ -14,6 +14,7 @@ public class SendChatMessageDto {
         private String sender;
         private Long senderId;
         private String content;
+        private Boolean isRead;
 
         public Response toResponse() {
             return Response.builder()
@@ -22,6 +23,7 @@ public class SendChatMessageDto {
                     .sender(this.sender)
                     .senderId(this.senderId)
                     .content(this.content)
+                    .isRead(this.isRead)
                     .build();
         }
     }
@@ -34,5 +36,6 @@ public class SendChatMessageDto {
         private String sender;
         private Long senderId;
         private String content;
+        private Boolean isRead;
     }
 }

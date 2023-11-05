@@ -25,6 +25,7 @@ public class MainDto {
   @Builder
   public static class Response {
     private Integer unreadMessageCount;
+    private Integer unreadChatCount;
     private Emotion statusWeather;
     private Integer aroundPeopleCount;
     private List<AroundDto.Response> aroundPeople;

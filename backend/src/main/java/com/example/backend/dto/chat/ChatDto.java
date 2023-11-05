@@ -12,4 +12,5 @@ public class ChatDto {
     private Long id;
     private String content;
     private String sender;
+    private Boolean isRead;
 }

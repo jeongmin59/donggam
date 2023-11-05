@@ -28,6 +28,7 @@ const UserLocation = ({ otherUserInfo }) => {
       getOtherUserInfo(otherUser.memberId)
         .then((data) => {
           const modalData = {
+            otherMemberId: otherUser.memberId,
             otherNickname: data.data.nickname,
             otherStatus: data.data.status,
             otherCharacterId: data.data.characterId,

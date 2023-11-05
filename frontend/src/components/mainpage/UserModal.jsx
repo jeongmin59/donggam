@@ -1,8 +1,23 @@
 import Modal from "../common/Modal";
 import SmallButton from "../common/SmallButton";
-
+import { useNavigate } from 'react-router-dom';
+import axiosInstance from "../../api/axiosConfig";
 
 const UserModal = ({ modalInfo, openMailModal }) => {
+  const navigate = useNavigate();
+
+  const handleChatting = async () => {
+    const res = await axiosInstance.post(`/chat/invite`, {
+      memberId: modalInfo.otherMemberId,
+    });
+    if (res.status === 200) {
+      console.log(res.data.data); // roomId 확인
+      navigate(`/chatting/${res.data.data.roomId}`);
+    } else {
+      console.log('채팅 신청 실패');
+    }
+  }
+
   return(
     <>
       <div className="w-[100%] space-y-3">
@@ -11,7 +26,10 @@ const UserModal = ({ modalInfo, openMailModal }) => {
         <div className='flex justify-center'><img src={`/character/${modalInfo.otherCharacterId}.svg`}/></div>
       </div>
       <div className="mt-10 flex space-x-2 ">
-        <SmallButton title='채팅하기' />
+        <SmallButton 
+          title='채팅하기' 
+          onClick={() => handleChatting()}
+        />
         <SmallButton 
           title='쪽지쓰기' 
           onClick={() => openMailModal(modalInfo.otherStatusId)} // (예정)

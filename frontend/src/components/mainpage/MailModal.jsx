@@ -2,6 +2,7 @@ import SmallButton from "../common/SmallButton";
 import { sendMail } from "../../api/mailApi";
 import addPhotoIcon from "../../assets/icons/addPhoto-icon.svg"
 import { useState, useRef } from "react";
+import imageCompression from 'browser-image-compression';
 
 const MailModal = ({mailModalInfo, closeMailModal}) => {
   const statusId = mailModalInfo.otherStatusId
@@ -48,9 +49,9 @@ const MailModal = ({mailModalInfo, closeMailModal}) => {
 
   return(
     <>
-      <div className="w-[100%] h-[100%] space-y-3">
+      <div className="w-full h-full space-y-3">
         <div className="flex justify-between">
-          <h2 className="mx-2">{mailModalInfo.otherStatusId}쪽지 쓰기</h2>
+          <h2 className="mx-2">쪽지 보내기</h2>
           <div className="flex item-center">
             <div><img src={addPhotoIcon}/></div>
             {isEditingImage ? (
@@ -75,14 +76,17 @@ const MailModal = ({mailModalInfo, closeMailModal}) => {
             />
           </div>
         </div>
-        {imageSrc && <img src={imageSrc} width="100%" alt="미리보기 이미지" />}
-        <textarea
-          type="text"
-          placeholder="쪽지 내용을 입력하세요"
-          className="bg-gray-100 w-[100%] h-60 px-5 py-5 text-left rounded-[16px]"
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-        />
+        <div className="overflow-y-auto max-h-[300px]">
+          {imageSrc && <img src={imageSrc} width="100%" alt="미리보기 이미지" />}
+          <textarea
+            type="text"
+            placeholder="쪽지 내용을 입력하세요"
+            className="bg-gray-100 w-full h-60 px-5 mt-2 py-5 ownglyph-text text-left rounded-[16px]"
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            maxLength={200}
+          />
+        </div>
       </div>
       <div className="mt-5 flex ">
         <SmallButton 

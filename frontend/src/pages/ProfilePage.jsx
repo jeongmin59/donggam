@@ -89,6 +89,7 @@ const ProfilePage = () => {
             onChange={handleNicknameChange}
             className="block w-full py-1.5 pl-2 pr-20 text-gray-900 placeholder:text-gray-400 sm:text-sm sm:leading-6 border-b-2 border-slate-700"
             placeholder={nickName}
+            maxLength={20}
           />
         </div>
 
@@ -118,6 +119,7 @@ const ProfilePage = () => {
               onChange={handleStatusChange}
               className="block w-full py-1.5 pl-2 pr-20 text-gray-900 placeholder:text-gray-400 sm:text-sm sm:leading-6 border-b-2 border-slate-700"
               placeholder={status}
+              maxLength={60}
             />
           </div>
           <h5 className="mt-2 px-5 text-gray-500">* 최소 2글자 이상 작성해주세요. </h5>

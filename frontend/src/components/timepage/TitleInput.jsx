@@ -9,6 +9,7 @@ const TitleInput = ({ title, onTitleChange }) => {
         className="w-full px-3 py-2 rounded-md border focus:outline-none focus:ring focus:border-blue-300"
         value={title}
         onChange={onTitleChange}
+        maxLength={20}
       />
     </div>
   );

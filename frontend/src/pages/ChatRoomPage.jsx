@@ -14,8 +14,8 @@ const ChatRoomPage = () => {
     setChatRoom(chatRoomList);
   };
 
-  const onClickRoom = (roomId) => {
-    navigate(`/chatting/${roomId}?isActive=${isActive}`)
+  const onClickRoom = (room) => {
+    navigate(`/chatting/${room.roomId}?isActive=${room.isActive}`)
   }
 
   const onClickLeave = async (roomId) => {
@@ -36,7 +36,7 @@ const ChatRoomPage = () => {
       <Header title="채팅 목록 보기" />
       <ul>
         {chatRoom.length > 0 && chatRoom.map(room => (
-          <li key={room.roomId} onClick={() => onClickRoom(room.roomId)}>
+          <li key={room.roomId} onClick={() => onClickRoom(room)}>
             {room.name}의 채팅방 - 상태 : {room.isActive ? '활성' : '비활성'}
             <buttom onClick={() => onClickLeave(room.roomId)}>방 나가기</buttom>
           </li>

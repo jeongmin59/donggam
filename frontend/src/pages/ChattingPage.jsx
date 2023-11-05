@@ -1,20 +1,20 @@
 import Header from "../components/common/Header";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { UserSelector } from '../recoil/user/userSelector';
 import axiosInstance from "../api/axiosConfig";
 import Stomp from 'stompjs';
+import SockJS from 'sockjs-client/dist/sockjs';
 
 const ChattingPage = () => {
-  const { roomId } = useParams();
+  const { roomId, isActive } = useParams();
   const [chatList, setChatList] = useState([]);
   const [stompClient, SetStompClient] = useState(null);
   const [message, setMessage] = useState('');
   const user = useRecoilValue(UserSelector);
   const senderId = user.memberId;
   const sender = user.nickname;
-  const isActive = searchParams.get('isActive');
 
   const updateChatList = async () => {
     const res = await axiosInstance.get(`/chat/list/${roomId}`)
@@ -22,9 +22,9 @@ const ChattingPage = () => {
   }
 
   // Spring 서버와 채팅 연결
-  const updateStompClient = () => {
+  const updateStompClient = () => { 
     // const socket = new WebSocket(`ws://localhost:8080/stomp/chat`);
-    const socket = new WebSocket(`wss://k9e107.p.ssafy.io/stomp/chat`);
+    const socket = new SockJS(`https://k9e107.p.ssafy.io/stomp/chat`);
     const stompClient = Stomp.over(socket);
     SetStompClient(stompClient);
 
@@ -33,7 +33,7 @@ const ChattingPage = () => {
       stompClient.subscribe(`/sub/chat/room/${roomId}`, function (response) {
         const message = JSON.parse(response.body);
         setChatList(prevChatList => [...prevChatList, message]);
-      });
+      }); 
     });
   };
 

@@ -4,6 +4,7 @@ import com.example.backend.dto.chat.ChatRoomDto;
 import com.example.backend.entity.mariaDB.chat.ChatRoom;
 import com.example.backend.exception.ErrorCode;
 import com.example.backend.exception.type.CustomException;
+import com.example.backend.repository.mariaDB.chat.CustomChatRoomRepository;
 import com.example.backend.repository.mariaDB.member.MemberRepository;
 import com.example.backend.repository.mariaDB.chat.ChatRoomRepository;
 import java.util.List;
@@ -17,10 +18,10 @@ import org.springframework.stereotype.Service;
 public class ChatRoomService {
 
     private final ChatRoomRepository chatRoomRepository;
-    private final MemberRepository memberRepository;
+    private final CustomChatRoomRepository customChatRoomRepository;
 
     public List<ChatRoomDto.Response> getRoomList(Long myId) {
-        List<ChatRoom> chatRooms = chatRoomRepository.findAllByMemberIdAndIsMemberActiveTrue(myId);
+        List<ChatRoom> chatRooms = customChatRoomRepository.findAllByMemberIdAndIsMemberActiveTrue(myId);
 
         return chatRooms.stream()
                 .map(room -> {
@@ -61,7 +62,7 @@ public class ChatRoomService {
         ChatRoom leftChatRoom = chatRoomRepository.save(chatRoom);
 
         // 채팅방 중에서 내가 아직 안나간 채팅방만 가져옴
-        List<ChatRoom> chatRooms = chatRoomRepository.findAllByMemberIdAndIsMemberActiveTrue(myId);
+        List<ChatRoom> chatRooms = customChatRoomRepository.findAllByMemberIdAndIsMemberActiveTrue(myId);
 
         return chatRooms.stream()
                 .map(room -> {

@@ -1,13 +1,17 @@
 import React from "react";
 
-const UploadSpaceTitle = ({ title, landmarkName }) => {
-  return(
+const UploadSpaceTitle = ({ title, setTitle, landmarkName }) => {
+  const handleTitleChange = (e) => {
+    setTitle(e.target.value);
+  };
+
+  return (
     <>
-      <label 
+      <label
         htmlFor="uploadTitle"
         className="pl-2"
       >
-        {title}
+        방명록 이름을 지어주세요.
       </label>
       {landmarkName ? (
         <div className="input-style">
@@ -18,9 +22,10 @@ const UploadSpaceTitle = ({ title, landmarkName }) => {
         className="input-style"
         type="text"
         id="uploadTitle"
-        placeholder="불꽃축제 숨은 명당"
-      />    
-      )}
+        placeholder="예시) 불꽃축제 숨은 명당"
+        value={title}
+        onChange={handleTitleChange}
+      />
     </>
   );
 };

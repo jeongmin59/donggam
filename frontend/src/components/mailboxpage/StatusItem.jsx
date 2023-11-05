@@ -9,12 +9,14 @@ const StatusItem = ({ status, changeStatus }) => {
       selectedStatus: statusItem.status,
       selectedStatusId: statusItem.id,
     });
-
   };
 
   return (
-    <div onClick={handleStatusChange} className="cursor-pointer">
-      <p>상메 : {statusItem.status}</p>
+    <div 
+      onClick={handleStatusChange} 
+      className="bg-slate-100 hover:bg-slate-300 p-2 m-2 cursor-pointer overflow-y-auto max-h-36">
+      
+      <h4>{statusItem.status}</h4>
     </div>
   );
 };

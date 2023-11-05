@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { getMailDetail, postMailLike } from '../../api/mailApi';
-import like from '../../assets/like/full_heart.png'
-import dislike from '../../assets/like/empty_heart.png'
-import alertIcon from '../../assets/icons/alert.png'
+import like from '../../assets/like/full_heart.png';
+import dislike from '../../assets/like/empty_heart.png';
+import alertIcon from '../../assets/icons/alert.png';
 import ToastModal from './../common/ToastModal';
 
-
-const MailItem = ({ isOpen, onClose, mailData }) => {
+const MailItem = ({ isOpen, onClose, mailData, updateLikedState }) => {
   // 모달 영역 밖 클릭 시 모달 닫기
   const handleBackgroundClick = (e) => {
     if (e.target === e.currentTarget) {
@@ -18,7 +17,6 @@ const MailItem = ({ isOpen, onClose, mailData }) => {
 
   const mailId = mailData.messageId;
 
-
   const [mailDetail, setMailDetail] = useState({});
   const [isLiked, setIsLiked] = useState();
 
@@ -27,7 +25,7 @@ const MailItem = ({ isOpen, onClose, mailData }) => {
       .then((res) => {
         setMailDetail(res);
         setIsLiked(res.isLiked);
-        console.log('쪽지디테일내놧!', res)
+        console.log('쪽지디테일내놧!', res);
       })
       .catch((err) => {
         console.log('쪽지 detail 가져오기 실패:', err);
@@ -35,8 +33,10 @@ const MailItem = ({ isOpen, onClose, mailData }) => {
   }, []);
 
   const handleLikeClick = () => {
-    postMailLike(mailId, !isLiked)
+    postMailLike(mailId, !isLiked);
     setIsLiked(!isLiked);
+
+    updateLikedState(!isLiked);
   };
 
   const [showToast, setShowToast] = useState(false);
@@ -57,50 +57,41 @@ const MailItem = ({ isOpen, onClose, mailData }) => {
         }}
         onClick={handleBackgroundClick}
       >
-        <div
-          style={{
-            backgroundColor: 'white',
-            borderRadius: '20px',
-            width: '100%',
-            height: '55%',
-            margin: 'auto',
-          }}
-        >
-          <div>
-            <p className="text-center text-sm text-gray-500 mt-2">{mailDetail.localDate}</p>
+        <div className="bg-white rounded-2xl w-full h-1/2 max-w-md mx-auto my-auto p-4 z-30 flex flex-col items-center" style={{ overflow: 'auto' }}>
+          <div className="px-5 flex justify-between items-center w-full">
+            <h4 className="text-center text-sm text-gray-500">{mailDetail.localDate}</h4>
+            <div>
+              {/* 신고하기 버튼 */}
+              <img src={alertIcon} onClick={handleReportClick} />
+            </div>
           </div>
-          {/* 사진 */}
-          <div>
-            <img src={mailDetail.imgAddress} />
-          </div>
-          <div>
+          {showToast && <ToastModal message="쪽지가 신고되었습니다." onClose={() => setShowToast(false)} />}
+          
+          <div className='w-2/3 h-full flex flex-col justify-center items-center' style={{ overflow: 'auto' }}>
             {/* 쪽지 사진 */}
-            <img src={mailDetail.imgAddress} />
+            <img src={mailDetail.imgAddress} style={{ maxWidth: '100%', maxHeight: '100%' }} />
+            <div className="mt-2 text-center">
+              {/* 쪽지 내용 */}
+              <div className='ownglyph-text text-xl'>{mailDetail.content}</div>
+            </div>
           </div>
-          <div>
-            {/* 쪽지 내용 */}
-            <h1 className="text-center mt-4">{mailDetail.content}</h1>
-          </div>
-          <div>
+          
+          <div className='mb-3 ml-auto'>
             {/* 보낸 사람 이름 */}
-            <p className="text-center mt-4">From: {mailDetail.from}</p>
+            <h5 className="text-center">From: {mailDetail.from}</h5>
           </div>
-          <div>
-            {/* 신고하기 버튼 */}
-            <img src={alertIcon} onClick={handleReportClick} />
-          </div>
-          {showToast && <ToastModal message="쪽지가 신고되었습니다." onClose={setShowToast} />}
-
-          <div>
+          
+          <div className='w-full h-8 px-3 py-2 bg-blue-300 rounded-3xl justify-center items-center gap-3 inline-flex' onClick={handleLikeClick}>
+            <h5 className='text-white'>마음에 들어요</h5>
             {/* 좋아요 버튼 */}
             {isLiked ? (
-              <img src={like} onClick={handleLikeClick} />
+              <img src={like} />
             ) : (
-              <img src={dislike} onClick={handleLikeClick} />
+              <img src={dislike} />
             )}
           </div>
         </div>
-      </div >
+      </div>
     </>
   );
 };

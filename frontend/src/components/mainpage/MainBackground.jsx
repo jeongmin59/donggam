@@ -6,7 +6,10 @@ import UserInfo from "./UserInfo";
 import MainArea from "./MainArea";
 import MainBackgroundImage from "../../assets/images/background-image.png"
 import NumberOfUsers from "./NumberOfUsers";
-import { getLocationInfo } from "../common/GetLocationInfo";
+// import { getLocationInfo } from "../common/GetLocationInfo";
+import { useSetRecoilState } from "recoil";
+import { LatitudeAtom, LongitudeAtom } from "../../recoil/location/locationAtom";
+
 
 const MainBackground = () => {
   // user 정보
@@ -16,6 +19,11 @@ const MainBackground = () => {
   // 위치 정보
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
+
+  //위도 경도 recoil 상태 업데이트
+  const setLongitudeAtom = useSetRecoilState(LongitudeAtom);
+  const setLatitudeAtom = useSetRecoilState(LatitudeAtom);
+
 
   // 주변 정보 
   const [selectedBackground, setSelectedBackground] = useState(''); // 날씨 배경 
@@ -29,8 +37,8 @@ const MainBackground = () => {
     setLongitude(position.coords.longitude);
   }
   useEffect(() => {
-    getLocationInfo(handleLocationChange);
-  }, []);
+  //   getLocationInfo(handleLocationChange);
+  // }, []);
 
   // useEffect(() => {
   //   if (navigator.geolocation) {
@@ -46,10 +54,27 @@ const MainBackground = () => {
   //     console.log('위치 정보를 지원하지 않는 브라우저입니다.')
   //   }
   // },[]);
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setLatitude(position.coords.latitude);
+          setLongitude(position.coords.longitude);
+
+          // 전역 위도, 경도 정보 저장
+          setLatitudeAtom(position.coords.latitude);
+          setLongitudeAtom(position.coords.longitude);
+        },
+        (e) => {
+          console.log(e.message)
+        });
+    } else {
+      console.log('위치 정보를 지원하지 않는 브라우저입니다.')
+    }
+  }, []);
 
   // 위치 기반 정보(날씨, 주변 유저, 주변 유저 수)
   useEffect(() => {
-    if (memberId && latitude !== null && longitude !== null){
+    if (memberId && latitude !== null && longitude !== null) {
       locationInfo(memberId, latitude, longitude)
         .then((data) => {
           if (data) {
@@ -64,18 +89,17 @@ const MainBackground = () => {
 
 
   // 날씨 배경 
-  const backgroundClass = `w-full h-full absolute ${
-    selectedBackground === 'POSITIVE' ? "bg-gradient-1"
+  const backgroundClass = `w-full h-full absolute ${selectedBackground === 'POSITIVE' ? "bg-gradient-1"
     : selectedBackground === 'NEUTRAL' ? "bg-gradient-2"
-    : "bg-gradient-3"
-  }`;
+      : "bg-gradient-3"
+    }`;
 
   return (
     <div className="h-screen overflow-hidden">
-      <div className={backgroundClass} style={{zIndex:3, backgroundSize: "cover" }}>
-        <UserInfo selectedBackground={selectedBackground}/> 
-        <MainArea aroundPeople={aroundPeople}/>
-        <NumberOfUsers aroundPeopleCount={aroundPeopleCount}/>
+      <div className={backgroundClass} style={{ zIndex: 3, backgroundSize: "cover" }}>
+        <UserInfo selectedBackground={selectedBackground} />
+        <MainArea aroundPeople={aroundPeople} />
+        <NumberOfUsers aroundPeopleCount={aroundPeopleCount} />
       </div>
       <div className="bottomBG h-screen flex justify-center  relative bg-[#abcdf0]" style={{ zIndex: -1 }}>
         <img src={MainBackgroundImage}

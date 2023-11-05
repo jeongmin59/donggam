@@ -10,6 +10,7 @@ import com.example.backend.repository.mariaDB.member.MemberRepository;
 import com.example.backend.repository.mariaDB.chat.ChatRepository;
 import com.example.backend.repository.mariaDB.chat.ChatRoomRepository;
 import com.example.backend.type.MessageType;
+import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
@@ -42,10 +43,13 @@ public class ChatMessageService {
                 .chatRoom(chatRoom)
                 .sender(member)
                 .content(request.getContent())
+                .createdAt(LocalDateTime.now())
                 .build();
 
         chatRepository.save(chat);
         String topic = channelTopic.getTopic();
+
+        chatRoom.setLastChatTime(chat.getCreatedAt());
 
         // ChatMessageRequest에 유저정보, 현재시간 저장
         request.setSender(member.getNickname());

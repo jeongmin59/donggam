@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { getMailDetail, postMailLike } from '../../api/mailApi';
-import like from '../../assets/like/full_heart.png'
-import dislike from '../../assets/like/empty_heart.png'
-import alertIcon from '../../assets/icons/alert.png'
+import like from '../../assets/like/full_heart.png';
+import dislike from '../../assets/like/empty_heart.png';
+import alertIcon from '../../assets/icons/alert.png';
 import ToastModal from './../common/ToastModal';
 
-
-const MailItem = ({ isOpen, onClose, mailData }) => {
+const MailItem = ({ isOpen, onClose, mailData, updateLikedState }) => {
   // 모달 영역 밖 클릭 시 모달 닫기
   const handleBackgroundClick = (e) => {
     if (e.target === e.currentTarget) {
@@ -18,7 +17,6 @@ const MailItem = ({ isOpen, onClose, mailData }) => {
 
   const mailId = mailData.messageId;
 
-
   const [mailDetail, setMailDetail] = useState({});
   const [isLiked, setIsLiked] = useState();
 
@@ -27,7 +25,7 @@ const MailItem = ({ isOpen, onClose, mailData }) => {
       .then((res) => {
         setMailDetail(res);
         setIsLiked(res.isLiked);
-        console.log('쪽지디테일내놧!', res)
+        console.log('쪽지디테일내놧!', res);
       })
       .catch((err) => {
         console.log('쪽지 detail 가져오기 실패:', err);
@@ -35,8 +33,10 @@ const MailItem = ({ isOpen, onClose, mailData }) => {
   }, []);
 
   const handleLikeClick = () => {
-    postMailLike(mailId, !isLiked)
+    postMailLike(mailId, !isLiked);
     setIsLiked(!isLiked);
+
+    updateLikedState(!isLiked);
   };
 
   const [showToast, setShowToast] = useState(false);
@@ -91,7 +91,7 @@ const MailItem = ({ isOpen, onClose, mailData }) => {
             )}
           </div>
         </div>
-      </div >
+      </div>
     </>
   );
 };

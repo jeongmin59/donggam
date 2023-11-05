@@ -30,6 +30,8 @@ public class QChat extends EntityPathBase<Chat> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
+    public final BooleanPath isRead = createBoolean("isRead");
+
     public final com.example.backend.entity.mariaDB.member.QMember sender;
 
     public QChat(String variable) {

@@ -16,6 +16,7 @@ public class CorsConfig implements WebMvcConfigurer {
             "https://k9e107a.p.ssafy.io", "http://ditto.site", "https://ditto.site")
         .allowedMethods("OPTIONS", "POST", "GET", "DELETE", "PUT")
         .allowedHeaders("*")
+        .allowCredentials(true)
         .maxAge(3600);
   }
 }

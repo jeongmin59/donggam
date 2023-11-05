@@ -60,7 +60,6 @@ const MailModal = ({mailModalInfo, closeMailModal}) => {
                 </button>
             ) : (
               <label 
-                // className="signup-profileImg-label" 
                 htmlFor="addPhoto">
                   사진 등록
               </label>

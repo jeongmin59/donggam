@@ -24,6 +24,7 @@ const LoginRediect = () => {
 
   useEffect(() => {
     axios.get(`https://k9e107.p.ssafy.io/member/login?code=${code}`
+    // axios.get(`http://localhost:8080/member/login?code=${code}`
     )
       .then((res) => {
         console.log('성공!!', res.data);
@@ -51,7 +52,7 @@ const LoginRediect = () => {
           navigator(`/`) // 메인페이지 이동
         }
         else {
-          navigator(`/profile`) // 프로필 설정 페이지 이동
+          navigator(`/tutorial`) // 튜토리얼 페이지 이동
         }
       })
       .catch(err => {

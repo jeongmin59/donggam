@@ -1,12 +1,13 @@
 package com.example.backend.service.chat;
 
-import com.example.backend.dto.chat.GetRoomListDto;
-import com.example.backend.dto.chat.RoomDto;
+import com.example.backend.dto.chat.ChatRoomDto;
 import com.example.backend.entity.mariaDB.chat.ChatRoom;
-import com.example.backend.entity.mariaDB.member.Member;
+import com.example.backend.exception.ErrorCode;
+import com.example.backend.exception.type.CustomException;
 import com.example.backend.repository.mariaDB.member.MemberRepository;
 import com.example.backend.repository.mariaDB.chat.ChatRoomRepository;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,14 +19,65 @@ public class ChatRoomService {
     private final ChatRoomRepository chatRoomRepository;
     private final MemberRepository memberRepository;
 
-    public GetRoomListDto.Response getRoomList(Long memberId) {
-        Member member = memberRepository.findById(memberId).get();
-        List<ChatRoom> chatRoomList = chatRoomRepository.findAllByMemberId(memberId);
-        List<RoomDto> chatRoomDtoList = chatRoomList.stream()
-                .map(chatRoom -> chatRoom.toRoomDto(member)).collect(
-                        Collectors.toList());
-        return GetRoomListDto.Response.builder()
-                .roomList(chatRoomDtoList)
-                .build();
+    public List<ChatRoomDto.Response> getRoomList(Long myId) {
+        List<ChatRoom> chatRooms = chatRoomRepository.findAllByMemberIdAndIsMemberActiveTrue(myId);
+
+        return chatRooms.stream()
+                .map(room -> {
+                    Boolean isActive = true;
+                    // 내가 member1이면 member2의 활성화 상태 사용
+                    if (Objects.equals(room.getMember1().getId(), myId)) {
+                        isActive = room.getIsMember2Active();
+                        // 내가 member2면 member1의 활성화 상태 사용
+                    } else if (Objects.equals(room.getMember2().getId(), myId)) {
+                        isActive = room.getIsMember1Active();
+                    }
+
+                    return ChatRoomDto.Response.builder()
+                            .roomId(room.getId())
+                            .name(Objects.equals(room.getMember1().getId(), myId)
+                                    ? room.getMember2()
+                                    .getNickname() : room.getMember1().getNickname())
+                            .isActive(isActive)
+                            .lastChatTime(room.getLastChatTime())
+                            .build();
+                }).collect(Collectors.toList());
+    }
+
+    public List<ChatRoomDto.Response> leaveChat(Long roomId, Long myId) {
+        ChatRoom chatRoom = chatRoomRepository.findById(roomId)
+                .orElseThrow(() -> new CustomException(ErrorCode.ENTITY_NOT_FOUND.getMessage(),
+                        ErrorCode.ENTITY_NOT_FOUND));
+
+        // 해당 채팅방에서 나를 비활성화 시킴
+        if (Objects.equals(chatRoom.getMember1().getId(), myId)) {
+            chatRoom.setIsMember1Active(false);
+        } else if (Objects.equals(chatRoom.getMember2().getId(), myId)) {
+            chatRoom.setIsMember2Active(false);
+        }
+
+        ChatRoom leftChatRoom = chatRoomRepository.save(chatRoom);
+
+        // 채팅방 중에서 내가 아직 안나간 채팅방만 가져옴
+        List<ChatRoom> chatRooms = chatRoomRepository.findAllByMemberIdAndIsMemberActiveTrue(myId);
+
+        return chatRooms.stream()
+                .map(room -> {
+                    Boolean isActive = true;
+                    if (Objects.equals(room.getMember1().getId(), myId)) {
+                        isActive = room.getIsMember2Active();
+                    } else if (Objects.equals(room.getMember2().getId(), myId)) {
+                        isActive = room.getIsMember1Active();
+                    }
+
+                    return ChatRoomDto.Response.builder()
+                            .roomId(room.getId())
+                            .name(Objects.equals(room.getMember1().getId(), myId)
+                                    ? room.getMember2()
+                                    .getNickname() : room.getMember1().getNickname())
+                            .isActive(isActive)
+                            .lastChatTime(room.getLastChatTime())
+                            .build();
+                }).collect(Collectors.toList());
     }
 }

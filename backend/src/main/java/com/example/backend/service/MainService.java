@@ -3,6 +3,8 @@ package com.example.backend.service;
 import com.example.backend.dto.AroundDto;
 import com.example.backend.dto.MainDto;
 import com.example.backend.dto.MemberDetailDto;
+import com.example.backend.entity.mariaDB.chat.ChatRoom;
+import com.example.backend.repository.mariaDB.chat.CustomChatRoomRepository;
 import com.example.backend.type.Emotion;
 import com.example.backend.entity.mariaDB.member.Member;
 import com.example.backend.entity.mariaDB.status.Status;
@@ -26,6 +28,7 @@ public class MainService {
     private final MemberRepository memberRepository;
     private final CustomMemberRepository customMemberRepository;
     private final MemberLocationRepository memberLocationRepository;
+    private final CustomChatRoomRepository customChatRoomRepository;
     private final LocationService locationService;
 
     // 필요한거 : 내 닉네임, 내 상태메시지, 내 캐릭터 id,  주변사람 카운트, 주변 사람들 정보
@@ -40,6 +43,13 @@ public class MainService {
 
         List<Member> members = getAroundMembers(memberId);
 
+        List<ChatRoom> chatRooms = customChatRoomRepository.findAllByMemberIdAndIsMemberActiveTrue(memberId);
+        int unreadChatCount = 0;
+        for (ChatRoom chatRoom : chatRooms) {
+            int unreadCount = (int) chatRoom.getChat().stream().filter(chat -> !chat.getIsRead()).count();
+            unreadChatCount += unreadCount;
+        }
+
         // 주변에 다른 사용자를 찾지 못했을 때
         if (members.isEmpty()) {
             return MainDto.Response.builder()
@@ -48,6 +58,7 @@ public class MainService {
                                     .stream()
                                     .filter(message -> !message.getIsRead())
                                     .count())
+                    .unreadChatCount(unreadChatCount)
                     .statusWeather(
                             member.getStatus().get(member.getStatus().size() - 1).getEmotion())
                     .aroundPeopleCount(0)

@@ -21,8 +21,7 @@ export const updateNickname = async (nickname) => {
     const res = await axiosInstance.post(`/member/nickname`, {
       nickname: nickname
     });
-    console.log(' 닉네임 변경 됏나', res)
-    console.log('nickname', nickname)
+    // console.log(' 닉네임 변경 됏나', res)
     return res.data;
   } catch (err) {
     console.log('닉네임 변경 실패!', err)
@@ -61,7 +60,7 @@ export const getOtherUserInfo = async (memberId) => {
   try {
     const res = await axiosInstance.get(`/main/${memberId}`)
     return res.data;
-  } catch(err) {
+  } catch (err) {
     console.log('상대방 정보 가져오기 실패!', err);
     return err;
   }

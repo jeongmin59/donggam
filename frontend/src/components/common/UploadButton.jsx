@@ -8,7 +8,7 @@ const UploadButton = ({ onUpload, to }) => {
   const handleUploadClick = (event) => {
     event.preventDefault(); // 중복 이벤트 실행 방지
     onUpload();
-    navigate('/');
+    navigate(to);
   };
 
   return (

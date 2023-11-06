@@ -1,19 +1,17 @@
 import React from 'react';
-import DateTimeFormatter from '../../../utils/date';
+import TraceDetailTitle from './TraceDetailTitle';
 
 const TraceDetailFront = ({ data }) => {
   const title = data.title
   const image = data.imageAddress
-  const date = data.createdAt
+  const date = data.createdAt;
   const content = data.content
 
   return (
     <div>
-      <img src={image} />
-      <h1>{title}</h1>
-      <p>날짜 및 시간: <DateTimeFormatter dateTimeString={date} /></p>
-      <p>내용 : {content}</p>
-
+      <img className="w-96 h-72" src={image} />
+      <TraceDetailTitle title={title} content={date} />
+      <div className="w-96 h-72">{content}</div>
     </div>
   );
 };

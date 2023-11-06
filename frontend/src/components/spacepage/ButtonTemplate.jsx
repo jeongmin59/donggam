@@ -1,6 +1,4 @@
 import React from "react";
-import FindingTraceButton from "./FindingTraceButton";
-import FindingLandmarkButton from "./FindingLandmarkButton";
 import NavigateButton from './../common/NavigateButton';
 
 const ButtonTemplate = () => {

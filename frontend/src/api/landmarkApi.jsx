@@ -1,6 +1,7 @@
 import axios from "axios";
 import axiosInstance from "./axiosConfig";
 
+// 근처 랜드마크 찾기
 export const searchLandmark = async ( latitude, longitude) => {
   try{
     const res = await axiosInstance.post(`/space/landmark/search`,{
@@ -16,6 +17,7 @@ export const searchLandmark = async ( latitude, longitude) => {
 };
 
 
+// 랜드마크 방명록 작성
 export const postLandmark =async( landmarkId, content, imageFile) => {
   try {
     const landmark = {
@@ -38,3 +40,5 @@ export const postLandmark =async( landmarkId, content, imageFile) => {
     return err;
   }
 }
+
+// 랜드마크 방명록 조회

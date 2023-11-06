@@ -41,17 +41,10 @@ const LandmarkUpload = () => {
 
   const handlePostLandmark = async () => {
     try{
-      // const landmarkData = {
-      //   landmarkId : landmarkId,
-      //   content: landmarkContent,
-      //   imageFile: landmarkImage,
-      // };
       if (landmarkId && landmarkContent && landmarkImage){
         const res = await postLandmark(landmarkId, landmarkContent, landmarkImage);
         console.log('랜드마크 방명록 작성 완료', res);
-
       }
-      // console.log('되냐',landmarkData)
     } catch(err){
       console.error('랜드마크 방명록 작성 실패', err)
     }

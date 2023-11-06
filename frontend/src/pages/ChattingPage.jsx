@@ -7,7 +7,7 @@ import axiosInstance from "../api/axiosConfig";
 import Stomp from 'stompjs';
 import SockJS from 'sockjs-client/dist/sockjs';
 
-const ChattingPage = (props) => {
+const ChattingPage = () => {
   const { roomId } = useParams();
   const location = useLocation();
   const isActive = location.state.isActive;
@@ -39,12 +39,12 @@ const ChattingPage = (props) => {
         setChatList(prevChatList => [...prevChatList, message]);
       }); 
       // 상대방의 접속 유무 판단
-      stompClient.ws.onopen = () => {
+      stompClient.onopen = () => {
         setIsOpponentOnline(true);
       };
-      stompClient.ws.onclose = () => {
+      stompClient.onclose = () => {
         setIsOpponentOnline(false);
-      }
+      };
     });
   };
 

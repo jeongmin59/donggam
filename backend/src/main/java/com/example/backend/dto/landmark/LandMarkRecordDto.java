@@ -15,28 +15,28 @@ import lombok.NoArgsConstructor;
 @Data
 public class LandMarkRecordDto {
 
-  @Data
-  @NoArgsConstructor
-  @AllArgsConstructor
-  @Builder
-  public static class Response {
-    private Long recordId;
-    private String content;
-    private String imageAddress;
-    private Long authorId;
-    private LocalDateTime createdAt;
-    private List<LandMarkCommentDto.Response> comments;
-  }
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class Response {
 
-  public static Response toRecordDto(LandMarkRecord record) {
-    return Response.builder()
-        .recordId(record.getId())
-        .content(record.getContent())
-        .imageAddress(record.getImageAddress())
-        .authorId(record.getMember().getId())
-        .createdAt(record.getCreatedAt())
-        .comments(record.getComments() != null ? record.getComments().stream().map(LandMarkCommentDto::toCommentDto)
-            .collect(Collectors.toList()) : Collections.emptyList())
-        .build();
-  }
+        private Long recordId;
+        private String content;
+        private String imageAddress;
+        private Long authorId;
+        private String authorNickname;
+        private LocalDateTime createdAt;
+    }
+
+    public static Response toRecordDto(LandMarkRecord record) {
+        return Response.builder()
+                .recordId(record.getId())
+                .content(record.getContent())
+                .imageAddress(record.getImageAddress())
+                .authorId(record.getMember().getId())
+                .authorNickname(record.getMember().getNickname())
+                .createdAt(record.getCreatedAt())
+                .build();
+    }
 }

@@ -8,8 +8,10 @@ import { searchLandmark } from "../../api/landmarkApi";
 import { useRecoilValue } from "recoil";
 import { LatitudeAtom, LongitudeAtom } from '../../recoil/location/locationAtom';
 import { postLandmark } from '../../api/landmarkApi';
+import { useNavigate } from 'react-router-dom';
 
 const LandmarkUpload = () => {
+  const navigate = useNavigate();
   // 전역 상태의 위도, 경도 불러오기
   const latitude = useRecoilValue(LatitudeAtom);
   const longitude = useRecoilValue(LongitudeAtom);
@@ -41,9 +43,10 @@ const LandmarkUpload = () => {
 
   const handlePostLandmark = async () => {
     try{
-      if (landmarkId && landmarkContent && landmarkImage){
+      if (landmarkId && (landmarkContent || landmarkImage)){
         const res = await postLandmark(landmarkId, landmarkContent, landmarkImage);
         console.log('랜드마크 방명록 작성 완료', res);
+        navigate(`/space/landmark/${landmarkId}`);
       }
     } catch(err){
       console.error('랜드마크 방명록 작성 실패', err)

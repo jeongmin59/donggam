@@ -43,7 +43,7 @@ const TraceDetailPage = () => {
 
   return (
     <div>
-      <BackButton to='/space/trace' />
+      <BackButton to={-1} />
 
 
       {/* showFront 상태에 따라서 TraceDetailFront 또는 TraceDetailBack 컴포넌트를 렌더링합니다 */}

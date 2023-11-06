@@ -7,12 +7,9 @@ import { useRecoilValue } from "recoil";
 import { LatitudeAtom, LongitudeAtom } from '../../recoil/location/locationAtom';
 import { postTrace } from '../../api/spaceApi';
 
-
-
 const TraceUpload = () => {
   // 여기서 업로드 axios 요청을 해야함
   // 사진, 제목, 내용 중 하나라도 있으면 요청 가능!
-
   const [title, setTitle] = useState(null);
   const [content, setContent] = useState(null);
   const [image, setImage] = useState(null);

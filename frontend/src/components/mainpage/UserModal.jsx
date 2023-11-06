@@ -12,7 +12,9 @@ const UserModal = ({ modalInfo, openMailModal }) => {
     });
     if (res.status === 200) {
       console.log(res.data.data); // roomId 확인
-      navigate(`/chatting/${res.data.data.roomId}`);
+      const roomId = res.data.data.roomId;
+      const isActive = res.data.data.isActive;
+      navigate(`/chatting/${roomId}`, {state : {isActive}});
     } else {
       console.log('채팅 신청 실패');
     }

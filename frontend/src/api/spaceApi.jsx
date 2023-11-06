@@ -60,3 +60,15 @@ export const postTraceComment = async (recordId, content) => {
     return err;
   }
 };
+
+// 내 방명록 목록 조회
+export const getMyTrace = async () => {
+  try {
+    const res = await axiosInstance.get(`/space/mine`);
+    // console.log('내 방명록 가져오기 성공', res)
+    return res.data;
+  } catch (err) {
+    console.log('내 방명록 가져오기 실패!', err)
+    return err;
+  }
+};

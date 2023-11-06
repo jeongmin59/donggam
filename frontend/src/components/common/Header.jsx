@@ -8,14 +8,14 @@ const Header = ({ title, to }) => {
     navigate(to);
   }
 
-  return(
+  return (
     <>
       {/* <div 
         className="header w-100 h-[100px] flex justify-center items-center pt-[30px] bg-white relative shadow-md"> */}
-      <div 
+      <div
         className="header w-100 h-[100px] flex justify-center items-center pt-[30px] relative shadow-md">
         <div className="absolute left-5" onClick={navigateTo}>
-          <img src={BackBtn} alt="뒤로가기버튼"/>
+          <img src={BackBtn} alt="뒤로가기버튼" />
         </div>
         <h2 className="text-center text-black">{title}</h2>
       </div>

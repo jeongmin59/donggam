@@ -20,12 +20,8 @@ export const searchLandmark = async ( latitude, longitude) => {
 // 랜드마크 방명록 작성
 export const postLandmark =async( landmarkId, content, imageFile) => {
   try {
-    const landmark = {
-      "landmarkId" : landmarkId,
-      "content" : content,
-    }
     const formData = new FormData()
-    formData.append('request', new Blob([JSON.stringify(landmark)], { type: 'application/json' }));
+    formData.append('content', content);
     formData.append('image', imageFile)
 
     const res = await axiosInstance.post(`/space/landmark/${landmarkId}`, formData, {
@@ -42,3 +38,13 @@ export const postLandmark =async( landmarkId, content, imageFile) => {
 }
 
 // 랜드마크 방명록 조회
+export const getLandmarkGuestbook = async (landmarkId) => {
+  try {
+    const res = await axiosInstance.get(`/space/landmark/${landmarkId}`);
+    console.log('랜드마크 방명록 조회 axios 성공', res);
+    return res.data;
+  } catch (err) {
+    console.log('랜드마크 방명록 조회 axios 실패', err);
+    return err;
+  }
+};

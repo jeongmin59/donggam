@@ -38,6 +38,7 @@ public class CustomChatRoomRepository extends QuerydslRepositorySupport {
         return queryFactory
                 .selectFrom(chatRoom)
                 .leftJoin(chatRoom.chat, chat).fetchJoin()
+                .where(chatRoom.id.eq(roomId))
                 .fetchOne();
     }
 

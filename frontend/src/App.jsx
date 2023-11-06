@@ -17,6 +17,7 @@ import ChattingPage from './pages/ChattingPage';
 import { AccessTokenAtom } from './recoil/user/userAtom';
 import { useRecoilValue } from "recoil";
 import TutorialPage from "./pages/TutorialPage";
+import TraceDetailPage from "./pages/TraceDetailPage";
 
 function App() {
   const isLoggedIn = useRecoilValue(AccessTokenAtom)
@@ -30,14 +31,23 @@ function App() {
             <Route path="/" element={<MainPage />} />
             <Route path="/tutorial" element={<TutorialPage />} />
             <Route path="/profile" element={<ProfilePage />} />
+
+            {/* 채팅 페이지 */}
             <Route path="/chatroom" element={<ChatRoomPage />} />
             <Route path="/chatting/:roomId" element={<ChattingPage />} />
+
+            {/* 쪽지 페이지 */}
             <Route path="/mailbox" element={<MailboxPage />} />
+
+            {/* 시간 페이지 */}
             <Route path="/time" element={<TimePage />} />
             <Route path="/time/upload" element={<PhotoUploadPage />} />
             <Route path="/time/:imageId" element={<PhotoDetailPage />} />
+
+            {/* 공간페이지 */}
             <Route path="/space" element={<SpacePage />} />
             <Route path="/space/trace" element={<NearbyTracePage />} />
+            <Route path="/space/trace/:traceId" element={<TraceDetailPage />} />
             <Route path="/space/landmark" element={<NearbyLandmarkPage />} />
             <Route path="/space/upload" element={<SpaceUploadpage />} />
           </>

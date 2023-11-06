@@ -36,9 +36,11 @@ const ChatRoomPage = () => {
       <Header title="채팅 목록 보기" to="/"/>
       <ul>
         {chatRoom.length > 0 && chatRoom.map(room => (
-          <li key={room.roomId} onClick={() => onClickRoom(room.roomId, room.isActive)}>
-            {room.name}의 채팅방 - 상태 : {room.isActive ? '활성' : '비활성'}
-            <button onClick={() => onClickLeave(room.roomId)}>  방나가기</button>
+          <li key={room.roomId} >
+            <span onClick={() => onClickRoom(room.roomId, room.isActive)}>
+              {room.name}의 채팅방 - 상태 : {room.isActive ? '활성' : '비활성'}
+            </span>
+            <button onClick={() => onClickLeave(room.roomId)}>방나가기</button>
           </li>
         ))}
       </ul>

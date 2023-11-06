@@ -64,6 +64,7 @@ const MailList = (mail) => {
             src={likedImg}
             alt="Liked Icon"
             className='absolute top-0 left-0'
+            style={{ marginTop: '-10px' }}
           />
         )}
       </div>

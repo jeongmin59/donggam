@@ -25,7 +25,7 @@ public class CustomChatRoomRepository extends QuerydslRepositorySupport {
         return queryFactory
                 .selectDistinct(chatRoom)
                 .from(chatRoom)
-                .leftJoin(chatRoom.chat, chat)
+                .leftJoin(chatRoom.chat, chat).fetchJoin()
                 .leftJoin(chatRoom.member1, member)
                 .leftJoin(chatRoom.member2, member)
                 .where(chatRoom.member1.id.eq(memberId).and(chatRoom.isMember1Active.isTrue())

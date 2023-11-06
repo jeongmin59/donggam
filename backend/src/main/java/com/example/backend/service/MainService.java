@@ -173,10 +173,10 @@ public class MainService {
             // 다른 사용자가 있을 경우에는 랜덤으로 섞어서 최대 5명 반환
         } else {
             Collections.shuffle(locationIds);
-            int number = Math.min(locationIds.size(), 5); // 5와 리스트의 크기 중 작은 값을 선택
-            locationIds = locationIds.subList(0, number); // 무작위로 선택된 요소만 포함하는 새 리스트 생성
+            if (locationIds.size() > 5) {
+                locationIds = locationIds.subList(0,5);
+            }
         }
-
         return customMemberRepository.findByIdInAndLastUpdateTimeAfter(locationIds,
                 LocalDateTime.now().minusMinutes(10));
     }

@@ -18,6 +18,7 @@ import { AccessTokenAtom } from './recoil/user/userAtom';
 import { useRecoilValue } from "recoil";
 import TutorialPage from "./pages/TutorialPage";
 import TraceDetailPage from "./pages/TraceDetailPage";
+import MyTracePage from "./pages/MyTracePage";
 
 function App() {
   const isLoggedIn = useRecoilValue(AccessTokenAtom)
@@ -50,6 +51,7 @@ function App() {
             <Route path="/space/trace/:traceId" element={<TraceDetailPage />} />
             <Route path="/space/landmark" element={<NearbyLandmarkPage />} />
             <Route path="/space/upload" element={<SpaceUploadpage />} />
+            <Route path="/mytrace" element={<MyTracePage />} />
           </>
         ) : (
           <Route path="/*" element={<Navigate to="/login" replace />} />

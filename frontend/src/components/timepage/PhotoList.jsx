@@ -3,6 +3,7 @@ import axiosInstance from "../../api/axiosConfig";
 import { Link } from "react-router-dom";
 import Masonry from "react-masonry-component";
 import fullLikeImg from "../../assets/like/full_heart.png";
+import nullLogo from "../../assets/images/noPhoto.svg";
 
 const PhotoList = () => {
   const [photos, setPhotos] = useState([]);
@@ -27,7 +28,7 @@ const PhotoList = () => {
   }, []);
 
   const masonryOptions = {
-    itemSelector: ".masonry-grid-item", // 각 그리드 항목을 선택하기 위한 CSS 선택자
+    itemSelector: ".masonry-grid-item",
     transitionDuration: 0,
   };
 
@@ -35,17 +36,12 @@ const PhotoList = () => {
     <div className="px-5">
       {loading ? (
         <p>Loading...</p>
+      ) : photos.length === 0 ? (
+        <img src={nullLogo} alt="No Photos" className="mx-auto my-8" />
       ) : (
-        <Masonry
-          className={"my-gallery-class"}
-          options={masonryOptions}
-        >
+        <Masonry className={"my-gallery-class"} options={masonryOptions}>
           {photos.map((photo) => (
-            <div 
-              key={photo.imageId} 
-              className="masonry-grid-item" 
-              style={{ width: "50%" }}>
-              
+            <div key={photo.imageId} className="masonry-grid-item" style={{ width: "50%" }}>
               <Link to={`/time/${photo.imageId}`} className="m-2 flex flex-col items-center relative">
                 <div className="overflow-hidden">
                   <img src={photo.imageAddress} alt={photo.title} className="rounded-lg" />
@@ -55,7 +51,6 @@ const PhotoList = () => {
                 </div>
                 <h5 className="mt-1">{photo.title}</h5>
               </Link>
-            
             </div>
           ))}
         </Masonry>

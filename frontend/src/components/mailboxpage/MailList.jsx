@@ -11,13 +11,14 @@ import violetMail from '../../assets/mail/7_violet.svg';
 import blueMail from '../../assets/mail/8_blue.svg';
 import beigeMail from '../../assets/mail/9_beige.svg';
 import likedImg from '../../assets/like/liked.png';
+import notReadImg from '../../assets/mail/notRead.png';
 
 const MailList = (mail) => {
   const mailData = mail.mail;
   const mailId = mailData.messageId;
-  const isRead = mailData.isRead;
 
   const [isLiked, setIsLiked] = useState(mailData.isLiked);
+  const [isRead, setIsRead] = useState(mailData.isRead);
 
   const mailIcons = [
     pinkMail, orangeMail, yellowMail, greenMail,
@@ -35,6 +36,7 @@ const MailList = (mail) => {
 
   const closeModal = () => {
     setIsModalOpen(false);
+    setIsRead(true);
   };
 
   const handleMailClick = () => {
@@ -53,7 +55,7 @@ const MailList = (mail) => {
       <div className='relative'>
         <img
           onClick={handleMailClick}
-          src={randomMailIcon}
+          src={isRead ? randomMailIcon : notReadImg}
           alt="Mail Icon"
           className='w-24 h-24'
         />
@@ -62,6 +64,7 @@ const MailList = (mail) => {
             src={likedImg}
             alt="Liked Icon"
             className='absolute top-0 left-0'
+            style={{ marginTop: '-10px' }}
           />
         )}
       </div>

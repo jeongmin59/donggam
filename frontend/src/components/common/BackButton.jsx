@@ -2,7 +2,6 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import btn from '../../assets/common/back-btn.svg';
 
-
 const BackButton = ({ to }) => {
   const navigate = useNavigate();
 
@@ -19,5 +18,6 @@ const BackButton = ({ to }) => {
     </div >
   );
 };
+
 
 export default BackButton;

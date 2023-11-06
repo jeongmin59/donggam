@@ -2,6 +2,7 @@ import SmallButton from "../common/SmallButton";
 import { sendMail } from "../../api/mailApi";
 import addPhotoIcon from "../../assets/icons/addPhoto-icon.svg"
 import { useState, useRef } from "react";
+import imageCompression from 'browser-image-compression';
 
 const MailModal = ({mailModalInfo, closeMailModal}) => {
   const statusId = mailModalInfo.otherStatusId
@@ -13,7 +14,7 @@ const MailModal = ({mailModalInfo, closeMailModal}) => {
   const imageInputRef = useRef(null);
 
   const handleSendMailClick = async () => {
-    if (!content) {
+    if (!content) {                     
       console.log("쪽지 내용을 작성하세요");
       return;
     }
@@ -28,29 +29,48 @@ const MailModal = ({mailModalInfo, closeMailModal}) => {
     }
   }
 
-  // 사진 첨부 
-  const handleImageInputChange = (e) => {
-    if (e.target.files.length >0) {
-      setSelectedImage(e.target.files[0]);
+// 사진 관련
+const handleImageInputChange = async (e) => {
+  const file = e.target.files[0];
+
+  const maxSizeInBytes = 10 * 1024 * 1024; // 10MB
+  const maxWidth = 800;  // 최대 너비
+  const maxHeight = 600; // 최대 높이
+
+  if (file) {
+    try {
+      // 이미지 압축을 위한 설정
+      const options = {
+        maxSizeMB: maxSizeInBytes / (1024 * 1024), // 이미지 크기 제한 (10MB)
+        maxWidthOrHeight: Math.max(maxWidth, maxHeight),
+      };
+
+      // 이미지 압축을 수행하고 압축된 파일을 가져옴
+      const compressedFile = await imageCompression(file, options);
+
+      // 압축된 이미지를 선택된 이미지로 설정
+      setSelectedImage(compressedFile);
       setIsEditingImage(true);
 
-      // 미리보기
-      const file = e.target.files[0];
+      // 압축된 이미지의 미리보기 URL 생성
       const reader = new FileReader();
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(compressedFile);
       reader.onload = () => {
         setImageSrc(reader.result || null);
       };
+    } catch (error) {
+      console.error("이미지 압축 중 에러", error);
     }
-  };
+  }
+};
 
   // console.log(statusId, content, selectedImage)
 
   return(
     <>
-      <div className="w-[100%] h-[100%] space-y-3">
+      <div className="w-full h-full space-y-3">
         <div className="flex justify-between">
-          <h2 className="mx-2">{mailModalInfo.otherStatusId}쪽지 쓰기</h2>
+          <h2 className="mx-2">쪽지 보내기</h2>
           <div className="flex item-center">
             <div><img src={addPhotoIcon}/></div>
             {isEditingImage ? (
@@ -75,14 +95,17 @@ const MailModal = ({mailModalInfo, closeMailModal}) => {
             />
           </div>
         </div>
-        {imageSrc && <img src={imageSrc} width="100%" alt="미리보기 이미지" />}
-        <textarea
-          type="text"
-          placeholder="쪽지 내용을 입력하세요"
-          className="bg-gray-100 w-[100%] h-60 px-5 py-5 text-left rounded-[16px]"
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-        />
+        <div className="overflow-y-auto max-h-[300px]">
+          {imageSrc && <img src={imageSrc} width="100%" alt="미리보기 이미지" />}
+          <textarea
+            type="text"
+            placeholder="쪽지 내용을 입력하세요"
+            className="bg-gray-100 w-full h-60 px-5 mt-2 py-5 ownglyph-text text-left rounded-[16px]"
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            maxLength={200}
+          />
+        </div>
       </div>
       <div className="mt-5 flex ">
         <SmallButton 

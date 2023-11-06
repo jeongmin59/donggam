@@ -6,7 +6,7 @@ import UserInfo from "./UserInfo";
 import MainArea from "./MainArea";
 import MainBackgroundImage from "../../assets/images/background-image.png"
 import NumberOfUsers from "./NumberOfUsers";
-import { getLocationInfo } from "../common/GetLocationInfo";
+// import { getLocationInfo } from "../common/GetLocationInfo";
 import { useSetRecoilState } from "recoil";
 import { LatitudeAtom, LongitudeAtom } from "../../recoil/location/locationAtom";
 
@@ -29,6 +29,22 @@ const MainBackground = () => {
   const [selectedBackground, setSelectedBackground] = useState(''); // 날씨 배경 
   const [aroundPeople, setAroundPeople] = useState([]) // 주변 사용자 
   const [aroundPeopleCount, setAroundPeopleCount] = useState(0); // 주변 사용자 수
+
+
+  // 읽음, 안읽음 정보
+  const [unreadChatCount, setUnreadChatCount] = useState(0);
+  const [unreadMessageCount, setUnreadMessageCount] = useState(0);
+
+  const updateUnreadCounts = (chatCount, messageCount) => {
+    setUnreadChatCount(chatCount);
+    setUnreadMessageCount(messageCount);
+  };
+
+  // // 위도 경도 전송
+  // const handleLocationChange = (position) => {
+  //   setLatitude(position.coords.latitude);
+  //   setLongitude(position.coords.longitude);
+  // }
 
   useEffect(() => {
 

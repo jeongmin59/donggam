@@ -55,9 +55,9 @@ public class ChatService {
 
         // 이미 해당 회원과 같이 참여된 채팅방이 있을 경우
         if (chatRoom1 != null) {
-            return InviteChatDto.Response.builder().roomId(chatRoom1.getId()).build();
+            return InviteChatDto.toDto(chatRoom1);
         } else if (chatRoom2 != null) {
-            return InviteChatDto.Response.builder().roomId(chatRoom2.getId()).build();
+            return InviteChatDto.toDto(chatRoom2);
         }
 
         // 처음 채팅하는 사람일 경우
@@ -68,7 +68,7 @@ public class ChatService {
                 .isMember2Active(true)
                 .build());
 
-        return InviteChatDto.Response.builder().roomId(chatRoom.getId()).build();
+        return InviteChatDto.toDto(chatRoom);
 
     }
 }

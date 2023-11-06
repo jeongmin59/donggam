@@ -3,7 +3,7 @@ import React from "react";
 const FileInput = ({ previewUrl, onFileChange }) => {
   return (
     <div className="mb-4">
-      <div className="mt-2 h-80 flex flex-col items-center justify-center rounded-lg border focus:outline-none focus:ring focus:border-blue-300 px-6 py-10">
+      <div className="mt-2 h-[50vh] flex flex-col items-center justify-center rounded-lg border focus:outline-none focus:ring focus:border-blue-300 px-6 py-10">
         {/* 이미지 미리보기 */}
         {previewUrl && (
           <img

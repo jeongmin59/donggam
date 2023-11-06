@@ -73,7 +73,7 @@ const ChattingPage = () => {
         <Header title="1:1 채팅방" to="/chatroom"/>
         <ul>
           {chatList && chatList.length > 0 && chatList.map(chat => (
-            <li key={chat.id}>{chat.sender} : {chat.content} - 읽음유무 : {chat.isRead ? '읽음' : '안읽음'}</li>
+            <li key={chat.id}>{chat.sender} : {chat.content}</li>
           ))}
         </ul>
         {isActive ? (

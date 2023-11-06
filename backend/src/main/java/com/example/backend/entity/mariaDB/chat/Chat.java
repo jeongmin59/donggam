@@ -9,13 +9,16 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Entity
+@Setter
 @NoArgsConstructor
 public class Chat {
 
@@ -33,9 +36,11 @@ public class Chat {
     private Boolean isRead;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "sender_id")
     private Member sender;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "chat_room_id")
     private ChatRoom chatRoom;
 
     @Builder
@@ -45,14 +50,5 @@ public class Chat {
         this.chatRoom = chatRoom;
         this.createdAt = createdAt;
         this.isRead = isRead;
-    }
-
-    public ChatDto toChatDto() {
-        return ChatDto.builder()
-                .id(this.id)
-                .content(this.content)
-                .sender(this.sender.getNickname())
-                .isRead(this.isRead)
-                .build();
     }
 }

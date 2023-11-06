@@ -22,7 +22,7 @@ public class InviteChatDto {
     public static Response toDto(ChatRoom chatRoom) {
         return Response.builder()
                 .roomId(chatRoom.getId())
-                .isActive(true)
+                .isActive(chatRoom.getIsMember1Active() && chatRoom.getIsMember2Active())
                 .build();
     }
 }

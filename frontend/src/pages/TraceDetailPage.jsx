@@ -7,7 +7,6 @@ import BackButton from './../components/common/BackButton';
 
 const TraceDetailPage = () => {
   const { traceId } = useParams(); // object로 온다.
-
   const [traceData, setTraceData] = useState(null);
   const [comment, setComment] = useState('');
 

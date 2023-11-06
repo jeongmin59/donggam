@@ -1,5 +1,6 @@
 package com.example.backend.service;
 
+import com.example.backend.dto.record.MyRecordDto;
 import com.example.backend.dto.record.RecordCommentDto;
 import com.example.backend.dto.record.RecordDetailDto;
 import com.example.backend.dto.record.RecordDto;
@@ -10,6 +11,7 @@ import com.example.backend.entity.postgreSQL.MemberLocation;
 import com.example.backend.entity.postgreSQL.RecordLocation;
 import com.example.backend.exception.ErrorCode;
 import com.example.backend.exception.type.CustomException;
+import com.example.backend.repository.mariaDB.member.CustomMemberRepository;
 import com.example.backend.repository.mariaDB.member.MemberRepository;
 import com.example.backend.repository.mariaDB.record.CustomRecordRepository;
 import com.example.backend.repository.mariaDB.record.RecordCommentRepository;
@@ -31,6 +33,7 @@ public class RecordService {
 
     private final ImageUtil imageUtil;
     private final MemberRepository memberRepository;
+    private final CustomMemberRepository customMemberRepository;
     private final MemberLocationRepository memberLocationRepository;
     private final RecordRepository recordRepository;
     private final CustomRecordRepository customRecordRepository;
@@ -105,5 +108,16 @@ public class RecordService {
                 .orElseThrow(() -> new CustomException(ErrorCode.ENTITY_NOT_FOUND.getMessage(), ErrorCode.ENTITY_NOT_FOUND));
 
         return RecordDetailDto.toDetailDto(record, recordLocation);
+    }
+
+    public List<MyRecordDto.Response> myRecords(Long memberId) {
+        Member member = customMemberRepository.findWithRecordsById(memberId);
+        List<Record> myRecords = member.getRecords();
+
+        return myRecords.stream().map(record -> {
+            RecordLocation recordLocation = recordLocationRepository.findById(record.getId())
+                            .orElseThrow(() -> new CustomException(ErrorCode.ENTITY_NOT_FOUND.getMessage(), ErrorCode.ENTITY_NOT_FOUND));
+            return MyRecordDto.toDto(record, recordLocation);
+        }).collect(Collectors.toList());
     }
 }

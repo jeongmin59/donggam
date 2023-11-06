@@ -1,6 +1,7 @@
 package com.example.backend.repository.mariaDB.member;
 
 import static com.example.backend.entity.mariaDB.member.QMember.member;
+import static com.example.backend.entity.mariaDB.space.QRecord.record;
 import static com.example.backend.entity.mariaDB.status.QStatus.status;
 import static com.example.backend.entity.mariaDB.time.QImage.image;
 
@@ -48,5 +49,13 @@ public class CustomMemberRepository extends QuerydslRepositorySupport {
                 .where(member.id.eq(memberId))
                 .fetchOne()
         );
+    }
+
+    public Member findWithRecordsById(Long memberId) {
+        return queryFactory
+                .selectFrom(member)
+                .leftJoin(member.records, record)
+                .where(member.id.eq(memberId))
+                .fetchOne();
     }
 }

@@ -1,6 +1,7 @@
 package com.example.backend.controller.space;
 
 import com.example.backend.dto.Response;
+import com.example.backend.dto.record.MyRecordDto;
 import com.example.backend.dto.record.RecordCommentDto;
 import com.example.backend.dto.record.RecordDetailDto;
 import com.example.backend.dto.record.RecordDto;
@@ -67,5 +68,14 @@ public class RecordController {
     ) {
         Long memberId = Long.parseLong(userDetails.getUsername());
         return new Response<>(200, "주변 방명록 조회 성공", recordService.aroundRecords(memberId));
+    }
+
+    @Operation(summary = "내 방명록 목록", description = "내 방명록 목록")
+    @GetMapping("/mine")
+    public Response<List<MyRecordDto.Response>> myRecords (
+            @Parameter(hidden = true) @AuthenticationPrincipal UserDetails userDetails
+    ) {
+        Long memberId = Long.parseLong(userDetails.getUsername());
+        return new Response<>(200, "내 방명록 목록 조회 성공", recordService.myRecords(memberId));
     }
 }

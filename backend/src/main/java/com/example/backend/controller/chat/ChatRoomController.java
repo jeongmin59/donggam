@@ -60,4 +60,15 @@ public class ChatRoomController {
         Long myId = Long.parseLong(userDetails.getUsername());
         return new Response<>(200, "채팅방 나가기 완료", chatRoomService.leaveChat(request.getRoomId(), myId));
     }
+
+    @Operation(summary = "채팅 읽음 처리", description = "채팅방 떠날때 전부 읽음 처리")
+    @PostMapping("/chat/list/{roomId}")
+    public Response<String> readChats(
+            @PathVariable("roomId") Long roomId,
+            @Parameter(hidden = true) @AuthenticationPrincipal UserDetails userDetails
+    ) {
+        Long memberId = Long.parseLong(userDetails.getUsername());
+        chatRoomService.readChats(roomId, memberId);
+        return new Response<>(200, "읽음 처리 완료", "읽음 처리 완료");
+    }
 }

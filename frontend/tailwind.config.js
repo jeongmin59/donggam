@@ -14,6 +14,7 @@ export default {
 
       backgroundColor:{
         'mainColor' : 'var(--mainColor)',
+        'subColor' : 'var(--subColor)',
       }
 
     },

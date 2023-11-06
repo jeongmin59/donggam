@@ -6,9 +6,9 @@ import UserInfo from "./UserInfo";
 import MainArea from "./MainArea";
 import MainBackgroundImage from "../../assets/images/background-image.png"
 import NumberOfUsers from "./NumberOfUsers";
+// import { getLocationInfo } from "../common/GetLocationInfo";
 import { useSetRecoilState } from "recoil";
 import { LatitudeAtom, LongitudeAtom } from "../../recoil/location/locationAtom";
-
 
 
 const MainBackground = () => {
@@ -30,9 +30,38 @@ const MainBackground = () => {
   const [aroundPeople, setAroundPeople] = useState([]) // 주변 사용자 
   const [aroundPeopleCount, setAroundPeopleCount] = useState(0); // 주변 사용자 수
 
+  // 읽음, 안읽음 정보
+  const [unreadChatCount, setUnreadChatCount] = useState(0);
+  const [unreadMessageCount, setUnreadMessageCount] = useState(0);
+
+  const updateUnreadCounts = (chatCount, messageCount) => {
+    setUnreadChatCount(chatCount);
+    setUnreadMessageCount(messageCount);
+  };
 
   // 위도 경도 전송
+  const handleLocationChange = (position) => {
+    setLatitude(position.coords.latitude);
+    setLongitude(position.coords.longitude);
+  }
   useEffect(() => {
+  //   getLocationInfo(handleLocationChange);
+  // }, []);
+
+  // useEffect(() => {
+  //   if (navigator.geolocation) {
+  //     navigator.geolocation.getCurrentPosition(
+  //       (position) => {
+  //       setLatitude(position.coords.latitude);
+  //       setLongitude(position.coords.longitude);
+  //     }, 
+  //     (e) => {
+  //       console.log(e.message)
+  //     });
+  //   } else {
+  //     console.log('위치 정보를 지원하지 않는 브라우저입니다.')
+  //   }
+  // },[]);
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -60,6 +89,7 @@ const MainBackground = () => {
             setSelectedBackground(data.data.statusWeather);
             setAroundPeopleCount(data.data.aroundPeopleCount);
             setAroundPeople(data.data.aroundPeople);
+            updateUnreadCounts(data.data.unreadChatCount, data.data.unreadMessageCount);
           }
           console.log('위치 API 응답:', data.data)
         });
@@ -77,7 +107,11 @@ const MainBackground = () => {
     <div className="h-screen overflow-hidden">
       <div className={backgroundClass} style={{ zIndex: 3, backgroundSize: "cover" }}>
         <UserInfo selectedBackground={selectedBackground} />
-        <MainArea aroundPeople={aroundPeople} />
+        <MainArea 
+          aroundPeople={aroundPeople}
+          unreadChatCount={unreadChatCount} 
+          unreadMessageCount={unreadMessageCount}
+          />
         <NumberOfUsers aroundPeopleCount={aroundPeopleCount} />
       </div>
       <div className="bottomBG h-screen flex justify-center  relative bg-[#abcdf0]" style={{ zIndex: -1 }}>

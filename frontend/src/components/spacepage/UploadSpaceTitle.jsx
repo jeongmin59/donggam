@@ -1,6 +1,6 @@
 import React from "react";
 
-const UploadSpaceTitle = ({ title, setTitle }) => {
+const UploadSpaceTitle = ({ title, setTitle, landmarkName }) => {
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
   };
@@ -13,6 +13,11 @@ const UploadSpaceTitle = ({ title, setTitle }) => {
       >
         방명록 이름을 지어주세요.
       </label>
+      {landmarkName ? (
+        <div className="input-style">
+          {landmarkName}
+        </div>
+      ):(
       <input
         className="input-style"
         type="text"
@@ -21,6 +26,7 @@ const UploadSpaceTitle = ({ title, setTitle }) => {
         value={title}
         onChange={handleTitleChange}
       />
+      )}
     </>
   );
 };

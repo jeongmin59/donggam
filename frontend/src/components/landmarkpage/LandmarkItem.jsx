@@ -18,10 +18,10 @@ const TraceItem = ({ time, content, userName, imageUrl }) => {
   return (
     < >
        <div style={backgroundStyle} className='rounded-[16px] my-2 text-white flex justify-center items-center'>
-        <div className='flex-col items-center justify-center'>
+        <div className='flex-col items-center justify-center space-y-2'>
           <div className='text-center'>{formattedDate}</div>
           <div className='text-center'>{content}</div>
-          <div className='text-center'>{userName}</div>
+          <div className='text-center'>-{userName}의 흔적-</div>
         </div>
       </div>
     </>

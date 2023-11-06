@@ -26,7 +26,7 @@ const LandmarkDetailPage = () => {
   console.log(landmarkList);
   return(
     <>
-      <Header title={landmarkName} to="/" />
+      <Header title={landmarkName} to="/space/landmark" />
       <div className='px-5'>
         <ul>
         {landmarkList.map((record,index) => (

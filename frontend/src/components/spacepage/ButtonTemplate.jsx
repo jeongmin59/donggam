@@ -1,12 +1,12 @@
 import React from "react";
-import FindingTraceButton from "./FindingTraceButton";
-import FindingLandmarkButton from "./FindingLandmarkButton";
+import NavigateButton from './../common/NavigateButton';
 
 const ButtonTemplate = () => {
-  return(
+  return (
     <div className="px-5 fixed bottom-3 left-0 right-0">
-      <FindingTraceButton to="/space/trace"/>
-      <FindingLandmarkButton to="/space/landmark" />
+      <NavigateButton content="근처 방명록 보기" to="/space/trace" />
+      <NavigateButton content="랜드마크 보기" to="/space/landmark" />
+      <NavigateButton content="내 방명록 보기" to="/mytrace" />
     </div>
   );
 };

@@ -34,4 +34,11 @@ public class CustomChatRoomRepository extends QuerydslRepositorySupport {
                 .fetch();
     }
 
+    public ChatRoom findByRoomId(Long roomId) {
+        return queryFactory
+                .selectFrom(chatRoom)
+                .leftJoin(chatRoom.chat, chat).fetchJoin()
+                .fetchOne();
+    }
+
 }

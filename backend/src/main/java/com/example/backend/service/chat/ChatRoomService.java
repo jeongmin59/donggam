@@ -1,9 +1,11 @@
 package com.example.backend.service.chat;
 
 import com.example.backend.dto.chat.ChatRoomDto;
+import com.example.backend.entity.mariaDB.chat.Chat;
 import com.example.backend.entity.mariaDB.chat.ChatRoom;
 import com.example.backend.exception.ErrorCode;
 import com.example.backend.exception.type.CustomException;
+import com.example.backend.repository.mariaDB.chat.ChatRepository;
 import com.example.backend.repository.mariaDB.chat.CustomChatRoomRepository;
 import com.example.backend.repository.mariaDB.member.MemberRepository;
 import com.example.backend.repository.mariaDB.chat.ChatRoomRepository;
@@ -18,6 +20,7 @@ import org.springframework.stereotype.Service;
 public class ChatRoomService {
 
     private final ChatRoomRepository chatRoomRepository;
+    private final ChatRepository chatRepository;
     private final CustomChatRoomRepository customChatRoomRepository;
 
     public List<ChatRoomDto.Response> getRoomList(Long myId) {
@@ -84,5 +87,17 @@ public class ChatRoomService {
                                     (int) room.getChat().stream().filter(chat -> !chat.getIsRead()).count())
                             .build();
                 }).collect(Collectors.toList());
+    }
+
+    public void readChats(Long roomId, Long myId) {
+        ChatRoom chatRoom = customChatRoomRepository.findByRoomId(roomId);
+
+        List<Chat> chats = chatRoom.getChat();
+        chats.forEach(chat -> {
+            if (!Objects.equals(chat.getSender().getId(), myId) && !chat.getIsRead()) {
+                chat.setIsRead(true);
+                chatRepository.save(chat);
+            }
+        });
     }
 }

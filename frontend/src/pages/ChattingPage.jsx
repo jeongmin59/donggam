@@ -84,7 +84,7 @@ const ChattingPage = () => {
         <Header title="1:1 채팅방" to="/chatroom" />
       </div>
       <ul
-        className="pb-20  w-full h-full"
+        className="w-full h-full"
         id="chatWindow"
         style={{ overflowY: "scroll" }}
       >

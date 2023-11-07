@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import BackButton from './../components/common/BackButton';
 import MyTraceItem from './../components/spacepage/MyTraceItem';
 import { getMyTrace } from "../api/spaceApi";
+import Header from './../components/common/Header';
 
 const MyTracePage = () => {
   const [traceList, setTraceList] = useState([])
@@ -24,17 +24,13 @@ const MyTracePage = () => {
 
   return (
     <>
-      <div>
-        <BackButton to='/space' />
-      </div>
-      <div>
-        <h3>근처에 있는 {traceList.length}개
-          방명록을 발견했어요!</h3>
-      </div>
-      <div>
-        {traceList.map((traceData, index) => (
-          <MyTraceItem key={index} data={traceData} />
-        ))}
+      <Header title="내 방명록" to={-1} />
+      <div className='px-5'>
+        <ul>
+          {traceList.map((traceData, index) => (
+            <MyTraceItem key={index} data={traceData} />
+          ))}
+        </ul>
       </div>
     </>
   );

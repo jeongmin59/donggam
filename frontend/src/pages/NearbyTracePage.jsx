@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getTraceList } from "../api/spaceApi";
-import Header from '../components/common/Header';
 import TraceItem from '../components/spacepage/TraceItem';
+import BackButton from './../components/common/BackButton';
 
 const NearbyTracePage = () => {
   const [traceList, setTraceList] = useState([]);
@@ -20,12 +20,17 @@ const NearbyTracePage = () => {
 
   return (
     <>
-      <Header title="근처 방명록 찾기" to='/space' />
-
-      {traceList.map((trace, index) => (
-        <TraceItem key={index} title={trace.title} traceId={trace.recordId} />
-      )
-      )}
+      <BackButton to='/space' />
+      <h1>
+        근처에 있는  {traceList.length}개의
+        <br />
+        방명록을 발견했어요!
+      </h1>
+      <div className="flex flex-col gap-4">
+        {traceList.map((trace, index) => (
+          <TraceItem key={index} title={trace.title} traceId={trace.recordId} />
+        ))}
+      </div>
     </>
   );
 };

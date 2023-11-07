@@ -9,9 +9,9 @@ const TraceDetailFront = ({ data }) => {
 
   return (
     <div>
-      <img className="w-96 h-72" src={image} />
+      <img className="trace-image mx-auto my-auto w-screen " src={image} />
       <TraceDetailTitle title={title} content={date} />
-      <div className="w-96 h-72">{content}</div>
+      <div className="trace-content">{content}</div>
     </div>
   );
 };

@@ -12,7 +12,9 @@ const TraceDetailBack = ({ data, setComment, comment, traceId, setShowFront }) =
 
   return (
     <div>
-      <div className="w-96 h-72">지도 나오는 부분</div>
+      <div className="flex justify-center relative h-[100vw]  object-cover  mx-auto my-auto w-screen text-justify">
+        지도 나오는 부분
+      </div>
       <TraceDetailTitle title={title} content={location} />
       <div>
         {commentList.map((commentItem, index) => (

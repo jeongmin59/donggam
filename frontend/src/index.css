@@ -100,7 +100,7 @@
     border-4 border-[#ABCEF2] rounded-[16px] border flex justify-center;
   }
   .landmark-card {
-    @apply ownglyph-text text-xl text-center h-[70vh] flex items-center justify-center;
+    @apply ownglyph-text text-xl text-center h-[70vh] flex items-center justify-center
     background-image: radial-gradient(
       50% 48.18% at 50% 50%,
       #fff 69.41%,
@@ -137,27 +137,24 @@
   }
 
   .nav-shadow {
-    box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.10);
-  }
-  
-}
-  .trace-content {
-    @apply ownglyph-text text-xl text-center h-[60vh] flex items-center justify-center;
-    background-image: radial-gradient(
-      50% 48.18% at 50% 50%,
-      #fff 69.41%,
-      #e4efff 100%
-    );
-  }
-
-  .trace-comment {
-    @apply ownglyph-text text-xl text-center h-[60vh] flex-col justify-center items-center;
-    background-image: radial-gradient(
-      50% 48.18% at 50% 50%,
-      #e4efff 52.5%,
-      #e4efff 61.35%,
-      #fff 94.17%
-    );
+    box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.1);
   }
 }
+.trace-content {
+  @apply ownglyph-text text-xl text-center h-[60vh] flex items-center justify-center;
+  background-image: radial-gradient(
+    50% 48.18% at 50% 50%,
+    #fff 69.41%,
+    #e4efff 100%
+  );
+}
 
+.trace-comment {
+  @apply ownglyph-text text-xl text-center h-[60vh] flex-col justify-center items-center;
+  background-image: radial-gradient(
+    50% 48.18% at 50% 50%,
+    #e4efff 52.5%,
+    #e4efff 61.35%,
+    #fff 94.17%
+  );
+}

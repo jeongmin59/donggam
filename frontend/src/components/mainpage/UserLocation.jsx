@@ -19,6 +19,9 @@ const UserLocation = ({ otherUserInfo }) => {
   const [modalInfo, setModalInfo] = useState(null); // 유저 모달
   const [mailModalInfo, setMailModalInfo] = useState(null); // (예정) 쪽지 모달 
 
+  // 주변 친구 위치 업데이트
+  const [existingCharacters, setExistingCharacters] = useState([]);
+
   const handleModal = (otherUser) => {
     if (modalInfo) {
       // 모달이 이미 열려있는 경우, 닫고 초기화
@@ -91,13 +94,14 @@ const UserLocation = ({ otherUserInfo }) => {
       <div className="flex justify-center items-center overflow-hidden" style={{ width: "100%", height: "100%", zIndex: -1 }}>
         <div className="nya relative flex justify-center items-center" style={{ width: "100%", height: "100%", zIndex: 1 }}>
           <div>
-            <img src={myCharacter} alt={`${characterId}번 캐릭터`} />
+            <img src={myCharacter} alt={`${characterId}번 캐릭터`} style={{width:"8rem"}} />
           </div>
           {otherUserInfo.map((otherUser, index) => (
             <UserCharacter 
               key={index} 
               otherCharacterId={otherUser.characterId} 
-              existingCharacters={otherUserInfo}
+              existingCharacters={existingCharacters}
+              setExistingCharacters={setExistingCharacters}
               onCharacterClick={() => handleModal(otherUser)}
             />
           ))}

@@ -6,7 +6,11 @@ const MailFilter = ({ mailList }) => {
 
   return (
     <div className='text-right'>
-      <h5>전체 {mailList.length} | 맘에 듦 {likedMails.length} | 안 읽음 {unReadMails.length}</h5>
+      <span className='font-[GmarketSansLight]'>
+        전체 <span className="total-count font-[GmarketSansLight]">{mailList.length}</span> | 
+        맘에 듦 <span className="liked-count font-[GmarketSansLight]">{likedMails.length}</span> | 
+        안 읽음 <span className="unread-count font-[GmarketSansLight]">{unReadMails.length}</span>
+      </span>
     </div>
   );
 };

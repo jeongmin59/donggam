@@ -1,9 +1,11 @@
 import React from "react";
 
+
+
 const FileInput = ({ previewUrl, onFileChange }) => {
   return (
-    <div className="mb-4">
-      <div className="mt-2 h-[50vh] flex flex-col items-center justify-center rounded-lg border focus:outline-none focus:ring focus:border-blue-300 px-6 py-10">
+    <>
+      <div className="photo-frame flex flex-col">
         {/* 이미지 미리보기 */}
         {previewUrl && (
           <img
@@ -28,9 +30,9 @@ const FileInput = ({ previewUrl, onFileChange }) => {
             />
           </label>
         </div>
-        <p className="text-xs leading-5 text-gray-600">10mb까지 첨부 가능</p>
+        <p className="text-center text-xs leading-5 text-gray-600">10mb까지 첨부 가능</p>
       </div>
-    </div>
+    </>
   );
 };
 

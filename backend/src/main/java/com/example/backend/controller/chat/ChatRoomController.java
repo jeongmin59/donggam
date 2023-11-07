@@ -1,8 +1,8 @@
 package com.example.backend.controller.chat;
 
 import com.example.backend.dto.Response;
+import com.example.backend.dto.chat.ChatDto;
 import com.example.backend.dto.chat.ChatRoomDto;
-import com.example.backend.dto.chat.GetChatListDto;
 import com.example.backend.dto.chat.InviteChatDto;
 import com.example.backend.dto.chat.LeaveChatDto;
 import com.example.backend.service.chat.ChatRoomService;
@@ -39,12 +39,11 @@ public class ChatRoomController {
 
     @Operation(summary = "채팅 내용 조회", description = "채팅 내용 조회")
     @GetMapping("/chat/list/{roomId}")
-    public Response<GetChatListDto.Response> getChatList(@PathVariable Long roomId) {
-        GetChatListDto.Response response = chatService.getChatList(roomId);
-        return new Response<>(200, "채팅 내용 조회 완료", response);
+    public Response<List<ChatDto.Response>> getChatList(@PathVariable Long roomId) {
+        return new Response<>(200, "채팅 내용 조회 완료", chatService.getChatList(roomId));
     }
 
-    @Operation(summary = "채팅; 신청", description = "채팅 신청")
+    @Operation(summary = "채팅 신청", description = "채팅 신청")
     @PostMapping("/chat/invite")
     public Response<InviteChatDto.Response> inviteChat(@RequestBody InviteChatDto.Request request,
             @Parameter(hidden = true) @AuthenticationPrincipal UserDetails userDetails) {
@@ -60,5 +59,16 @@ public class ChatRoomController {
     ) {
         Long myId = Long.parseLong(userDetails.getUsername());
         return new Response<>(200, "채팅방 나가기 완료", chatRoomService.leaveChat(request.getRoomId(), myId));
+    }
+
+    @Operation(summary = "채팅 읽음 처리", description = "채팅방 떠날때 전부 읽음 처리")
+    @PostMapping("/chat/list/{roomId}")
+    public Response<String> readChats(
+            @PathVariable("roomId") Long roomId,
+            @Parameter(hidden = true) @AuthenticationPrincipal UserDetails userDetails
+    ) {
+        Long memberId = Long.parseLong(userDetails.getUsername());
+        chatRoomService.readChats(roomId, memberId);
+        return new Response<>(200, "읽음 처리 완료", "읽음 처리 완료");
     }
 }

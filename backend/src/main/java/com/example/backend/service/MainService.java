@@ -3,6 +3,7 @@ package com.example.backend.service;
 import com.example.backend.dto.AroundDto;
 import com.example.backend.dto.MainDto;
 import com.example.backend.dto.MemberDetailDto;
+import com.example.backend.entity.mariaDB.chat.Chat;
 import com.example.backend.entity.mariaDB.chat.ChatRoom;
 import com.example.backend.repository.mariaDB.chat.CustomChatRoomRepository;
 import com.example.backend.type.Emotion;
@@ -17,6 +18,7 @@ import com.example.backend.repository.postgreSQL.MemberLocationRepository;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -43,12 +45,13 @@ public class MainService {
 
         List<Member> members = getAroundMembers(memberId);
 
+        // 내가 들어간 채팅방 중 내가 활성화된 채팅방 목록을 가져옴
         List<ChatRoom> chatRooms = customChatRoomRepository.findAllByMemberIdAndIsMemberActiveTrue(memberId);
-        int unreadChatCount = 0;
-        for (ChatRoom chatRoom : chatRooms) {
-            int unreadCount = (int) chatRoom.getChat().stream().filter(chat -> !chat.getIsRead()).count();
-            unreadChatCount += unreadCount;
-        }
+        int unreadChatCount = chatRooms.stream()
+                .flatMap(room -> room.getChat().stream())
+                .filter(chat -> !Objects.equals(chat.getSender().getId(), memberId) && !chat.getIsRead())
+                .mapToInt(chat -> 1)
+                .sum();
 
         // 주변에 다른 사용자를 찾지 못했을 때
         if (members.isEmpty()) {
@@ -78,6 +81,7 @@ public class MainService {
                                 .filter(message -> !message.getIsRead())
                                 .count())
                 .statusWeather(statusWeather)
+                .unreadChatCount(unreadChatCount)
                 .aroundPeopleCount(aroundPeopleCount)
                 .aroundPeople(aroundPeople)
                 .build();
@@ -169,10 +173,10 @@ public class MainService {
             // 다른 사용자가 있을 경우에는 랜덤으로 섞어서 최대 5명 반환
         } else {
             Collections.shuffle(locationIds);
-            int number = Math.min(locationIds.size(), 5); // 5와 리스트의 크기 중 작은 값을 선택
-            locationIds = locationIds.subList(0, number); // 무작위로 선택된 요소만 포함하는 새 리스트 생성
+            if (locationIds.size() > 5) {
+                locationIds = locationIds.subList(0,5);
+            }
         }
-
         return customMemberRepository.findByIdInAndLastUpdateTimeAfter(locationIds,
                 LocalDateTime.now().minusMinutes(10));
     }

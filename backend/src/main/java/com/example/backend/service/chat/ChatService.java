@@ -1,7 +1,6 @@
 package com.example.backend.service.chat;
 
 import com.example.backend.dto.chat.ChatDto;
-import com.example.backend.dto.chat.GetChatListDto;
 import com.example.backend.dto.chat.InviteChatDto;
 import com.example.backend.dto.chat.InviteChatDto.Request;
 import com.example.backend.entity.mariaDB.chat.Chat;
@@ -25,13 +24,20 @@ public class ChatService {
     private final ChatRoomRepository chatRoomRepository;
     private final MemberRepository memberRepository;
 
-    public GetChatListDto.Response getChatList(Long roomId) {
+    public List<ChatDto.Response> getChatList(Long roomId) {
         List<Chat> chatList = chatRepository.findAllByChatRoomId(roomId);
-        List<ChatDto> chatDtoList = chatList.stream().map(Chat::toChatDto)
+
+        List<Chat> readChatList = chatList.stream().map(chat -> {
+            if (!chat.getIsRead()) {
+                chat.setIsRead(true);
+                return chatRepository.save(chat);
+            } else {
+                return chat;
+            }
+        }).collect(Collectors.toList());
+
+        return readChatList.stream().map(ChatDto::toDto)
                 .collect(Collectors.toList());
-        return GetChatListDto.Response.builder()
-                .chatList(chatDtoList)
-                .build();
     }
 
     public InviteChatDto.Response inviteChat(Request request, Long memberId) {
@@ -49,9 +55,9 @@ public class ChatService {
 
         // 이미 해당 회원과 같이 참여된 채팅방이 있을 경우
         if (chatRoom1 != null) {
-            return InviteChatDto.Response.builder().roomId(chatRoom1.getId()).build();
+            return InviteChatDto.toDto(chatRoom1);
         } else if (chatRoom2 != null) {
-            return InviteChatDto.Response.builder().roomId(chatRoom2.getId()).build();
+            return InviteChatDto.toDto(chatRoom2);
         }
 
         // 처음 채팅하는 사람일 경우
@@ -62,7 +68,7 @@ public class ChatService {
                 .isMember2Active(true)
                 .build());
 
-        return InviteChatDto.Response.builder().roomId(chatRoom.getId()).build();
+        return InviteChatDto.toDto(chatRoom);
 
     }
 }

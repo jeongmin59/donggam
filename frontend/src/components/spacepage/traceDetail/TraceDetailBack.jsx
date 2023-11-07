@@ -8,13 +8,13 @@ const TraceDetailBack = ({ data, setComment, comment, traceId, setShowFront }) =
   const longitude = data.longitude
   const latitude = data.latitude
   const commentList = data.comments
-  const location = `위도: ${longitude} 경도:${latitude}`;
+  // const location = `위도: ${longitude} 경도:${latitude}`;
 
   return (
     <div>
-      <img src='https://item.kakaocdn.net/do/7277796c3f7ef108040dcfde1bd2fb9c960f4ab09fe6e38bae8c63030c9b37f9' className="trace-image text-justify" />
+      <img src='https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/321/d4c6b40843af7f4f1d8000cafef4a2e7_res.jpeg' className="trace-image text-justify" />
 
-      <TraceDetailTitle title={title} content={location} />
+      <TraceDetailTitle title={title} content="위치 서비스는 추후 업데이트" />
 
       <div className='trace-comment '>
         <div>

@@ -14,6 +14,7 @@ import SpaceButton from "../components/common/SpaceButton";
 import miniLogo from "../assets/tutorial/mini-logo.svg";
 import CreateButton from './../components/common/CreateButton';
 import { useNavigate } from "react-router";
+import NavBar from "../components/common/NavBar";
 
 
 const SpacePage = () => {
@@ -67,7 +68,7 @@ const SpacePage = () => {
 
         </div>
 
-
+      <NavBar />
       <CreateButton to='/space/upload' />
 
 

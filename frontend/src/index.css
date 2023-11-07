@@ -139,5 +139,8 @@
     background-image: radial-gradient(50% 48.18% at 50% 50%, #FFF 69.41%, #E4EFFF 100%);
   }
 
+  .nav-shadow {
+    box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.10);
+  }
   
 }

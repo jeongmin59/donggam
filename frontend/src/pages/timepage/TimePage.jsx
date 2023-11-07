@@ -27,6 +27,7 @@ const TimePage = () => {
           <img src={trophy} alt="트로피" className="fixed bottom-4 right-4 z-10 w-24 h-24" />
         </div>
       )}
+
     </>
   );
 };

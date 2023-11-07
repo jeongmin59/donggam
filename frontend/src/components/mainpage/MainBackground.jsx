@@ -9,6 +9,7 @@ import NumberOfUsers from "./NumberOfUsers";
 // import { getLocationInfo } from "../common/GetLocationInfo";
 import { useSetRecoilState } from "recoil";
 import { LatitudeAtom, LongitudeAtom } from "../../recoil/location/locationAtom";
+import NavBar from "../common/NavBar";
 
 
 const MainBackground = () => {
@@ -98,7 +99,8 @@ const MainBackground = () => {
           unreadChatCount={unreadChatCount} 
           unreadMessageCount={unreadMessageCount}
           />
-        <NumberOfUsers aroundPeopleCount={aroundPeopleCount} />
+        {/* <NumberOfUsers aroundPeopleCount={aroundPeopleCount} /> */}
+        <NavBar />
       </div>
       <div className="bottomBG h-screen flex justify-center  relative bg-[#abcdf0]" style={{ zIndex: -1 }}>
         <img src={MainBackgroundImage}

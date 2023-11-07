@@ -36,15 +36,12 @@ const SpacePage = () => {
 
   return (
     <>
-      {/* <div className=""> */}
       <div className="flex justify-center mt-10">
         <img
           src={miniLogo}
           onClick={handleLogoClick}
         />
       </div>
-
-      {/* <div className="px-5 h-[100%] flex-column align-center"> */}
       <div className="h-full mt-5 py-20">
         <Slider {...settings} className="px-5">
           <div className="trace-guide">
@@ -69,9 +66,6 @@ const SpacePage = () => {
 
 
       <CreateButton to='/space/upload' />
-
-
-      {/* </div> */}
 
     </>
   );

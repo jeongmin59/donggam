@@ -126,16 +126,20 @@
   }
 
   /* 방명록 상세 페이지 */
+  .trace-image{
+  @apply
+  h-[40vh] w-full bg-cover bg-center relative object-cover
+  }
 
   .trace-title{
     @apply
-    w-[80%] bg-white  absolute left-1/2 -translate-x-1/2
-    border-2 rounded-[16px]  flex justify-center text-center;
+    w-[60%] py-4 bg-white absolute left-1/2 -translate-x-1/2 top-[35%]
+    border-4 border-[#ABCEF2] rounded-[16px]  flex justify-center;
   }
 
   .trace-content{
     @apply
-    text-center justify-center relative  w-full h-[100vw]  flex items-center ;
+    ownglyph-text text-xl text-center h-[60vh] flex items-center justify-center ;
     background-image: radial-gradient(50% 48.18% at 50% 50%, #FFF 69.41%, #E4EFFF 100%);
   }
 

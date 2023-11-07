@@ -30,6 +30,7 @@ const MainBackground = () => {
   const [aroundPeople, setAroundPeople] = useState([]) // 주변 사용자 
   const [aroundPeopleCount, setAroundPeopleCount] = useState(0); // 주변 사용자 수
 
+
   // 읽음, 안읽음 정보
   const [unreadChatCount, setUnreadChatCount] = useState(0);
   const [unreadMessageCount, setUnreadMessageCount] = useState(0);
@@ -39,29 +40,14 @@ const MainBackground = () => {
     setUnreadMessageCount(messageCount);
   };
 
-  // 위도 경도 전송
-  const handleLocationChange = (position) => {
-    setLatitude(position.coords.latitude);
-    setLongitude(position.coords.longitude);
-  }
-  useEffect(() => {
-  //   getLocationInfo(handleLocationChange);
-  // }, []);
+  // // 위도 경도 전송
+  // const handleLocationChange = (position) => {
+  //   setLatitude(position.coords.latitude);
+  //   setLongitude(position.coords.longitude);
+  // }
 
-  // useEffect(() => {
-  //   if (navigator.geolocation) {
-  //     navigator.geolocation.getCurrentPosition(
-  //       (position) => {
-  //       setLatitude(position.coords.latitude);
-  //       setLongitude(position.coords.longitude);
-  //     }, 
-  //     (e) => {
-  //       console.log(e.message)
-  //     });
-  //   } else {
-  //     console.log('위치 정보를 지원하지 않는 브라우저입니다.')
-  //   }
-  // },[]);
+  useEffect(() => {
+
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {

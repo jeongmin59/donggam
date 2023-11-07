@@ -17,9 +17,10 @@ const ChatRoomPage = () => {
 
   const onClickRoom = (roomId, isActive) => {
     navigate(`/chatting/${roomId}`, {state : {isActive}});
-  }
+  };
 
-  const onClickLeave = async (roomId) => {
+  const onClickLeave = async (e, roomId) => {
+    e.stopPropagation();
     const res = await axiosInstance.post(`/chat/leave`, {
       roomId : roomId,
     });
@@ -35,25 +36,37 @@ const ChatRoomPage = () => {
   return (
     <div className="chatting h-screen bg-gradient-to-b from-[#e5f3ff] to-white">
       <Header title="채팅 목록 보기" to="/" />
-      <div className="flex flex-wrap gap-4 p-4 md:p-8 lg:p-12">
+      <div className="flex flex-wrap gap-2 p-4 md:p-6 lg:p-8">
         {chatRoom.length > 0 &&
           chatRoom.map((room) => (
             <div
               key={room.roomId}
-              className="w-full md:w-1/2 lg:w-1/3"
+              className="w-full md:w-1/2 lg:w-1/3 my-2 max-w-screen min-w-[20rem] flex-shrink-0"
               onClick={() => onClickRoom(room.roomId, room.isActive)}
             >
-              <div className="bg-white p-6 md:p-8 lg:p-10 flex flex-col justify-between rounded-md shadow-md h-full">
-                <span className="cursor-pointer text-lg md:text-xl lg:text-2xl">
-                  {room.name}
-                </span>
-                <div className="flex justify-end items-center mt-4">
-                  <button
-                    onClick={() => onClickLeave(room.roomId)}
-                    className="text-red-500 hover:text-red-700"
-                  >
-                    <XIcon className="h-5 w-5" />
-                  </button>
+              <div className="bg-white p-4 md:p-6 lg:p-8 flex flex-col justify-between rounded-[20px] shadow-md h-full w-full relative">
+                <div className="flex items-center w-full">
+                  <img
+                    src={`/character/${room.characterId}.svg`}
+                    alt="대화상대의 캐릭터 이미지"
+                    className="h-16 w-16 object-contain mr-4"
+                  />
+                  <div className="flex flex-col flex-grow">
+                    <span className="cursor-pointer text-lg md:text-xl lg:text-2xl mb-2">
+                      {room.name}
+                    </span>
+                    <span className="text-sm text-gray-500">
+                      {room.lastChat}
+                    </span>
+                  </div>
+                  {room.unReadChatCount > 0 && (
+                    <div className="flex items-center justify-center h-6 w-6 bg-red-500 rounded-full text-white text-xs">
+                      {room.unReadChatCount}
+                    </div>
+                  )}
+                  <div className="absolute top-0 right-0 p-2 cursor-pointer" onClick={(e) => onClickLeave(e, room.roomId)}>
+                    <XIcon className="h-5 w-5 text-gray-500"/>
+                  </div>
                 </div>
               </div>
             </div>

@@ -59,27 +59,33 @@ const MailItem = ({ isOpen, onClose, mailData, updateLikedState }) => {
       >
         <div className="bg-white rounded-2xl w-full h-1/2 max-w-md mx-auto my-auto p-4 z-30 flex flex-col items-center" style={{ overflow: 'auto' }}>
           <div className="px-5 flex justify-between items-center w-full">
-            <h4 className="text-center text-sm text-gray-500">{mailDetail.localDate}</h4>
+            {/* 보낸 사람 이름 */}
+            <h3 className="ownglyph-text text-lg">From: {mailDetail.from}</h3>
             <div>
               {/* 신고하기 버튼 */}
               <img src={alertIcon} onClick={handleReportClick} />
             </div>
           </div>
           {showToast && <ToastModal message="쪽지가 신고되었습니다." onClose={() => setShowToast(false)} />}
-
-          <div className='w-2/3 h-full flex flex-col justify-center items-center' style={{ overflow: 'auto' }}>
-            {/* 쪽지 사진 */}
-            <img src={mailDetail.imgAddress} style={{ maxWidth: '100%', maxHeight: '100%' }} />
-            <div className="mt-2 text-center">
-              {/* 쪽지 내용 */}
+          
+          {mailDetail.imgAddress && (
+            <div className='mt-2'>
+              <img 
+                src={mailDetail.imgAddress} 
+                alt="Mail Image"
+                className="w-full h-full" />
+            </div>
+          )}
+          <div 
+            className='mail-content w-5/6 h-full flex flex-col justify-center items-center' 
+            >
+              
+            <div className="mt-4 text-center">
               <div className='ownglyph-text text-xl'>{mailDetail.content}</div>
             </div>
           </div>
-
-          <div className='mb-3 ml-auto'>
-            {/* 보낸 사람 이름 */}
-            <h5 className="text-center">From: {mailDetail.from}</h5>
-          </div>
+          
+          <h4 className="ownglyph-text ml-auto mb-3 text-right text-md text-gray-500">{mailDetail.localDate}</h4>
 
           <div className='w-full h-8 px-3 py-2 bg-blue-300 rounded-3xl justify-center items-center gap-3 inline-flex' onClick={handleLikeClick}>
             <h5 className='text-white'>마음에 들어요</h5>

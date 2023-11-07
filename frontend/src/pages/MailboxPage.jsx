@@ -4,7 +4,7 @@ import MailBox from './../components/mailboxpage/MailBox';
 
 const MailboxPage = () => {
   return (
-    <div className='chatting h-screen bg-gradient-to-b from-[#e5f3ff] to-white'>
+    <div className='chatting h-screen'>
       <Header title="쪽지" to="/" />
       <MailBox />
     </div>

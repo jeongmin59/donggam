@@ -42,7 +42,7 @@ const TutorialPage = () => {
       </div>
       
       <div className="mt-24 mb-6">
-        <div className="w-full h-[55px] bg-white rounded-[80px] border-2 border-blue-200 flex justify-center items-center gap-2 inline-flex">
+        <div className="w-full h-[55px] bg-white rounded-[80px] border-2 border-blue-200 justify-center items-center gap-2 inline-flex">
           <button
             className="font-['GmarketSansBold'] font-base text-blue-300"
             onClick={handleStartClick}

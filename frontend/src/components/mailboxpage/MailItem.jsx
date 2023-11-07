@@ -25,7 +25,7 @@ const MailItem = ({ isOpen, onClose, mailData, updateLikedState }) => {
       .then((res) => {
         setMailDetail(res);
         setIsLiked(res.isLiked);
-        console.log('쪽지디테일내놧!', res);
+        // console.log('쪽지디테일내놧!', res);
       })
       .catch((err) => {
         console.log('쪽지 detail 가져오기 실패:', err);
@@ -66,7 +66,7 @@ const MailItem = ({ isOpen, onClose, mailData, updateLikedState }) => {
             </div>
           </div>
           {showToast && <ToastModal message="쪽지가 신고되었습니다." onClose={() => setShowToast(false)} />}
-          
+
           <div className='w-2/3 h-full flex flex-col justify-center items-center' style={{ overflow: 'auto' }}>
             {/* 쪽지 사진 */}
             <img src={mailDetail.imgAddress} style={{ maxWidth: '100%', maxHeight: '100%' }} />
@@ -75,12 +75,12 @@ const MailItem = ({ isOpen, onClose, mailData, updateLikedState }) => {
               <div className='ownglyph-text text-xl'>{mailDetail.content}</div>
             </div>
           </div>
-          
+
           <div className='mb-3 ml-auto'>
             {/* 보낸 사람 이름 */}
             <h5 className="text-center">From: {mailDetail.from}</h5>
           </div>
-          
+
           <div className='w-full h-8 px-3 py-2 bg-blue-300 rounded-3xl justify-center items-center gap-3 inline-flex' onClick={handleLikeClick}>
             <h5 className='text-white'>마음에 들어요</h5>
             {/* 좋아요 버튼 */}

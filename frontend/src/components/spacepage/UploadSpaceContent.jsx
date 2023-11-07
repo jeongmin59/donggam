@@ -1,7 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 
-const UploadSpaceContent = ({ content, setContent }) => {
-  const maxCharacterLimit = 60;
+const UploadSpaceContent = ({ content, setContent, textLength }) => {
+  const maxCharacterLimit = textLength;
+
+
+  const handleContentChange = (e) => {
+    const text = e.target.value;
+    if (text.length <= maxCharacterLimit) {
+      setContent(text);
+    }
+  };
 
   const handleContentChange = (e) => {
     const text = e.target.value;
@@ -12,7 +20,7 @@ const UploadSpaceContent = ({ content, setContent }) => {
   return (
     <>
       <label className="pl-2">
-        방명록을 작성해주세요(*최대 60글자)
+        방명록을 작성해주세요(*최대 {textLength}글자)
       </label>
       <textarea
         className="input-style"

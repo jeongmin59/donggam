@@ -1,4 +1,4 @@
-import React, { useSyncExternalStore } from "react";
+import React from "react";
 // import SpaceHeaderTemplate from "../components/spacepage/SpaceHeaderTemplate";
 // import ButtonTemplate from "../components/spacepage/ButtonTemplate";
 // import MyTrace from "../components/spacepage/MyTrace";
@@ -10,31 +10,31 @@ import landmarkImg from "../assets/images/landmark-img.svg"
 import traceImg from "../assets/images/trace-img.svg"
 import myTraceImg from "../assets/images/my-trace-img.svg"
 import SpaceButton from "../components/common/SpaceButton";
-import createBtn from "../assets/common/createBtn.png";
+// import createBtn from "../assets/common/createBtn.png";
 import miniLogo from "../assets/tutorial/mini-logo.svg";
+import CreateButton from './../components/common/CreateButton';
 import { useNavigate } from "react-router";
 
 
 const SpacePage = () => {
   const navigate = useNavigate ();
 
-  const handleButtonClick = () => {
-    navigate("/space/upload"); // 클릭 시 지정한 경로로 이동
-  };
+
   const handleLogoClick = () => {
     navigate("/"); // 클릭 시 지정한 경로로 이동
   };
+
 
   const settings = {
     // dots: true,
     infinite: false,
     speed: 500,
-    slidesToShow : 1,
+    slidesToShow: 1,
     slidesToScroll: 1,
     arrows: false,
   };
 
-  return(
+  return (
     <>
       {/* <div className=""> */}
         <div className="flex justify-center mt-10">
@@ -67,12 +67,9 @@ const SpacePage = () => {
 
         </div>
 
-        <button 
-          onClick={handleButtonClick}
-          className="fixed bottom-7 right-5 z-10" // 우하단에 버튼 고정
-        >
-          <img src={createBtn} alt="글 작성 버튼" />
-        </button>
+
+      <CreateButton to='/space/upload' />
+
 
       {/* </div> */}
 

@@ -4,6 +4,8 @@ import { getTraceDetail } from '../api/spaceApi';
 import TraceDetailFront from '../components/spacepage/traceDetail/TraceDetailFront';
 import TraceDetailBack from '../components/spacepage/traceDetail/TraceDetailBack';
 import BackButton from './../components/common/BackButton';
+import moreBtn from "../assets/icons/more-btn.svg";
+
 
 const TraceDetailPage = () => {
   const { traceId } = useParams(); // object로 온다.
@@ -44,14 +46,10 @@ const TraceDetailPage = () => {
     <div>
       <BackButton to={-1} />
 
-
       {/* showFront 상태에 따라서 TraceDetailFront 또는 TraceDetailBack 컴포넌트를 렌더링합니다 */}
       {showFront ? <TraceDetailFront data={traceData} /> : <TraceDetailBack data={traceData} comment={comment} setComment={setComment} traceId={traceId} setShowFront={setShowFront} />}
 
-      <button className="w-36 h-14 px-3 py-2 bg-blue-200 rounded-3xl border-2 justify-center items-center gap-3 inline-flex fixed bottom-0 left-1/2 transform -translate-x-1/2" onClick={toggleComponent}>
-        눌러보세요
-      </button>
-
+      <img src={moreBtn} className="fixed bottom-4 left-1/2 transform -translate-x-1/2" onClick={toggleComponent} />
     </div>
   );
 };

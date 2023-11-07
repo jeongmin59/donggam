@@ -101,7 +101,6 @@
     @apply
     w-[80%] py-4 bg-white absolute left-1/2 -translate-x-1/2 top-[25.5%]
     border-4 border-[#ABCEF2] rounded-[16px] border flex justify-center;
-  }
 
   .landmark-card {
     @apply
@@ -125,5 +124,20 @@
     @apply
     bg-gray-100 w-[100%] px-5 py-3 rounded-[10px] mb-10 mt-2;
   }
+
+  /* 방명록 상세 페이지 */
+
+  .trace-title{
+    @apply
+    w-[80%] bg-white  absolute left-1/2 -translate-x-1/2
+    border-2 rounded-[16px]  flex justify-center text-center;
+  }
+
+  .trace-content{
+    @apply
+    text-center justify-center relative  w-full h-[100vw]  flex items-center ;
+    background-image: radial-gradient(50% 48.18% at 50% 50%, #FFF 69.41%, #E4EFFF 100%);
+  }
+
 
 }

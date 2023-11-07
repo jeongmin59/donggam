@@ -68,12 +68,12 @@ const PhotoUpload = () => {
 
   return (
     <div className="px-5 flex flex-col">
-      <TitleInput title={title} onTitleChange={handleTitleChange} />
       <FileInput previewUrl={previewUrl} onFileChange={handleFileChange} />
+      <TitleInput title={title} onTitleChange={handleTitleChange} />
 
       {title && selectedFile && (
         <div className="fixed bottom-3 left-0 right-0 p-4">
-          <UploadButton onUpload={handleUpload} />
+          <UploadButton onUpload={handleUpload}/>
         </div>
       )}
     </div>

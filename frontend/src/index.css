@@ -114,7 +114,7 @@
   .photo-frame {
     @apply
       relative h-[90vw] max-h-[90vh] my-5 rounded-lg flex items-center justify-center overflow-hidden;
-      background-image: radial-gradient(50.13% 50% at 50.13% 50%, #FFF 51.98%, #EEECEC 100%);
+      background-image: radial-gradient(50.13% 50% at 50.13% 50%, #FFF 51.98%, #F3F4F6 100%);
   }
 
   .photo-img-frame{

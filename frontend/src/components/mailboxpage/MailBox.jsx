@@ -49,7 +49,7 @@ const MailBox = () => {
   return (
     <div className="px-5">
       <div className="mt-8 mb-4 h-20">
-        <button className="w-full h-full bg-stone-50 rounded-2xl justify-center items-center gap-2.5 inline-flex" onClick={openModal}>
+        <button className="w-full h-full bg-sky-100 px-8 rounded-2xl justify-center items-center gap-2.5 inline-flex" onClick={openModal}>
           {status}
         </button>
         <StatusList isOpen={isModalOpen} onClose={closeModal} statusList={statusList} changeStatus={handleStatusChange} />
@@ -59,7 +59,7 @@ const MailBox = () => {
 
       <div className="text-center">
         {mailList.length === 0 ? (
-          <div className="flex flex-col justify-center items-center">
+          <div className="mt-10 flex flex-col justify-center items-center">
             <img src={nullLogo} alt="구름" />
           </div>
         ) : (

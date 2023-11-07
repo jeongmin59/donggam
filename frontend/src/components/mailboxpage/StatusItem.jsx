@@ -12,11 +12,12 @@ const StatusItem = ({ status, changeStatus }) => {
   };
 
   return (
+
     <div 
       onClick={handleStatusChange} 
-      className="bg-slate-100 hover:bg-slate-300 p-2 m-2 cursor-pointer overflow-y-auto max-h-36">
+      className="w-full h-fit px-5 py-3 mb-3 bg-slate-100 rounded-xl flex justify-start items-center">
       
-      <h4>{statusItem.status}</h4>
+      <h4 className="text-black text-md">{statusItem.status}</h4>
     </div>
   );
 };

@@ -92,21 +92,19 @@
   /* 공간 캐러셀 */
   .trace-guide {
     @apply
-      rounded-[14.5px] h-[120vw] items-center;
+      rounded-[14.5px] h-[120vw] py-10;
       background-image: radial-gradient(96.37% 79.72% at 50% 50.12%, #FFF 38.96%, #E1F0FF 100%);
-    /* shadow-[0px 3.625px 9.0625px 0px rgba(97, 157, 218, 0.40)]; */
   }
 
   /* 랜드마크 디테일*/
   .landmark-title{
     @apply
-    w-[70%] bg-white absolute absolute left-1/2 -translate-x-1/2
-    border-2 rounded-[16px] border flex justify-center;
+    w-[80%] py-4 bg-white absolute left-1/2 -translate-x-1/2 top-[25.5%]
+    border-4 border-[#ABCEF2] rounded-[16px] border flex justify-center;
   }
-
   .landmark-card {
     @apply
-    text-center h-[100vw] flex items-center justify-center ;
+    ownglyph-text text-xl text-center h-[70vh] flex items-center justify-center ;
     background-image: radial-gradient(50% 48.18% at 50% 50%, #FFF 69.41%, #E4EFFF 100%);
   }
 
@@ -127,4 +125,19 @@
     bg-gray-100 w-[100%] px-5 py-3 rounded-[10px] mb-10 mt-2;
   }
 
+  /* 방명록 상세 페이지 */
+
+  .trace-title{
+    @apply
+    w-[80%] bg-white  absolute left-1/2 -translate-x-1/2
+    border-2 rounded-[16px]  flex justify-center text-center;
+  }
+
+  .trace-content{
+    @apply
+    text-center justify-center relative  w-full h-[100vw]  flex items-center ;
+    background-image: radial-gradient(50% 48.18% at 50% 50%, #FFF 69.41%, #E4EFFF 100%);
+  }
+
+  
 }

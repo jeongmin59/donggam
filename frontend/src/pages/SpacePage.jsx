@@ -10,16 +10,10 @@ import landmarkImg from "../assets/images/landmark-img.svg"
 import traceImg from "../assets/images/trace-img.svg"
 import myTraceImg from "../assets/images/my-trace-img.svg"
 import SpaceButton from "../components/common/SpaceButton";
-import createBtn from "../assets/common/createBtn.png";
-import { useNavigate } from "react-router";
+import CreateButton from './../components/common/CreateButton';
 
 
 const SpacePage = () => {
-  const navigate = useNavigate();
-
-  const handleButtonClick = () => {
-    navigate("/space/upload"); // 클릭 시 지정한 경로로 이동
-  };
 
   const settings = {
     dots: true,
@@ -54,13 +48,7 @@ const SpacePage = () => {
         </div>
       </div>
       {/* </Slider> */}
-
-      <button
-        onClick={handleButtonClick}
-        className="fixed bottom-10 right-10 z-10" // 우하단에 버튼 고정
-      >
-        <img src={createBtn} alt="글 작성 버튼" />
-      </button>
+      <CreateButton to='/space/upload' />
 
     </>
   );

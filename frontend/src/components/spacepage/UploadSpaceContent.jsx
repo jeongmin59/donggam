@@ -1,24 +1,14 @@
 import React, { useState } from "react";
 
-
-// const UploadSpaceContent = () => {
-//   // 랜드마크
-//   const [content, setContent] = useState("");
-//   const maxCharacterLimit = 60;
-
-//   const handleContentChange = (e) => {
-//     const text = e.target.value;
-//     if (text.length <= maxCharacterLimit) {
-//       setContent(text);
-//     }
-//   }
-//   return(
-
 const UploadSpaceContent = ({ content, setContent }) => {
-  const handleContentChange = (e) => {
-    setContent(e.target.value);
-  };
+  const maxCharacterLimit = 60;
 
+  const handleContentChange = (e) => {
+    const text = e.target.value;
+    if (text.length <= maxCharacterLimit) {
+      setContent(text);
+    }
+  }
   return (
     <>
       <label className="pl-2">

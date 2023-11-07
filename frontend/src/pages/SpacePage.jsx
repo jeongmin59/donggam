@@ -32,35 +32,41 @@ const SpacePage = () => {
 
   return(
     <>
+      <div className="h-screen">
         <div>동감로고</div>
         {/* <div className="px-5 h-[100%] flex-column align-center"> */}
-        <Slider {...settings} className="px-5">
-          <div className="trace-guide">
-            <div className="flex-column mx-auto">
-              <div className="flex justify-center"><img src={landmarkImg} alt="" /></div>
-              <SpaceButton title="근처 랜드마크 찾기" to="/space/landmark" />
+        <div className="overflow-hidden">
+          <Slider {...settings} className="px-5">
+            <div className="trace-guide">
+              <div className="flex-column mx-auto">
+                <div className="flex justify-center"><img src={landmarkImg} alt="" /></div>
+                <SpaceButton title="근처 랜드마크 찾기" to="/space/landmark" />
+              </div>
             </div>
-          </div>
-          <div className="trace-guide">
-            <div className="flex-column mx-auto">
-              <div className="flex justify-center"><img src={traceImg} alt="" /></div>
-              <SpaceButton title="근처 방명록 찾기" to="/space/trace" />
+            <div className="trace-guide">
+              <div className="flex-column mx-auto">
+                <div className="flex justify-center"><img src={traceImg} alt="" /></div>
+                <SpaceButton title="근처 방명록 찾기" to="/space/trace" />
+              </div>
             </div>
-          </div>
-          <div className="trace-guide">
-            <div className="flex-column mx-auto">
-              <div className="flex justify-center"><img src={myTraceImg} alt="" /></div>
-              <SpaceButton title="내 방명록" />
+            <div className="trace-guide">
+              <div className="flex-column mx-auto">
+                <div className="flex justify-center"><img src={myTraceImg} alt="" /></div>
+                <SpaceButton title="내 방명록" />
+              </div>
             </div>
-          </div>
-        </Slider>
+          </Slider>
+
+        </div>
 
         <button 
           onClick={handleButtonClick}
-          className="fixed bottom-10 right-10 z-10" // 우하단에 버튼 고정
+          className="fixed bottom-5 right-10 z-10" // 우하단에 버튼 고정
         >
           <img src={createBtn} alt="글 작성 버튼" />
         </button>
+
+      </div>
 
     </>
   );

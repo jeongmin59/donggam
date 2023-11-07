@@ -17,6 +17,7 @@ public class ChatDto {
         private Long chatId;
         private String content;
         private String sender;
+        private Long senderId;
         private LocalDateTime createdAt;
         private Boolean isRead;
     }
@@ -26,6 +27,7 @@ public class ChatDto {
                 .chatId(chat.getId())
                 .content(chat.getContent())
                 .sender(chat.getSender().getNickname())
+                .senderId(chat.getSender().getId())
                 .isRead(chat.getIsRead())
                 .createdAt(chat.getCreatedAt())
                 .build();

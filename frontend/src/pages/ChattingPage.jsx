@@ -63,16 +63,18 @@ const ChattingPage = () => {
 
   // 메시지 전송
   const handleSendMessage = () => {
-    const request = {
-      type: "TALK",
-      roomId: roomId,
-      sender: sender,
-      senderId: senderId,
-      content: message,
-      isRead: false,
-    };
-    stompClient.send(`/pub/chat/message`, {}, JSON.stringify(request));
-    setMessage("");
+    if (message != "") {
+      const request = {
+        type: "TALK",
+        roomId: roomId,
+        sender: sender,
+        senderId: senderId,
+        content: message,
+        isRead: false,
+      };
+      stompClient.send(`/pub/chat/message`, {}, JSON.stringify(request));
+      setMessage("");
+    }
   };
 
   return (

@@ -37,7 +37,7 @@ const SpacePage = () => {
   return(
     <>
       {/* <div className=""> */}
-        <div className="flex justify-center my-7">
+        <div className="flex justify-center mt-10">
           <img 
             src={miniLogo}
             onClick={handleLogoClick}
@@ -45,7 +45,7 @@ const SpacePage = () => {
         </div>
 
         {/* <div className="px-5 h-[100%] flex-column align-center"> */}
-        <div className="h-full py-20">
+        <div className="h-full mt-5 py-20">
           <Slider {...settings} className="px-5">
             <div className="trace-guide">
                 <div className="flex justify-center"><img src={landmarkImg} alt="" /></div>

@@ -133,7 +133,7 @@
 
   .trace-title{
     @apply
-    w-[60%] py-4 bg-white absolute left-1/2 -translate-x-1/2 top-[35%]
+    w-[80%] py-4 bg-white absolute left-1/2 -translate-x-1/2 top-[35%]
     border-4 border-[#ABCEF2] rounded-[16px]  flex justify-center;
   }
 
@@ -143,5 +143,9 @@
     background-image: radial-gradient(50% 48.18% at 50% 50%, #FFF 69.41%, #E4EFFF 100%);
   }
 
-  
+  .trace-comment{
+    @apply
+    ownglyph-text text-xl text-center h-[60vh] flex items-center justify-center ;
+    background-image:  radial-gradient(50% 48.18% at 50% 50%, #E4EFFF 52.5%, #E4EFFF 61.35%, #FFF 94.17%);
+  }
 }

@@ -107,7 +107,7 @@ public class LandMarkService {
 
     public SearchLandmarkDto.Response searchLandmark(Request request) {
         Optional<LandMarkLocation> OptionalLandMarkLocation = landMarkLocationRepository.findNearestWithinRadius(
-                request.getLatitude(), request.getLongitude(), 10000d);
+                request.getLatitude(), request.getLongitude(), 50000d);
         LandMarkLocation landMarkLocation = OptionalLandMarkLocation.orElse(null);
 
         if (landMarkLocation == null) {

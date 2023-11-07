@@ -11,12 +11,15 @@ const ChattingPage = () => {
   const { roomId } = useParams();
   const location = useLocation();
   const isActive = location.state.isActive;
+  const roomName = location.state.roomName;
   const [chatList, setChatList] = useState([]);
   const [stompClient, SetStompClient] = useState(null);
   const [message, setMessage] = useState("");
   const user = useRecoilValue(UserSelector);
   const senderId = user.memberId;
   const sender = user.nickname;
+  const chatNames = chatList.map((chat) => chat.sender);
+  const otherUserName = chatNames[0];
 
   const updateChatList = async () => {
     const res = await axiosInstance.get(`/chat/list/${roomId}`);
@@ -43,7 +46,6 @@ const ChattingPage = () => {
 
   const readChats = async () => {
     const res = await axiosInstance.post(`/chat/list/${roomId}`);
-    console.log(res.data);
   };
 
   useEffect(() => {
@@ -79,11 +81,11 @@ const ChattingPage = () => {
 
   return (
     <div
-      className=" flex flex-col chatting h-screen bg-gradient-to-b from-[#e5f3ff] to-white w-full"
+      className=" flex flex-col chatting h-screen bg-white w-full"
       // style={{ overflowY: "hidden" }}
     >
       <div>
-        <Header title="1:1 채팅방" to="/chatroom" />
+        <Header title={roomName} to="/chatroom" />
       </div>
       <ul
         className="w-full h-full"
@@ -99,15 +101,17 @@ const ChattingPage = () => {
                 user.memberId === chat.senderId ? "text-right" : "text-left"
               }`}
             >
-              <div className="chat_user_name text-lg font-bold mb-2 mt-2 ml-8 mr-8">
-                {chat.sender}
-              </div>
+              {user.memberId !== chat.senderId && ( // 이 부분 추가
+                <div className="chat_user_name text-md font-bold mt-10 ml-5 mr-8">
+                  {chat.sender}
+                </div>
+              )}              
               <div
                 className={`inline-block ${
                   user.memberId === chat.senderId
                     ? "bg-gray-100"
-                    : "bg-blue-100"
-                } p-4 rounded-3xl border max-w-xs max-h-96 whitespace-pre-wrap ml-5 mr-5`}
+                    : "bg-mainColor"
+                } px-4 py-2 my-1 rounded-3xl border max-w-xs max-h-96 whitespace-pre-wrap ml-5 mr-5`}
                 style={{
                   maxHeight: "auto",
                   maxWidth: "auto",

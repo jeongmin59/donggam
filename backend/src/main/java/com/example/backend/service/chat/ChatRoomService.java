@@ -36,17 +36,7 @@ public class ChatRoomService {
                     } else if (Objects.equals(room.getMember2().getId(), myId)) {
                         isActive = room.getIsMember1Active();
                     }
-
-                    return ChatRoomDto.Response.builder()
-                            .roomId(room.getId())
-                            .name(Objects.equals(room.getMember1().getId(), myId)
-                                    ? room.getMember2()
-                                    .getNickname() : room.getMember1().getNickname())
-                            .isActive(isActive)
-                            .unReadChatCount(
-                                    (int) room.getChat().stream().filter(chat -> !chat.getIsRead()).count())
-                            .lastChatTime(room.getLastChatTime())
-                            .build();
+                    return ChatRoomDto.toDto(room, myId, isActive);
                 }).collect(Collectors.toList());
     }
 
@@ -62,7 +52,12 @@ public class ChatRoomService {
             chatRoom.setIsMember2Active(false);
         }
 
-        ChatRoom leftChatRoom = chatRoomRepository.save(chatRoom);
+        // 둘 다 채팅방을 나갔을 경우에는 방을 삭제한다
+        if (!chatRoom.getIsMember1Active() && !chatRoom.getIsMember2Active()) {
+            chatRoomRepository.delete(chatRoom);
+        } else {
+            chatRoomRepository.save(chatRoom);
+        }
 
         // 채팅방 중에서 내가 아직 안나간 채팅방만 가져옴
         List<ChatRoom> chatRooms = customChatRoomRepository.findAllByMemberIdAndIsMemberActiveTrue(myId);
@@ -75,17 +70,7 @@ public class ChatRoomService {
                     } else if (Objects.equals(room.getMember2().getId(), myId)) {
                         isActive = room.getIsMember1Active();
                     }
-
-                    return ChatRoomDto.Response.builder()
-                            .roomId(room.getId())
-                            .name(Objects.equals(room.getMember1().getId(), myId)
-                                    ? room.getMember2()
-                                    .getNickname() : room.getMember1().getNickname())
-                            .isActive(isActive)
-                            .lastChatTime(room.getLastChatTime())
-                            .unReadChatCount(
-                                    (int) room.getChat().stream().filter(chat -> !chat.getIsRead()).count())
-                            .build();
+                    return ChatRoomDto.toDto(room, myId, isActive);
                 }).collect(Collectors.toList());
     }
 

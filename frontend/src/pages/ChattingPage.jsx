@@ -11,6 +11,7 @@ const ChattingPage = () => {
   const { roomId } = useParams();
   const location = useLocation();
   const isActive = location.state.isActive;
+  const roomName = location.state.roomName;
   const [chatList, setChatList] = useState([]);
   const [stompClient, SetStompClient] = useState(null);
   const [message, setMessage] = useState("");
@@ -45,7 +46,6 @@ const ChattingPage = () => {
 
   const readChats = async () => {
     const res = await axiosInstance.post(`/chat/list/${roomId}`);
-    console.log(res.data);
   };
 
   useEffect(() => {
@@ -85,8 +85,7 @@ const ChattingPage = () => {
       // style={{ overflowY: "hidden" }}
     >
       <div>
-        <Header title={otherUserName} to="/chatroom" />
-        {/* <Header title=${chat.sender} to="/chatroom" /> */}
+        <Header title={roomName} to="/chatroom" />
       </div>
       <ul
         className="w-full h-full"

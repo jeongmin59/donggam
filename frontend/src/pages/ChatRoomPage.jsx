@@ -10,13 +10,12 @@ const ChatRoomPage = () => {
 
   const updateChatRoom = async () => {
     const res = await axiosInstance.get(`/room/list`);
-    console.log(res.data.data);
     const chatRoomList = res.data.data;
     setChatRoom(chatRoomList);
   };
 
-  const onClickRoom = (roomId, isActive) => {
-    navigate(`/chatting/${roomId}`, {state : {isActive}});
+  const onClickRoom = (roomId, isActive, roomName) => {
+    navigate(`/chatting/${roomId}`, {state : {isActive, roomName}});
   };
 
   const onClickLeave = async (e, roomId) => {
@@ -24,7 +23,6 @@ const ChatRoomPage = () => {
     const res = await axiosInstance.post(`/chat/leave`, {
       roomId : roomId,
     });
-    console.log(res.data.data);
     const chatRoomList = res.data.data;
     setChatRoom(chatRoomList);
   }
@@ -42,7 +40,7 @@ const ChatRoomPage = () => {
             <div
               key={room.roomId}
               className="w-full md:w-1/2 lg:w-1/3 my-2 max-w-screen min-w-[20rem] flex-shrink-0"
-              onClick={() => onClickRoom(room.roomId, room.isActive)}
+              onClick={() => onClickRoom(room.roomId, room.isActive, room.name)}
             >
               <div className="bg-white p-4 md:p-6 lg:p-8 flex flex-col justify-between rounded-[20px] shadow-md h-full w-full relative">
                 <div className="flex items-center w-full">

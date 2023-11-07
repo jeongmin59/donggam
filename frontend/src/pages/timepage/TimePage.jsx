@@ -25,7 +25,7 @@ const TimePage = () => {
       ) : (
         <div>
           <BestPhoto />
-          <img src={trophy} alt="트로피" className="fixed bottom-4 right-4 z-10 w-24 h-24" />
+          <img src={trophy} alt="트로피" className="fixed bottom-[12vh] right-4 z-50 w-20 h-20" />
         </div>
       )}
 

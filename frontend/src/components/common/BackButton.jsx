@@ -11,10 +11,8 @@ const BackButton = ({ to }) => {
 
   return (
     <div
-      className="header w-100 h-[60px] flex justify-center items-center pt-[12px] relative shadow-md">
-      < div className="absolute left-5" onClick={navigateTo}>
-        <img src={btn} alt="뒤로가기버튼" />
-      </div>
+      className="fixed top-4 left-4">
+      <img src={btn} alt="뒤로가기버튼" onClick={navigateTo} />
     </div >
   );
 };

@@ -1,28 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 
+const UploadSpaceContent = ({ content, setContent, textLength }) => {
+  const maxCharacterLimit = textLength;
 
-// const UploadSpaceContent = () => {
-//   // 랜드마크
-//   const [content, setContent] = useState("");
-//   const maxCharacterLimit = 60;
-
-//   const handleContentChange = (e) => {
-//     const text = e.target.value;
-//     if (text.length <= maxCharacterLimit) {
-//       setContent(text);
-//     }
-//   }
-//   return(
-
-const UploadSpaceContent = ({ content, setContent }) => {
   const handleContentChange = (e) => {
-    setContent(e.target.value);
-  };
-
+    const text = e.target.value;
+    if (text.length <= maxCharacterLimit) {
+      setContent(text);
+    }
+  }
   return (
     <>
       <label className="pl-2">
-        방명록을 작성해주세요(*최대 60글자)
+        방명록을 작성해주세요(*최대 {textLength}글자)
       </label>
       <textarea
         className="input-style"

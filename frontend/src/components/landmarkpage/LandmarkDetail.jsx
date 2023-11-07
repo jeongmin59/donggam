@@ -11,13 +11,16 @@ const LandmarkDetail = ({landmarkName, landmarkImage, landmarkId}) => {
 
   return(
     <>
-      <div>
-        <img src={landmarkImage} />
+      <div 
+        className="h-[30vh] bg-center bg-cover relative"
+        style={{ backgroundImage: `url(${landmarkImage})` }}>
+        {/* <img src={landmarkImage} /> */}
       </div>
-      <div
+
+      <h2
         className="landmark-title">
         {landmarkName}
-      </div>
+      </h2>
       
       {landmarkName === 'SSAFY 부울경 캠퍼스' && 
         <div className="landmark-card">
@@ -55,7 +58,7 @@ const LandmarkDetail = ({landmarkName, landmarkImage, landmarkId}) => {
         </div>
       }
 
-      <div>
+      <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2">
         <img 
           src={moreBtn} 
           onClick={handleButtonClick}

@@ -1,5 +1,6 @@
 import React from 'react';
 
+// 2023년 11월 5일 10시 12분
 function DateTimeFormatter({ dateTimeString }) {
   const formatDateTime = (dateTimeString) => {
     const date = new Date(dateTimeString);

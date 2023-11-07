@@ -17,7 +17,7 @@ const LandmarkUpload = () => {
   const longitude = useRecoilValue(LongitudeAtom);
 
   // 랜드마크 정보 
-  const [landmarkName, setLandmarkName] = useState(null); 
+  const [landmarkName, setLandmarkName] = useState(null);
   const [landmarkContent, setLandmarkContent] = useState(null);
   const [landmarkImage, setLandmarkImage] = useState(null);
   const [landmarkId, setLandmarkId] = useState(null);
@@ -26,7 +26,7 @@ const LandmarkUpload = () => {
   useEffect(() => {
     // 위치 정보가 변경되면 랜드마크 검색 실행
     if (latitude !== null && longitude !== null) {
-      searchLandmark( latitude, longitude )
+      searchLandmark(latitude, longitude)
         .then((data) => {
           if (data) {
             setLandmarkName(data.data.name || "")
@@ -42,30 +42,30 @@ const LandmarkUpload = () => {
   }, [latitude, longitude]);
 
   const handlePostLandmark = async () => {
-    try{
-      if (landmarkId && (landmarkContent || landmarkImage)){
+    try {
+      if (landmarkId && (landmarkContent || landmarkImage)) {
         const res = await postLandmark(landmarkId, landmarkContent, landmarkImage);
         console.log('랜드마크 방명록 작성 완료', res);
         navigate(`/space/landmark/${landmarkId}`);
       }
-    } catch(err){
+    } catch (err) {
       console.error('랜드마크 방명록 작성 실패', err)
     }
   }
-  
 
-  return(
+
+  return (
     <>
       <div className="mt-3 px-5 pb-10">
-        <UploadSpacePhoto image={landmarkImage} setImage={setLandmarkImage}/>
-        <UploadSpaceTitle 
+        <UploadSpacePhoto image={landmarkImage} setImage={setLandmarkImage} />
+        <UploadSpaceTitle
           title="근처 랜드마크를 선택해주세요"
-          landmarkName={landmarkName} 
-          />
-        <UploadSpaceContent content={landmarkContent} setContent={setLandmarkContent}/>
+          landmarkName={landmarkName}
+        />
+        <UploadSpaceContent content={landmarkContent} setContent={setLandmarkContent} textLength={60} />
 
         {/* UploadButton.jsx 참고해서 처리해야 합니닷 */}
-        <UploadButton onUpload={handlePostLandmark}/> 
+        <UploadButton onUpload={handlePostLandmark} />
       </div>
     </>
   );

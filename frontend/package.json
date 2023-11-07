@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@heroicons/react": "1.0.0",
     "axios": "^1.5.1",
     "browser-image-compression": "^2.0.2",
     "image-compressor": "^2.0.3",

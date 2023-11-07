@@ -1,8 +1,6 @@
 import React from 'react';
-import DateTimeFormatter from '../../../utils/date';
 
 const TraceDetailTitle = ({ title, content }) => {
-  console.log(content)
 
   return (
     <div

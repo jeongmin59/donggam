@@ -85,11 +85,8 @@ const MailItem = ({ isOpen, onClose, mailData, updateLikedState }) => {
             </div>
           </div>
           
-          <div className='mb-3 ml-auto'>
-            {/* 보낸 사람 이름 */}
-            <h5 className="text-center">From: {mailDetail.from}</h5>
-          </div>
-          
+          <h4 className="ownglyph-text ml-auto mb-3 text-right text-md text-gray-500">{mailDetail.localDate}</h4>
+
           <div className='w-full h-8 px-3 py-2 bg-blue-300 rounded-3xl justify-center items-center gap-3 inline-flex' onClick={handleLikeClick}>
             <h5 className='text-white'>마음에 들어요</h5>
             {/* 좋아요 버튼 */}

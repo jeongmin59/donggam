@@ -27,7 +27,7 @@ const LandmarkDetailPage = () => {
   return(
     <>
       <Header title={landmarkName} to="/space/landmark" />
-      <div className='px-5'>
+      <div className='px-5 pt-5'>
         <ul>
         {landmarkList.map((record,index) => (
           <LandmarkItem 

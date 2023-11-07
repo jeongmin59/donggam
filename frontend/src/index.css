@@ -86,29 +86,31 @@
 
   /* 공간 캐러셀 */
   .trace-guide {
-    @apply
-      rounded-[16px] pb-10;
-      background-image: radial-gradient(96.37% 79.72% at 50% 50.12%, #FFF 38.96%, #E1F0FF 100%);
+    @apply rounded-[16px] pb-10;
+    background-image: radial-gradient(
+      96.37% 79.72% at 50% 50.12%,
+      #fff 38.96%,
+      #e1f0ff 100%
+    );
   }
 
-  .carousel{
+  .carousel {
     @apply list-none;
   }
 
   /* .slick-active {
     background-image: url('/icons/active-btn.svg');
   } */
-  .carousel li button::before{
-    background-image: url('/icons/active-btn.svg');
+  .carousel li button::before {
+    background-image: url("/icons/active-btn.svg");
   }
-  
-
 
   /* 랜드마크 디테일*/
   .landmark-title {
     @apply w-[80%] py-4 bg-white absolute left-1/2 -translate-x-1/2 top-[25.5%]
-    border-4 border-[#ABCEF2] rounded-[16px] border flex justify-center;
+    border-4 border-[#ABCEF2] rounded-[16px] flex justify-center;
   }
+
   .landmark-card {
     @apply ownglyph-text text-xl text-center h-[70vh] flex items-center justify-center;
     background-image: radial-gradient(
@@ -142,14 +144,13 @@
   }
 
   .trace-title {
-    @apply w-[80%] py-4 bg-white absolute left-1/2 -translate-x-1/2 top-[35%]
-    border-4 border-[#ABCEF2] rounded-[16px]  flex justify-center;
+    @apply w-[80%] h-16 py-2 bg-white absolute left-1/2 -translate-x-1/2 top-[35%]
+    border-2 border-[#ABCEF2] rounded-[16px];
   }
 
   .nav-shadow {
     box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.1);
   }
-
 }
 .trace-content {
   @apply ownglyph-text text-xl text-center h-[60vh] flex items-center justify-center;
@@ -170,16 +171,20 @@
   );
 }
 
+.landmark-yes {
+  @apply h-screen flex justify-center items-center;
+  background-image: radial-gradient(
+    64.84% 50% at 50% 50%,
+    #fff 56.67%,
+    #cfe2ff 100%
+  );
+}
 
-  .landmark-yes{
-    @apply
-    h-screen flex justify-center items-center;
-    background-image: radial-gradient(64.84% 50% at 50% 50%, #FFF 56.67%, #CFE2FF 100%);
-  }
-
-  .landmark-no{
-    @apply
-    h-screen flex justify-center items-center;
-    background-image: radial-gradient(64.84% 50% at 50% 50%, #FFF 56.67%, #D6DFEC 100%);
-  } 
-
+.landmark-no {
+  @apply h-screen flex justify-center items-center;
+  background-image: radial-gradient(
+    64.84% 50% at 50% 50%,
+    #fff 56.67%,
+    #d6dfec 100%
+  );
+}

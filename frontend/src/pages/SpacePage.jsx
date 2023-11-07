@@ -38,7 +38,7 @@ const SpacePage = () => {
   return (
     <>
       {/* <div className=""> */}
-        <div className="flex justify-center py-10">
+        <div className="flex justify-center pt-20">
           <img 
             src={miniLogo}
             onClick={handleLogoClick}

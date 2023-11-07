@@ -1,7 +1,7 @@
 import React from "react";
 
 const UploadSpaceTitle = ({ title, setTitle, landmarkName }) => {
-  const maxTitleLimit = 30;
+  const maxTitleLimit = 15;
 
 
   const handleTitleChange = (e) => {

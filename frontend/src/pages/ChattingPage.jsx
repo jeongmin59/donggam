@@ -17,7 +17,6 @@ const ChattingPage = () => {
   const user = useRecoilValue(UserSelector);
   const senderId = user.memberId;
   const sender = user.nickname;
-  const [isOpponentOnline, setIsOpponentOnline] = useState(false);
 
   const updateChatList = async () => {
     const res = await axiosInstance.get(`/chat/list/${roomId}`)
@@ -38,21 +37,21 @@ const ChattingPage = () => {
         const message = JSON.parse(response.body);
         setChatList(prevChatList => [...prevChatList, message]);
       }); 
-      // 상대방의 접속 유무 판단
-      stompClient.onopen = () => {
-        setIsOpponentOnline(true);
-      };
-      stompClient.onclose = () => {
-        setIsOpponentOnline(false);
-      };
     });
   };
+
+  const readChats = async () => {
+    const res = await axiosInstance.post(`/chat/list/${roomId}`);
+    console.log(res.data);
+  }
 
   useEffect(() => {
     updateChatList();
     updateStompClient();
-    console.log(chatList);
-    console.log('isOpponentOnline : ' + isOpponentOnline);
+
+    return () => {
+      readChats();
+    }
   }, [])
 
   // 메시지 전송
@@ -63,7 +62,7 @@ const ChattingPage = () => {
       "sender" : sender,
       "senderId" : senderId,
       "content" : message,
-      "isRead" : isOpponentOnline
+      "isRead" : false
     };
     stompClient.send(`/pub/chat/message`, {}, JSON.stringify(request));
     setMessage('');
@@ -74,7 +73,7 @@ const ChattingPage = () => {
         <Header title="1:1 채팅방" to="/chatroom"/>
         <ul>
           {chatList && chatList.length > 0 && chatList.map(chat => (
-            <li key={chat.id}>{chat.sender} : {chat.content} - 읽음유무 : {chat.isRead ? '읽음' : '안읽음'}</li>
+            <li key={chat.id}>{chat.sender} : {chat.content}</li>
           ))}
         </ul>
         {isActive ? (

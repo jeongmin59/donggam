@@ -2,10 +2,11 @@ import moreBtn from "../../assets/icons/more-btn.svg";
 import { useNavigate } from "react-router";
 
 
+
 const LandmarkDetail = ({landmarkName, landmarkImage, landmarkId}) => {
   const navigate = useNavigate ();
   const handleButtonClick = () => {
-    navigate(`/space/landmark/${landmarkId}`); // 클릭 시 지정한 경로로 이동
+    navigate(`/space/landmark/${landmarkId}`, { state: { landmarkName } }); // 클릭 시 지정한 경로로 이동
   };
 
   return(

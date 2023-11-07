@@ -27,7 +27,7 @@ const SpacePage = () => {
 
 
   const settings = {
-    // dots: true,
+    dots: true,
     infinite: false,
     speed: 500,
     slidesToShow: 1,
@@ -37,33 +37,36 @@ const SpacePage = () => {
 
   return (
     <>
-      <div className="flex justify-center mt-10">
-        <img
-          src={miniLogo}
-          onClick={handleLogoClick}
-        />
-      </div>
-      <div className="h-full mt-5 py-20">
-        <Slider {...settings} className="px-5">
-          <div className="trace-guide">
-            <div className="flex justify-center"><img src={landmarkImg} alt="" /></div>
-            <SpaceButton title="근처 랜드마크 찾기" to="/space/landmark" />
-          </div>
-          <div className="trace-guide">
-            <div className="flex-column mx-auto">
-              <div className="flex justify-center"><img src={traceImg} alt="" /></div>
-              <SpaceButton title="근처 방명록 찾기" to="/space/trace" />
-            </div>
-          </div>
-          <div className="trace-guide">
-            <div className="flex-column mx-auto">
-              <div className="flex justify-center"><img src={myTraceImg} alt="" /></div>
-              <SpaceButton title="내 방명록" to="/mytrace" />
-            </div>
-          </div>
-        </Slider>
+      {/* <div className=""> */}
+        <div className="flex justify-center py-10">
+          <img 
+            src={miniLogo}
+            onClick={handleLogoClick}
+          />
+        </div>
 
-      </div>
+        {/* <div className="px-5 h-[100%] flex-column align-center"> */}
+        <div className="h-full py-[13%] px-5">
+          <Slider {...settings} className="carousel pb-5">
+            <div className="trace-guide ">
+                <div className="flex justify-center"><img src={landmarkImg} alt="" /></div>
+                <SpaceButton title="근처 랜드마크 찾기" to="/space/landmark" />
+            </div>
+            <div className="trace-guide">
+              {/* <div className="flex-column mx-auto"> */}
+                <div className="flex justify-center"><img src={traceImg} alt="" /></div>
+                <SpaceButton title="근처 방명록 찾기" to="/space/trace" />
+              {/* </div> */}
+            </div>
+            <div className="trace-guide">
+              {/* <div className="flex-column mx-auto"> */}
+                <div className="flex justify-center"><img src={myTraceImg} alt="" /></div>
+                <SpaceButton title="내 방명록" />
+              {/* </div> */}
+            </div>
+          </Slider>
+
+        </div>
 
       <NavBar />
       <CreateButton to='/space/upload' />

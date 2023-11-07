@@ -86,13 +86,23 @@
 
   /* 공간 캐러셀 */
   .trace-guide {
-    @apply rounded-[14.5px] h-[120vw] py-10;
-    background-image: radial-gradient(
-      96.37% 79.72% at 50% 50.12%,
-      #fff 38.96%,
-      #e1f0ff 100%
-    );
+    @apply
+      rounded-[16px] pb-10;
+      background-image: radial-gradient(96.37% 79.72% at 50% 50.12%, #FFF 38.96%, #E1F0FF 100%);
   }
+
+  .carousel{
+    @apply list-none;
+  }
+
+  /* .slick-active {
+    background-image: url('/icons/active-btn.svg');
+  } */
+  .carousel li button::before{
+    background-image: url('/icons/active-btn.svg');
+  }
+  
+
 
   /* 랜드마크 디테일*/
   .landmark-title {
@@ -139,6 +149,7 @@
   .nav-shadow {
     box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.1);
   }
+
 }
 .trace-content {
   @apply ownglyph-text text-xl text-center h-[60vh] flex items-center justify-center;
@@ -158,3 +169,4 @@
     #fff 94.17%
   );
 }
+

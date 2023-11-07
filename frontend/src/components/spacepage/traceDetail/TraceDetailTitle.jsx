@@ -5,7 +5,7 @@ const TraceDetailTitle = ({ title, content }) => {
 
   return (
     <div
-      className="trace-title z-50">
+      className="trace-title text-center" >
       {title}
       <br />
       {content}

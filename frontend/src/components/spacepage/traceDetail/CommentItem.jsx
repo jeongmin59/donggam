@@ -7,10 +7,10 @@ const CommentItem = (commentItem) => {
 
 
   return (
-    <div>
+    <div className='' >
       <h3>{content}</h3>
-      <p>작성 시간: <DateTimeFormatter dateTimeString={date} /></p>
 
+      <p>작성 시간: <DateTimeFormatter dateTimeString={date} /></p>
     </div>
   );
 };

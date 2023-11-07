@@ -12,7 +12,7 @@ const CreateButton = ({ to }) => {
   return (
     <button
       onClick={handleButtonClick}
-      className="fixed bottom-4 right-4 z-50" // 우하단에 버튼 고정
+      className="fixed bottom-[12vh] right-4 z-50" // 우하단에 버튼 고정
     >
       <img src={createBtn} alt="글 작성 버튼" />
     </button>

@@ -22,17 +22,16 @@ const CommentForm = ({ setComment, comment, traceId, setShowFront }) => {
   };
 
   return (
-    <div className="w-80 h-11 rounded-3xl bg-blue-200 border-2 border-blue-500">
+    <div className='fixed bottom-16 w-[80%]'>
       <form onSubmit={handleSubmitComment}>
         <textarea
-          rows="4"
+          rows="1"
           cols="50"
           placeholder="댓글을 입력하세요"
           value={comment}
           onChange={handleCommentChange}
-          className="border-2 border-blue-500 rounded-lg w-full p-2"
+          className="border-2 border-blue-300 rounded-lg w-full p-4 "
         />
-        <br />
         <button type="submit">댓글 작성</button>
       </form>
     </div>

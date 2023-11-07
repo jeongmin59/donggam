@@ -4,6 +4,7 @@ import CreateButton from "../../components/common/CreateButton";
 import PhotoList from "../../components/timepage/PhotoList";
 import BestPhoto from "../../components/timepage/BestPhoto";
 import trophy from "../../assets/icons/trophy.png";
+import NavBar from "../../components/common/NavBar";
 
 const TimePage = () => {
   const [currentTime, setCurrentTime] = useState(new Date().getHours()); 
@@ -24,9 +25,12 @@ const TimePage = () => {
       ) : (
         <div>
           <BestPhoto />
-          <img src={trophy} alt="트로피" className="fixed bottom-4 right-4 z-10 w-24 h-24" />
+          <img src={trophy} alt="트로피" className="fixed bottom-[12vh] right-4 z-50 w-20 h-20" />
         </div>
       )}
+
+      <NavBar />
+
     </>
   );
 };

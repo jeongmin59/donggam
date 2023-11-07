@@ -3,14 +3,6 @@ import React from "react";
 const UploadSpaceContent = ({ content, setContent, textLength }) => {
   const maxCharacterLimit = textLength;
 
-
-  const handleContentChange = (e) => {
-    const text = e.target.value;
-    if (text.length <= maxCharacterLimit) {
-      setContent(text);
-    }
-  };
-
   const handleContentChange = (e) => {
     const text = e.target.value;
     if (text.length <= maxCharacterLimit) {

@@ -101,7 +101,7 @@
     @apply
     w-[80%] py-4 bg-white absolute left-1/2 -translate-x-1/2 top-[25.5%]
     border-4 border-[#ABCEF2] rounded-[16px] border flex justify-center;
-
+  }
   .landmark-card {
     @apply
     ownglyph-text text-xl text-center h-[70vh] flex items-center justify-center ;
@@ -139,5 +139,5 @@
     background-image: radial-gradient(50% 48.18% at 50% 50%, #FFF 69.41%, #E4EFFF 100%);
   }
 
-
+  
 }

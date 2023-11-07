@@ -89,7 +89,7 @@ const ProfilePage = () => {
             onChange={handleNicknameChange}
             className="block w-full py-1.5 pl-2 pr-20 text-gray-900 placeholder:text-gray-400 sm:text-sm sm:leading-6 border-b-2 border-slate-700"
             placeholder={nickName}
-            maxLength={15}
+            maxLength={12}
           />
         </div>
 

@@ -170,3 +170,16 @@
   );
 }
 
+
+  .landmark-yes{
+    @apply
+    h-screen flex justify-center items-center;
+    background-image: radial-gradient(64.84% 50% at 50% 50%, #FFF 56.67%, #CFE2FF 100%);
+  }
+
+  .landmark-no{
+    @apply
+    h-screen flex justify-center items-center;
+    background-image: radial-gradient(64.84% 50% at 50% 50%, #FFF 56.67%, #D6DFEC 100%);
+  } 
+

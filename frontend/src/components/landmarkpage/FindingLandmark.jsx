@@ -1,14 +1,17 @@
 import React from "react";
-import landmark from "../../assets/landmark/landmark.png"
-
+import landmarkImg from "../../assets/images/landmark-img.svg"
+import landmarkNoImg from "../../assets/images/landmark-no-img.svg"
 import { searchLandmark } from "../../api/landmarkApi";
 import { useRecoilValue } from "recoil";
 import { LatitudeAtom, LongitudeAtom } from '../../recoil/location/locationAtom';
 import { useState, useEffect } from "react";
 import LandmarkDetail from "./LandmarkDetail";
+import { useNavigate } from "react-router";
 
 
 const FindingLandmark = () => {
+  const navigate = useNavigate(); 
+
   // 비동기 처리
   const [showDetail, setShowDetail] = useState(false);
 
@@ -40,12 +43,27 @@ const FindingLandmark = () => {
           }, 1000);
         })
         .catch((error) => {
-          console.error('랜드마크 검색 실패:', error);
+          // console.error('랜드마크 검색 실패:', error);
+          setTimeout(() => {
+            navigate("/");
+          }, 1000);
         });
     }
-  }, [latitude, longitude]);
+  }, [latitude, longitude, navigate]);
 
+  // useEffect(() => {
+  //   // landmark-no가 보여진 후 1초 뒤에 메인 페이지로 이동
+  //   if (!landmarkName) {
+  //     const timer = setTimeout(() => {
+  //       navigate("/");
+  //     }, 1000);
 
+  //     return () => {
+  //       // 컴포넌트가 언마운트될 때 타이머를 클리어
+  //       clearTimeout(timer);
+  //     };
+  //   }
+  // }, [landmarkName, navigate]);
 
   return(
     <>
@@ -56,17 +74,21 @@ const FindingLandmark = () => {
           landmarkId={landmarkId}
         />
       ) : (
-      <div className="px-5 h-screen flex justify-center items-center bg-gradient-to-b from-sky-100 to-blue-200">
-        <div className="flex flex-col items-center">
-          <h3>근처에 있는 랜드마크를 찾았어요.</h3>
-          <img 
-            src={landmark} 
-            alt="랜드마크 이미지" 
-            className="w-56 h-56 mt-4"
-          />
-          <h2 className="mt-4">{landmarkName}</h2>
+        <div>
+          {landmarkName ? (
+            <div className="landmark-yes flex-col">
+              <h3>근처에 있는 랜드마크를 찾았어요.</h3>
+              <div className="flex justify-center"><img src={landmarkImg} alt="" /></div>
+              <h2 className="mt-4">{landmarkName}</h2>
+            </div>
+          ) : (
+            <div className="landmark-no flex-col">
+              <h3>근처에 있는 랜드마크가 없어요😥</h3>
+              <div className="flex justify-center"><img src={landmarkNoImg} alt="" /></div>
+              <h3 className="mt-4">랜드마크는 추후 업데이트됩니다</h3>
+            </div>
+          )}
         </div>
-      </div>
       )}
     </>
   );

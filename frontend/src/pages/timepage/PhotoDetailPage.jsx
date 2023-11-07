@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PhotoDetail from "../../components/timepage/PhotoDetail";
 import TimeBackground from "../../components/timepage/TimeBackground";
-import BackBtn from "../../assets/common/back-btn.svg";
+import BackBtn from "../../assets/icons/detail-back-btn.svg";
 import { useNavigate } from "react-router-dom";
 
 const PhotoDetailPage= () => {
@@ -20,15 +20,16 @@ const PhotoDetailPage= () => {
   return (
     <>
       <TimeBackground currentTime={currentTime} />
-      <div className="flex items-end p-2">
-        <img
-          src={BackBtn}
-          alt="뒤로가기"
-          onClick={navigateToTimePage}
-        />
-        <div>뒤로가기</div>
+      <div className="overflow-auto">
+        <PhotoDetail />
+        <div className="mb-8 flex justify-center">
+          <img
+            src={BackBtn}
+            alt="뒤로가기"
+            onClick={navigateToTimePage}
+          />
+        </div>
       </div>
-      <PhotoDetail />
     </>
   );
 };

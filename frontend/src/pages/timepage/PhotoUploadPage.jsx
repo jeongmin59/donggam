@@ -1,32 +1,14 @@
-import React, { useEffect, useState } from "react";
-import TimeBackground from "../../components/timepage/TimeBackground";
+import React from "react";
 import PhotoUpload from "../../components/timepage/PhotoUpload";
-import BackBtn from "../../assets/common/back-btn.svg";
-import { useNavigate } from "react-router-dom";
+import Header from '../../components/common/Header';
 
 const PhotoUploadpage = () => {
-  const [currentTime, setCurrentTime] = useState(new Date().getHours());
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    setCurrentTime(new Date().getHours());
-    console.log("현재 시간!", currentTime);
-  }, []);
-
-  const navigateToTimePage = () => {
-    navigate("/time");
-  };
 
   return (
     <>
-      <TimeBackground currentTime={currentTime} />
-      <PhotoUpload />
-      <div className="absolute left-0 bottom-0 flex items-center p-5">
-        <img
-          src={BackBtn}
-          alt="뒤로가기"
-          onClick={navigateToTimePage}
-        />
+      <Header title="사진 업로드" to="/time" />
+      <div className="mt-12">
+        <PhotoUpload />
       </div>
     </>
   );

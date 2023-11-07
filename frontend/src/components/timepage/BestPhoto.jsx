@@ -14,7 +14,7 @@ const BestPhoto = () => {
         if (response.data && response.data.data) {
           setPhotos(response.data.data);
         }
-        console.log("베스트컷 왔니?", response)
+        console.log("베스트컷 왔니?", response);
         setLoading(false);
       } catch (error) {
         console.error("에러", error);
@@ -30,11 +30,17 @@ const BestPhoto = () => {
       {loading ? (
         <h5>Loading...</h5>
       ) : (
-        <Carousel showThumbs={false} className="mt-10 p-8" autoPlay={true} infiniteLoop={true} interval={5000}>
+        <Carousel showThumbs={false} className="" autoPlay={true} infiniteLoop={true} interval={5000}>
           {photos.map((photo) => (
             <div key={photo.imageId} className="flex flex-col items-center">
-              <img src={photo.imageAddress} alt={photo.title} className="mb-6 rounded-lg" />
-              <h4 className="mb-12 text-center">{photo.title}</h4>
+              <div className="h-[400px] w-[100%]">
+                <img
+                  src={photo.imageAddress}
+                  alt={photo.title}
+                  className="object-cover object-center h-full w-full rounded-lg"
+                />
+              </div>
+              <h4 className="mt-8 mb-12 text-center">{photo.title}</h4>
             </div>
           ))}
         </Carousel>

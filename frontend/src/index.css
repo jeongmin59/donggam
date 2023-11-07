@@ -144,7 +144,7 @@
   }
 
   .trace-title {
-    @apply w-[80%] h-16 py-2 bg-white absolute left-1/2 -translate-x-1/2 top-[35%]
+    @apply w-[80%] h-16 py-2 z-50 bg-white absolute left-1/2 -translate-x-1/2 top-[35%]
     border-2 border-[#ABCEF2] rounded-[16px];
   }
 
@@ -161,14 +161,18 @@
   );
 }
 
-.trace-comment {
-  @apply ownglyph-text text-xl text-center h-[60vh] flex-col justify-center items-center;
+.trace-comment-bg {
+  @apply h-[60vh]  flex-col justify-center items-center;
   background-image: radial-gradient(
     50% 48.18% at 50% 50%,
     #e4efff 52.5%,
     #e4efff 61.35%,
     #fff 94.17%
   );
+}
+
+.trace-comment-item {
+  @apply ownglyph-text text-xl flex-col justify-start  gap-2 flex;
 }
 
 .landmark-yes {

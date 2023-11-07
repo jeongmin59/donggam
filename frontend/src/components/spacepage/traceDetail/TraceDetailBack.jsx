@@ -9,6 +9,7 @@ const TraceDetailBack = ({ data, setComment, comment, traceId, setShowFront }) =
   const latitude = data.latitude
   const commentList = data.comments
   // const location = `위도: ${longitude} 경도:${latitude}`;
+  const commentCount = commentList.length
 
   return (
     <div>
@@ -16,19 +17,18 @@ const TraceDetailBack = ({ data, setComment, comment, traceId, setShowFront }) =
 
       <TraceDetailTitle title={title} content="위치 서비스는 추후 업데이트" />
 
-      <div className='trace-comment '>
+      <div className='trace-comment-bg'>
         <div>
-          {commentList.map((commentItem, index) => (
-            <CommentItem key={index} comment={commentItem} />
-          ))}
-        </div>
+          <h2>{commentCount}개의 댓글</h2>
+          <li className='trace-comment-item overflow-y-scroll'>
+            {commentList.map((commentItem, index) => (
+              <CommentItem key={index} comment={commentItem} />
+            ))}
+          </li>
 
-        <div className='flex justify-center'>
           <CommentForm setComment={setComment} comment={comment} traceId={traceId} setShowFront={setShowFront} />
         </div>
       </div>
-
-
     </div >
   );
 };

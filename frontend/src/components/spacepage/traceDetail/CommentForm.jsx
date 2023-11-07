@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { postTraceComment } from '../../../api/spaceApi';
 
@@ -21,20 +20,29 @@ const CommentForm = ({ setComment, comment, traceId, setShowFront }) => {
     setComment(''); // 댓글 입력창 비우기
   };
 
+  const content = "테스트 중 ... 바보가튼 나에 모습.."
+
+  const handleSubmitClick = () => {
+    postTraceComment(traceId, content)
+  }
+
   return (
-    <div className='fixed bottom-16 w-[80%]'>
-      <form onSubmit={handleSubmitComment}>
-        <textarea
-          rows="1"
-          cols="50"
-          placeholder="댓글을 입력하세요"
-          value={comment}
-          onChange={handleCommentChange}
-          className="border-2 border-blue-300 rounded-lg w-full p-4 "
-        />
-        <button type="submit">댓글 작성</button>
-      </form>
-    </div>
+    <>
+      <div className='fixed bottom-16 w-[80%]'>
+        <form onSubmit={handleSubmitComment}>
+          <textarea
+            rows="1"
+            cols="50"
+            placeholder="댓글을 입력하세요"
+            value={comment}
+            onChange={handleCommentChange}
+            className="border-2 border-blue-300 rounded-lg w-full p-4 "
+          />
+          <button type="submit">댓글 작성</button>
+        </form>
+      </div>
+      <button onClick={handleSubmitClick}>테스트 버튼</button>
+    </>
   );
 };
 

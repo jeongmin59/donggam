@@ -39,7 +39,8 @@ public class ChatRoomDto {
                 .characterId(Objects.equals(room.getMember1().getId(), memberId)
                         ? room.getMember2().getCharacterId() : room.getMember1().getCharacterId())
                 .isActive(isActive)
-                .unReadChatCount((int) room.getChat().stream().filter(chat -> !chat.getIsRead()).count())
+                .unReadChatCount((int) room.getChat().stream().filter(chat ->
+                        !Objects.equals(chat.getSender().getId(), memberId) && !chat.getIsRead()).count())
                 .lastChatTime(lastChat != null ? lastChat.getCreatedAt() : null)
                 .lastChat(lastChat != null ? lastChat.getContent() : null)
                 .build();

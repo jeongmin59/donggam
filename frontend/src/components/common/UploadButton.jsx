@@ -1,14 +1,13 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-// 업로드 함수, 이동 경로를 인자로 넣어줍니다 
 const UploadButton = ({ onUpload, to }) => {
   const navigate = useNavigate();
 
   const handleUploadClick = (event) => {
     event.preventDefault(); // 중복 이벤트 실행 방지
     onUpload();
-    navigate('/');
+    navigate(to);
   };
 
   return (

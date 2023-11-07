@@ -5,6 +5,7 @@ import { useRecoilValue } from 'recoil';
 import { StatusMessageAtom, StatusMessageIdAtom } from '../../recoil/user/userAtom';
 import StatusList from './StatusList';
 import nullLogo from '../../assets/images/noMail.svg';
+import MailFilter from './MailFilter';
 
 const MailBox = () => {
   const nowStatus = useRecoilValue(StatusMessageAtom);
@@ -47,12 +48,14 @@ const MailBox = () => {
 
   return (
     <div className="px-5">
-      <div className="my-8 h-20">
+      <div className="mt-8 mb-4 h-20">
         <button className="w-full h-full bg-stone-50 rounded-2xl justify-center items-center gap-2.5 inline-flex" onClick={openModal}>
           {status}
         </button>
         <StatusList isOpen={isModalOpen} onClose={closeModal} statusList={statusList} changeStatus={handleStatusChange} />
       </div>
+
+      <MailFilter mailList={mailList}/>
 
       <div className="text-center">
         {mailList.length === 0 ? (
@@ -60,7 +63,7 @@ const MailBox = () => {
             <img src={nullLogo} alt="구름" />
           </div>
         ) : (
-          <div className='grid grid-cols-3 gap-4'>
+          <div className='mt-4 grid grid-cols-3 gap-4'>
             {mailList.map((mail, index) => (
               <MailList key={index} mail={mail} />
             ))}

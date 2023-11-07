@@ -15,19 +15,21 @@ const MyTraceItem = (traceData) => {
     background: `linear-gradient(0deg, rgba(0, 0, 0, 0.40) 0%, rgba(0, 0, 0, 0.40) 100%), url(${image}), lightgray 70% / cover no-repeat`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
+    zIndex: 0
   };
 
   return (
-    <Link className='z-0' to={`/space/trace/${traceId}`} >
-      <div style={backgroundStyle} className='rounded-[16px] my-2 text-white flex justify-center items-center'>
-        <div className='flex-col items-center justify-center space-y-2'>
-          <DateTimeFormatter className='text-center' dateTimeString={date} />
-          <div className='text-center'>{title}</div>
+    <>
+      <Link to={`/space/trace/${traceId}`} >
+        <div style={backgroundStyle} className='rounded-[16px] my-2 text-white flex justify-center items-center'>
+          <div className='flex-col items-center justify-center space-y-2'>
+            <DateTimeFormatter className='text-center' dateTimeString={date} />
+            <div className='text-center'>{title}</div>
+          </div>
         </div>
-        {/* 버튼 눌렀을 때 영역이 안잡히는 거 같음.. */}
-        <CreateButton className='z-10' to='/' />
-      </div>
-    </Link>
+      </Link>
+      <CreateButton to='/space/upload' />
+    </>
   );
 };
 

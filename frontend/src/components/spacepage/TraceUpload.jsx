@@ -36,7 +36,7 @@ const TraceUpload = () => {
       <div className="mt-3 px-5 pb-10">
         <UploadSpacePhoto image={image} setImage={setImage} />
         <UploadSpaceTitle title={title} setTitle={setTitle} />
-        <UploadSpaceContent content={content} setContent={setContent} />
+        <UploadSpaceContent content={content} setContent={setContent} textLength={240} />
         <UploadButton onUpload={handlePostTrace} to='/mytrace' />
       </div>
     </>

@@ -11,7 +11,7 @@ const BackButton = ({ to }) => {
 
   return (
     <div
-      className="fixed top-4 left-4">
+      className="fixed top-4 left-4 z-50">
       <img src={btn} alt="뒤로가기버튼" onClick={navigateTo} />
     </div >
   );

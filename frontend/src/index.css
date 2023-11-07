@@ -92,9 +92,8 @@
   /* 공간 캐러셀 */
   .trace-guide {
     @apply
-      rounded-[14.5px] h-[120vw] items-center;
+      rounded-[14.5px] h-[120vw] py-10;
       background-image: radial-gradient(96.37% 79.72% at 50% 50.12%, #FFF 38.96%, #E1F0FF 100%);
-    /* shadow-[0px 3.625px 9.0625px 0px rgba(97, 157, 218, 0.40)]; */
   }
 
   /* 랜드마크 디테일*/

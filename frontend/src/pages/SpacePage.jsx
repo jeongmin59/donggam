@@ -11,6 +11,7 @@ import traceImg from "../assets/images/trace-img.svg"
 import myTraceImg from "../assets/images/my-trace-img.svg"
 import SpaceButton from "../components/common/SpaceButton";
 import createBtn from "../assets/common/createBtn.png";
+import miniLogo from "../assets/tutorial/mini-logo.svg";
 import { useNavigate } from "react-router";
 
 
@@ -20,9 +21,12 @@ const SpacePage = () => {
   const handleButtonClick = () => {
     navigate("/space/upload"); // 클릭 시 지정한 경로로 이동
   };
+  const handleLogoClick = () => {
+    navigate("/"); // 클릭 시 지정한 경로로 이동
+  };
 
   const settings = {
-    dots: true,
+    // dots: true,
     infinite: false,
     speed: 500,
     slidesToShow : 1,
@@ -32,16 +36,20 @@ const SpacePage = () => {
 
   return(
     <>
-      <div className="h-screen">
-        <div>동감로고</div>
+      {/* <div className=""> */}
+        <div className="flex justify-center my-7">
+          <img 
+            src={miniLogo}
+            onClick={handleLogoClick}
+          />
+        </div>
+
         {/* <div className="px-5 h-[100%] flex-column align-center"> */}
-        <div className="overflow-hidden">
+        <div className="h-full py-20">
           <Slider {...settings} className="px-5">
             <div className="trace-guide">
-              <div className="flex-column mx-auto">
                 <div className="flex justify-center"><img src={landmarkImg} alt="" /></div>
                 <SpaceButton title="근처 랜드마크 찾기" to="/space/landmark" />
-              </div>
             </div>
             <div className="trace-guide">
               <div className="flex-column mx-auto">
@@ -61,12 +69,12 @@ const SpacePage = () => {
 
         <button 
           onClick={handleButtonClick}
-          className="fixed bottom-5 right-10 z-10" // 우하단에 버튼 고정
+          className="fixed bottom-7 right-5 z-10" // 우하단에 버튼 고정
         >
           <img src={createBtn} alt="글 작성 버튼" />
         </button>
 
-      </div>
+      {/* </div> */}
 
     </>
   );

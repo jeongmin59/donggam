@@ -9,22 +9,30 @@ const TraceItem = ({ time, content, userName, imageUrl }) => {
   });
 
   const backgroundStyle = {
-    height: '200px',
     background: `linear-gradient(0deg, rgba(0, 0, 0, 0.40) 0%, rgba(0, 0, 0, 0.40) 100%), url(${imageUrl}), lightgray 70% / cover no-repeat`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
+    color: 'white'
   };
 
+  const normalBackground = {
+    border: '2px solid var(--subColor2, #ABCEF2)',
+    backgroundColor: '#FFF',
+    color: 'var(--subColor)'
+  };
+
+  const hasImageUrl = imageUrl !== null;
+
   return (
-    < >
-      <div style={backgroundStyle} className='rounded-[16px] my-2 text-white flex justify-center items-center'>
-        <div className='flex-col items-center justify-center space-y-2'>
-          <div className='text-center'>{formattedDate}</div>
-          <div className='text-center'>{content}</div>
-          <div className='text-center'>-{userName}의 흔적-</div>
-        </div>
+    <div
+      style={hasImageUrl ? backgroundStyle : normalBackground}
+      className='rounded-[16px] h-[200px] my-5 flex justify-center items-center'>
+      <div className='flex-col items-center justify-center space-y-2'>
+        <div className='ownglyph-text text-xl text-center'>{formattedDate}</div>
+        <div className='ownglyph-text text-3xl text-center'>{content}</div>
+        <div className='ownglyph-text text-xl text-center'>-{userName}의 흔적-</div>
       </div>
-    </>
+    </div>
   );
 };
 

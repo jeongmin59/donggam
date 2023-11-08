@@ -14,7 +14,9 @@ const UserModal = ({ modalInfo, openMailModal }) => {
       console.log(res.data.data); // roomId 확인
       const roomId = res.data.data.roomId;
       const isActive = res.data.data.isActive;
-      navigate(`/chatting/${roomId}`, {state : {isActive}});
+      const roomName = modalInfo.otherNickname;
+      console.log(roomName);
+      navigate(`/chatting/${roomId}`, {state : {isActive , roomName}});
     } else {
       console.log('채팅 신청 실패');
     }

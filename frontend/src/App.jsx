@@ -14,15 +14,20 @@ import SpaceUploadpage from "./pages/SpaceUploadPage";
 import ProfilePage from "./pages/ProfilePage";
 import ChatRoomPage from "./pages/ChatRoomPage";
 import ChattingPage from './pages/ChattingPage';
-import { AccessTokenAtom } from './recoil/user/userAtom';
+import { AccessTokenAtom, checkAccessTokenExpiration } from './recoil/user/userAtom';
 import { useRecoilValue } from "recoil";
 import TutorialPage from "./pages/TutorialPage";
 import TraceDetailPage from "./pages/TraceDetailPage";
 import MyTracePage from "./pages/MyTracePage";
 import LandmarkDetailPage from "./pages/LandmarkDetailPage";
+import { useEffect } from "react";
 
 function App() {
   const isLoggedIn = useRecoilValue(AccessTokenAtom)
+
+  useEffect(() => {
+    checkAccessTokenExpiration();
+  }, [])
 
   return (
     <BrowserRouter>

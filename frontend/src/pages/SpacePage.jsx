@@ -45,8 +45,9 @@ const SpacePage = () => {
           />
         </div>
 
-        <div className="pt-[13%] px-5">
-          <Slider {...settings} className="carousel pb-5">
+        <div className="h-[75%] flex justify-center items-center">
+        {/* <div className="mt-5 mb-20 px-5"> */}
+          <Slider {...settings} className="carousel p-8 mx-auto">
             <div className="trace-guide ">
               <div className="flex justify-center"><img src={landmarkImg} /></div>
               <SpaceButton title="근처 랜드마크 찾기" to="/space/landmark" />

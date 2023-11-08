@@ -4,12 +4,22 @@ import like from '../../assets/like/full_heart.png';
 import dislike from '../../assets/like/empty_heart.png';
 import alertIcon from '../../assets/icons/alert.png';
 import ToastModal from './../common/ToastModal';
+import { useNavigate } from 'react-router-dom';
 
 const MailItem = ({ isOpen, onClose, mailData, updateLikedState }) => {
   // 모달 영역 밖 클릭 시 모달 닫기
   const handleBackgroundClick = (e) => {
     if (e.target === e.currentTarget) {
       onClose();
+    }
+  };
+
+  const navigate = useNavigate();
+  const errorCallback = () => {
+    console.log("401에러 발생");
+    const confirm = window.confirm('다시 로그인 해주세요.');
+    if (confirm) {
+      navigate('/login');
     }
   };
 
@@ -21,7 +31,7 @@ const MailItem = ({ isOpen, onClose, mailData, updateLikedState }) => {
   const [isLiked, setIsLiked] = useState();
 
   useEffect(() => {
-    getMailDetail(mailId)
+    getMailDetail(mailId, errorCallback)
       .then((res) => {
         setMailDetail(res);
         setIsLiked(res.isLiked);
@@ -33,7 +43,7 @@ const MailItem = ({ isOpen, onClose, mailData, updateLikedState }) => {
   }, []);
 
   const handleLikeClick = () => {
-    postMailLike(mailId, !isLiked);
+    postMailLike(mailId, !isLiked, errorCallback);
     setIsLiked(!isLiked);
 
     updateLikedState(!isLiked);

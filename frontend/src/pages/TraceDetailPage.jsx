@@ -5,19 +5,28 @@ import TraceDetailFront from '../components/spacepage/traceDetail/TraceDetailFro
 import TraceDetailBack from '../components/spacepage/traceDetail/TraceDetailBack';
 import BackButton from './../components/common/BackButton';
 import moreBtn from "../assets/icons/more-btn.svg";
-
+import { useNavigate } from 'react-router-dom';
 
 const TraceDetailPage = () => {
   const { traceId } = useParams(); // object로 온다.
   const [traceData, setTraceData] = useState(null);
   const [comment, setComment] = useState('');
 
+  const navigate = useNavigate();
+
+  const errorCallback = () => {
+    console.log("401에러 발생");
+    const confirm = window.confirm('다시 로그인 해주세요.');
+    if (confirm) {
+      navigate('/login');
+    }
+  }
 
   // 방명록 상세 조회 axios 호출
   useEffect(() => {
     const traceIdInt = parseInt(traceId, 10); // int로 변환
 
-    getTraceDetail(traceIdInt)
+    getTraceDetail(traceIdInt, errorCallback)
 
       .then((res) => {
         setTraceData(res.data)

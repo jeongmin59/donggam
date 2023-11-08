@@ -23,7 +23,9 @@ axiosInstance.interceptors.request.use(
     return config;
   },
   (error) => {
-    console.log("엑세스 토큰 없음!");
+    if (error.response.status === 401) {
+      console.log("엑세스 토큰 만료!");
+    }
     return Promise.reject(error);
   }
 );

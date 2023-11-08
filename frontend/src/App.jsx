@@ -20,14 +20,13 @@ import TutorialPage from "./pages/TutorialPage";
 import TraceDetailPage from "./pages/TraceDetailPage";
 import MyTracePage from "./pages/MyTracePage";
 import LandmarkDetailPage from "./pages/LandmarkDetailPage";
-import { useEffect } from "react";
 
 function App() {
-  const isLoggedIn = useRecoilValue(AccessTokenAtom)
 
-  useEffect(() => {
-    checkAccessTokenExpiration();
-  }, [])
+  // 토큰이 있다면 만료되었는지를 확인해서 만료되었으면 null
+  checkAccessTokenExpiration();
+
+  const isLoggedIn = useRecoilValue(AccessTokenAtom);
 
   return (
     <BrowserRouter>

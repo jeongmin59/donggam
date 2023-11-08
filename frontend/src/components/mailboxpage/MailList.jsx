@@ -12,6 +12,7 @@ import blueMail from '../../assets/mail/8_blue.svg';
 import beigeMail from '../../assets/mail/9_beige.svg';
 import likedImg from '../../assets/like/liked.png';
 import notReadImg from '../../assets/mail/notRead.png';
+import { useNavigate } from 'react-router-dom';
 
 const MailList = (mail) => {
   const mailData = mail.mail;
@@ -30,6 +31,15 @@ const MailList = (mail) => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const navigate = useNavigate();
+  const errorCallback = () => {
+    console.log("401에러 발생");
+    const confirm = window.confirm('다시 로그인 해주세요.');
+    if (confirm) {
+      navigate('/login');
+    }
+  }
+
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -41,7 +51,7 @@ const MailList = (mail) => {
 
   const handleMailClick = () => {
     if (!isRead) {
-      postMailRead(mailId);
+      postMailRead(mailId, errorCallback);
     }
     openModal();
   };

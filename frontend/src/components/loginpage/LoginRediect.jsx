@@ -62,6 +62,10 @@ const LoginRediect = () => {
       })
       .catch(err => {
         console.log('실패!!!!!!', err);
+        const confirm = window.confirm('로그인 실패');
+        if (confirm) {
+          navigator('/login');
+        }
       });
   }, []);
 

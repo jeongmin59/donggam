@@ -22,6 +22,13 @@ const ChattingPage = () => {
 
   const updateChatList = async () => {
     const res = await axiosInstance.get(`/chat/list/${roomId}`);
+    if (res.response && res.response.status === 401) {
+      console.log('401 에러 발생');
+      const confirm = window.confirm('다시 로그인 해주세요');
+      if (confirm) {
+        navigate('/login');
+      }
+    }
     setChatList(res.data.data);
   };
 
@@ -45,6 +52,13 @@ const ChattingPage = () => {
 
   const readChats = async () => {
     const res = await axiosInstance.post(`/chat/list/${roomId}`);
+    if (res.response && res.response.status === 401) {
+      console.log('401 에러 발생');
+      const confirm = window.confirm('다시 로그인 해주세요');
+      if (confirm) {
+        navigate('/login');
+      }
+    }
   };
 
   useEffect(() => {

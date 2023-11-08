@@ -19,6 +19,13 @@ const UserModal = ({ modalInfo, openMailModal }) => {
       navigate(`/chatting/${roomId}`, {state : {isActive , roomName}});
     } else {
       console.log('채팅 신청 실패');
+      if (res.response.status === 401) {
+        console.log('401 에러 발생');
+        const confirm = window.confirm('다시 로그인 해주세요');
+        if (confirm) {
+          navigate('/login');
+        }
+      }
     }
   }
 

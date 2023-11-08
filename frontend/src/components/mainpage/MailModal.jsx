@@ -13,13 +13,21 @@ const MailModal = ({mailModalInfo, closeMailModal}) => {
 
   const imageInputRef = useRef(null);
 
+  const errorCallback = (err) => {
+    console.log("401에러 발생");
+    const confirm = window.confirm('다시 로그인 해주세요.');
+    if (confirm) {
+      navigate('/login');
+    }
+  }
+
   const handleSendMailClick = async () => {
     if (!content) {                     
       console.log("쪽지 내용을 작성하세요");
       return;
     }
     try {
-      const res = await sendMail(statusId, content, selectedImage);
+      const res = await sendMail(statusId, content, selectedImage, errorCallback);
       if (res) {
         closeMailModal();
         console.log('쪽지 전송 성공', res.data);

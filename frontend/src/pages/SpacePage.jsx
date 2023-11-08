@@ -27,7 +27,7 @@ const SpacePage = () => {
 
 
   const settings = {
-    dots: true,
+    // dots: true,
     infinite: false,
     speed: 500,
     slidesToShow: 1,
@@ -37,17 +37,17 @@ const SpacePage = () => {
 
   return (
     <>
-      {/* <div className=""> */}
-      <div className="logo flex justify-center pt-20">
-        <img
-          src={miniLogo}
-          onClick={handleLogoClick}
-        />
-      </div>
-{/* 
-      <div className="px-5 h-[50%] flex-column align-center"> */}
-        <div className="pt-[13%] px-5">
-          <Slider {...settings} className="carousel pb-5">
+      <div className="bg-white h-screen">
+        <div className="logo flex justify-center pt-[10%]">
+          <img
+            src={miniLogo}
+            onClick={handleLogoClick}
+          />
+        </div>
+
+        <div className="h-[75%] flex justify-center items-center">
+        {/* <div className="mt-5 mb-20 px-5"> */}
+          <Slider {...settings} className="carousel p-8 mx-auto">
             <div className="trace-guide ">
               <div className="flex justify-center"><img src={landmarkImg} /></div>
               <SpaceButton title="근처 랜드마크 찾기" to="/space/landmark" />
@@ -62,10 +62,11 @@ const SpacePage = () => {
             </div>
           </Slider>
         </div>
-      {/* </div> */}
 
-      <NavBar />
-      <CreateButton to='/space/upload' />
+        <NavBar />
+
+        {/* <CreateButton to='/space/upload' /> */}
+      </div>
 
     </>
   );

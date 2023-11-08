@@ -8,28 +8,30 @@ const SpaceUploadpage = () => {
 
   return (
     <>
-      <Header title="방명록 등록하기" to="/space" />
-      <div>
-        <div className="flex justify-between pt-3 px-2">
-          <div
-            onClick={() => setActiveTab("trace")}
-            className={`${activeTab === "trace" ? 
-              "active text-[var(--subColor)] border-b-2 border-[var(--subColor)]" : "text-gray-400"}
-              w-[100%] flex justify-center py-2`}
-          >
-            <h3>방명록</h3>
+      <div className="bg-white">
+        <Header title="방명록 등록하기" to="/space" />
+        <div>
+          <div className="flex justify-between pt-3 px-2">
+            <div
+              onClick={() => setActiveTab("trace")}
+              className={`${activeTab === "trace" ? 
+                "active text-[var(--subColor)] border-b-2 border-[var(--subColor)]" : "text-gray-400"}
+                w-[100%] flex justify-center py-2`}
+            >
+              <h3>방명록</h3>
+            </div>
+            <div
+              onClick={() => setActiveTab("landmark")}
+              className={`${activeTab === "landmark" ? 
+                "acitve text-[var(--subColor)] border-b-2 border-[var(--subColor)]" : "text-gray-400"}
+                w-[100%]  flex justify-center py-2`}
+            >
+              <h3>랜드마크</h3>
+            </div>
           </div>
-          <div
-            onClick={() => setActiveTab("landmark")}
-            className={`${activeTab === "landmark" ? 
-              "acitve text-[var(--subColor)] border-b-2 border-[var(--subColor)]" : "text-gray-400"}
-              w-[100%]  flex justify-center py-2`}
-          >
-            <h3>랜드마크</h3>
-          </div>
+          {activeTab === "trace" && <TraceUpload />}
+          {activeTab === "landmark" && <LandmarkUpload />}
         </div>
-        {activeTab === "trace" && <TraceUpload />}
-        {activeTab === "landmark" && <LandmarkUpload />}
       </div>
     </>
   );

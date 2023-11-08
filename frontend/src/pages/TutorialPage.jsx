@@ -14,7 +14,7 @@ const TutorialPage = () => {
   };
 
   return (
-    <div className='px-5'>
+    <div className='px-5 bg-white'>
       <div className='mt-10 flex justify-center'>
         <img src={logo} alt="로고"/>
       </div>

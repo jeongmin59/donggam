@@ -36,19 +36,21 @@ const LandmarkDetailPage = () => {
   console.log('랜드마크 방명록',landmarkList);
   return(
     <>
-      <Header title={landmarkName} to="/space/" />
-      <div className='px-5 pt-5'>
-        <ul>
-        {landmarkList.map((record,index) => (
-          <LandmarkItem 
-            key={index} 
-            time = {record.createdAt}
-            content = {record.content}
-            userName = {record.authorNickname}
-            imageUrl = {record.imageAddress} 
-          />
-        ))}
-        </ul>
+      <div className='bg-white h-screen'>
+        <Header title={landmarkName} to="/space/" />
+        <div className='px-5 pt-5'>
+          <ul>
+          {landmarkList.map((record,index) => (
+            <LandmarkItem 
+              key={index} 
+              time = {record.createdAt}
+              content = {record.content}
+              userName = {record.authorNickname}
+              imageUrl = {record.imageAddress} 
+            />
+          ))}
+          </ul>
+        </div>
       </div>
     </>
   );

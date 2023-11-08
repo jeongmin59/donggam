@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import UploadSpacePhoto from "./UploadSpacePhoto";
-import UploadSpaceTitle from "./UploadSpaceTitle";
-import UploadSpaceContent from "./UploadSpaceContent";
+import UploadSpacePhoto from "../spacepage/UploadSpacePhoto";
+import UploadSpaceTitle from "../spacepage/UploadSpaceTitle";
+import UploadSpaceContent from "../spacepage/UploadSpaceContent";
 import UploadButton from "../common/UploadButton";
 // import { getLocationInfo } from "../common/GetLocationInfo";
 import { searchLandmark } from "../../api/landmarkApi";

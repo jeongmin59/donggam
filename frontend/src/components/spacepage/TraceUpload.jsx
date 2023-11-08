@@ -57,7 +57,7 @@ const TraceUpload = () => {
         <button
           onClick={handlePostTrace}
           className="w-full h-[55px] bg-white rounded-[80px] border-2 border-blue-200 justify-center items-center gap-[12.28px] inline-flex  font-base text-blue-200 "
-        >제출!</button>
+        >업로드</button>
       </div>
       {showToast && <ToastModal message="제목을 3자 이상 입력해주세요." onClose={() => setShowToast(false)} />}
     </>

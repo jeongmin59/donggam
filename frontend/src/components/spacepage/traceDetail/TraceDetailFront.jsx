@@ -12,9 +12,7 @@ const TraceDetailFront = ({ data }) => {
   const year = newDate.getFullYear();
   const month = newDate.getMonth() + 1;
   const day = newDate.getDate();
-  const hours = newDate.getHours();
-  const minutes = newDate.getMinutes();
-  const formattedDate = `${year}년 ${month}월 ${day}일 ${hours}:${minutes}`;
+  const formattedDate = `${year}년 ${month}월 ${day}일`;
 
 
 

@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import CharacterModal from '../components/character/CharacterModal';
 import ProfileHeader from '../components/character/ProfileHeader';
 import editIcon from '../assets/icons/edit-icon.png';
+import ToastModal from '../components/common/ToastModal';
 
 const ProfilePage = () => {
   // 전역 상태의 유저 정보 가져오기
@@ -34,24 +35,30 @@ const ProfilePage = () => {
   // 캐릭터 이미지 주소
   const myCharacter = `/character/${newCharacterId}.svg`;
 
-  const handleUserUpdateClick = () => {
-    const updatedUser = {
-      nickname: newNickname,
-      status: newStatus,
-      characterId: newCharacterId,
-    };
-    updateUser(updatedUser)
-      .then((res) => {
-        setNickname(newNickname);
-        setCharterId(newCharacterId);
-        setStatus(newStatus);
-        setStatusId(res.data.statusId);
-        navigator('/'); // 정보 수정 후 메인페이지 이동
-        console.log('유저정보 변경', res);
-      })
-      .catch((err) => {
-        console.log('유저 정보 변경 안됨 ㄱ-', err);
-      });
+  const handleUserUpdateClick = async () => {
+    try {
+      if ((newStatus.length >= 2)) {
+        const updatedUser = {
+          nickname: newNickname,
+          status: newStatus,
+          characterId: newCharacterId,
+        };
+        updateUser(updatedUser)
+          .then((res) => {
+            setNickname(newNickname);
+            setCharterId(newCharacterId);
+            setStatus(newStatus);
+            setStatusId(res.data.statusId);
+            navigator('/'); // 정보 수정 후 메인페이지 이동
+            console.log('유저정보 변경', res);
+          })
+      }
+      else {
+        handleToastOpen();
+      }
+    } catch (err) {
+      console.log('유저 정보 변경 안됨 ㄱ-', err);
+    }
   };
 
   const handleNicknameChange = (e) => {
@@ -74,6 +81,15 @@ const ProfilePage = () => {
   const modalClose = () => {
     setIsModalOpen(false);
   };
+
+  // 토스트 모달 관련
+  const [showToast, setShowToast] = useState(false);
+
+  const handleToastOpen = () => {
+    setShowToast(true);
+  };
+
+
 
   return (
     <div>
@@ -125,6 +141,7 @@ const ProfilePage = () => {
           <h5 className="mt-2 px-5 text-gray-500">* 최소 2글자 이상 작성해주세요. </h5>
         </div>
       </div>
+      {showToast && <ToastModal message="상태 메시지를 2자 이상 입력해주세요!" onClose={() => setShowToast(false)} />}
     </div>
   );
 };

@@ -14,6 +14,12 @@ export const AccessTokenAtom = atom({
   effects_UNSTABLE: [persistAtom]
 })
 
+export const AccessTokenExpirationAtom = atom({
+  key: 'AccessTokenExpiration',
+  default: null,
+  effects_UNSTABLE: [persistAtom]
+})
+
 //유저 아이디
 export const MemberIdAtom = atom({
   key: 'MemberIdAtom',
@@ -48,3 +54,18 @@ export const StatusMessageIdAtom = atom({
   default: null,
   effects_UNSTABLE: [persistAtom]
 });
+
+// localStorage에서 UserAtom 가져올 때 AccessTokenExpiration이 현재 시간보다 지났는지 확인하는 함수
+export const checkAccessTokenExpiration = () => {
+  const now = new Date();
+  const storedUser = JSON.parse(localStorage.getItem('User'));
+  
+  if (storedUser && storedUser.AccessTokenExpiration && new Date(storedUser.AccessTokenExpiration) < now) {
+    const updatedUser = {
+      ...storedUser,
+      AccessToken: null,
+      AccessTokenExpiration: null,
+    };
+    localStorage.setItem('User', JSON.stringify(updatedUser));
+  }
+};

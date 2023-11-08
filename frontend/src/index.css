@@ -111,7 +111,7 @@
 
   /* 랜드마크 디테일*/
   .landmark-title {
-    @apply w-[80%] py-4 bg-white absolute left-1/2 -translate-x-1/2 top-[30%]
+    @apply w-[80%] py-4 bg-white absolute left-1/2 -translate-x-1/2 bottom-[-10%]
     border-2 border-[#ABCEF2] rounded-[16px] flex justify-center;
   }
 

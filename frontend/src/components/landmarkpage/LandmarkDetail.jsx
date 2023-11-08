@@ -17,18 +17,18 @@ const LandmarkDetail = ({landmarkName, landmarkImage, landmarkId}) => {
       <div 
         className="trace-image"
         // className="h-[30vh] bg-center bg-cover relative"
-        style={{ backgroundImage: `url(${landmarkImage})` }}
+        style={{ backgroundImage: `url(${landmarkImage})` ,zIndex:2}}
       >
         <img 
           src={BackBtn} 
           className="absolute top-10 left-5"
           onClick={handleBackBtnClick}/>
+        <h2
+          className="landmark-title">
+          {landmarkName}
+        </h2>
       </div>
 
-      <h2
-        className="landmark-title">
-        {landmarkName}
-      </h2>
       
       {landmarkName === 'SSAFY 부울경 캠퍼스' && 
         <div className="landmark-card">

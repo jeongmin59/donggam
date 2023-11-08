@@ -24,7 +24,7 @@ const MyTracePage = () => {
 
   return (
     <>
-      <Header title="내 방명록" to={-1} />
+      <Header title="내 방명록" to='/space' />
       <div className='px-5'>
         <ul>
           {traceList.map((traceData, index) => (

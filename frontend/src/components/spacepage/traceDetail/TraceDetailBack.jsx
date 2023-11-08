@@ -13,7 +13,7 @@ const TraceDetailBack = ({ data, setComment, comment, traceId }) => {
 
   return (
     <div >
-      <img src='https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/321/d4c6b40843af7f4f1d8000cafef4a2e7_res.jpeg' className="trace-image text-justify" />
+      <img src='' alt='지도 사진' className="trace-image text-justify" />
 
       <TraceDetailTitle title={title} content="위치 서비스는 추후 업데이트" />
 

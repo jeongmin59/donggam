@@ -19,7 +19,6 @@ const ChattingPage = () => {
   const senderId = user.memberId;
   const sender = user.nickname;
   const chatNames = chatList.map((chat) => chat.sender);
-  const otherUserName = chatNames[0];
 
   const updateChatList = async () => {
     const res = await axiosInstance.get(`/chat/list/${roomId}`);
@@ -61,6 +60,8 @@ const ChattingPage = () => {
     if (element) {
       element.scrollIntoView({ behavior: "auto", block: "end" });
     }
+    console.log(isActive);
+    console.log(roomName);
   }, [chatList]);
 
   // 메시지 전송

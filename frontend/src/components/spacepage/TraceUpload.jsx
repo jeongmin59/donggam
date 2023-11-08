@@ -12,7 +12,7 @@ const TraceUpload = () => {
   const navigator = useNavigate();
 
   const [title, setTitle] = useState('');
-  console.log(title)
+  // console.log(title)
   const [content, setContent] = useState(null);
   const [image, setImage] = useState(null);
   const latitude = useRecoilValue(LatitudeAtom);

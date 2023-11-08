@@ -3,7 +3,7 @@ import CommentForm from './CommentForm';
 import CommentItem from './CommentItem';
 import TraceDetailTitle from './TraceDetailTitle';
 
-const TraceDetailBack = ({ data, setComment, comment, traceId }) => {
+const TraceDetailBack = ({ data, setComment, comment, traceId, setShowFront }) => {
   const title = data.title
   const longitude = data.longitude
   const latitude = data.latitude
@@ -13,7 +13,7 @@ const TraceDetailBack = ({ data, setComment, comment, traceId }) => {
 
   return (
     <div >
-      <img src='' alt='지도 사진' className="trace-image text-justify" />
+      <div src='/icons/android-chrome-192x192.png' alt='지도 사진' className="trace-image text-justify" />
 
       <TraceDetailTitle title={title} content="위치 서비스는 추후 업데이트" />
 
@@ -35,7 +35,7 @@ const TraceDetailBack = ({ data, setComment, comment, traceId }) => {
 
 
           <div>
-            <CommentForm setComment={setComment} comment={comment} traceId={traceId} />
+            <CommentForm setComment={setComment} comment={comment} traceId={traceId} setShowFront={setShowFront} />
           </div>
         </div>
       </div>

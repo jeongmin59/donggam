@@ -21,7 +21,7 @@ const TraceDetailPage = () => {
 
       .then((res) => {
         setTraceData(res.data)
-        setShowFront(false)
+        // setShowFront(false)
         // console.log('데이터 어케옴', res.data)
       })
       .catch((err) => {
@@ -47,7 +47,7 @@ const TraceDetailPage = () => {
     <div>
       <BackButton to='/mytrace' />
       {/* showFront 상태에 따라서 TraceDetailFront 또는 TraceDetailBack 컴포넌트를 렌더링합니다 */}
-      {showFront ? <TraceDetailFront data={traceData} /> : <TraceDetailBack data={traceData} comment={comment} setComment={setComment} traceId={traceId} />}
+      {showFront ? <TraceDetailFront data={traceData} /> : <TraceDetailBack data={traceData} comment={comment} setComment={setComment} traceId={traceId} setShowFront={setShowFront} />}
 
       <img src={moreBtn} className="fixed bottom-4 left-1/2 transform -translate-x-1/2" onClick={toggleComponent} />
     </div>

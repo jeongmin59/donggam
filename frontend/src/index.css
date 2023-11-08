@@ -116,7 +116,7 @@
   }
 
   .landmark-card {
-    @apply ownglyph-text text-xl text-center h-[65vh] flex items-center justify-center;
+    @apply ownglyph-text text-xl text-center h-[65vh] flex items-center justify-center relative;
     background-image: radial-gradient(
       50% 48.18% at 50% 50%,
       #fff 69.41%,

@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useEffect } from "react-router-dom";
 import "./index.css";
 import MainPage from "./pages/MainPage";
 import LoginPage from "./pages/LoginPage";
@@ -27,6 +27,17 @@ function App() {
   checkAccessTokenExpiration();
 
   const isLoggedIn = useRecoilValue(AccessTokenAtom);
+
+  useEffect(() => {
+    if ('serviceWorker' in navigator) {
+      const registInit = async () => {
+        const registration = await navigator.serviceWorker.register('/sw.js');
+
+        registration.waiting?.postMessage('SKIP_WAITING');
+      }
+      registInit();
+    }
+  }, [])
 
   return (
     <BrowserRouter>

@@ -17,6 +17,7 @@ const CommentForm = ({ setComment, comment, traceId }) => {
     // 댓글을 처리하고 상태 초기화 또는 전송할 수 있음
     console.log('제출된 댓글:', comment);
     setComment(''); // 댓글 입력창 비우기
+    window.location.reload();
   };
 
   return (

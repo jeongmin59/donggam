@@ -10,16 +10,14 @@ const CommentItem = (commentItem) => {
   const year = newDate.getFullYear();
   const month = newDate.getMonth() + 1;
   const day = newDate.getDate();
-  const hours = newDate.getHours();
-  const minutes = newDate.getMinutes();
-  const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}`;
+  const formattedDate = `${year}-${month}-${day}`;
 
 
 
   return (
-    <div className='w-full px-4 py-2  border-2 border-[#ABCEF2] rounded-[16px] ' >
-      <h3 className='text-left'>{content}</h3>
-      <h5 className='text-right'>{formattedDate}</h5>
+    <div className=' px-4 py-2  border-2 border-[#ABCEF2] rounded-[16px]' >
+      <h4 className='text-left text-md'>{content}</h4>
+      <h5 className='text-right text-sm'>{formattedDate}</h5>
     </div>
   );
 };

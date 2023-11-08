@@ -162,7 +162,7 @@
 }
 
 .trace-comment-bg {
-  @apply h-[60vh]  flex-col justify-center items-center;
+  @apply h-[60vh];
   background-image: radial-gradient(
     50% 48.18% at 50% 50%,
     #e4efff 52.5%,
@@ -172,7 +172,7 @@
 }
 
 .trace-comment-item {
-  @apply ownglyph-text text-xl flex-col justify-start  gap-2 flex;
+  @apply ownglyph-text text-xl w-[100%] flex-col justify-start  gap-2 flex;
 }
 
 .landmark-yes {

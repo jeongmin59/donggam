@@ -15,7 +15,8 @@ const LandmarkDetail = ({landmarkName, landmarkImage, landmarkId}) => {
   return(
     <>
       <div 
-        className="h-[30vh] bg-center bg-cover relative"
+        className="trace-image"
+        // className="h-[30vh] bg-center bg-cover relative"
         style={{ backgroundImage: `url(${landmarkImage})` }}
       >
         <img 

@@ -8,7 +8,7 @@ export const searchLandmark = async ( latitude, longitude) => {
       latitude: latitude,
       longitude: longitude,
     });
-    console.log('랜드마크 검색 axios 성공! 쿌쿌~', res)
+    // console.log('랜드마크 검색 axios 성공! 쿌쿌~', res)
     return res.data;
   } catch (err) {
     console.log('랜드마크 검색 axios 실패..', err)
@@ -29,7 +29,7 @@ export const postLandmark =async( landmarkId, content, imageFile) => {
         'Content-Type': 'multipart/form-data',
       },    
     });
-    console.log('랜드마크 방명록 작성 axios 성공', res);
+    // console.log('랜드마크 방명록 작성 axios 성공', res);
     return res.data;
   } catch (err) {
     console.log('랜드마크 방명록 axios 실패',err)

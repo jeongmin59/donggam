@@ -20,10 +20,10 @@ export const locationInfo = async (memberId, latitude, longitude, errorCallback)
       }
     }
   } catch (error) {
-    console.error('위치 정보 API 호출 중 오류 발생:', error.message);
-    if (err.response.status === 401) {
+    console.error('위치 정보 API 호출 중 오류 발생:', error);
+    if (error.response.status === 401) {
       errorCallback();
     }
-    return null;
+    return error;
   }
 };

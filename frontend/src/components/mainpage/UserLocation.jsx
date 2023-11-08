@@ -8,6 +8,7 @@ import UserCharacter from "./UserCharacter";
 import Modal from "../common/Modal";
 import UserModal from "./UserModal";
 import MailModal from "./MailModal";
+import { useNavigate } from 'react-router-dom';
 
 const UserLocation = ({ otherUserInfo }) => {
   // 유저 정보
@@ -22,6 +23,7 @@ const UserLocation = ({ otherUserInfo }) => {
   // 주변 친구 위치 업데이트
   const [existingCharacters, setExistingCharacters] = useState([]);
 
+  const navigate = useNavigate();
   const errorCallback = () => {
     console.log("401에러 발생");
     const confirm = window.confirm('다시 로그인 해주세요.');

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { postTraceComment } from '../../../api/spaceApi';
+import { useNavigate } from 'react-router-dom';
 
 const CommentForm = ({ setComment, comment, traceId }) => {
 
@@ -7,6 +8,8 @@ const CommentForm = ({ setComment, comment, traceId }) => {
   const handleCommentChange = (e) => {
     setComment(e.target.value);
   };
+
+  const navigate = useNavigate();
 
   const errorCallback = () => {
     console.log("401에러 발생");

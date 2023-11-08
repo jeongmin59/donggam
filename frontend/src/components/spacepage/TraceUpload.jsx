@@ -25,7 +25,7 @@ const TraceUpload = () => {
     console.log("401에러 발생");
     const confirm = window.confirm('다시 로그인 해주세요.');
     if (confirm) {
-      navigate('/login');
+      navigator('/login');
     }
   }
 

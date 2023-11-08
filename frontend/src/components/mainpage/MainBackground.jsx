@@ -10,6 +10,7 @@ import NumberOfUsers from "./NumberOfUsers";
 import { useSetRecoilState } from "recoil";
 import { LatitudeAtom, LongitudeAtom } from "../../recoil/location/locationAtom";
 import NavBar from "../common/NavBar";
+import { useNavigate } from 'react-router-dom';
 
 
 const MainBackground = () => {
@@ -51,6 +52,7 @@ const MainBackground = () => {
     window.location.reload();
   }
 
+  const navigate = useNavigate();
   const errorCallback = () => {
     console.log("401에러 발생");
     const confirm = window.confirm('다시 로그인 해주세요.');

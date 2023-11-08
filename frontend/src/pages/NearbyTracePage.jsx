@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 import { getTraceList } from "../api/spaceApi";
 import TraceItem from '../components/spacepage/TraceItem';
 import BackButton from './../components/common/BackButton';
+import { useNavigate } from 'react-router-dom';
 
 const NearbyTracePage = () => {
   const [traceList, setTraceList] = useState([]);
+
+  const navigate = useNavigate();
 
   const errorCallback = () => {
     console.log("401에러 발생");

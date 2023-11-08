@@ -21,6 +21,14 @@ const TraceUpload = () => {
   // 토스트 모달 관련
   const [showToast, setShowToast] = useState(false);
 
+  const errorCallback = () => {
+    console.log("401에러 발생");
+    const confirm = window.confirm('다시 로그인 해주세요.');
+    if (confirm) {
+      navigate('/login');
+    }
+  }
+
   const handleToastOpen = () => {
     setShowToast(true);
   };
@@ -36,7 +44,7 @@ const TraceUpload = () => {
           longitude: longitude,
           imageFile: image,
         };
-        const res = await postTrace(traceData);
+        const res = await postTrace(traceData, errorCallback);
         console.log("방명록 작성 완료:", res);
         navigator('/mytrace')
       }
@@ -45,6 +53,7 @@ const TraceUpload = () => {
       }
     } catch (err) {
       console.error("방명록 작성 실패:", err);
+
     }
   };
 

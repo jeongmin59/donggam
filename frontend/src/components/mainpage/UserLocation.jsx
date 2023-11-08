@@ -22,13 +22,21 @@ const UserLocation = ({ otherUserInfo }) => {
   // 주변 친구 위치 업데이트
   const [existingCharacters, setExistingCharacters] = useState([]);
 
+  const errorCallback = () => {
+    console.log("401에러 발생");
+    const confirm = window.confirm('다시 로그인 해주세요.');
+    if (confirm) {
+      navigate('/login');
+    }
+  }
+
   const handleModal = (otherUser) => {
     if (modalInfo) {
       // 모달이 이미 열려있는 경우, 닫고 초기화
       setModalInfo(null);
     } else {
       // 모달 열기
-      getOtherUserInfo(otherUser.memberId)
+      getOtherUserInfo(otherUser.memberId, errorCallback)
         .then((data) => {
           const modalData = {
             otherMemberId: otherUser.memberId,

@@ -51,6 +51,14 @@ const MainBackground = () => {
     window.location.reload();
   }
 
+  const errorCallback = () => {
+    console.log("401에러 발생");
+    const confirm = window.confirm('다시 로그인 해주세요.');
+    if (confirm) {
+      navigate('/login');
+    }
+  }
+
   useEffect(() => {
 
     if (navigator.geolocation) {
@@ -74,7 +82,7 @@ const MainBackground = () => {
   // 위치 기반 정보(날씨, 주변 유저, 주변 유저 수)
   useEffect(() => {
     if (memberId && latitude !== null && longitude !== null) {
-      locationInfo(memberId, latitude, longitude)
+      locationInfo(memberId, latitude, longitude, errorCallback)
         .then((data) => {
           if (data) {
             setSelectedBackground(data.data.statusWeather);

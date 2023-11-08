@@ -1,19 +1,22 @@
 import axiosInstance from "./axiosConfig";
 
 // 주변 방명록 조회
-export const getTraceList = async () => {
+export const getTraceList = async (errorCallback) => {
   try {
     const res = await axiosInstance.get(`/space`);
     console.log('주변 방명록 가져오기 성공', res)
     return res.data;
   } catch (err) {
     console.log('주변 방명록 가져오기 실패!', err)
+    if (err.response.status === 401) {
+      errorCallback();
+    }
     return err;
   }
 };
 
 // 방명록 작성
-export const postTrace = async ({ title, content, latitude, longitude, imageFile }) => {
+export const postTrace = async ({ title, content, latitude, longitude, imageFile, errorCallback }) => {
   try {
     const trace = {
       "title": title,
@@ -34,41 +37,53 @@ export const postTrace = async ({ title, content, latitude, longitude, imageFile
     return res.data;
   } catch (err) {
     console.log('방명록 작성 실패 ㄱ-', err)
+    if (err.response.status === 401) {
+      errorCallback();
+    }
   }
 }
 
 // 방명록 상세 보기
-export const getTraceDetail = async (recordId) => {
+export const getTraceDetail = async (recordId, errorCallback) => {
   try {
     const res = await axiosInstance.get(`/space/${recordId}`);
     console.log('방명록 내가 다봣지롱 ㅋ', res)
     return res.data;
   } catch (err) {
     console.log('방명록 훔쳐보기 실패 ㄱ-', err)
+    if (err.response.status === 401) {
+      errorCallback();
+    }
     return err;
   }
 };
 
 // 방명록 댓글 달기
-export const postTraceComment = async (recordId, content) => {
+export const postTraceComment = async (recordId, content, errorCallback) => {
   try {
     const res = await axiosInstance.post(`/space/${recordId}`, { content });
     console.log('댓글 달기 완 ㅋ', res)
     return res.data;
   } catch (err) {
     console.log('댓글 달게해줘! ㄱ-', err)
+    if (err.response.status === 401) {
+      errorCallback();
+    }
     return err;
   }
 };
 
 // 내 방명록 목록 조회
-export const getMyTrace = async () => {
+export const getMyTrace = async (errorCallback) => {
   try {
     const res = await axiosInstance.get(`/space/mine`);
     // console.log('내 방명록 가져오기 성공', res)
     return res.data;
   } catch (err) {
     console.log('내 방명록 가져오기 실패!', err)
+    if (err.response.status === 401) {
+      errorCallback();
+    }
     return err;
   }
 };

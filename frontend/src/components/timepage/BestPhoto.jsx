@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import axiosInstance from "../../api/axiosConfig";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { useNavigate } from 'react-router-dom';
 
 const BestPhoto = () => {
   const [photos, setPhotos] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const navigate = useNavigate();
+  
   useEffect(() => {
     const getPhotos = async () => {
       try {
@@ -19,6 +21,13 @@ const BestPhoto = () => {
       } catch (error) {
         console.error("에러", error);
         setLoading(false);
+        if (error.response.status === 401) {
+          console.log('401 에러 발생');
+          const confirm = window.confirm('다시 로그인 해주세요');
+          if (confirm) {
+            navigate('/login');
+          }
+        }
       }
     };
 

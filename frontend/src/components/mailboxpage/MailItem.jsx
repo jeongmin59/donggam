@@ -13,6 +13,14 @@ const MailItem = ({ isOpen, onClose, mailData, updateLikedState }) => {
     }
   };
 
+  const errorCallback = () => {
+    console.log("401에러 발생");
+    const confirm = window.confirm('다시 로그인 해주세요.');
+    if (confirm) {
+      navigate('/login');
+    }
+  };
+
   if (!isOpen) return null;
 
   const mailId = mailData.messageId;
@@ -21,7 +29,7 @@ const MailItem = ({ isOpen, onClose, mailData, updateLikedState }) => {
   const [isLiked, setIsLiked] = useState();
 
   useEffect(() => {
-    getMailDetail(mailId)
+    getMailDetail(mailId, errorCallback)
       .then((res) => {
         setMailDetail(res);
         setIsLiked(res.isLiked);
@@ -33,7 +41,7 @@ const MailItem = ({ isOpen, onClose, mailData, updateLikedState }) => {
   }, []);
 
   const handleLikeClick = () => {
-    postMailLike(mailId, !isLiked);
+    postMailLike(mailId, !isLiked, errorCallback);
     setIsLiked(!isLiked);
 
     updateLikedState(!isLiked);

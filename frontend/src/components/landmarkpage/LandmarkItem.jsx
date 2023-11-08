@@ -26,10 +26,10 @@ const TraceItem = ({ time, content, userName, imageUrl }) => {
   return (
     <div
       style={hasImageUrl ? backgroundStyle : normalBackground}
-      className='rounded-[16px] h-[200px] my-5 flex justify-center items-center'>
+      className='rounded-[16px] h-[200px] my-5 px-5 flex justify-center items-center'>
       <div className='flex-col items-center justify-center space-y-2'>
         <div className='ownglyph-text text-xl text-center'>{formattedDate}</div>
-        <div className='ownglyph-text text-3xl text-center'>{content}</div>
+        <div className='ownglyph-text text-2xl text-center'>{content}</div>
         <div className='ownglyph-text text-xl text-center'>-{userName}의 흔적-</div>
       </div>
     </div>

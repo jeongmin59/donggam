@@ -23,7 +23,7 @@ const LandmarkDetailPage = () => {
       });
   },[landmarkId])
 
-  console.log(landmarkList);
+  console.log('랜드마크 방명록',landmarkList);
   return(
     <>
       <Header title={landmarkName} to="/space/landmark" />

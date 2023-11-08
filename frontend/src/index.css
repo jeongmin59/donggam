@@ -58,6 +58,10 @@
     @apply text-[1rem];
     font-family: "GmarketSansMedium";
   }
+  h4 {
+    @apply text-[1rem];
+    font-family: "GmarketSansMedium";
+  }
   h5 {
     @apply text-[0.875rem];
     font-family: "GmarketSansLight";
@@ -86,7 +90,7 @@
 
   /* 공간 캐러셀 */
   .trace-guide {
-    @apply rounded-[16px] pb-10;
+    @apply rounded-[16px] w-[100px] pb-10;
     background-image: radial-gradient(
       96.37% 79.72% at 50% 50.12%,
       #fff 38.96%,
@@ -107,12 +111,12 @@
 
   /* 랜드마크 디테일*/
   .landmark-title {
-    @apply w-[80%] py-4 bg-white absolute left-1/2 -translate-x-1/2 top-[25.5%]
-    border-4 border-[#ABCEF2] rounded-[16px] flex justify-center;
+    @apply w-[80%] py-4 bg-white absolute left-1/2 -translate-x-1/2 top-[30%]
+    border-2 border-[#ABCEF2] rounded-[16px] flex justify-center;
   }
 
   .landmark-card {
-    @apply ownglyph-text text-xl text-center h-[70vh] flex items-center justify-center;
+    @apply ownglyph-text text-xl text-center h-[65vh] flex items-center justify-center;
     background-image: radial-gradient(
       50% 48.18% at 50% 50%,
       #fff 69.41%,
@@ -140,11 +144,11 @@
 
   /* 방명록 상세 페이지 */
   .trace-image {
-    @apply h-[40vh] w-full bg-cover bg-center relative object-cover;
+    @apply h-[35vh] w-full bg-cover bg-center relative object-cover;
   }
 
   .trace-title {
-    @apply w-[80%] h-16 py-2 z-50 bg-white absolute left-1/2 -translate-x-1/2 top-[35%]
+    @apply w-[80%]  py-2 bg-white absolute left-1/2 -translate-x-1/2 top-[30%]
     border-2 border-[#ABCEF2] rounded-[16px];
   }
 
@@ -153,7 +157,7 @@
   }
 }
 .trace-content {
-  @apply ownglyph-text text-xl text-center h-[60vh] flex items-center justify-center;
+  @apply  text-center h-[65vh] flex items-center justify-center;
   background-image: radial-gradient(
     50% 48.18% at 50% 50%,
     #fff 69.41%,

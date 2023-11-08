@@ -54,7 +54,7 @@ const UploadSpacePhoto = ({ image, setImage }) => {
         ) : (
           <div className="">
             <div className="flex justify-center mb-1"><img src={UploadIcon} /></div>
-            <span>사진을 올려주세요</span>
+            <span className="text-gray-400">사진 업로드</span>
           </div>
         )}
       </label>

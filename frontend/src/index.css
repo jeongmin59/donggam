@@ -58,6 +58,10 @@
     @apply text-[1rem];
     font-family: "GmarketSansMedium";
   }
+  h4 {
+    @apply text-[1rem];
+    font-family: "GmarketSansMedium";
+  }
   h5 {
     @apply text-[0.875rem];
     font-family: "GmarketSansLight";

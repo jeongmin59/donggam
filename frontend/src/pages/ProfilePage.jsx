@@ -92,7 +92,7 @@ const ProfilePage = () => {
 
 
   return (
-    <div>
+    <div className='bg-white h-screen'>
       <div className="mb-20">
         <ProfileHeader title="내 프로필 만들기" onConfirmClick={handleUserUpdateClick} />
       </div>

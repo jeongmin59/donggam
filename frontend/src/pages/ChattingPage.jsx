@@ -89,7 +89,7 @@ const ChattingPage = () => {
         <Header title={roomName} to="/chatroom" />
       </div>
       <ul
-        className="w-full h-full"
+        className="w-full h-full pt-5"
         id="chatWindow"
         style={{ overflowY: "scroll" }}
       >
@@ -103,7 +103,7 @@ const ChattingPage = () => {
               }`}
             >
               {user.memberId !== chat.senderId && ( // 이 부분 추가
-                <div className="chat_user_name text-md font-bold mt-10 ml-5 mr-8">
+                <div className="chat_user_name text-md font-bold mt-5 ml-5 mr-8">
                   {chat.sender}
                 </div>
               )}              

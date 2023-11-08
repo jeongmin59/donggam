@@ -4,7 +4,7 @@ import loginLogo from "../assets/images/loginlogo.svg";
 
 const LoginPage = () => {
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
+    <div className="bg-white flex flex-col items-center justify-center h-screen">
       <img src={loginLogo} alt="로고" />
       <KakaoLogin />
     </div>

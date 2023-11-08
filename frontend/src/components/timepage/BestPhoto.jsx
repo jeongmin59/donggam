@@ -26,7 +26,7 @@ const BestPhoto = () => {
   }, []);
 
   return (
-    <div className="px-5">
+    <div className="px-5 bg-white h-screen">
       {loading ? (
         <h5>Loading...</h5>
       ) : (

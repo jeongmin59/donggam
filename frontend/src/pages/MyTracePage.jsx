@@ -24,13 +24,15 @@ const MyTracePage = () => {
 
   return (
     <>
-      <Header title="내 방명록" to='/space' />
-      <div className='px-5'>
-        <ul>
-          {traceList.map((traceData, index) => (
-            <MyTraceItem key={index} data={traceData} />
-          ))}
-        </ul>
+      <div className="bg-white h-screen">
+        <Header title="내 방명록" to='/space' />
+        <div className='px-5'>
+          <ul>
+            {traceList.map((traceData, index) => (
+              <MyTraceItem key={index} data={traceData} />
+            ))}
+          </ul>
+        </div>
       </div>
     </>
   );

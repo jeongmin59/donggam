@@ -12,7 +12,7 @@ const Header = ({ title, to }) => {
     <>
       {/* <div 
         className="header w-100 h-[100px] flex justify-center items-center pt-[30px] bg-white relative shadow-md"> */}
-      <div className="header w-100 h-[100px] flex justify-center items-center pt-[30px] relative shadow-md">
+      <div className="header w-full h-[100px] flex justify-center items-center pt-[30px] bg-white  shadow-md">
         <div className="absolute left-5" onClick={navigateTo}>
           <img src={BackBtn} alt="뒤로가기버튼" />
         </div>

@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate, useEffect } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "./index.css";
 import MainPage from "./pages/MainPage";
 import LoginPage from "./pages/LoginPage";
@@ -20,6 +20,7 @@ import TutorialPage from "./pages/TutorialPage";
 import TraceDetailPage from "./pages/TraceDetailPage";
 import MyTracePage from "./pages/MyTracePage";
 import LandmarkDetailPage from "./pages/LandmarkDetailPage";
+import { useEffect } from 'react';
 
 function App() {
 

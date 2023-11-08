@@ -90,7 +90,7 @@
 
   /* 공간 캐러셀 */
   .trace-guide {
-    @apply rounded-[16px] pb-10;
+    @apply rounded-[16px] w-[100px] pb-10;
     background-image: radial-gradient(
       96.37% 79.72% at 50% 50.12%,
       #fff 38.96%,

@@ -24,11 +24,18 @@ const FindingLandmark = () => {
   const [landmarkImage, setLandmarkImage] = useState(null);
   const [landmarkId, setLandmarkId] = useState(null);
   
+  const errorCallback = () => {
+    console.log("401에러 발생");
+    const confirm = window.confirm('다시 로그인 해주세요.');
+    if (confirm) {
+      navigate('/login');
+    }
+  }
   
   useEffect(() => {
     // 위치 정보가 변경되면 랜드마크 검색 실행
     if (latitude !== null && longitude !== null) {
-      searchLandmark( latitude, longitude )
+      searchLandmark( latitude, longitude, errorCallback )
         .then((data) => {
           if (data) {
             setLandmarkName(data.data.name || "")

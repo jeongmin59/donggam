@@ -2,6 +2,7 @@ import React from 'react';
 import CommentForm from './CommentForm';
 import CommentItem from './CommentItem';
 import TraceDetailTitle from './TraceDetailTitle';
+// import defaultimg from '../../../assets/icons/android-chrome-192x192.png'
 
 const TraceDetailBack = ({ data, setComment, comment, traceId, setShowFront }) => {
   const title = data.title
@@ -13,7 +14,7 @@ const TraceDetailBack = ({ data, setComment, comment, traceId, setShowFront }) =
 
   return (
     <div >
-      <div src='/icons/android-chrome-192x192.png' alt='지도 사진' className="trace-image text-justify" />
+      <img src='/icons/android-chrome-192x192.png' alt='지도 사진' className="trace-image text-justify" />
 
       <TraceDetailTitle title={title} content="위치 서비스는 추후 업데이트" />
 

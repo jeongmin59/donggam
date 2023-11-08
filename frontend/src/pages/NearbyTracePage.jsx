@@ -6,8 +6,16 @@ import BackButton from './../components/common/BackButton';
 const NearbyTracePage = () => {
   const [traceList, setTraceList] = useState([]);
 
+  const errorCallback = () => {
+    console.log("401에러 발생");
+    const confirm = window.confirm('다시 로그인 해주세요.');
+    if (confirm) {
+      navigate('/login');
+    }
+  }
+
   useEffect(() => {
-    getTraceList()
+    getTraceList(errorCallback)
       .then((res) => {
         setTraceList(res.data)
       })

@@ -6,9 +6,17 @@ import Header from './../components/common/Header';
 const MyTracePage = () => {
   const [traceList, setTraceList] = useState([])
 
+  const errorCallback = () => {
+    console.log("401에러 발생");
+    const confirm = window.confirm('다시 로그인 해주세요.');
+    if (confirm) {
+      navigate('/login');
+    }
+  }
+
   // 내 방명록 조회 axios 호출
   useEffect(() => {
-    getMyTrace()
+    getMyTrace(errorCallback)
       .then((res) => {
         setTraceList(res.data)
         // console.log('내 방명록 잘 옴??', res.data)

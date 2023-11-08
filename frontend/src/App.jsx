@@ -23,13 +23,10 @@ import LandmarkDetailPage from "./pages/LandmarkDetailPage";
 
 function App() {
 
-  const isLoggedIn = () => {
-    if (checkAccessTokenExpiration()) {
-      return useRecoilValue(AccessTokenAtom);
-    } else {
-      return false;
-    }
-  }
+  // 토큰이 있다면 만료되었는지를 확인해서 만료되었으면 null
+  checkAccessTokenExpiration();
+
+  const isLoggedIn = useRecoilValue(AccessTokenAtom);
 
   return (
     <BrowserRouter>

@@ -2,8 +2,8 @@ import axios from "axios";
 
 const axiosInstance = axios.create({
   // baseURL: process.env.REACT_APP_API_URL,  // 추후 .env 파일에 생성
-  baseURL: "https://k9e107.p.ssafy.io",
-  // baseURL: "http://localhost:8080",
+  // baseURL: "https://k9e107.p.ssafy.io",
+  baseURL: "http://localhost:8080",
   headers: {
     "Content-Type": "application/json",
     'Access-Control-Allow-Origin': '*'

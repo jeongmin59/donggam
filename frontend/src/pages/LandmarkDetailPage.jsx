@@ -3,6 +3,7 @@ import { getLandmarkGuestbook } from '../api/landmarkApi';
 import { useState, useEffect } from 'react';
 import LandmarkItem from "../components/landmarkpage/LandmarkItem";
 import Header from '../components/common/Header';
+import { useNavigate } from 'react-router-dom';
 
 const LandmarkDetailPage = () => {
   const location = useLocation();
@@ -11,6 +12,7 @@ const LandmarkDetailPage = () => {
   const { landmarkId } = useParams(); 
   const [landmarkList, setLandmarkList] = useState([]);
 
+  const navigate = useNavigate();
   const errorCallback = () => {
     console.log("401에러 발생");
     const confirm = window.confirm('다시 로그인 해주세요.');

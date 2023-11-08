@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 import MyTraceItem from './../components/spacepage/MyTraceItem';
 import { getMyTrace } from "../api/spaceApi";
 import Header from './../components/common/Header';
+import { useNavigate } from 'react-router-dom';
 
 const MyTracePage = () => {
   const [traceList, setTraceList] = useState([])
+
+  const navigate = useNavigate();
 
   const errorCallback = () => {
     console.log("401에러 발생");

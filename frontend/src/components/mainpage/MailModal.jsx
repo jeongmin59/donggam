@@ -3,6 +3,7 @@ import { sendMail } from "../../api/mailApi";
 import addPhotoIcon from "../../assets/icons/addPhoto-icon.svg"
 import { useState, useRef } from "react";
 import imageCompression from 'browser-image-compression';
+import { useNavigate } from 'react-router-dom';
 
 const MailModal = ({mailModalInfo, closeMailModal}) => {
   const statusId = mailModalInfo.otherStatusId
@@ -13,6 +14,7 @@ const MailModal = ({mailModalInfo, closeMailModal}) => {
 
   const imageInputRef = useRef(null);
 
+  const navigate = useNavigate();
   const errorCallback = (err) => {
     console.log("401에러 발생");
     const confirm = window.confirm('다시 로그인 해주세요.');

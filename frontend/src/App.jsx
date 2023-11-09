@@ -14,7 +14,7 @@ import SpaceUploadpage from "./pages/SpaceUploadPage";
 import ProfilePage from "./pages/ProfilePage";
 import ChatRoomPage from "./pages/ChatRoomPage";
 import ChattingPage from './pages/ChattingPage';
-import { AccessTokenAtom, checkAccessTokenExpiration } from './recoil/user/userAtom';
+import { AccessTokenAtom } from './recoil/user/userAtom';
 import { useRecoilValue } from "recoil";
 import TutorialPage from "./pages/TutorialPage";
 import TraceDetailPage from "./pages/TraceDetailPage";
@@ -22,9 +22,6 @@ import MyTracePage from "./pages/MyTracePage";
 import LandmarkDetailPage from "./pages/LandmarkDetailPage";
 
 function App() {
-
-  // 토큰이 있다면 만료되었는지를 확인해서 만료되었으면 null
-  checkAccessTokenExpiration();
 
   const isLoggedIn = useRecoilValue(AccessTokenAtom);
 

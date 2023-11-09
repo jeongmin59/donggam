@@ -6,10 +6,8 @@ import { StatusMessageAtom, StatusMessageIdAtom } from '../../recoil/user/userAt
 import StatusList from './StatusList';
 import nullLogo from '../../assets/images/noMail.svg';
 import MailFilter from './MailFilter';
-import { useNavigate } from 'react-router-dom';
 
 const MailBox = () => {
-  const navigate = useNavigate();
   const nowStatus = useRecoilValue(StatusMessageAtom);
   const nowStatusId = useRecoilValue(StatusMessageIdAtom);
   const [status, setStatus] = useState(nowStatus);
@@ -28,27 +26,21 @@ const MailBox = () => {
     setIsModalOpen(false);
   };
 
-  const errorCallback = () => {
-    console.log("401에러 발생");
-    const confirm = window.confirm('다시 로그인 해주세요.');
-    if (confirm) {
-      navigate('/login');
-    }
+  const fetchData = async () => {
+    const statusData = await getStatusList();
+    setStatusList(statusData);
+
+    const mailData = await getMailList(selectedStatusId);
+    setMailList(mailData);
   }
 
   useEffect(() => {
-    getStatusList(errorCallback)
-      .then((res) => {
-        setStatusList(res.statusList);
-        return getMailList(selectedStatusId, errorCallback);
-      })
-      .then((res) => {
-        setMailList(res.data.messageList);
-      })
-      .catch((err) => {
-        console.log('status리스트 가져오기 실패ㄱ-', err);
-      });
-  }, [selectedStatusId]);
+    fetchData();
+  }, []);
+
+  // useEffect(() => {
+  //   const statusData = getStatusList();
+  // })
 
   // 선택된 상메 바꿔주는 함수
   const handleStatusChange = ({ selectedStatus, selectedStatusId }) => {
@@ -68,15 +60,15 @@ const MailBox = () => {
       <MailFilter mailList={mailList}/>
 
       <div className="text-center">
-        {mailList.length === 0 ? (
-          <div className="mt-10 flex flex-col justify-center items-center">
-            <img src={nullLogo} alt="구름" />
-          </div>
-        ) : (
+        {mailList && mailList.length > 0 ? (
           <div className='mt-4 grid grid-cols-3 gap-4'>
             {mailList.map((mail, index) => (
               <MailList key={index} mail={mail} />
             ))}
+          </div>
+        ) : (
+          <div className="mt-10 flex flex-col justify-center items-center">
+            <img src={nullLogo} alt="구름" />
           </div>
         )}
       </div>

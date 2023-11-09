@@ -1,8 +1,8 @@
 import React from 'react';
 
 const MailFilter = ({ mailList }) => {
-  const unReadMails = mailList.filter((mail) => !mail.isRead);
-  const likedMails = mailList.filter((mail) => mail.isLiked);
+  const unReadMails = mailList && mailList.length > 0 ? mailList.filter((mail) => !mail.isRead) : 0;
+  const likedMails = mailList && mailList.length > 0 ? mailList.filter((mail) => mail.isLiked) : 0;
 
   return (
     <div className='text-right'>

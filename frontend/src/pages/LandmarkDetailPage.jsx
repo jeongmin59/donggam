@@ -14,17 +14,10 @@ const LandmarkDetailPage = () => {
   const [landmarkList, setLandmarkList] = useState([]);
 
   const navigate = useNavigate();
-  const errorCallback = () => {
-    console.log("401에러 발생");
-    const confirm = window.confirm('다시 로그인 해주세요.');
-    if (confirm) {
-      navigate('/login');
-    }
-  }
 
   useEffect(() => {
     const landmarkIdInt = parseInt(landmarkId, 10);
-    getLandmarkGuestbook(landmarkIdInt, errorCallback)
+    getLandmarkGuestbook(landmarkIdInt)
       .then((res) => {
         setLandmarkList(res.data);
         console.log('랜드마크 방명록 조회 성공', res.data)

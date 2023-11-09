@@ -26,14 +26,6 @@ const ProfilePage = () => {
   // 모달 열고 닫기
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const errorCallback = () => {
-    console.log("401에러 발생");
-    const confirm = window.confirm('다시 로그인 해주세요.');
-    if (confirm) {
-      navigator('/login');
-    }
-  }
-
   // newCharacterId가 변경될 때 렌더링
   useEffect(() => {
     // newCharacterId가 변경될 때 실행
@@ -51,7 +43,7 @@ const ProfilePage = () => {
           status: newStatus,
           characterId: newCharacterId,
         };
-        updateUser(updatedUser, errorCallback)
+        updateUser(updatedUser)
           .then((res) => {
             setNickname(newNickname);
             setCharterId(newCharacterId);

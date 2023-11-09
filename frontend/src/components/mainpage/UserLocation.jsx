@@ -24,13 +24,6 @@ const UserLocation = ({ otherUserInfo }) => {
   const [existingCharacters, setExistingCharacters] = useState([]);
 
   const navigate = useNavigate();
-  const errorCallback = () => {
-    console.log("401에러 발생");
-    const confirm = window.confirm('다시 로그인 해주세요.');
-    if (confirm) {
-      navigate('/login');
-    }
-  }
 
   const handleModal = (otherUser) => {
     if (modalInfo) {
@@ -38,7 +31,7 @@ const UserLocation = ({ otherUserInfo }) => {
       setModalInfo(null);
     } else {
       // 모달 열기
-      getOtherUserInfo(otherUser.memberId, errorCallback)
+      getOtherUserInfo(otherUser.memberId)
         .then((data) => {
           const modalData = {
             otherMemberId: otherUser.memberId,

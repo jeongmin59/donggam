@@ -1,5 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import BackBtn from "../../assets/common/back-btn.svg";
+// import BackBtn from "../../assets/common/back-btn.svg";
+// import BackBtn from "../../assets/common/back-btn.svg";
+import BackBtn from '../../assets/icons/black-back-btn.svg'
+
 
 const Header = ({ title, to }) => {
   const navigate = useNavigate();

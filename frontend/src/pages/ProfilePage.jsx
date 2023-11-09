@@ -104,7 +104,7 @@ const ProfilePage = () => {
       <div className="mb-20">
         <ProfileHeader title="내 프로필 만들기" onConfirmClick={handleUserUpdateClick} />
       </div>
-      <div className="px-5">
+      <div className="px-5 bg-white">
         <div className="px-5 rounded-md shadow-sm">
         <label htmlFor="nickname" className="b-2 pl-2 block text-sm font-medium leading-6 text-gray-900">닉네임</label>
           <input

@@ -26,21 +26,17 @@ const MailBox = () => {
     setIsModalOpen(false);
   };
 
-  const fetchData = async () => {
+  const fetchData = async() => {
     const statusData = await getStatusList();
-    setStatusList(statusData);
+    setStatusList(statusData.statusList);
 
     const mailData = await getMailList(selectedStatusId);
-    setMailList(mailData);
+    setMailList(mailData.data.messageList);
   }
 
   useEffect(() => {
     fetchData();
   }, []);
-
-  // useEffect(() => {
-  //   const statusData = getStatusList();
-  // })
 
   // 선택된 상메 바꿔주는 함수
   const handleStatusChange = ({ selectedStatus, selectedStatusId }) => {
@@ -60,7 +56,7 @@ const MailBox = () => {
       <MailFilter mailList={mailList}/>
 
       <div className="text-center">
-        {mailList && mailList.length > 0 ? (
+        {mailList.length > 0 ? (
           <div className='mt-4 grid grid-cols-3 gap-4'>
             {mailList.map((mail, index) => (
               <MailList key={index} mail={mail} />

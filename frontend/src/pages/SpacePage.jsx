@@ -65,7 +65,7 @@ const SpacePage = () => {
 
         <NavBar />
 
-        {/* <CreateButton to='/space/upload' /> */}
+        <CreateButton to='/space/upload' />
       </div>
 
     </>

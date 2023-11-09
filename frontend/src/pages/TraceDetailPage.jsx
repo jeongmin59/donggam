@@ -54,7 +54,7 @@ const TraceDetailPage = () => {
 
   return (
     <div className='bg-white h-screen'>
-      <BackButton to='/mytrace' />
+      <BackButton to='/space/trace' />
       {/* showFront 상태에 따라서 TraceDetailFront 또는 TraceDetailBack 컴포넌트를 렌더링합니다 */}
       {showFront ? <TraceDetailFront data={traceData} /> : <TraceDetailBack data={traceData} comment={comment} setComment={setComment} traceId={traceId} setShowFront={setShowFront} />}
 

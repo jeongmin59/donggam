@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import LandmarkItem from "../components/landmarkpage/LandmarkItem";
 import Header from '../components/common/Header';
 import { useNavigate } from 'react-router-dom';
+import CreateButton from '../components/common/CreateButton';
 
 const LandmarkDetailPage = () => {
   const location = useLocation();
@@ -51,6 +52,7 @@ const LandmarkDetailPage = () => {
           ))}
           </ul>
         </div>
+        <CreateButton to='/space/upload' />
       </div>
     </>
   );

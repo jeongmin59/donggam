@@ -6,12 +6,12 @@ import alertIcon from '../../assets/icons/alert.png';
 import ToastModal from './../common/ToastModal';
 import { useNavigate } from 'react-router-dom';
 
-const MailItem = ({ isOpen, onClose, mailData, updateLikedState, setLikeMailCount }) => {
+const MailItem = ({ isOpen, onClose, mail, updateLikedState, setLikeMailCount }) => {
 
   const [mailDetail, setMailDetail] = useState({});
   const [isLiked, setIsLiked] = useState(false);
   const [showToast, setShowToast] = useState(false);
-  const mailId = mailData.messageId;
+  const mailId = mail.messageId;
 
   // 모달 영역 밖 클릭 시 모달 닫기
   const handleBackgroundClick = (e) => {
@@ -20,8 +20,8 @@ const MailItem = ({ isOpen, onClose, mailData, updateLikedState, setLikeMailCoun
     }
   };
 
-  const handleLikeClick = () => {
-    postMailLike(mailId, !isLiked);
+  const handleLikeClick = async () => {
+    await postMailLike(mailId, !isLiked);
     if (isLiked === true) {
       setLikeMailCount(currentCount => currentCount - 1);
     } else {

@@ -6,9 +6,8 @@ import alertIcon from '../../assets/icons/alert.png';
 import ToastModal from './../common/ToastModal';
 import { useNavigate } from 'react-router-dom';
 
-const MailItem = ({ isOpen, onClose, mailData, updateLikedState }) => {
+const MailItem = ({ isOpen, onClose, mailData, updateLikedState, setLikeMailCount }) => {
 
-  const navigate = useNavigate();
   const [mailDetail, setMailDetail] = useState({});
   const [isLiked, setIsLiked] = useState(false);
   const [showToast, setShowToast] = useState(false);
@@ -23,6 +22,11 @@ const MailItem = ({ isOpen, onClose, mailData, updateLikedState }) => {
 
   const handleLikeClick = () => {
     postMailLike(mailId, !isLiked);
+    if (isLiked === true) {
+      setLikeMailCount(currentCount => currentCount - 1);
+    } else {
+      setLikeMailCount(currentCount => currentCount + 1);
+    }
     setIsLiked(!isLiked);
 
     updateLikedState(!isLiked);

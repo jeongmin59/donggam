@@ -13,8 +13,9 @@ import beigeMail from '../../assets/mail/9_beige.svg';
 import likedImg from '../../assets/like/liked.png';
 import notReadImg from '../../assets/mail/notRead.png';
 
-const MailList = (mail) => {
-  const mailData = mail.mail;
+// mailList에서 mail을 하나씩 가져와서 사용
+const MailList = ({mail, setUnreadMailCount, setLikeMailCount}) => {
+  const mailData = mail;
   const mailId = mailData.messageId;
 
   const [isLiked, setIsLiked] = useState(mailData.isLiked);
@@ -42,6 +43,7 @@ const MailList = (mail) => {
   const handleMailClick = () => {
     if (!isRead) {
       postMailRead(mailId);
+      setUnreadMailCount(currentCount => currentCount - 1);
     }
     openModal();
   };
@@ -68,7 +70,7 @@ const MailList = (mail) => {
           />
         )}
       </div>
-      <MailItem isOpen={isModalOpen} onClose={closeModal} mailData={mailData} updateLikedState={updateLikedState} />
+      <MailItem isOpen={isModalOpen} onClose={closeModal} mailData={mailData} updateLikedState={updateLikedState} setLikeMailCount={setLikeMailCount} />
     </div>
   );
 };

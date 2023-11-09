@@ -85,13 +85,17 @@ const handleImageInputChange = async (e) => {
             <div><img src={addPhotoIcon}/></div>
             {isEditingImage ? (
               <button
-                onClick={() => imageInputRef.current.click()}>
-                  사진 수정
-                </button>
+                onClick={() => imageInputRef.current.click()}
+                className="text-gray-500"
+              >
+                사진 수정
+              </button>
             ) : (
               <label 
-                htmlFor="addPhoto">
-                  사진 등록
+                htmlFor="addPhoto"
+                className="text-gray-500"
+              >
+                사진 등록
               </label>
 
             )}
@@ -110,7 +114,7 @@ const handleImageInputChange = async (e) => {
           <textarea
             type="text"
             placeholder="쪽지 내용을 입력하세요"
-            className="bg-gray-100 w-full h-60 px-5 mt-2 py-5 ownglyph-text text-left rounded-[16px]"
+            className="bg-gray-100 w-full h-60 px-5 mt-2 py-5 ownglyph-text text-xl text-left rounded-[16px]"
             value={content}
             onChange={(e) => setContent(e.target.value)}
             maxLength={200}

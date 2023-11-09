@@ -10,13 +10,6 @@ const ChatRoomPage = () => {
 
   const updateChatRoom = async () => {
     const res = await axiosInstance.get(`/room/list`);
-    if (res.response && res.response.status === 401) {
-      console.log('401 에러 발생');
-      const confirm = window.confirm('다시 로그인 해주세요');
-      if (confirm) {
-        navigate('/login');
-      }
-    }
     const chatRoomList = res.data.data;
     setChatRoom(chatRoomList);
   };
@@ -30,13 +23,6 @@ const ChatRoomPage = () => {
     const res = await axiosInstance.post(`/chat/leave`, {
       roomId: roomId,
     });
-    if (res.response && res.response.status === 401) {
-      console.log('401 에러 발생');
-      const confirm = window.confirm('다시 로그인 해주세요');
-      if (confirm) {
-        navigate('/login');
-      }
-    }
     const chatRoomList = res.data.data;
     setChatRoom(chatRoomList);
   }

@@ -13,8 +13,10 @@ const MailBox = () => {
   const [status, setStatus] = useState(nowStatus);
   const [statusList, setStatusList] = useState([]);
   const [mailList, setMailList] = useState([]);
-
   const [selectedStatusId, setSelectedStatusId] = useState(nowStatusId);
+  const [totalMailCount, setTotalMailCount] = useState(0);
+  const [unreadMailCount, setUnreadMailCount] = useState(0);
+  const [likeMailCount, setLikeMailCount] = useState(0);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -26,22 +28,33 @@ const MailBox = () => {
     setIsModalOpen(false);
   };
 
-  const fetchData = async() => {
+  const updateStatusList = async () => {
     const statusData = await getStatusList();
     setStatusList(statusData.statusList);
+  }
 
+  const updateMailList = async () => {
     const mailData = await getMailList(selectedStatusId);
-    setMailList(mailData.data.messageList);
+    const mail = mailData.data.messageList;
+    setMailList(mail);
+    setTotalMailCount(mail.length);
+    setUnreadMailCount(mail.filter(mail => !mail.isRead).length);
+    setLikeMailCount(mail.filter(mail => mail.isLiked).length);
   }
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    updateStatusList();
+  }, [])
+
+  useEffect(() => {
+    updateMailList();
+  }, [selectedStatusId]);
 
   // 선택된 상메 바꿔주는 함수
   const handleStatusChange = ({ selectedStatus, selectedStatusId }) => {
     setStatus(selectedStatus);
     setSelectedStatusId(selectedStatusId);
+    closeModal();
   };
 
   return (
@@ -53,13 +66,13 @@ const MailBox = () => {
         <StatusList isOpen={isModalOpen} onClose={closeModal} statusList={statusList} changeStatus={handleStatusChange} />
       </div>
 
-      <MailFilter mailList={mailList}/>
+      <MailFilter totalMailCount={totalMailCount} unreadMailCount={unreadMailCount} likeMailCount={likeMailCount}/>
 
       <div className="text-center">
         {mailList.length > 0 ? (
           <div className='mt-4 grid grid-cols-3 gap-4'>
             {mailList.map((mail, index) => (
-              <MailList key={index} mail={mail} />
+              <MailList key={index} mail={mail} setUnreadMailCount={setUnreadMailCount} setLikeMailCount={setLikeMailCount} />
             ))}
           </div>
         ) : (

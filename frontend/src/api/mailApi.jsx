@@ -42,7 +42,7 @@ export const getMailList = async (statusId) => {
     const res = await axiosInstance.get(`/message/list/${statusId}`, {
       params: { statusId },
     });
-    // console.log('쪽지axios 가져오기 성공', res.data)
+    console.log('쪽지axios 가져오기 성공', res.data)
     return res.data;
   } catch (err) {
     console.log('쪽지 axios 실패!', err)

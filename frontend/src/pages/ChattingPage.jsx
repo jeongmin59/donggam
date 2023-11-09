@@ -101,6 +101,7 @@ const ChattingPage = () => {
       <div>
         <Header title={roomName} to="/chatroom" className='fixed' />
       </div>
+
       <div className="h-[73%]" style={{ overflowY: "scroll" }}>
         <ul
           className="w-full h-[90%] pt-5"
@@ -136,7 +137,7 @@ const ChattingPage = () => {
                 </div>
               </li>
             ))}
-          <li className="bottom" style={{ height: "80px" }}></li>
+          <li className="bottom" ></li>
         </ul>
       </div>
 

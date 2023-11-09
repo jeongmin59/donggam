@@ -40,11 +40,11 @@ const PhotoList = () => {
   };
 
   return (
-    <div className="px-5">
+    <div className="px-5 bg-white h-screen">
       {loading ? (
         <p>Loading...</p>
       ) : photos.length === 0 ? (
-        <img src={nullLogo} alt="No Photos" className="mx-auto my-8" />
+        <img src={nullLogo} alt="No Photos" className="mx-auto py-8" />
       ) : (
         <Masonry className={"my-gallery-class"} options={masonryOptions}>
           {photos.map((photo) => (

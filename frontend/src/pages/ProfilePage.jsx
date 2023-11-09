@@ -104,19 +104,17 @@ const ProfilePage = () => {
       <div className="mb-20">
         <ProfileHeader title="내 프로필 만들기" onConfirmClick={handleUserUpdateClick} />
       </div>
-      <div className="px-5">
-        <div className="px-5 rounded-md shadow-sm">
-          <label htmlFor="nickname" className="mb-2 pl-2 block text-sm font-medium leading-6 text-gray-900">닉네임</label>
-          <input
-            type="text"
-            id="nickname"
-            value={newNickname}
-            onChange={handleNicknameChange}
-            className="block w-full py-1.5 pl-2 pr-20 text-gray-900 placeholder:text-gray-400 sm:text-sm sm:leading-6 border-b-2 border-slate-700"
-            placeholder={nickName}
-            maxLength={12}
-          />
-        </div>
+      <div className="px-8">
+        <label htmlFor="nickname" className="mb-1 pl-2 block font-bold leading-6 text-gray-900">닉네임</label>
+        <input
+          type="text"
+          id="nickname"
+          value={newNickname}
+          onChange={handleNicknameChange}
+          className="block w-full py-2 px-2 text-gray-900 placeholder:text-gray-400 sm:text-sm sm:leading-6 border-b-2 border-slate-700  shadow-sm "
+          placeholder={nickName}
+          maxLength={12}
+        />
         <h5 className="mt-2 px-5 text-gray-500">* 최대 12자까지 설정 가능해요!</h5>
 
         <div onClick={modalOpen} className="mt-24 mb-20 h-full flex flex-col justify-center items-center">
@@ -136,24 +134,22 @@ const ProfilePage = () => {
         </div>
 
         <div>
-          <div className="relative px-5 rounded-md shadow-sm">
-            <label htmlFor="status" className="mb-2 pl-2 block text-sm font-medium leading-6 text-gray-900">상태메시지</label>
-            <input
-              type="text"
-              id="status"
-              value={newStatus}
-              onChange={handleStatusChange}
-              className="block w-full py-1.5 pl-2 pr-2 text-gray-900 placeholder:text-gray-400 sm:text-sm sm:leading-6 border-b-2 border-slate-700"
-              placeholder={status}
-              maxLength={50}
-            />
-          </div>
-          <h5 className="mt-2 px-5 text-gray-500">* 최소 3글자 이상 작성해주세요. </h5>
-          <h5 className="mt-1 px-5 text-gray-500">** 최대 50자까지 작성 가능해요! </h5>
+          <label htmlFor="status" className="mb-1 pl-2 block font-bold  text-gray-900">상태메시지</label>
+          <input
+            type="text"
+            id="status"
+            value={newStatus}
+            onChange={handleStatusChange}
+            className="block w-full py-1.5 px-2 text-gray-900 placeholder:text-gray-400 sm:text-sm border-b-2 border-slate-700"
+            placeholder={status}
+            maxLength={50}
+          />
+          <h5 className="mt-2 px-4 text-gray-500">* 최소 3글자 이상 작성해주세요. </h5>
+          <h5 className="mt-1 px-4 text-gray-500">** 최대 50자까지 작성 가능해요! </h5>
         </div>
       </div>
       {showToast && <ToastModal message="상태 메시지를 3자 이상 입력해주세요!" onClose={() => setShowToast(false)} />}
-    </div>
+    </div >
   );
 };
 

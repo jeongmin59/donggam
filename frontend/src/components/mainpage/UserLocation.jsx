@@ -26,7 +26,7 @@ const UserLocation = ({ otherUserInfo }) => {
   useEffect(() => {
     resetExistingCharacters();
   }, []);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const handleModal = (otherUser) => {
     if (modalInfo) {

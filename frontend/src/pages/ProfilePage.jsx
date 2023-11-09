@@ -135,7 +135,7 @@ const ProfilePage = () => {
 
         <div>
           <div className="relative px-5 rounded-md shadow-sm">
-            <label htmlFor="status" className="mb-2 pl-2 block text-sm font-medium leading-6 text-gray-900">상태메시지</label>
+            <label htmlFor="status" className="b-2 pl-2 block text-sm font-medium leading-6 text-gray-900">상태메시지</label>
             <input
               type="text"
               id="status"

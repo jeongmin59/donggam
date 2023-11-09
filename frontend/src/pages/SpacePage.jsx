@@ -15,6 +15,8 @@ import miniLogo from "../assets/tutorial/mini-logo.svg";
 import CreateButton from './../components/common/CreateButton';
 import { useNavigate } from "react-router";
 import NavBar from "../components/common/NavBar";
+import ActiveDot from "../assets/icons/active-btn.svg"
+import NonActiveDot from "../assets/icons/non-active-btn.svg"
 
 
 const SpacePage = () => {
@@ -27,7 +29,7 @@ const SpacePage = () => {
 
 
   const settings = {
-    // dots: true,
+    dots: true,
     infinite: false,
     speed: 500,
     slidesToShow: 1,
@@ -45,9 +47,9 @@ const SpacePage = () => {
           />
         </div>
 
-        <div className="h-[75%] flex justify-center items-center">
+        <div className="h-[75%] flex justify-center items-center p-8">
         {/* <div className="mt-5 mb-20 px-5"> */}
-          <Slider {...settings} className="carousel p-8 mx-auto">
+          <Slider {...settings} className="carousel mx-auto">
             <div className="trace-guide ">
               <div className="flex justify-center"><img src={landmarkImg} /></div>
               <SpaceButton title="근처 랜드마크 찾기" to="/space/landmark" />

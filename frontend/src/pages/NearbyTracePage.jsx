@@ -9,16 +9,8 @@ const NearbyTracePage = () => {
 
   const navigate = useNavigate();
 
-  const errorCallback = () => {
-    console.log("401에러 발생");
-    const confirm = window.confirm('다시 로그인 해주세요.');
-    if (confirm) {
-      navigate('/login');
-    }
-  }
-
   useEffect(() => {
-    getTraceList(errorCallback)
+    getTraceList()
       .then((res) => {
         setTraceList(res.data)
       })
@@ -33,7 +25,7 @@ const NearbyTracePage = () => {
 
   return (
     <div className="h-screen flex flex-col" style={pageStyle}>
-      <BackButton to='/space' />
+      <BackButton to='/space' type='black' />
       <div className="text-center p-5">
         <h2 className="mt-12">근처에 있는 {traceList.length}개의 <br /> 방명록을 발견했어요!</h2>
       </div>

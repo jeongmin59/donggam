@@ -53,8 +53,8 @@ const UserInfo = ({selectedBackground}) => {
         className="absolute top-[-70px] right-[5%]"
         style={imageStyle}
       />
-      <div className="usermsg h-auto bg-white rounded-2xl flex justify-center">
-        <p className="px-[40px] py-[20px] text-center ">{statusMessage}</p>
+      <div className="usermsg h-[hug] bg-white rounded-2xl flex justify-center">
+        <p className="px-[20px] py-[20px] text-center ">{statusMessage}</p>
       </div>
     </div>
   );

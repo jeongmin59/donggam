@@ -22,7 +22,7 @@ const NavBar = () => {
   return (
     <>
       <div className="w-full fixed flex items-center justify-center px-5 bottom-5">
-        <div className="nav-shadow rounded-[50px] bg-white flex py-5 px-10 w-full justify-between space-x-2">
+        <div className="nav-shadow rounded-[50px] bg-white flex py-4 px-10 w-full justify-between space-x-2">
           <img src={timePageIcon} alt="Time Page" onClick={handleTimePageClick} />
           <img src={mainPageIcon} alt="Main Page" onClick={handleMainPageClick} />
           <img src={spacePageIcon} alt="Space Page" onClick={handleSpacePageClick} />

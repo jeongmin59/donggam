@@ -15,13 +15,6 @@ const MailModal = ({mailModalInfo, closeMailModal}) => {
   const imageInputRef = useRef(null);
 
   const navigate = useNavigate();
-  const errorCallback = (err) => {
-    console.log("401에러 발생");
-    const confirm = window.confirm('다시 로그인 해주세요.');
-    if (confirm) {
-      navigate('/login');
-    }
-  }
 
   const handleSendMailClick = async () => {
     if (!content) {                     
@@ -29,7 +22,7 @@ const MailModal = ({mailModalInfo, closeMailModal}) => {
       return;
     }
     try {
-      const res = await sendMail(statusId, content, selectedImage, errorCallback);
+      const res = await sendMail(statusId, content, selectedImage);
       if (res) {
         closeMailModal();
         console.log('쪽지 전송 성공', res.data);
@@ -85,13 +78,17 @@ const handleImageInputChange = async (e) => {
             <div><img src={addPhotoIcon}/></div>
             {isEditingImage ? (
               <button
-                onClick={() => imageInputRef.current.click()}>
-                  사진 수정
-                </button>
+                onClick={() => imageInputRef.current.click()}
+                className="text-gray-500"
+              >
+                사진 수정
+              </button>
             ) : (
               <label 
-                htmlFor="addPhoto">
-                  사진 등록
+                htmlFor="addPhoto"
+                className="text-gray-500"
+              >
+                사진 등록
               </label>
 
             )}
@@ -110,7 +107,7 @@ const handleImageInputChange = async (e) => {
           <textarea
             type="text"
             placeholder="쪽지 내용을 입력하세요"
-            className="bg-gray-100 w-full h-60 px-5 mt-2 py-5 ownglyph-text text-left rounded-[16px]"
+            className="bg-gray-100 w-full h-60 px-5 mt-2 py-5 ownglyph-text text-xl text-left rounded-[16px]"
             value={content}
             onChange={(e) => setContent(e.target.value)}
             maxLength={200}

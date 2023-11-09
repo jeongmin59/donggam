@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import LandmarkItem from "../components/landmarkpage/LandmarkItem";
 import Header from '../components/common/Header';
 import { useNavigate } from 'react-router-dom';
+import CreateButton from '../components/common/CreateButton';
 
 const LandmarkDetailPage = () => {
   const location = useLocation();
@@ -13,17 +14,10 @@ const LandmarkDetailPage = () => {
   const [landmarkList, setLandmarkList] = useState([]);
 
   const navigate = useNavigate();
-  const errorCallback = () => {
-    console.log("401에러 발생");
-    const confirm = window.confirm('다시 로그인 해주세요.');
-    if (confirm) {
-      navigate('/login');
-    }
-  }
 
   useEffect(() => {
     const landmarkIdInt = parseInt(landmarkId, 10);
-    getLandmarkGuestbook(landmarkIdInt, errorCallback)
+    getLandmarkGuestbook(landmarkIdInt)
       .then((res) => {
         setLandmarkList(res.data);
         console.log('랜드마크 방명록 조회 성공', res.data)
@@ -36,19 +30,22 @@ const LandmarkDetailPage = () => {
   console.log('랜드마크 방명록',landmarkList);
   return(
     <>
-      <Header title={landmarkName} to="/space/" />
-      <div className='px-5 pt-5'>
-        <ul>
-        {landmarkList.map((record,index) => (
-          <LandmarkItem 
-            key={index} 
-            time = {record.createdAt}
-            content = {record.content}
-            userName = {record.authorNickname}
-            imageUrl = {record.imageAddress} 
-          />
-        ))}
-        </ul>
+      <div className='bg-white h-screen'>
+        <Header title={landmarkName} to="/space/" />
+        <div className='px-5 pt-5'>
+          <ul>
+          {landmarkList.map((record,index) => (
+            <LandmarkItem 
+              key={index} 
+              time = {record.createdAt}
+              content = {record.content}
+              userName = {record.authorNickname}
+              imageUrl = {record.imageAddress} 
+            />
+          ))}
+          </ul>
+        </div>
+        <CreateButton to='/space/upload' />
       </div>
     </>
   );

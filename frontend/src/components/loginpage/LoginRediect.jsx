@@ -48,7 +48,8 @@ const LoginRediect = () => {
         setStatusMessageId(res.data.data.statusId)
 
         const expirationTime = new Date();
-        expirationTime.setHours(expirationTime.getHours() + 24);
+        // expirationTime.setHours(expirationTime.getHours() + 24);
+        expirationTime.setMinutes(expirationTime.getMinutes() + 3);
         setAccessTokenExpiration(expirationTime); // 수정된 부분
 
 

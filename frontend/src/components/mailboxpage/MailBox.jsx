@@ -59,7 +59,7 @@ const MailBox = () => {
   return (
     <div className="px-5">
       <div className="mt-8 mb-4 h-20">
-        <button className="w-full h-full bg-sky-100 px-8 rounded-2xl justify-center items-center gap-2.5 inline-flex" onClick={openModal}>
+        <button className="w-full  bg-sky-100 px-8 py-3 rounded-2xl justify-center items-center gap-2.5 inline-flex" onClick={openModal}>
           {status}
         </button>
         <StatusList isOpen={isModalOpen} onClose={closeModal} statusList={statusList} changeStatus={handleStatusChange} />

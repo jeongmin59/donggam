@@ -106,6 +106,7 @@ const ProfilePage = () => {
       </div>
       <div className="px-5">
         <div className="px-5 rounded-md shadow-sm">
+        <label htmlFor="nickname" className="b-2 pl-2 block text-sm font-medium leading-6 text-gray-900">닉네임</label>
           <input
             type="text"
             id="nickname"
@@ -141,7 +142,7 @@ const ProfilePage = () => {
               id="status"
               value={newStatus}
               onChange={handleStatusChange}
-              className="block w-full py-1.5 pl-2 pr-20 text-gray-900 placeholder:text-gray-400 sm:text-sm sm:leading-6 border-b-2 border-slate-700"
+              className="block w-full py-1.5 px-2  text-gray-900 placeholder:text-gray-400 sm:text-sm sm:leading-6 border-b-2 border-slate-700"
               placeholder={status}
               maxLength={50}
             />

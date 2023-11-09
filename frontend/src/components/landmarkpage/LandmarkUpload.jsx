@@ -53,7 +53,7 @@ const LandmarkUpload = () => {
       if (landmarkId && (landmarkContent || landmarkImage)) {
         const res = await postLandmark(landmarkId, landmarkContent, landmarkImage, errorCallback);
         console.log('랜드마크 방명록 작성 완료', res);
-        navigate(`/space/landmark/${landmarkId}`);
+        navigate(`/space/landmark/${landmarkId}`,{ state: { landmarkName } });
       }
     } catch (err) {
       console.error('랜드마크 방명록 작성 실패', err)

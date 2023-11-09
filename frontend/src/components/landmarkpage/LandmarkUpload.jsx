@@ -22,14 +22,6 @@ const LandmarkUpload = () => {
   const [landmarkImage, setLandmarkImage] = useState(null);
   const [landmarkId, setLandmarkId] = useState(null);
 
-  const errorCallback = () => {
-    console.log("401에러 발생");
-    const confirm = window.confirm('다시 로그인 해주세요.');
-    if (confirm) {
-      navigate('/login');
-    }
-  }
-
   useEffect(() => {
     // 위치 정보가 변경되면 랜드마크 검색 실행
     if (latitude !== null && longitude !== null) {
@@ -51,9 +43,9 @@ const LandmarkUpload = () => {
   const handlePostLandmark = async () => {
     try {
       if (landmarkId && (landmarkContent || landmarkImage)) {
-        const res = await postLandmark(landmarkId, landmarkContent, landmarkImage, errorCallback);
+        const res = await postLandmark(landmarkId, landmarkContent, landmarkImage);
         console.log('랜드마크 방명록 작성 완료', res);
-        navigate(`/space/landmark/${landmarkId}`);
+        navigate(`/space/landmark/${landmarkId}`,{ state: { landmarkName } });
       }
     } catch (err) {
       console.error('랜드마크 방명록 작성 실패', err)

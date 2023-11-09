@@ -48,7 +48,9 @@ const LoginRediect = () => {
         setStatusMessageId(res.data.data.statusId)
 
         const expirationTime = new Date();
+        // 토큰 만료 시간 : 1일
         expirationTime.setHours(expirationTime.getHours() + 24);
+        // expirationTime.setMinutes(expirationTime.getMinutes() + 3);
         setAccessTokenExpiration(expirationTime); // 수정된 부분
 
 

@@ -98,7 +98,7 @@
 
   /* 공간 캐러셀 */
   .trace-guide {
-    @apply rounded-[16px] w-[100px] pb-10;
+    @apply rounded-[20px]  mb-5 py-10;
     background-image: radial-gradient(
       96.37% 79.72% at 50% 50.12%,
       #fff 38.96%,
@@ -110,12 +110,6 @@
     @apply list-none;
   }
 
-  /* .slick-active {
-    background-image: url('/icons/active-btn.svg');
-  } */
-  .carousel li button::before {
-    background-image: url("/icons/active-btn.svg");
-  }
 
   /* 랜드마크 디테일*/
   .landmark-title {
@@ -134,7 +128,9 @@
 
   /* 방명록 등록 */
   .photo-frame {
-    @apply relative h-[90vw] max-h-[90vh] my-5 rounded-lg flex items-center justify-center overflow-hidden;
+    @apply 
+    /* relative h-[50vh] max-h-[] my-5 rounded-lg flex items-center justify-center overflow-hidden; */
+    relative h-[90vw] max-h-[90vh] my-5 rounded-lg flex items-center justify-center overflow-hidden;
     background-image: radial-gradient(
       50.13% 50% at 50.13% 50%,
       #fff 51.98%,

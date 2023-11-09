@@ -12,7 +12,7 @@ const SpaceButton = ({ title, to}) => {
       <div className="px-7">
         <button 
           onClick={navigateTo} 
-          className="w-[100%] px-[12px] py-[15px] rounded-[100px] mt-5 bg-subColor text-white">
+          className="w-[100%] px-[12px] py-[10px] rounded-[100px] bg-subColor text-white">
           {title}
         </button>
 

@@ -59,7 +59,14 @@ export const StatusMessageIdAtom = atom({
 export const checkAccessTokenExpiration = () => {
   const now = new Date();
   const storedUser = JSON.parse(localStorage.getItem('User'));
+  const accessToken = localStorage.getItem('accessToken');
+
+  // 1. accessToken이 없다.
+  if (!accessToken) {
+    return false;
+  }
   
+  // 2. accessToken이 만료되었다.
   if (storedUser && storedUser.AccessTokenExpiration && new Date(storedUser.AccessTokenExpiration) < now) {
     const updatedUser = {
       ...storedUser,
@@ -67,5 +74,9 @@ export const checkAccessTokenExpiration = () => {
       AccessTokenExpiration: null,
     };
     localStorage.setItem('User', JSON.stringify(updatedUser));
+
+    return false;
   }
+
+  return true;
 };

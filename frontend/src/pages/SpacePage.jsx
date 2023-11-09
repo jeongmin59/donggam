@@ -1,8 +1,4 @@
 import React from "react";
-// import SpaceHeaderTemplate from "../components/spacepage/SpaceHeaderTemplate";
-// import ButtonTemplate from "../components/spacepage/ButtonTemplate";
-// import MyTrace from "../components/spacepage/MyTrace";
-// import Header from "../components/common/Header"
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
@@ -10,11 +6,12 @@ import landmarkImg from "../assets/images/landmark-img.svg"
 import traceImg from "../assets/images/trace-img.svg"
 import myTraceImg from "../assets/images/my-trace-img.svg"
 import SpaceButton from "../components/common/SpaceButton";
-// import createBtn from "../assets/common/createBtn.png";
 import miniLogo from "../assets/tutorial/mini-logo.svg";
 import CreateButton from './../components/common/CreateButton';
 import { useNavigate } from "react-router";
 import NavBar from "../components/common/NavBar";
+import ActiveDot from "../assets/icons/active-btn.svg"
+import NonActiveDot from "../assets/icons/non-active-btn.svg"
 
 
 const SpacePage = () => {
@@ -27,7 +24,7 @@ const SpacePage = () => {
 
 
   const settings = {
-    // dots: true,
+    dots: true,
     infinite: false,
     speed: 500,
     slidesToShow: 1,
@@ -45,19 +42,25 @@ const SpacePage = () => {
           />
         </div>
 
-        <div className="h-[75%] flex justify-center items-center">
+        <div className="h-[70%] flex justify-center items-center px-8 pt-8">
         {/* <div className="mt-5 mb-20 px-5"> */}
-          <Slider {...settings} className="carousel p-8 mx-auto">
+          <Slider {...settings} className="carousel">
             <div className="trace-guide ">
-              <div className="flex justify-center"><img src={landmarkImg} /></div>
+              <div className="flex justify-center">
+                <img src={landmarkImg} style={{ width: '80%'}}  />
+              </div>
               <SpaceButton title="근처 랜드마크 찾기" to="/space/landmark" />
             </div>
             <div className="trace-guide">
-              <div className="flex justify-center"><img src={traceImg} /></div>
+              <div className="flex justify-center">
+                <img src={traceImg} style={{ width: '80%'}}/>
+              </div>
               <SpaceButton title="근처 방명록 찾기" to="/space/trace" />
             </div>
             <div className="trace-guide">
-              <div className="flex justify-center"><img src={myTraceImg} /></div>
+              <div className="flex justify-center">
+                <img src={myTraceImg} style={{ width: '80%'}}/>
+              </div>
               <SpaceButton title="내 방명록" to="/mytrace" />
             </div>
           </Slider>

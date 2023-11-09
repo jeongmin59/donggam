@@ -33,7 +33,6 @@ const UserCharacter = ({ otherCharacterId, onCharacterClick }) => {
           continue;
         }
         for (const existingCharacter of existingCharacters) {
-          // console.log(existingCharacter);
           const charX = existingCharacter.left;
           const charY = existingCharacter.top;
           const dx = Math.abs(initialX - charX);

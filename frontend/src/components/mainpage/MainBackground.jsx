@@ -53,13 +53,6 @@ const MainBackground = () => {
   }
 
   const navigate = useNavigate();
-  const errorCallback = () => {
-    console.log("401에러 발생");
-    const confirm = window.confirm('다시 로그인 해주세요.');
-    if (confirm) {
-      navigate('/login');
-    }
-  }
 
   useEffect(() => {
 
@@ -84,7 +77,7 @@ const MainBackground = () => {
   // 위치 기반 정보(날씨, 주변 유저, 주변 유저 수)
   useEffect(() => {
     if (memberId && latitude !== null && longitude !== null) {
-      locationInfo(memberId, latitude, longitude, errorCallback)
+      locationInfo(memberId, latitude, longitude)
         .then((data) => {
           if (data) {
             setSelectedBackground(data.data.statusWeather);
@@ -99,7 +92,7 @@ const MainBackground = () => {
 
 
   // 날씨 배경 
-  const backgroundClass = `w-full h-screen absolute ${selectedBackground === 'POSITIVE' ? "bg-gradient-1"
+  const backgroundClass = `w-full h-full overflow-hidden absolute ${selectedBackground === 'POSITIVE' ? "bg-gradient-1"
     : selectedBackground === 'NEUTRAL' ? "bg-gradient-2"
       : "bg-gradient-3"
     }`;

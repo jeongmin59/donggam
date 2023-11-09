@@ -20,7 +20,7 @@ const UploadSpaceTitle = ({ title, setTitle, landmarkName }) => {
         방명록 이름을 지어주세요. (*최대 {maxTitleLimit}자)
       </label>
       {landmarkName ? (
-        <div className="input-style">
+        <div className="input-style text-gray-500">
           {landmarkName}
         </div>
       ) : (

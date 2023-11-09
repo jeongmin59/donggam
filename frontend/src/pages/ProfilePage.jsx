@@ -93,10 +93,10 @@ const ProfilePage = () => {
 
   return (
     <div className='bg-white h-screen'>
-      <div className="mb-20">
+      <div className="mb-10">
         <ProfileHeader title="내 프로필 만들기" onConfirmClick={handleUserUpdateClick} />
       </div>
-      <div className="px-8">
+      <div className="px-8 pb-10 bg-white">
         <label htmlFor="nickname" className="mb-1 pl-2 block font-bold leading-6 text-gray-900">닉네임</label>
         <input
           type="text"
@@ -108,6 +108,20 @@ const ProfilePage = () => {
           maxLength={12}
         />
         <h5 className="mt-2 px-3 text-gray-500">* 최대 12자로 설정할 수 있어요. </h5>
+      {/* <div className="px-5 bg-white">
+        <div className="px-5 rounded-md shadow-sm">
+        <label htmlFor="nickname" className="b-2 pl-2 block text-sm font-medium leading-6 text-gray-900">닉네임</label>
+          <input
+            type="text"
+            id="nickname"
+            value={newNickname}
+            onChange={handleNicknameChange}
+            className="block w-full py-1.5 pl-2 pr-20 text-gray-900 placeholder:text-gray-400 sm:text-sm sm:leading-6 border-b-2 border-slate-700"
+            placeholder={nickName}
+            maxLength={12}
+          />
+        </div> */}
+
         <div onClick={modalOpen} className="mt-24 mb-20 h-full flex flex-col justify-center items-center">
           <div className="relative">
             <img src={myCharacter} alt={`${newCharacterId}번 캐릭터`} />

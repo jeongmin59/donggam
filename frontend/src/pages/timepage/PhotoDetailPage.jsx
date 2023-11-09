@@ -20,7 +20,7 @@ const PhotoDetailPage= () => {
   return (
     <>
       <TimeBackground currentTime={currentTime} />
-      <div className="overflow-auto">
+      <div className="bg-white overflow-auto">
         <PhotoDetail />
         <div className="mb-8 flex justify-center">
           <img

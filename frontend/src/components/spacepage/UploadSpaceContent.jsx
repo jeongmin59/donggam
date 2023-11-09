@@ -11,7 +11,7 @@ const UploadSpaceContent = ({ content, setContent, textLength }) => {
   }
   return (
     <>
-      <label className="pl-2">
+      <label className="pl-2 text-s">
         방명록을 작성해주세요(*최대 {textLength}글자)
       </label>
       <textarea

@@ -11,19 +11,11 @@ const CommentForm = ({ setComment, comment, traceId }) => {
 
   const navigate = useNavigate();
 
-  const errorCallback = () => {
-    console.log("401에러 발생");
-    const confirm = window.confirm('다시 로그인 해주세요.');
-    if (confirm) {
-      navigate('/login');
-    }
-  }
-
   // 댓글을 제출할 때 호출되는 함수
   const handleSubmitComment = (e) => {
     e.preventDefault(); // 폼 제출 시 페이지 리로드 방지
 
-    postTraceComment(traceId, comment, errorCallback)
+    postTraceComment(traceId, comment)
 
     // 댓글을 처리하고 상태 초기화 또는 전송할 수 있음
     console.log('제출된 댓글:', comment);

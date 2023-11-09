@@ -1,6 +1,6 @@
 import React from 'react';
 
-const TraceItem = ({ time, content, userName, imageUrl }) => {
+const LandmarkItem = ({ time, content, userName, imageUrl }) => {
   const date = new Date(time);
   const formattedDate = date.toLocaleDateString({
     year: '2-digit',
@@ -36,4 +36,4 @@ const TraceItem = ({ time, content, userName, imageUrl }) => {
   );
 };
 
-export default TraceItem;
+export default LandmarkItem;

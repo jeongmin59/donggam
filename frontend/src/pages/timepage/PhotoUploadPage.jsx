@@ -7,7 +7,7 @@ const PhotoUploadpage = () => {
   return (
     <>
       <Header title="사진 업로드" to="/time" />
-      <div className="pt-12 bg-white">
+      <div className="pt-6 bg-white">
         <PhotoUpload />
       </div>
     </>

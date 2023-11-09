@@ -99,7 +99,7 @@ const MainBackground = () => {
 
 
   // 날씨 배경 
-  const backgroundClass = `w-screen h-screen overflow-hidden absolute ${selectedBackground === 'POSITIVE' ? "bg-gradient-1"
+  const backgroundClass = `w-full h-full overflow-hidden absolute ${selectedBackground === 'POSITIVE' ? "bg-gradient-1"
     : selectedBackground === 'NEUTRAL' ? "bg-gradient-2"
       : "bg-gradient-3"
     }`;

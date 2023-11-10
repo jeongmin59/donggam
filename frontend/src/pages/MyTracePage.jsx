@@ -2,12 +2,11 @@ import React, { useEffect, useState } from "react";
 import MyTraceItem from './../components/spacepage/MyTraceItem';
 import { getMyTrace } from "../api/spaceApi";
 import Header from './../components/common/Header';
-import { useNavigate } from 'react-router-dom';
+import CreateButton from './../components/common/CreateButton';
 
 const MyTracePage = () => {
   const [traceList, setTraceList] = useState([])
 
-  const navigate = useNavigate();
 
   // 내 방명록 조회 axios 호출
   useEffect(() => {
@@ -23,14 +22,15 @@ const MyTracePage = () => {
 
   return (
     <>
-      <div className="bg-white h-screen">
+      <div className="bg-white h-full">
         <Header title="내 방명록" to='/space' />
-        <div className='px-5'>
+        <div className='px-4'>
           <ul>
             {traceList.map((traceData, index) => (
               <MyTraceItem key={index} data={traceData} />
             ))}
           </ul>
+          <CreateButton to='/space/upload' />
         </div>
       </div>
     </>

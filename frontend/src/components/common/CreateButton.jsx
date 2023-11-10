@@ -10,12 +10,8 @@ const CreateButton = ({ to }) => {
   };
 
   return (
-    <button
-      onClick={handleButtonClick}
-      className="fixed bottom-[12vh] right-5 z-50" // 우하단에 버튼 고정
-    >
-      <img src={createBtn} alt="글 작성 버튼" />
-    </button>
+    <img src={createBtn} alt="글 작성 버튼" onClick={handleButtonClick}
+      className="p-2 bottom-1 " style={{ position: "sticky", float: 'right' }} />
   );
 };
 

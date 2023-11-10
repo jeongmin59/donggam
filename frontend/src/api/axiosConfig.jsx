@@ -33,13 +33,14 @@ axiosInstance.interceptors.response.use(
     return response;
   },
   (error) => {
-    if (error.response?.status === 401 || error.response?.status === 404) {
+    if (error.response?.status === 401 || error.response?.status === 404 || error.response?.status === 500) {
       alert('로그아웃 되었습니다.\n 다시 로그인 해주세요.');
       window.location.href = '/login';
-    } else if(error.response?.status === 500) {
-      alert('상태메시지를 설정해주세요');
-      window.location.href = '/profile';
     }
+    // } else if(error.response?.status === 500) {
+    //   alert('상태메시지를 설정해주세요');
+    //   window.location.href = '/profile';
+    // }
   }
 )
 

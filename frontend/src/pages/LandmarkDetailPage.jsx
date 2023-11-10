@@ -31,7 +31,7 @@ const LandmarkDetailPage = () => {
       <div className='bg-white h-screen'>
         <Header title={landmarkName} to="/space/" />
         <div className='px-5 pt-5 overflow-y-auto h-full max-h-[calc(100vh-100px)]'>
-          <div className=''>
+          <div>
             <ul>
             {landmarkList.map((record,index) => (
               <LandmarkItem 
@@ -46,7 +46,7 @@ const LandmarkDetailPage = () => {
 
           </div>
         </div>
-          <CreateButton to='/space/upload' /> 
+        <CreateButton to='/space/upload' /> 
         {/* <NavBar /> */}
       </div>
     </>

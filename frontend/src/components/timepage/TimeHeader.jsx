@@ -49,4 +49,3 @@ const TimeHeader = ({ currentTime }) => {
 };
 
 export default TimeHeader;
-

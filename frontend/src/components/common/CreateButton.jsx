@@ -11,7 +11,7 @@ const CreateButton = ({ to }) => {
 
   return (
     <img src={createBtn} alt="글 작성 버튼" onClick={handleButtonClick}
-      className="p-2" style={{ position: "sticky", float: 'right' }} />
+      className="p-2 bottom-5 right-5 fixed" />
   );
 };
 

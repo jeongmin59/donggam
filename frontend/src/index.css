@@ -66,11 +66,15 @@
     @apply text-[0.875rem];
     font-family: "GmarketSansLight";
   }
+  p {
+    @apply text-[0.75rem];
+    font-family: "GmarketSansLight";
+  }
 }
 
 :root {
   background-color: #d7ecff;
-  height: 100vh; 
+  height: 100vh;
   left: 50%;
   max-width: 443px;
   position: absolute;
@@ -98,20 +102,18 @@
 
   /* 공간 캐러셀 */
   .trace-guide {
-    @apply rounded-[20px]  mb-5 py-10; 
+    @apply rounded-[20px]  mb-5 py-10;
     background-image: radial-gradient(
       96.37% 79.72% at 50% 50.12%,
       #fff 38.96%,
       #e1f0ff 100%
     );
     /* box-shadow: 0px 3px 20px 0px rgba(97, 157, 218, 0.77); */
-
   }
 
   .carousel {
-    @apply list-none;    
+    @apply list-none;
   }
-
 
   /* 랜드마크 디테일*/
   .landmark-title {
@@ -130,8 +132,7 @@
 
   /* 방명록 등록 */
   .photo-frame {
-    @apply 
-    /* relative h-[50vh] max-h-[] my-5 rounded-lg flex items-center justify-center overflow-hidden; */
+    @apply /* relative h-[50vh] max-h-[] my-5 rounded-lg flex items-center justify-center overflow-hidden; */
     relative h-[370px]  my-5 rounded-lg flex items-center justify-center overflow-hidden;
     background-image: radial-gradient(
       50.13% 50% at 50.13% 50%,
@@ -150,7 +151,7 @@
 
   /* 방명록 상세 페이지 */
   .trace-image {
-    @apply h-[35vh] w-full bg-cover bg-center relative object-cover;
+    @apply h-[35vh] w-full bg-cover bg-center relative object-cover bg-slate-50;
   }
 
   .trace-title {
@@ -163,7 +164,7 @@
   }
 }
 .trace-content {
-  @apply  text-center h-[65vh] flex items-center justify-center;
+  @apply text-center h-[65vh] flex items-center justify-center;
   background-image: radial-gradient(
     50% 48.18% at 50% 50%,
     #fff 69.41%,
@@ -206,11 +207,10 @@
 /* 스크롤바 커스터마이징 */
 ::-webkit-scrollbar {
   width: 5px; /* 스크롤바 너비 */
-  
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #E4EFFF; /* 스크롤바 색상 */
+  background-color: #e4efff; /* 스크롤바 색상 */
   border-radius: 6px; /* 스크롤바 모서리 둥글게 */
   /* height: 3px */
 }
@@ -222,7 +222,5 @@
 
 /* 스크롤바에 마우스 오버 시 스타일 변경 */
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #ABCEF2; /* 마우스 오버 시 스크롤바 색상 변경 */
+  background-color: #abcef2; /* 마우스 오버 시 스크롤바 색상 변경 */
 }
-
-

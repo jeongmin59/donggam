@@ -5,6 +5,7 @@ import TraceDetailFront from '../components/spacepage/traceDetail/TraceDetailFro
 import TraceDetailBack from '../components/spacepage/traceDetail/TraceDetailBack';
 import BackButton from '../components/common/BackButton';
 import moreBtn from "../assets/icons/more-btn.svg";
+import detailBackBtn from "../assets/icons/detail-back-btn.svg";
 import { useNavigate } from 'react-router-dom';
 
 const TraceDetailPage = () => {
@@ -48,7 +49,7 @@ const TraceDetailPage = () => {
       {/* showFront 상태에 따라서 TraceDetailFront 또는 TraceDetailBack 컴포넌트를 렌더링합니다 */}
       {showFront ? <TraceDetailFront data={traceData} /> : <TraceDetailBack data={traceData} comment={comment} setComment={setComment} traceId={traceId} setShowFront={setShowFront} />}
 
-      <img src={moreBtn} className="fixed bottom-4 left-1/2 transform -translate-x-1/2" onClick={toggleComponent} />
+      {showFront ? <img src={moreBtn} className="fixed bottom-4 left-1/2 transform -translate-x-1/2" onClick={toggleComponent} /> : <img src={detailBackBtn} className="fixed bottom-4 left-1/2 transform -translate-x-1/2" onClick={toggleComponent} />}
     </div>
   );
 };

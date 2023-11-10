@@ -24,15 +24,14 @@ const MyTracePage = () => {
     <>
       <div className="bg-white h-full">
         <Header title="내 방명록" to='/space' />
-        <div className='px-5 pt-5 overflow-y-auto max-h-[calc(100vh-160px)]'>
-
-          <ul>
-            {traceList.map((traceData, index) => (
-              <MyTraceItem key={index} data={traceData} />
-            ))}
-          </ul>
-          <CreateButton to='/space/upload' />
-        </div>
+        <div className='px-5 pt-5 overflow-y-auto h-[100vh]'>
+            <ul>
+              {traceList.map((traceData, index) => (
+                <MyTraceItem key={index} data={traceData} />
+              ))}
+            </ul>
+          </div>
+          {/* <CreateButton to='/space/upload' /> */}
       </div>
     </>
   );

@@ -25,7 +25,7 @@ const CommentForm = ({ setComment, comment, traceId }) => {
 
   return (
     <>
-      <div className='pr-5 fixed bottom-16 flex gap-1'>
+      <div className='pr-8 fixed bottom-16 flex gap-1'>
         <textarea
           rows="1"
           cols="50"

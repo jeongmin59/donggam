@@ -21,7 +21,6 @@ const TraceDetailFront = ({ data }) => {
     <div>
       <img className="trace-image" src={image} />
       <TraceDetailTitle title={title} content={formattedDate} />
-      {/* <div className="landmark-card"> */}
       <div className="trace-content flex items-center justify-center">
         <h4 className='text-center ownglyph-text text-xl w-[70%]'>{content}</h4>
       </div>

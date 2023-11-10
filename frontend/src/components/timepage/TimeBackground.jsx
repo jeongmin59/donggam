@@ -21,19 +21,19 @@ const TimeBackground = ({ currentTime, totalParticipants, isBestTime, remainTime
   }, [currentTime]);
 
   return (
-    <div className="h-[25vh] overflow-hidden">
+    <div className="h-[27vh] overflow-hidden">
       <div className={`pt-5 h-full ${timeClass}`}>
         <TimeHeaderTemplate currentTime={currentTime} />
         <div className = "float-right px-5 text-right">
           {isBestTime ? (
-            <div >
-              <h5>총 {totalParticipants}명이 참여했어요!</h5>
-              <h5>개장까지 {remainTime} 전</h5>
+            <div>
+              <h6>총 {totalParticipants}명이 참여했어요!</h6>
+              <h6>개장까지 {remainTime} 전</h6>
             </div>
           ) : (
             <div>
-              <h5>총 {totalParticipants}명이 참여중이에요!</h5>
-              <h5>마감까지 {remainTime} 전</h5>
+              <h6>총 {totalParticipants}명이 참여중이에요!</h6>
+              <h6>마감까지 {remainTime} 전</h6>
             </div>
           )}
         </div>

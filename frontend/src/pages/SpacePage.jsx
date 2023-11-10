@@ -41,30 +41,31 @@ const SpacePage = () => {
           />
         </div>
 
-        <div className="h-[70%] px-8 pt-8">
-          {/* <div className="mt-5 mb-20 px-5"> */}
-          <Slider {...settings} className="carousel">
-            <div className="trace-guide">
-              <div className="flex justify-center">
-                <img src={landmarkImg} style={{ width: '80%' }} />
+        <div className="h-[calc(100vh-250px)] mt-3 flex justify-center items-center px-8">
+          <div className="w-full max-w-md">
+            <Slider {...settings} className="carousel">
+              <div className="trace-guide">
+                <div className="flex justify-center">
+                  <img src={landmarkImg} style={{ width: '80%' }} />
+                </div>
+                <SpaceButton title="근처 랜드마크 찾기" to="/space/landmark" />
               </div>
-              <SpaceButton title="근처 랜드마크 찾기" to="/space/landmark" />
-            </div>
 
-            <div className="trace-guide">
-              <div className="flex justify-center">
-                <img src={traceImg} style={{ width: '80%' }} />
+              <div className="trace-guide">
+                <div className="flex justify-center">
+                  <img src={traceImg} style={{ width: '80%' }} />
+                </div>
+                <SpaceButton title="근처 방명록 찾기" to="/space/trace" />
               </div>
-              <SpaceButton title="근처 방명록 찾기" to="/space/trace" />
-            </div>
 
-            <div className="trace-guide">
-              <div className="flex justify-center">
-                <img src={myTraceImg} style={{ width: '80%' }} />
+              <div className="trace-guide">
+                <div className="flex justify-center">
+                  <img src={myTraceImg} style={{ width: '80%' }} />
+                </div>
+                <SpaceButton title="내 방명록" to="/mytrace" />
               </div>
-              <SpaceButton title="내 방명록" to="/mytrace" />
-            </div>
-          </Slider>
+            </Slider>
+          </div>
         </div>
         <NavBar />
       </div>

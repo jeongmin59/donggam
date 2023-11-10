@@ -24,7 +24,7 @@ const TraceDetailBack = ({ data, setComment, comment, traceId, setShowFront }) =
           <div>
             <h2 className='text-md'>{commentCount}개의 댓글</h2>
             <div className='overflow-y-scroll' style={{ height: '35vh' }}>
-              <li className='trace-comment-item flex-col justify-start items-end mb-4 gap-2 inline-flex' style={{ overflowY: 'scroll' }}>
+              <li className='trace-comment-item flex-col justify-start items-end mt-2 mb-4 gap-2 inline-flex' style={{ overflowY: 'scroll' }}>
                 {commentList.map((commentItem, index) => (
                   <CommentItem key={index} comment={commentItem} />
                 ))}

@@ -66,7 +66,7 @@
     @apply text-[0.875rem];
     font-family: "GmarketSansLight";
   }
-  p {
+  h6 {
     @apply text-[0.75rem];
     font-family: "GmarketSansLight";
   }

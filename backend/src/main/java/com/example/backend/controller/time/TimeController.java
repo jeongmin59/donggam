@@ -1,5 +1,6 @@
 package com.example.backend.controller.time;
 
+import com.example.backend.dto.image.BestImageDto;
 import com.example.backend.dto.image.ImageDetailDto;
 import com.example.backend.dto.image.ImageDto;
 import com.example.backend.dto.Response;
@@ -75,7 +76,7 @@ public class TimeController {
 
   @Operation(summary = "베스트 사진 목록", description = "베스트 사진 목록")
   @GetMapping("/best")
-  public Response<List<ImageDto.Response>> bestImages(
+  public Response<BestImageDto.Response> bestImages(
       @Parameter(hidden = true) @AuthenticationPrincipal UserDetails userDetails
   ) {
     Long memberId = Long.parseLong(userDetails.getUsername());

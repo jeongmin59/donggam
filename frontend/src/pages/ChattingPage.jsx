@@ -48,7 +48,7 @@ const ChattingPage = () => {
 
   const disconnectStomp = () => {
     if (stompClient !== null) {
-      stompClient.disconect();
+      stompClient.disconnect();
     }
   }
 

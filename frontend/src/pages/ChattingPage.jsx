@@ -97,50 +97,51 @@ const ChattingPage = () => {
   return (
     <div
       className=" flex flex-col chatting h-screen bg-white w-full"
-      // style={{ overflowY: "hidden" }}
     >
       <div>
-        <Header title={roomName} to="/chatroom" />
+        <Header title={roomName} to="/chatroom" className='fixed' />
       </div>
-      <ul
-        className="w-full h-full pt-5"
-        id="chatWindow"
-        style={{ overflowY: "scroll" }}
-      >
-        {chatList &&
-          chatList.length > 0 &&
-          chatList.map((chat) => (
-            <li
-              key={chat.id}
-              className={`chatbox ${
-                user.memberId === chat.senderId ? "text-right" : "text-left"
-              }`}
-            >
-              {user.memberId !== chat.senderId && ( // 이 부분 추가
-                <div className="chat_user_name text-md font-bold mt-5 ml-5 mr-8">
-                  {chat.sender}
-                </div>
-              )}              
-              <div
-                className={`inline-block ${
-                  user.memberId === chat.senderId
+
+      <div className="h-[70%]" style={{ overflowY: "scroll" }}>
+        <ul
+          className="w-full pt-5"
+          id="chatWindow"
+        >
+          {chatList &&
+            chatList.length > 0 &&
+            chatList.map((chat) => (
+              <li
+                key={chat.id}
+                className={`chatbox ${user.memberId === chat.senderId ? "text-right" : "text-left"
+                  }`}
+              >
+                {user.memberId !== chat.senderId && ( // 이 부분 추가
+                  <div className="chat_user_name text-md font-bold mt-5 ml-5 mr-8">
+                    {chat.sender}
+                  </div>
+                )}
+                <div
+                  className={`inline-block ${user.memberId === chat.senderId
                     ? "bg-gray-100"
                     : "bg-mainColor"
-                } px-4 py-2 my-1 rounded-3xl border max-w-xs max-h-96 whitespace-pre-wrap ml-5 mr-5`}
-                style={{
-                  maxHeight: "auto",
-                  maxWidth: "auto",
-                  overflowWrap: "break-word",
-                  wordWrap: "break-word",
-                  wordBreak: "break-word",
-                }}
-              >
-                {chat.content}
-              </div>
-            </li>
-          ))}
-        <li className="bottom" style={{ height: "80px" }}></li>
-      </ul>
+                    } px-4 py-2 my-1 rounded-3xl border max-w-xs max-h-96 whitespace-pre-wrap ml-5 mr-5`}
+                  style={{
+                    maxHeight: "auto",
+                    maxWidth: "auto",
+                    overflowWrap: "break-word",
+                    wordWrap: "break-word",
+                    wordBreak: "break-word",
+                  }}
+                >
+                  {chat.content}
+                </div>
+              </li>
+            ))}
+          <li className="bottom" ></li>
+        </ul>
+      </div>
+
+
       {isActive ? (
         <div
           className=" bg-gray-100 rounded-full"
@@ -153,9 +154,10 @@ const ChattingPage = () => {
             height: "3rem",
           }}
         >
+          {/* 채팅 입력 */}
           <input
             type="text"
-            className="w-full h-full bg-transparent p-4"
+            className="w-full h-full bg-transparent py-4 pl-4 pr-16"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             onKeyPress={(e) => {
@@ -165,6 +167,7 @@ const ChattingPage = () => {
             }}
             style={{ borderRadius: "10px", flexShrink: 0 }}
           />
+          {/* 전송 버튼 */}
           <div
             className="inline-block absolute mr-5 top-1/2 transform -translate-y-1/3"
             onClick={handleSendMessage}

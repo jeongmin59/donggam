@@ -7,12 +7,8 @@ import traceImg from "../assets/images/trace-img.svg"
 import myTraceImg from "../assets/images/my-trace-img.svg"
 import SpaceButton from "../components/common/SpaceButton";
 import miniLogo from "../assets/tutorial/mini-logo.svg";
-import CreateButton from './../components/common/CreateButton';
 import { useNavigate } from "react-router";
 import NavBar from "../components/common/NavBar";
-// import ActiveDot from "../assets/icons/active-btn.svg"
-// import NonActiveDot from "../assets/icons/non-active-btn.svg"
-
 
 const SpacePage = () => {
   const navigate = useNavigate();
@@ -46,36 +42,32 @@ const SpacePage = () => {
         </div>
 
         <div className="h-[70%] flex justify-center items-center px-8 pt-8">
-        {/* <div className="mt-5 mb-20 px-5"> */}
+          {/* <div className="mt-5 mb-20 px-5"> */}
           <Slider {...settings} className="carousel">
             <div className="trace-guide">
               <div className="flex justify-center">
-                <img src={landmarkImg} style={{ width: '80%'}}  />
+                <img src={landmarkImg} style={{ width: '80%' }} />
               </div>
               <SpaceButton title="근처 랜드마크 찾기" to="/space/landmark" />
             </div>
 
             <div className="trace-guide">
               <div className="flex justify-center">
-                <img src={traceImg} style={{ width: '80%'}}/>
+                <img src={traceImg} style={{ width: '80%' }} />
               </div>
               <SpaceButton title="근처 방명록 찾기" to="/space/trace" />
             </div>
-            
+
             <div className="trace-guide">
               <div className="flex justify-center">
-                <img src={myTraceImg} style={{ width: '80%'}}/>
+                <img src={myTraceImg} style={{ width: '80%' }} />
               </div>
               <SpaceButton title="내 방명록" to="/mytrace" />
             </div>
           </Slider>
         </div>
-
         <NavBar />
-
-        <CreateButton to='/space/upload' />
       </div>
-
     </>
   );
 };

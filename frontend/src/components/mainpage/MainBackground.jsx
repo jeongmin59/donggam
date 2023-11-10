@@ -11,6 +11,7 @@ import { useSetRecoilState } from "recoil";
 import { LatitudeAtom, LongitudeAtom } from "../../recoil/location/locationAtom";
 import NavBar from "../common/NavBar";
 import { useNavigate } from 'react-router-dom';
+import { CharacterIdAtom, NicknameAtom, StatusMessageAtom, StatusMessageIdAtom } from "../../recoil/user/userAtom";
 
 
 const MainBackground = () => {
@@ -25,7 +26,10 @@ const MainBackground = () => {
   //위도 경도 recoil 상태 업데이트
   const setLongitudeAtom = useSetRecoilState(LongitudeAtom);
   const setLatitudeAtom = useSetRecoilState(LatitudeAtom);
-
+  const setCharacterId = useSetRecoilState(CharacterIdAtom);
+  const setNickname = useSetRecoilState(NicknameAtom);
+  const setStatusMessage = useSetRecoilState(StatusMessageAtom);
+  const setStatusMessageId = useSetRecoilState(StatusMessageIdAtom);
 
   // 주변 정보 
   const [selectedBackground, setSelectedBackground] = useState(''); // 날씨 배경 
@@ -83,6 +87,10 @@ const MainBackground = () => {
             setSelectedBackground(data.data.statusWeather);
             setAroundPeopleCount(data.data.aroundPeopleCount);
             setAroundPeople(data.data.aroundPeople);
+            setCharacterId(data.data.characterId);
+            setNickname(data.data.nickname);
+            setStatusMessage(data.data.status);
+            setStatusMessageId(data.data.statusId);
             updateUnreadCounts(data.data.unreadChatCount, data.data.unreadMessageCount);
           }
           console.log('위치 API 응답:', data.data)

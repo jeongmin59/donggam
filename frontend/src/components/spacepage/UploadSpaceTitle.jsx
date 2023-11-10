@@ -31,6 +31,7 @@ const UploadSpaceTitle = ({ title, setTitle, landmarkName }) => {
           placeholder="예시) 불꽃축제 숨은 명당"
           value={title}
           onChange={handleTitleChange}
+          maxLength={maxTitleLimit}
         />
       )}
     </>

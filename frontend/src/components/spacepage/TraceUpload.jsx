@@ -54,7 +54,7 @@ const TraceUpload = () => {
       <div className="mt-3 px-5 pb-10">
         <UploadSpacePhoto image={image} setImage={setImage} />
         <UploadSpaceTitle title={title} setTitle={setTitle} />
-        <UploadSpaceContent content={content} setContent={setContent} textLength={240} />
+        <UploadSpaceContent content={content} setContent={setContent} textLength={200} />
         <button
           onClick={handlePostTrace}
           className="w-full h-[55px] bg-white rounded-[80px] border-2 border-blue-200 justify-center items-center gap-[12.28px] inline-flex  font-base text-blue-200 "

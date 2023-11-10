@@ -4,7 +4,7 @@ import like from '../../assets/like/full_heart.png';
 import dislike from '../../assets/like/empty_heart.png';
 import alertIcon from '../../assets/icons/alert.png';
 import ToastModal from './../common/ToastModal';
-import { useNavigate } from 'react-router-dom';
+import SmallButton from '../common/SmallButton';
 
 const MailItem = ({ isOpen, onClose, mail, updateLikedState, setLikeMailCount }) => {
 
@@ -60,10 +60,11 @@ const MailItem = ({ isOpen, onClose, mail, updateLikedState, setLikeMailCount })
       }}
       onClick={handleBackgroundClick}
     >
-      <div className="bg-white rounded-2xl w-full h-1/2 max-w-md mx-auto my-auto p-4 z-30 flex flex-col items-center" style={{ overflow: 'auto' }}>
-        <div className="px-5 flex justify-between items-center w-full">
+      <div className="bg-white rounded-2xl w-full h-[70vh] max-w-md m-auto px-5 py-8 z-30 flex flex-col items-center">
+      {/* <div className="bg-white rounded-2xl w-full h-1/2 max-w-md mx-auto my-auto p-4 z-30 flex flex-col items-center" style={{ overflow: 'auto' }}> */}
+        <div className="px-5 pb-3 flex justify-between items-center w-full">
           {/* 보낸 사람 이름 */}
-          <h3 className="ownglyph-text text-lg">From: {mailDetail.from}</h3>
+          <h3 className="ownglyph-text text-xl">From: {mailDetail.from}</h3>
           <div>
             {/* 신고하기 버튼 */}
             <img src={alertIcon} onClick={handleReportClick} />
@@ -71,27 +72,26 @@ const MailItem = ({ isOpen, onClose, mail, updateLikedState, setLikeMailCount })
         </div>
         {showToast && <ToastModal message="쪽지가 신고되었습니다." onClose={() => setShowToast(false)} />}
         
-        {mailDetail.imgAddress && (
-          <div className='mt-2'>
-            <img 
-              src={mailDetail.imgAddress} 
-              alt="Mail Image"
-              className="w-full h-full" />
-          </div>
-        )}
-        <div 
-          className='mail-content w-5/6 h-full flex flex-col justify-center items-center' 
-          >
-            
-          <div className="mt-4 text-center">
-            <div className='ownglyph-text text-xl'>{mailDetail.content}</div>
-          </div>
+        <div className='flex flex-col justify-center items-center h-[50vh] overflow-y-auto py-3'>
+          {mailDetail.imgAddress && (
+            <div className='mt-4 flex justify-center items-center'>
+              <img 
+                src={mailDetail.imgAddress} 
+                alt="Mail Image"
+                className="w-[70%]" />
+            </div>
+          )}
+          {/* <div className='mail-content mx-2 flex flex-col justify-center items-center'> */}
+            <div className="mt-4 px-2 text-center">
+              <div className='ownglyph-text text-xl'>{mailDetail.content}</div>
+            </div>
+          {/* </div> */}
         </div>
-        
-        <h4 className="ownglyph-text ml-auto mb-3 text-right text-md text-gray-500">{mailDetail.localDate}</h4>
+        <h4 className="ownglyph-text ml-auto py-2 pr-5 text-right text-md text-gray-500">{mailDetail.localDate}</h4>
 
-        <div className='w-full h-8 px-3 py-2 bg-blue-300 rounded-3xl justify-center items-center gap-3 inline-flex' onClick={handleLikeClick}>
-          <h5 className='text-white'>마음에 들어요</h5>
+
+        <div className='w-full p-3 bg-mainColor rounded-3xl justify-center items-center gap-3 inline-flex' onClick={handleLikeClick}>
+          <h4>마음에 들어요</h4>
           {/* 좋아요 버튼 */}
           {isLiked ? (
             <img src={like} />

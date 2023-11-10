@@ -27,7 +27,7 @@ const TraceDetailBack = ({ data, setComment, comment, traceId, setShowFront }) =
   return (
     <div >
       {/* <img src='/icons/android-chrome-192x192.png' alt='지도 사진' className="trace-image text-justify" /> */}
-      <div src='/icons/android-chrome-192x192.png' alt='지도 사진' className="trace-image text-justify bg-slate-50"></div>
+      <div className="trace-image text-justify bg-slate-50"></div>
 
       <TraceDetailTitle title={title} content={location} />
 

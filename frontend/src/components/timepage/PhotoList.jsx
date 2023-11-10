@@ -6,7 +6,7 @@ import fullLikeImg from "../../assets/like/full_heart.png";
 import nullLogo from "../../assets/images/noPhoto.svg";
 import CreateButton from "../common/CreateButton";
 
-const PhotoList = () => {
+const PhotoList = ({ setTotalParticipants }) => {
   const [photos, setPhotos] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -16,6 +16,7 @@ const PhotoList = () => {
         const response = await axiosInstance.get("/time");
         if (response.data && response.data.data) {
           setPhotos(response.data.data);
+          setTotalParticipants(photos.length);
           console.log('왔니?', response);
         }
         setLoading(false);

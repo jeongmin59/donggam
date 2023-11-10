@@ -4,7 +4,7 @@ import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { useNavigate } from 'react-router-dom';
 
-const BestPhoto = () => {
+const BestPhoto = ({ setTotalParticipants }) => {
   const [photos, setPhotos] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -14,7 +14,8 @@ const BestPhoto = () => {
       try {
         const response = await axiosInstance.get("/time/best");
         if (response.data && response.data.data) {
-          setPhotos(response.data.data);
+          setPhotos(response.data.data.bestImages);
+          setTotalParticipants(response.data.data.totalParticipants);
         }
         console.log("베스트컷 왔니?", response);
         setLoading(false);
@@ -32,6 +33,7 @@ const BestPhoto = () => {
     };
 
     getPhotos();
+    console.log(photos);
   }, []);
 
   return (

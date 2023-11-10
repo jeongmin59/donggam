@@ -20,7 +20,6 @@ public class ChatMessageController {
     public SendChatMessageDto.Response message(
             SendChatMessageDto.Request request
     ) {
-        SendChatMessageDto.Response response = chatMessageService.sendMessage(request);
-        return response;
+        return chatMessageService.sendMessage(request);
     }
 }

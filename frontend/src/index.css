@@ -98,16 +98,18 @@
 
   /* 공간 캐러셀 */
   .trace-guide {
-    @apply rounded-[20px]  mb-5 py-10;
+    @apply rounded-[20px]  mb-5 py-10; 
     background-image: radial-gradient(
       96.37% 79.72% at 50% 50.12%,
       #fff 38.96%,
       #e1f0ff 100%
     );
+    /* box-shadow: 0px 3px 20px 0px rgba(97, 157, 218, 0.77); */
+
   }
 
   .carousel {
-    @apply list-none;
+    @apply list-none;    
   }
 
 

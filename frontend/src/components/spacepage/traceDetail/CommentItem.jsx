@@ -20,8 +20,8 @@ const CommentItem = (commentItem) => {
 
   return (
     <div className=' px-4 py-2 rounded-[16px] bg-slate-50 shadow-inherit shadow-md'>
-      <h4 className='text-left text-sm mb-2'>{content}</h4>
-      <p className='text-right text-xs'>{formattedDate}</p>
+      <h4 className='text-right text-sm mb-2'>{content}</h4>
+      <h6 className='text-right text-xs'>{formattedDate}</h6>
     </div>
   );
 };

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Masonry from "react-masonry-component";
 import fullLikeImg from "../../assets/like/full_heart.png";
 import nullLogo from "../../assets/images/noPhoto.svg";
+import CreateButton from "../common/CreateButton";
 
 const PhotoList = () => {
   const [photos, setPhotos] = useState([]);
@@ -40,13 +41,13 @@ const PhotoList = () => {
   };
 
   return (
-    <div className="px-5 bg-white h-[75vh] overflow-y-auto max-h-[calc(100vh-160px)] ">
+    <div className="px-5 bg-white h-[75vh]">
       {loading ? (
         <p>Loading...</p>
       ) : photos.length === 0 ? (
         <img src={nullLogo} alt="No Photos" className="mx-auto py-8" />
       ) : (
-        <Masonry className={"my-gallery-class"} options={masonryOptions}>
+        <Masonry className={"my-gallery-class overflow-y-auto max-h-[calc(100vh-200px)]"} options={masonryOptions}>
           {photos.map((photo) => (
             <div key={photo.imageId} className="masonry-grid-item " style={{ width: "50%" }}>
               <Link to={`/time/${photo.imageId}`} className="m-2 flex flex-col items-center relative">
@@ -59,7 +60,8 @@ const PhotoList = () => {
                 <h5 className="mt-1">{photo.title}</h5>
               </Link>
             </div>
-          ))}
+          ))}   
+        <CreateButton to="/time/upload" />  
         </Masonry>
       )}
     </div>

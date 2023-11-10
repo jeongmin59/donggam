@@ -210,9 +210,8 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #E4EFFF; /* 스크롤바 색상 */
-  border-radius: 6px; /* 스크롤바 모서리 둥글게 */
-  /* height: 3px */
+  /* background-color: #E4EFFF;  */
+  border-radius: 6px;
 }
 
 ::-webkit-scrollbar-track {

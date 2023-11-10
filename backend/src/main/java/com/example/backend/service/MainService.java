@@ -15,7 +15,9 @@ import com.example.backend.exception.type.CustomException;
 import com.example.backend.repository.mariaDB.member.CustomMemberRepository;
 import com.example.backend.repository.mariaDB.member.MemberRepository;
 import com.example.backend.repository.postgreSQL.MemberLocationRepository;
+import java.awt.Point;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -44,6 +46,13 @@ public class MainService {
         locationService.saveLocation(memberId, request.getLatitude(), request.getLongitude());
 
         List<Member> members = getAroundMembers(memberId);
+
+        if(members.size() != 0) {
+            Collections.shuffle(members);
+            if (members.size() > 5) {
+                members = members.subList(0, 5);
+            }
+        }
 
         // 내가 들어간 채팅방 중 내가 활성화된 채팅방 목록을 가져옴
         List<ChatRoom> chatRooms = customChatRoomRepository.findAllByMemberIdAndIsMemberActiveTrue(
@@ -76,12 +85,45 @@ public class MainService {
 
     // 주변사람들의 회원id와 캐릭터id를 가져오는 메서드
     private List<AroundDto.Response> getAroundPeople(List<Member> members) {
+        List<Point> points = new ArrayList<>();
+        setPosition(members.size(), points);
         return members.stream()
-                .map(member -> AroundDto.Response.builder()
-                        .memberId(member.getId())
-                        .characterId(member.getCharacterId())
-                        .build())
+                .map(member -> AroundDto.toAroundDtoResponse(members, member, points))
                 .collect(Collectors.toList());
+    }
+
+    private void setPosition(int size, List<Point> points) {
+        for (int i = 0; i < size; i++) {
+            boolean isOverlapping = true;
+            int positionX = 0;
+            int positionY = 0;
+
+            while (isOverlapping) {
+                isOverlapping = false;
+                positionX = (int) (Math.random() * (70 - 20) + 20);
+                positionY = (int) (Math.random() * (75 - 15) + 15);
+                if (
+                        positionX >= 15 &&
+                                positionX <= 60 &&
+                                positionY >= 25 &&
+                                positionY <= 60
+                ) {
+                    isOverlapping = true;
+                    continue;
+                }
+                for (Point point : points) {
+                    int charX = point.x;
+                    int charY = point.y;
+                    int dx = Math.abs(positionX - charX);
+                    int dy = Math.abs(positionY - charY);
+                    if (dx + dy < 30) {
+                        isOverlapping = true;
+                        break;
+                    }
+                }
+            }
+            points.add(new Point(positionX, positionY));
+        }
     }
 
     // 감정 날씨 분석 메서드
@@ -152,11 +194,6 @@ public class MainService {
         if (locationIds.isEmpty()) {
             return Collections.emptyList();
             // 다른 사용자가 있을 경우에는 랜덤으로 섞어서 최대 5명 반환
-        } else {
-            Collections.shuffle(locationIds);
-            if (locationIds.size() > 5) {
-                locationIds = locationIds.subList(0, 5);
-            }
         }
         return customMemberRepository.findByIdInAndLastUpdateTimeAfter(locationIds,
                 LocalDateTime.now().minusMinutes(10));

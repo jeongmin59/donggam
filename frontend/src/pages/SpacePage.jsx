@@ -41,7 +41,7 @@ const SpacePage = () => {
           />
         </div>
 
-        <div className="h-[70%] flex justify-center items-center px-8 pt-8">
+        <div className="h-[70%] px-8 pt-8">
           {/* <div className="mt-5 mb-20 px-5"> */}
           <Slider {...settings} className="carousel">
             <div className="trace-guide">

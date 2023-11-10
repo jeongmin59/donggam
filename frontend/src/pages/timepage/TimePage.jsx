@@ -3,7 +3,6 @@ import TimeBackground from "../../components/timepage/TimeBackground";
 import CreateButton from "../../components/common/CreateButton";
 import PhotoList from "../../components/timepage/PhotoList";
 import BestPhoto from "../../components/timepage/BestPhoto";
-import trophy from "../../assets/icons/trophy.png";
 import NavBar from "../../components/common/NavBar";
 
 const TimePage = () => {
@@ -68,7 +67,7 @@ const TimePage = () => {
       ) : (
         <div>
           <BestPhoto setTotalParticipants={setTotalParticipants}/>
-          <img src={trophy} alt="트로피" className="fixed bottom-[12vh] right-4 z-50 w-20 h-20" />
+          {/* <img src={trophy} alt="트로피" className="fixed bottom-[12vh] right-4 z-50 w-20 h-20" /> */}
         </div>
       )}
 

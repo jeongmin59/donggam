@@ -24,10 +24,10 @@ const PhotoList = ({ setTotalParticipants }) => {
         console.error("에러", error);
         setLoading(false);
         if (error.response.status === 401) {
-          console.log('401 에러 발생');
-          const confirm = window.confirm('다시 로그인 해주세요');
+          console.log("401 에러 발생");
+          const confirm = window.confirm("다시 로그인 해주세요");
           if (confirm) {
-            navigate('/login');
+            navigate("/login");
           }
         }
       }
@@ -44,18 +44,33 @@ const PhotoList = ({ setTotalParticipants }) => {
   return (
     <div className="px-5 bg-white h-[75vh]">
       {loading ? (
-        <p>Loading...</p>
+        <h4 className="text-center">Loading...</h4>
       ) : photos.length === 0 ? (
         <img src={nullLogo} alt="No Photos" className="mx-auto py-8" />
       ) : (
         <Masonry className={"my-gallery-class overflow-y-auto max-h-[calc(100vh-200px)]"} options={masonryOptions}>
           {photos.map((photo) => (
-            <div key={photo.imageId} className="masonry-grid-item " style={{ width: "50%" }}>
-              <Link to={`/time/${photo.imageId}`} className="m-2 flex flex-col items-center relative">
+            <div
+              key={photo.imageId}
+              className="masonry-grid-item "
+              style={{ width: "50%" }}
+            >
+              <Link
+                to={`/time/${photo.imageId}`}
+                className="m-2 flex flex-col items-center relative"
+              >
                 <div className="overflow-hidden">
-                  <img src={photo.imageAddress} alt={photo.title} className="rounded-lg" />
+                  <img
+                    src={photo.imageAddress}
+                    alt={photo.title}
+                    className="rounded-lg"
+                  />
                   {photo.isLiked ? (
-                    <img src={fullLikeImg} alt="Liked" className="absolute top-0 left-0 m-3" />
+                    <img
+                      src={fullLikeImg}
+                      alt="Liked"
+                      className="absolute top-0 left-0 m-3"
+                    />
                   ) : null}
                 </div>
                 <h5 className="mt-1">{photo.title}</h5>

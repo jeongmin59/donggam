@@ -20,7 +20,7 @@ const MyTraceItem = (traceData) => {
   return (
     <>
       <Link to={`/space/trace/${traceId}`} >
-        <div style={backgroundStyle} className='rounded-[16px] my-4 text-white flex justify-center items-center'>
+        <div style={backgroundStyle} className='rounded-[16px] my-5 text-white flex justify-center items-center'>
           <div className='flex-col items-center justify-center space-y-2'>
             <DateTimeFormatter className='text-center' dateTimeString={date} />
             <div className='text-center'>{title}</div>

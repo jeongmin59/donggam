@@ -21,7 +21,7 @@ const UploadSpaceContent = ({ content, setContent, textLength }) => {
         value={content}
         placeholder="예시) 나만 알고 싶은 추억의 공간!"
         onChange={handleContentChange}
-
+        maxLength={textLength}
       />
     </>
   );

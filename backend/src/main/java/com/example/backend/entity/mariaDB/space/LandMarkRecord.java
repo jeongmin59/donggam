@@ -28,7 +28,7 @@ public class LandMarkRecord {
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column
+  @Column(length = 512)
   private String content;
 
   @Column

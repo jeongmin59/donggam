@@ -10,8 +10,8 @@ import miniLogo from "../assets/tutorial/mini-logo.svg";
 import CreateButton from './../components/common/CreateButton';
 import { useNavigate } from "react-router";
 import NavBar from "../components/common/NavBar";
-import ActiveDot from "../assets/icons/active-btn.svg"
-import NonActiveDot from "../assets/icons/non-active-btn.svg"
+// import ActiveDot from "../assets/icons/active-btn.svg"
+// import NonActiveDot from "../assets/icons/non-active-btn.svg"
 
 
 const SpacePage = () => {
@@ -30,6 +30,9 @@ const SpacePage = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: false,
+    centerMode: true, // 중앙 정렬을 위해 추가
+    centerPadding: '0', // 중앙 정렬을 위해 추가
+    cssEase: 'linear', // 중앙 정렬을 위해 추가
   };
 
   return (
@@ -45,18 +48,20 @@ const SpacePage = () => {
         <div className="h-[70%] flex justify-center items-center px-8 pt-8">
         {/* <div className="mt-5 mb-20 px-5"> */}
           <Slider {...settings} className="carousel">
-            <div className="trace-guide ">
+            <div className="trace-guide">
               <div className="flex justify-center">
                 <img src={landmarkImg} style={{ width: '80%'}}  />
               </div>
               <SpaceButton title="근처 랜드마크 찾기" to="/space/landmark" />
             </div>
+
             <div className="trace-guide">
               <div className="flex justify-center">
                 <img src={traceImg} style={{ width: '80%'}}/>
               </div>
               <SpaceButton title="근처 방명록 찾기" to="/space/trace" />
             </div>
+            
             <div className="trace-guide">
               <div className="flex justify-center">
                 <img src={myTraceImg} style={{ width: '80%'}}/>

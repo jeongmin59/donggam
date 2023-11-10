@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Masonry from "react-masonry-component";
 import fullLikeImg from "../../assets/like/full_heart.png";
 import nullLogo from "../../assets/images/noPhoto.svg";
-import CreateButton from "../common/CreateButton";
+import CreateBtn from "../timepage/CreateBtn";
 
 const PhotoList = ({ setTotalParticipants }) => {
   const [photos, setPhotos] = useState([]);
@@ -35,7 +35,7 @@ const PhotoList = ({ setTotalParticipants }) => {
   };
 
   return (
-    <div className="px-5 bg-white h-[75vh]">
+    <div className="px-5 bg-white h-[73vh]">
       {loading ? (
         <h4 className="text-center">Loading...</h4>
       ) : photos.length === 0 ? (
@@ -70,9 +70,9 @@ const PhotoList = ({ setTotalParticipants }) => {
               </Link>
             </div>
           ))}   
-        <CreateButton to="/time/upload" />  
         </Masonry>
       )}
+      <CreateBtn to="/time/upload" />  
     </div>
   );
 };

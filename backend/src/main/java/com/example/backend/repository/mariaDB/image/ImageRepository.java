@@ -12,4 +12,7 @@ public interface ImageRepository extends JpaRepository<Image, Long> {
   List<Image> findByIsActiveTrue();
 
   List<Image> findAllByIsActiveFalse();
+
+  @Query("SELECT COUNT(*) FROM Image i where i.isActive = true")
+  Integer countByIsActiveTrue();
 }

@@ -1,5 +1,6 @@
 package com.example.backend.service;
 
+import com.example.backend.dto.image.BestImageDto;
 import com.example.backend.dto.image.ImageDetailDto;
 import com.example.backend.dto.image.ImageDto;
 import com.example.backend.dto.image.ImageLikeDto;
@@ -104,11 +105,17 @@ public class TimeService {
                 .build();
     }
 
-    public List<ImageDto.Response> bestImages(Long memberId) {
+    public BestImageDto.Response bestImages(Long memberId) {
+
         List<Image> images = customImageRepository.findTop3ByIsActiveOrderByLikeMemberDesc(true);
         if (images.isEmpty()) {
-            return Collections.emptyList();
+            return BestImageDto.Response.builder()
+                    .totalParticipants(0)
+                    .bestImages(Collections.emptyList())
+                    .build();
         }
+
+        Integer totalParticipantCount = imageRepository.countByIsActiveTrue();
 
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND.getMessage(),
@@ -116,7 +123,7 @@ public class TimeService {
 
         Collections.shuffle(images);
 
-        return images.stream().map(image ->
+        List<ImageDto.Response> bestImages = images.stream().map(image ->
                         ImageDto.Response.builder()
                                 .imageAddress(image.getImageAddress())
                                 .title(image.getTitle())
@@ -124,5 +131,10 @@ public class TimeService {
                                 .imageId(image.getId())
                                 .build())
                 .collect(Collectors.toList());
+
+        return BestImageDto.Response.builder()
+                .totalParticipants(totalParticipantCount)
+                .bestImages(bestImages)
+                .build();
     }
 }

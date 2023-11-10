@@ -12,7 +12,7 @@ const CharacterModal = ({ onClose, changeCharacter, nowCharacterId }) => {
 
 
   return (
-    <div className="fixed inset-0 bg-black/50 z-10">
+    <div className="fixed inset-0 bg-black/50 z-10 ">
       <div className="absolute bottom-0 w-full max-w-screen-md bg-white rounded-t-lg px-4 pb-10">
         <button 
           className="absolute top-0 right-0 mt-6 mr-6 text-blue-300"

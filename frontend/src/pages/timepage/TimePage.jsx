@@ -25,10 +25,10 @@ const TimePage = () => {
         targetHour = 16;
         targetMinute = 59;
       } else if (currentHour >= 20 && currentHour < 24) {
-        targetHour = 23;
+        targetHour = 29;
         targetMinute = 59;
-      } else if (currentHour >= 0 && currentHour < 5) {
-        targetHour = 4;
+      } else if (currentHour >= 0 && currentHour < 7) {
+        targetHour = 6;
         targetMinute = 59;
       }
       const timeDiffHour = targetHour - currentHour;
@@ -60,9 +60,9 @@ const TimePage = () => {
   return (
     <>
       <TimeBackground currentTime={currentTime} totalParticipants={totalParticipants} isBestTime={isBestTime} remainTime={remainTime}/>
-      {(currentTime >= 7 && currentTime < 10) || (currentTime >= 11 && currentTime < 14) || (currentTime >= 17 && currentTime < 20) ? (
+      {!isBestTime ? (
         <div>
-          <PhotoList setTotalParticipants={setTotalParticipants}/>
+          <PhotoList setTotalParticipants={setTotalParticipants} totalParticipants={totalParticipants} remainTime={remainTime} isBestTime={isBestTime}/>
         </div>
       ) : (
         <div>

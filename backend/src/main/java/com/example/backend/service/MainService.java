@@ -46,45 +46,26 @@ public class MainService {
         List<Member> members = getAroundMembers(memberId);
 
         // 내가 들어간 채팅방 중 내가 활성화된 채팅방 목록을 가져옴
-        List<ChatRoom> chatRooms = customChatRoomRepository.findAllByMemberIdAndIsMemberActiveTrue(memberId);
+        List<ChatRoom> chatRooms = customChatRoomRepository.findAllByMemberIdAndIsMemberActiveTrue(
+                memberId);
         int unreadChatCount = chatRooms.stream()
                 .flatMap(room -> room.getChat().stream())
-                .filter(chat -> !Objects.equals(chat.getSender().getId(), memberId) && !chat.getIsRead())
+                .filter(chat -> !Objects.equals(chat.getSender().getId(), memberId)
+                        && !chat.getIsRead())
                 .mapToInt(chat -> 1)
                 .sum();
 
         // 주변에 다른 사용자를 찾지 못했을 때
         if (members.isEmpty()) {
-            return MainDto.Response.builder()
-                    .unreadMessageCount(
-                            (int) member.getStatus().get(member.getStatus().size() - 1).getMessage()
-                                    .stream()
-                                    .filter(message -> !message.getIsRead())
-                                    .count())
-                    .unreadChatCount(unreadChatCount)
-                    .statusWeather(
-                            member.getStatus().get(member.getStatus().size() - 1).getEmotion())
-                    .aroundPeopleCount(0)
-                    .aroundPeople(null)
-                    .build();
+            return MainDto.toDtoAlone(member, unreadChatCount);
         }
 
         // 다른 사용자를 찾았을 때
         List<AroundDto.Response> aroundPeople = getAroundPeople(members);
-        Integer aroundPeopleCount = aroundPeople.size();
+        int aroundPeopleCount = aroundPeople.size();
         Emotion statusWeather = getStatusWeather(member, members);
 
-        return MainDto.Response.builder()
-                .unreadMessageCount(
-                        (int) member.getStatus().get(member.getStatus().size() - 1).getMessage()
-                                .stream()
-                                .filter(message -> !message.getIsRead())
-                                .count())
-                .statusWeather(statusWeather)
-                .unreadChatCount(unreadChatCount)
-                .aroundPeopleCount(aroundPeopleCount)
-                .aroundPeople(aroundPeople)
-                .build();
+        return MainDto.toDtoWith(member, statusWeather, unreadChatCount, aroundPeopleCount, aroundPeople);
     }
 
     public MemberDetailDto.Response otherMember(Long memberId) {
@@ -174,7 +155,7 @@ public class MainService {
         } else {
             Collections.shuffle(locationIds);
             if (locationIds.size() > 5) {
-                locationIds = locationIds.subList(0,5);
+                locationIds = locationIds.subList(0, 5);
             }
         }
         return customMemberRepository.findByIdInAndLastUpdateTimeAfter(locationIds,

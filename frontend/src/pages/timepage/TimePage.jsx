@@ -20,7 +20,6 @@ const TimePage = () => {
       {(currentTime >= 7 && currentTime < 10) || (currentTime >= 11 && currentTime < 14) || (currentTime >= 17 && currentTime < 20) ? (
         <div>
           <PhotoList />
-          <CreateButton to="/time/upload" />
         </div>
       ) : (
         <div>

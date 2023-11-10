@@ -18,27 +18,23 @@ const ChattingPage = () => {
   const user = useRecoilValue(UserSelector);
   const senderId = user.memberId;
   const sender = user.nickname;
-  const chatNames = chatList.map((chat) => chat.sender);
 
   const updateChatList = async () => {
     const res = await axiosInstance.get(`/chat/list/${roomId}`);
-    if (res.response && res.response.status === 401) {
-      console.log('401 에러 발생');
-      const confirm = window.confirm('다시 로그인 해주세요');
-      if (confirm) {
-        navigate('/login');
-      }
-    }
     setChatList(res.data.data);
   };
 
-  // Spring 서버와 채팅 연결
+  // 스프링 서버 stomp와 연결
   const updateStompClient = () => {
-    // const socket = new SockJS(`http://localhost:8080/stomp/chat`);
-    const socket = new SockJS(`https://k9e107.p.ssafy.io/stomp/chat`);
+    const socket = new SockJS(`https://k9e107.p.ssafy.io/stomp/chat`, null, {
+      transports: ["xhr-streaming", "xhr-polling"]
+    });
     const stompClient = Stomp.over(socket);
     SetStompClient(stompClient);
+  }
 
+  // 채팅 엔드포인트 subscribe
+  const connectStomp = () => {
     stompClient.connect({}, function (frame) {
       console.log("Connected : " + frame);
       stompClient.subscribe(`/sub/chat/room/${roomId}`, function (response) {
@@ -48,17 +44,16 @@ const ChattingPage = () => {
         chatWindow.scrollTop = chatWindow.scrollHeight;
       });
     });
-  };
+  }
+
+  const disconnectStomp = () => {
+    if (stompClient !== null) {
+      stompClient.disconect();
+    }
+  }
 
   const readChats = async () => {
-    const res = await axiosInstance.post(`/chat/list/${roomId}`);
-    if (res.response && res.response.status === 401) {
-      console.log('401 에러 발생');
-      const confirm = window.confirm('다시 로그인 해주세요');
-      if (confirm) {
-        navigate('/login');
-      }
-    }
+    await axiosInstance.post(`/chat/list/${roomId}`);
   };
 
   useEffect(() => {
@@ -66,16 +61,21 @@ const ChattingPage = () => {
     updateStompClient();
     return () => {
       readChats();
+      disconnectStomp();
     };
   }, []);
+
+  useEffect(() => {
+    if (stompClient !== null) {
+      connectStomp();
+    }
+  }, [stompClient]);
 
   useEffect(() => {
     const element = document.querySelector(".bottom");
     if (element) {
       element.scrollIntoView({ behavior: "auto", block: "end" });
     }
-    console.log(isActive);
-    console.log(roomName);
   }, [chatList]);
 
   // 메시지 전송
@@ -109,9 +109,9 @@ const ChattingPage = () => {
       >
         {chatList &&
           chatList.length > 0 &&
-          chatList.map((chat) => (
+          chatList.map((chat, index) => (
             <li
-              key={chat.id}
+              key={index}
               className={`chatbox ${
                 user.memberId === chat.senderId ? "text-right" : "text-left"
               }`}

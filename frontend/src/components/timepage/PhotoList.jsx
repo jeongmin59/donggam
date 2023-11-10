@@ -42,7 +42,7 @@ const PhotoList = () => {
   return (
     <div className="px-5 bg-white h-[75vh] overflow-y-auto max-h-[calc(100vh-160px)] ">
       {loading ? (
-        <p>Loading...</p>
+        <h4 className="text-center">Loading...</h4>
       ) : photos.length === 0 ? (
         <img src={nullLogo} alt="No Photos" className="mx-auto py-8" />
       ) : (

@@ -37,14 +37,14 @@ const TraceUpload = () => {
           imageFile: image,
         };
         const res = await postTrace(traceData);
-        console.log("방명록 작성 완료:", res);
+        // console.log("방명록 작성 완료:", res);
         navigator('/mytrace')
       }
       else {
         handleToastOpen();
       }
     } catch (err) {
-      console.error("방명록 작성 실패:", err);
+      // console.error("방명록 작성 실패:", err);
 
     }
   };

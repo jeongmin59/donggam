@@ -53,7 +53,7 @@ const TimePage = () => {
 
   useEffect(() => {
     setCurrentTime(new Date().getHours());
-    console.log("현재 시간!", currentTime);
+    // console.log("현재 시간!", currentTime);
     calculateTime();
   }, []);
 

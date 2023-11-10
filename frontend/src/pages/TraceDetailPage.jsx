@@ -27,7 +27,7 @@ const TraceDetailPage = () => {
         // console.log('데이터 어케옴', res.data)
       })
       .catch((err) => {
-        console.log('방명록 상세보기  실패ㄱ-', err)
+        // console.log('방명록 상세보기  실패ㄱ-', err)
       })
   }, [])
 

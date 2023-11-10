@@ -15,17 +15,17 @@ const MailModal = ({mailModalInfo, closeMailModal}) => {
 
   const handleSendMailClick = async () => {
     if (!content) {                     
-      console.log("쪽지 내용을 작성하세요");
+      // console.log("쪽지 내용을 작성하세요");
       return;
     }
     try {
       const res = await sendMail(statusId, content, selectedImage);
       if (res) {
         closeMailModal();
-        console.log('쪽지 전송 성공', res.data);
+        // console.log('쪽지 전송 성공', res.data);
       }
     } catch (err) {
-      console.log("쪽지 전송 실패", err);
+      // console.log("쪽지 전송 실패", err);
     }
   }
 
@@ -56,7 +56,7 @@ const MailModal = ({mailModalInfo, closeMailModal}) => {
             setImageSrc(reader.result || null);
           };
         } catch (error) {
-          console.error("이미지 압축 중 에러", error);
+          // console.error("이미지 압축 중 에러", error);
         }
       } else {
         // 파일 크기가 제한 이하이면 그대로 처리

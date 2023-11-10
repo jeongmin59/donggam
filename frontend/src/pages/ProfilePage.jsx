@@ -50,14 +50,14 @@ const ProfilePage = () => {
             setStatus(newStatus);
             setStatusId(res.data.statusId);
             navigator('/'); // 정보 수정 후 메인페이지 이동
-            console.log('유저정보 변경', res);
+            // console.log('유저정보 변경', res);
           })
       }
       else {
         handleToastOpen();
       }
     } catch (err) {
-      console.log('유저 정보 변경 안됨 ㄱ-', err);
+      // console.log('유저 정보 변경 안됨 ㄱ-', err);
     }
   };
 

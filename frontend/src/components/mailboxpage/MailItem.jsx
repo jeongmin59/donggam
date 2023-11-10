@@ -44,7 +44,7 @@ const MailItem = ({ isOpen, onClose, mail, updateLikedState, setLikeMailCount })
         // console.log('쪽지디테일내놧!', res);
       })
       .catch((err) => {
-        console.log('쪽지 detail 가져오기 실패:', err);
+        // console.log('쪽지 detail 가져오기 실패:', err);
       });
   }, []);
 

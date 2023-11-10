@@ -15,7 +15,7 @@ const NearbyTracePage = () => {
         setTraceList(res.data)
       })
       .catch((err) => {
-        console.log('주변 방명록 목록 가져오기 실패:', err)
+        // console.log('주변 방명록 목록 가져오기 실패:', err)
       })
   }, [])
 

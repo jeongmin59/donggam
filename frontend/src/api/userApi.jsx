@@ -10,7 +10,7 @@ export const updateUser = async ({ nickname, status, characterId }) => {
     });
     return res.data;
   } catch (err) {
-    console.log('유저 정보 변경 실패!', err)
+    // console.log('유저 정보 변경 실패!', err)
     return err;
   }
 };
@@ -24,7 +24,7 @@ export const updateNickname = async (nickname) => {
     // console.log(' 닉네임 변경 됏나', res)
     return res.data;
   } catch (err) {
-    console.log('닉네임 변경 실패!', err)
+    // console.log('닉네임 변경 실패!', err)
     return err;
   }
 };
@@ -37,7 +37,7 @@ export const updateStatus = async (status) => {
     });
     return res.data;
   } catch (err) {
-    console.log('상태메시지 변경 실패!', err)
+    // console.log('상태메시지 변경 실패!', err)
     return err;
   }
 };
@@ -50,7 +50,7 @@ export const updateCharacter = async (characterId) => {
     });
     return res.data;
   } catch (err) {
-    console.log('캐릭터 변경 실패!', err)
+    // console.log('캐릭터 변경 실패!', err)
     return err;
   }
 };
@@ -61,7 +61,7 @@ export const getOtherUserInfo = async (memberId) => {
     const res = await axiosInstance.get(`/main/${memberId}`)
     return res.data;
   } catch (err) {
-    console.log('상대방 정보 가져오기 실패!', err);
+    // console.log('상대방 정보 가져오기 실패!', err);
     return err;
   }
 }

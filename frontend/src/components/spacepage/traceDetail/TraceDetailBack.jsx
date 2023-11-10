@@ -16,7 +16,7 @@ const TraceDetailBack = ({ data, setComment, comment, traceId, setShowFront }) =
 
   const updateLocation = async () => {
     const res = await getKakaoAddress(latitude, longitude);
-    console.log(res)
+    // console.log(res)
     setLocation(res);
   }
 

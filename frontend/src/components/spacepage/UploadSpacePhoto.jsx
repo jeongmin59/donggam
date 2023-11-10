@@ -34,7 +34,7 @@ const UploadSpacePhoto = ({ image, setImage }) => {
             setImageSrc(reader.result || null);
           };
         } catch (err) {
-          console.error("이미지 압축 실패", err);
+          // console.error("이미지 압축 실패", err);
         }
       }
     }

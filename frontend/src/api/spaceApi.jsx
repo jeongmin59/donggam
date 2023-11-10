@@ -4,10 +4,10 @@ import axiosInstance from "./axiosConfig";
 export const getTraceList = async () => {
   try {
     const res = await axiosInstance.get(`/space`);
-    console.log('주변 방명록 가져오기 성공', res)
+    // console.log('주변 방명록 가져오기 성공', res)
     return res.data;
   } catch (err) {
-    console.log('주변 방명록 가져오기 실패!', err)
+    // console.log('주변 방명록 가져오기 실패!', err)
     return err;
   }
 };
@@ -30,10 +30,10 @@ export const postTrace = async ({ title, content, latitude, longitude, imageFile
         'Content-Type': 'multipart/form-data',
       },
     });
-    console.log('방명록 작성 완 ㅋ', res.data);
+    // console.log('방명록 작성 완 ㅋ', res.data);
     return res.data;
   } catch (err) {
-    console.log('방명록 작성 실패 ㄱ-', err)
+    // console.log('방명록 작성 실패 ㄱ-', err)
   }
 }
 
@@ -41,10 +41,10 @@ export const postTrace = async ({ title, content, latitude, longitude, imageFile
 export const getTraceDetail = async (recordId) => {
   try {
     const res = await axiosInstance.get(`/space/${recordId}`);
-    console.log('방명록 내가 다봣지롱 ㅋ', res)
+    // console.log('방명록 내가 다봣지롱 ㅋ', res)
     return res.data;
   } catch (err) {
-    console.log('방명록 훔쳐보기 실패 ㄱ-', err)
+    // console.log('방명록 훔쳐보기 실패 ㄱ-', err)
     return err;
   }
 };
@@ -53,10 +53,10 @@ export const getTraceDetail = async (recordId) => {
 export const postTraceComment = async (recordId, content) => {
   try {
     const res = await axiosInstance.post(`/space/${recordId}`, { content });
-    console.log('댓글 달기 완 ㅋ', res)
+    // console.log('댓글 달기 완 ㅋ', res)
     return res.data;
   } catch (err) {
-    console.log('댓글 달게해줘! ㄱ-', err)
+    // console.log('댓글 달게해줘! ㄱ-', err)
     return err;
   }
 };
@@ -68,7 +68,7 @@ export const getMyTrace = async () => {
     // console.log('내 방명록 가져오기 성공', res)
     return res.data;
   } catch (err) {
-    console.log('내 방명록 가져오기 실패!', err)
+    // console.log('내 방명록 가져오기 실패!', err)
     return err;
   }
 };

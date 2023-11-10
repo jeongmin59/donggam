@@ -30,20 +30,23 @@ const LandmarkDetailPage = () => {
     <>
       <div className='bg-white h-screen'>
         <Header title={landmarkName} to="/space/" />
-        <div className='px-5 pt-5 overflow-y-auto max-h-[calc(100vh-160px)]'>
-          <ul>
-          {landmarkList.map((record,index) => (
-            <LandmarkItem 
-              key={index} 
-              time = {record.createdAt}
-              content = {record.content}
-              userName = {record.authorNickname}
-              imageUrl = {record.imageAddress} 
-            />
-          ))}
-          </ul>
+        <div className='px-5 pt-5 overflow-y-auto h-full max-h-[calc(100vh-100px)]'>
+          <div>
+            <ul>
+            {landmarkList.map((record,index) => (
+              <LandmarkItem 
+                key={index} 
+                time = {record.createdAt}
+                content = {record.content}
+                userName = {record.authorNickname}
+                imageUrl = {record.imageAddress} 
+              />
+            ))}
+            </ul>
+
+          </div>
         </div>
-        <CreateButton to='/space/upload' />
+        <CreateButton to='/space/upload' /> 
         {/* <NavBar /> */}
       </div>
     </>

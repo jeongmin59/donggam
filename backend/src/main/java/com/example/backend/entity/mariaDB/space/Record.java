@@ -34,7 +34,7 @@ public class Record {
     @Column
     private String title;
 
-    @Column
+    @Column(length = 512)
     private String content;
 
     @Column

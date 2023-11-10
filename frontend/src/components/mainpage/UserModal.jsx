@@ -11,21 +11,14 @@ const UserModal = ({ modalInfo, openMailModal }) => {
       memberId: modalInfo.otherMemberId,
     });
     if (res.status === 200) {
-      console.log(res.data.data); // roomId 확인
+      // console.log(res.data.data); // roomId 확인
       const roomId = res.data.data.roomId;
       const isActive = res.data.data.isActive;
       const roomName = modalInfo.otherNickname;
-      console.log(roomName);
+      // console.log(roomName);
       navigate(`/chatting/${roomId}`, {state : {isActive , roomName}});
     } else {
-      console.log('채팅 신청 실패');
-      if (res.response.status === 401) {
-        console.log('401 에러 발생');
-        const confirm = window.confirm('다시 로그인 해주세요');
-        if (confirm) {
-          navigate('/login');
-        }
-      }
+      // console.log('채팅 신청 실패');
     }
   }
 

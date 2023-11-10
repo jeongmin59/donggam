@@ -18,14 +18,14 @@ const LandmarkDetailPage = () => {
     getLandmarkGuestbook(landmarkIdInt)
       .then((res) => {
         setLandmarkList(res.data);
-        console.log('랜드마크 방명록 조회 성공', res.data)
+        // console.log('랜드마크 방명록 조회 성공', res.data)
       })
       .catch((err) => {
-        console.err('랜드마크 방명록 조회 실패', err)
+        // console.err('랜드마크 방명록 조회 실패', err)
       });
   },[landmarkId])
 
-  console.log('랜드마크 방명록',landmarkList);
+  // console.log('랜드마크 방명록',landmarkList);
   return(
     <>
       <div className='bg-white h-screen'>

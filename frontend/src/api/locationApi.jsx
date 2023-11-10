@@ -15,7 +15,7 @@ export const locationInfo = async (memberId, latitude, longitude) => {
         return res.data;
       }
       else {
-        console.error('위치 정보 API 요청 실패');
+        // console.error('위치 정보 API 요청 실패');
         return null;
       }
     }

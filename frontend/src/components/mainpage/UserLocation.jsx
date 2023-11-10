@@ -37,7 +37,7 @@ const UserLocation = ({ otherUserInfo }) => {
           setModalInfo(modalData);
         })
         .catch((error) => {
-          console.error("상대방 정보 가져오기 실패!", error);
+          // console.error("상대방 정보 가져오기 실패!", error);
         });
     }
   };

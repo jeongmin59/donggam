@@ -71,10 +71,10 @@ const MainBackground = () => {
           setLongitudeAtom(position.coords.longitude);
         },
         (e) => {
-          console.log(e.message)
+          // console.log(e.message)
         });
     } else {
-      console.log('위치 정보를 지원하지 않는 브라우저입니다.')
+      // console.log('위치 정보를 지원하지 않는 브라우저입니다.')
     }
   }, []);
 
@@ -93,7 +93,7 @@ const MainBackground = () => {
             setStatusMessageId(data.data.statusId);
             updateUnreadCounts(data.data.unreadChatCount, data.data.unreadMessageCount);
           }
-          console.log('위치 API 응답:', data.data)
+          // console.log('위치 API 응답:', data.data)
         });
     }
   }, [memberId, latitude, longitude]);

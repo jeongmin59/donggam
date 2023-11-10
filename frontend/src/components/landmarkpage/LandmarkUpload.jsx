@@ -31,11 +31,11 @@ const LandmarkUpload = () => {
             setLandmarkName(data.data.name || "")
             setLandmarkId(data.data.landMarkId)
           }
-          console.log('랜드마크 데이터 API 응답:', data.data.name);
-          console.log('랜드마크 데이터 API 응답:', data.data.landMarkId);
+          // console.log('랜드마크 데이터 API 응답:', data.data.name);
+          // console.log('랜드마크 데이터 API 응답:', data.data.landMarkId);
         })
         .catch((error) => {
-          console.error('랜드마크 검색 실패:', error);
+          // console.error('랜드마크 검색 실패:', error);
         });
     }
   }, [latitude, longitude]);
@@ -44,11 +44,11 @@ const LandmarkUpload = () => {
     try {
       if (landmarkId && (landmarkContent || landmarkImage)) {
         const res = await postLandmark(landmarkId, landmarkContent, landmarkImage);
-        console.log('랜드마크 방명록 작성 완료', res);
+        // console.log('랜드마크 방명록 작성 완료', res);
         navigate(`/space/landmark/${landmarkId}`,{ state: { landmarkName } });
       }
     } catch (err) {
-      console.error('랜드마크 방명록 작성 실패', err)
+      // console.error('랜드마크 방명록 작성 실패', err)
     }
   }
 

@@ -34,8 +34,8 @@ const FindingLandmark = () => {
             setLandmarkImage(data.data.imgUrl)
             setLandmarkId(data.data.landMarkId)
           }
-          console.log('랜드마크 데이터 API 응답:', data.data.name);
-          console.log('랜드마크 데이터 API 응답:', data.data.landMarkId);
+          // console.log('랜드마크 데이터 API 응답:', data.data.name);
+          // console.log('랜드마크 데이터 API 응답:', data.data.landMarkId);
 
           setTimeout(() => {
             setShowDetail(true);

@@ -16,7 +16,7 @@ const MyTracePage = () => {
         // console.log('내 방명록 잘 옴??', res.data)
       })
       .catch((err) => {
-        console.log('내 방명록 가져오기  실패ㄱ-', err)
+        // console.log('내 방명록 가져오기  실패ㄱ-', err)
       })
   }, [])
 

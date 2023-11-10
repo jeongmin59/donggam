@@ -28,7 +28,7 @@ const LoginRediect = () => {
     // axios.get(`http://localhost:8080/member/login?code=${code}`
     )
       .then((res) => {
-        console.log('성공!!', res.data);
+        // console.log('성공!!', res.data);
 
         // res 데이터 받아오기
         const accessToken = res.data.data.accessToken
@@ -63,7 +63,7 @@ const LoginRediect = () => {
         }
       })
       .catch(err => {
-        console.log('실패!!!!!!', err);
+        // console.log('실패!!!!!!', err);
         const confirm = window.confirm('로그인 실패');
         if (confirm) {
           navigator('/login');

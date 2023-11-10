@@ -5,15 +5,13 @@ import LandmarkItem from "../components/landmarkpage/LandmarkItem";
 import Header from '../components/common/Header';
 import { useNavigate } from 'react-router-dom';
 import CreateButton from '../components/common/CreateButton';
+// import NavBar from '../components/common/NavBar';
 
 const LandmarkDetailPage = () => {
   const location = useLocation();
-  // const landmarkName = location.state ;
   const landmarkName = location.state && location.state.landmarkName;
   const { landmarkId } = useParams(); 
   const [landmarkList, setLandmarkList] = useState([]);
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     const landmarkIdInt = parseInt(landmarkId, 10);
@@ -32,7 +30,7 @@ const LandmarkDetailPage = () => {
     <>
       <div className='bg-white h-screen'>
         <Header title={landmarkName} to="/space/" />
-        <div className='px-5 pt-5'>
+        <div className='px-5 pt-5 overflow-y-auto max-h-[calc(100vh-160px)]'>
           <ul>
           {landmarkList.map((record,index) => (
             <LandmarkItem 
@@ -46,6 +44,7 @@ const LandmarkDetailPage = () => {
           </ul>
         </div>
         <CreateButton to='/space/upload' />
+        {/* <NavBar /> */}
       </div>
     </>
   );

@@ -8,7 +8,6 @@ import UserCharacter from "./UserCharacter";
 import Modal from "../common/Modal";
 import UserModal from "./UserModal";
 import MailModal from "./MailModal";
-import { existingCharacterAtom } from "../../recoil/existingCharacter/existingCharacterAtom";
 
 const UserLocation = ({ otherUserInfo }) => {
   // 유저 정보
@@ -19,14 +18,6 @@ const UserLocation = ({ otherUserInfo }) => {
   // 주변 유저 정보 모달
   const [modalInfo, setModalInfo] = useState(null); // 유저 모달
   const [mailModalInfo, setMailModalInfo] = useState(null); // (예정) 쪽지 모달
-
-  // 주변 유저 목록 초기화
-  const resetExistingCharacters = useResetRecoilState(existingCharacterAtom);
-
-  useEffect(() => {
-    resetExistingCharacters();
-  }, []);
-  // const navigate = useNavigate();
 
   const handleModal = (otherUser) => {
     if (modalInfo) {
@@ -113,6 +104,8 @@ const UserLocation = ({ otherUserInfo }) => {
             <UserCharacter
               key={index}
               otherCharacterId={otherUser.characterId}
+              positionX={otherUser.positionX}
+              positionY={otherUser.positionY}
               onCharacterClick={() => handleModal(otherUser)}
             />
           ))}

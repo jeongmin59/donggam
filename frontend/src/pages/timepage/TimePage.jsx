@@ -7,22 +7,67 @@ import NavBar from "../../components/common/NavBar";
 
 const TimePage = () => {
   const [currentTime, setCurrentTime] = useState(new Date().getHours()); 
+  const [totalParticipants, setTotalParticipants] = useState(0);
+  const [remainTime, setRemainTime] = useState("0시간 0분");
+  const isBestTime = (currentTime >= 7 && currentTime < 10) || (currentTime >= 11 && currentTime < 14) || (currentTime >= 17 && currentTime < 20) ? false : true;
+
+  const calculateTime = () => {
+    const now = new Date();
+    const currentHour = now.getHours();
+    const currentMinute = now.getMinutes();
+    let targetHour, targetMinute;
+
+    if (isBestTime) {
+      if (currentHour >= 10 && currentHour < 11) {
+        targetHour = 10;
+        targetMinute = 59;
+      } else if (currentHour >= 14 && currentHour < 17) {
+        targetHour = 16;
+        targetMinute = 59;
+      } else if (currentHour >= 20 && currentHour < 24) {
+        targetHour = 23;
+        targetMinute = 59;
+      } else if (currentHour >= 0 && currentHour < 5) {
+        targetHour = 4;
+        targetMinute = 59;
+      }
+      const timeDiffHour = targetHour - currentHour;
+      const timeDiffMinute = targetMinute - currentMinute;
+      setRemainTime(`${timeDiffHour}시간 ${timeDiffMinute}분`)
+    } else if (!isBestTime) {
+      if (currentHour >= 7 && currentHour < 10) {
+        targetHour = 9;
+        targetMinute = 59;
+      } else if (currentHour >= 11 && currentHour < 14) {
+        targetHour = 13;
+        targetMinute = 59;
+      } else if (currentHour >= 17 && currentHour < 20) {
+        targetHour = 19;
+        targetMinute = 59;
+      }
+      const timeDiffHour = targetHour - currentHour;
+      const timeDiffMinute = targetMinute - currentMinute;
+      setRemainTime(`${timeDiffHour}시간 ${timeDiffMinute}분`)
+    }
+  }
 
   useEffect(() => {
     setCurrentTime(new Date().getHours());
     console.log("현재 시간!", currentTime);
+    calculateTime();
   }, []);
 
   return (
     <>
-      <TimeBackground currentTime={currentTime} />
+      <TimeBackground currentTime={currentTime} totalParticipants={totalParticipants} isBestTime={isBestTime} remainTime={remainTime}/>
       {(currentTime >= 7 && currentTime < 10) || (currentTime >= 11 && currentTime < 14) || (currentTime >= 17 && currentTime < 20) ? (
         <div>
-          <PhotoList />
+          <PhotoList setTotalParticipants={setTotalParticipants}/>
         </div>
       ) : (
         <div>
-          <BestPhoto />
+          <BestPhoto setTotalParticipants={setTotalParticipants}/>
+          {/* <img src={trophy} alt="트로피" className="fixed bottom-[12vh] right-4 z-50 w-20 h-20" /> */}
         </div>
       )}
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axiosInstance from "../../api/axiosConfig";
 import { useNavigate } from 'react-router-dom';
 
-const SingleImageDisplay = () => {
+const BestPhoto = ({ setTotalParticipants }) => {
   const [photos, setPhotos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
@@ -13,7 +13,8 @@ const SingleImageDisplay = () => {
       try {
         const response = await axiosInstance.get("/time/best");
         if (response.data && response.data.data) {
-          setPhotos(response.data.data);
+          setPhotos(response.data.data.bestImages);
+          setTotalParticipants(response.data.data.totalParticipants);
         }
         console.log("베스트컷 왔니?", response);
         setLoading(false);
@@ -79,4 +80,4 @@ const SingleImageDisplay = () => {
   );
 };
 
-export default SingleImageDisplay;
+export default BestPhoto;

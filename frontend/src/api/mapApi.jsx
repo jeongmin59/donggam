@@ -12,6 +12,6 @@ export const getKakaoAddress = async (latitude, longitude) => {
     // console.log('지도!해낸다.', fullAddress)
     return fullAddress;
   } catch (err) {
-    console.error('카카오 API 호출 오류:', err);
+    // console.error('카카오 API 호출 오류:', err);
   }
 };

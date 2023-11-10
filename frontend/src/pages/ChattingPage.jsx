@@ -36,7 +36,7 @@ const ChattingPage = () => {
   // 채팅 엔드포인트 subscribe
   const connectStomp = () => {
     stompClient.connect({}, function (frame) {
-      console.log("Connected : " + frame);
+      // console.log("Connected : " + frame);
       stompClient.subscribe(`/sub/chat/room/${roomId}`, function (response) {
         const message = JSON.parse(response.body);
         setChatList((prevChatList) => [...prevChatList, message]);

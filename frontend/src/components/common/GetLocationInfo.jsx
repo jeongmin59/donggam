@@ -8,10 +8,10 @@ export const getLocationInfo = (onLocationChange) => {
         onLocationChange(position);
       },
       (e) => {
-        console.log(e.message);
+        // console.log(e.message);
       }
     );
   } else {
-    console.log('위치 정보를 지원하지 않는 브라우저입니다.');
+    // console.log('위치 정보를 지원하지 않는 브라우저입니다.');
   }
 };

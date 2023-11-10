@@ -41,7 +41,7 @@ const PhotoUpload = () => {
         setPreviewUrl(previewUrl);
         setSelectedFile(compressedFile);
       } catch (error) {
-        console.error("이미지 압축 중 에러", error);
+        // console.error("이미지 압축 중 에러", error);
       }
     }
   };
@@ -58,18 +58,11 @@ const PhotoUpload = () => {
           "Content-Type": "multipart/form-data",
         },
       });
-      console.log("업로드 성공!!", response.data);
+      // console.log("업로드 성공!!", response.data);
       
       navigate('/time');
     } catch (error) {
-      console.error("에러", error);
-      if (error.response.status === 401) {
-        console.log('401 에러 발생');
-        const confirm = window.confirm('다시 로그인 해주세요');
-        if (confirm) {
-          navigate('/login');
-        }
-      }
+      // console.error("에러", error);
     }
   };
 

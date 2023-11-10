@@ -47,10 +47,11 @@ public class ChatMessageService {
                 .isRead(request.getIsRead())
                 .build();
 
-        chatRepository.save(chat);
+        Chat savedChat = chatRepository.save(chat);
         String topic = channelTopic.getTopic();
 
-        chatRoom.setLastChatTime(chat.getCreatedAt());
+        chatRoom.setLastChatTime(savedChat.getCreatedAt());
+        chatRoomRepository.save(chatRoom);
 
         // ChatMessageRequest에 유저정보, 현재시간 저장
         request.setSender(member.getNickname());

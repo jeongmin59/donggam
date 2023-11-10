@@ -132,7 +132,7 @@
   .photo-frame {
     @apply 
     /* relative h-[50vh] max-h-[] my-5 rounded-lg flex items-center justify-center overflow-hidden; */
-    relative h-[90vw] max-h-[90vh] my-5 rounded-lg flex items-center justify-center overflow-hidden;
+    relative h-[370px]  my-5 rounded-lg flex items-center justify-center overflow-hidden;
     background-image: radial-gradient(
       50.13% 50% at 50.13% 50%,
       #fff 51.98%,
@@ -202,3 +202,27 @@
     #d6dfec 100%
   );
 }
+
+/* 스크롤바 커스터마이징 */
+::-webkit-scrollbar {
+  width: 5px; /* 스크롤바 너비 */
+  
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #E4EFFF; /* 스크롤바 색상 */
+  border-radius: 6px; /* 스크롤바 모서리 둥글게 */
+  /* height: 3px */
+}
+
+::-webkit-scrollbar-track {
+  background-color: rgba(228, 239, 255, 0);
+  border-radius: 6px;
+}
+
+/* 스크롤바에 마우스 오버 시 스타일 변경 */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #ABCEF2; /* 마우스 오버 시 스크롤바 색상 변경 */
+}
+
+

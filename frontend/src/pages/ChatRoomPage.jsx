@@ -32,7 +32,7 @@ const ChatRoomPage = () => {
   }, []);
 
   return (
-    <div className="chatting h-full bg-gradient-to-b from-[#e5f3ff] to-white">
+    <div className="chatting h-screen bg-gradient-to-b from-[#e5f3ff] to-white">
       <div>
         <Header title="채팅 목록 보기" to="/" />
       </div>

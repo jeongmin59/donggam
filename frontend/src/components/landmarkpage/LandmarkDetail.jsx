@@ -10,9 +10,6 @@ const LandmarkDetail = ({ landmarkName, landmarkImage, landmarkId }) => {
   const handleButtonClick = () => {
     navigate(`/space/landmark/${landmarkId}`, { state: { landmarkName } }); // 클릭 시 지정한 경로로 이동
   };
-  const handleBackBtnClick = () => {
-    navigate('/space');
-  }
 
   return (
     <>

@@ -37,7 +37,7 @@ const PhotoDetail = () => {
   };
 
   return (
-    <div className="px-5 mt-4 mb-8 flex items-center justify-center">
+    <div className="px-5 pt-4 mb-8 flex items-center justify-center">
       {photoData ? (
         <div className="max-w-fit h-1/2 bg-white rounded-xl shadow-xl p-8 text-center">
           <img

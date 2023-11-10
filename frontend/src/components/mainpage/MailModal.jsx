@@ -3,7 +3,6 @@ import { sendMail } from "../../api/mailApi";
 import addPhotoIcon from "../../assets/icons/addPhoto-icon.svg"
 import { useState, useRef } from "react";
 import imageCompression from 'browser-image-compression';
-import { useNavigate } from 'react-router-dom';
 
 const MailModal = ({mailModalInfo, closeMailModal}) => {
   const statusId = mailModalInfo.otherStatusId
@@ -13,8 +12,6 @@ const MailModal = ({mailModalInfo, closeMailModal}) => {
   const [imageSrc, setImageSrc]= useState(null);
 
   const imageInputRef = useRef(null);
-
-  const navigate = useNavigate();
 
   const handleSendMailClick = async () => {
     if (!content) {                     
@@ -32,42 +29,49 @@ const MailModal = ({mailModalInfo, closeMailModal}) => {
     }
   }
 
-// 사진 관련
-const handleImageInputChange = async (e) => {
-  const file = e.target.files[0];
 
-  const maxSizeInBytes = 10 * 1024 * 1024; // 10MB
-  const maxWidth = 800;  // 최대 너비
-  const maxHeight = 600; // 최대 높이
+  // 사진 업로드 
+  const handleImageInputChange = async (e) => {
+    if (e.target.files.length > 0) {
+      const file = e.target.files[0];
 
-  if (file) {
-    try {
-      // 이미지 압축을 위한 설정
-      const options = {
-        maxSizeMB: maxSizeInBytes / (1024 * 1024), // 이미지 크기 제한 (10MB)
-        maxWidthOrHeight: Math.max(maxWidth, maxHeight),
-      };
+      // 파일 압축 
+      const maxSizeInBytes = 10 * 1024 * 1024;
 
-      // 이미지 압축을 수행하고 압축된 파일을 가져옴
-      const compressedFile = await imageCompression(file, options);
+      if (file.size > maxSizeInBytes) {
+        try {
+          const options = {
+            maxSizeMB: maxSizeInBytes / (1024 * 1024),
+            maxWidthOrHeight: Math.max(800, 600),
+          };
+          const compressedFile = await imageCompression(file, options);
 
-      // 압축된 이미지를 선택된 이미지로 설정
-      setSelectedImage(compressedFile);
-      setIsEditingImage(true);
+          setSelectedImage(compressedFile);
+          setIsEditingImage(true);
 
-      // 압축된 이미지의 미리보기 URL 생성
-      const reader = new FileReader();
-      reader.readAsDataURL(compressedFile);
-      reader.onload = () => {
-        setImageSrc(reader.result || null);
-      };
-    } catch (error) {
-      console.error("이미지 압축 중 에러", error);
+          // 압축된 이미지의 미리보기 URL 생성
+          const reader = new FileReader();
+          reader.readAsDataURL(compressedFile);
+          reader.onload = () => {
+            setImageSrc(reader.result || null);
+          };
+        } catch (error) {
+          console.error("이미지 압축 중 에러", error);
+        }
+      } else {
+        // 파일 크기가 제한 이하이면 그대로 처리
+        setSelectedImage(file);
+        setIsEditingImage(true);
+
+        // 미리보기
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+          setImageSrc(reader.result || null);
+        };
+      }
     }
-  }
-};
-
-  // console.log(statusId, content, selectedImage)
+  };
 
   return(
     <>

@@ -40,7 +40,7 @@ const PhotoList = () => {
   };
 
   return (
-    <div className="px-5 bg-white h-screen">
+    <div className="px-5 bg-white h-[75vh] overflow-y-auto max-h-[calc(100vh-160px)] ">
       {loading ? (
         <p>Loading...</p>
       ) : photos.length === 0 ? (
@@ -48,7 +48,7 @@ const PhotoList = () => {
       ) : (
         <Masonry className={"my-gallery-class"} options={masonryOptions}>
           {photos.map((photo) => (
-            <div key={photo.imageId} className="masonry-grid-item" style={{ width: "50%" }}>
+            <div key={photo.imageId} className="masonry-grid-item " style={{ width: "50%" }}>
               <Link to={`/time/${photo.imageId}`} className="m-2 flex flex-col items-center relative">
                 <div className="overflow-hidden">
                   <img src={photo.imageAddress} alt={photo.title} className="rounded-lg" />

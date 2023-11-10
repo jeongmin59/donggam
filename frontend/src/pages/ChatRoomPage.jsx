@@ -15,13 +15,13 @@ const ChatRoomPage = () => {
   };
 
   const onClickRoom = (roomId, isActive, roomName) => {
-    navigate(`/chatting/${roomId}`, {state : {isActive, roomName}});
+    navigate(`/chatting/${roomId}`, { state: { isActive, roomName } });
   };
 
   const onClickLeave = async (e, roomId) => {
     e.stopPropagation();
     const res = await axiosInstance.post(`/chat/leave`, {
-      roomId : roomId,
+      roomId: roomId,
     });
     const chatRoomList = res.data.data;
     setChatRoom(chatRoomList);
@@ -33,8 +33,10 @@ const ChatRoomPage = () => {
 
   return (
     <div className="chatting h-screen bg-gradient-to-b from-[#e5f3ff] to-white">
-      <Header title="채팅 목록 보기" to="/" />
-      <div className="flex flex-wrap gap-2 p-4 md:p-6 lg:p-8">
+      <div>
+        <Header title="채팅 목록 보기" to="/" />
+      </div>
+      <div className="flex flex-wrap p-4 md:p-6 lg:p-8">
         {chatRoom.length > 0 &&
           chatRoom.map((room) => (
             <div
@@ -63,7 +65,7 @@ const ChatRoomPage = () => {
                     </div>
                   )}
                   <div className="absolute top-0 right-0 p-2 cursor-pointer" onClick={(e) => onClickLeave(e, room.roomId)}>
-                    <XIcon className="h-5 w-5 text-gray-500"/>
+                    <XIcon className="h-5 w-5 text-gray-500" />
                   </div>
                 </div>
               </div>

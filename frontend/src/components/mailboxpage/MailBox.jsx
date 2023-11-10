@@ -43,12 +43,12 @@ const MailBox = () => {
   }
 
   useEffect(() => {
-    updateStatusList();
-  }, [])
-
-  useEffect(() => {
     updateMailList();
   }, [selectedStatusId]);
+
+  useEffect(() => {
+    updateStatusList();
+  }, [])
 
   // 선택된 상메 바꿔주는 함수
   const handleStatusChange = ({ selectedStatus, selectedStatusId }) => {
@@ -71,8 +71,8 @@ const MailBox = () => {
       <div className="text-center">
         {mailList.length > 0 ? (
           <div className='mt-4 grid grid-cols-3 gap-4'>
-            {mailList.map((mail, index) => (
-              <MailList key={index} mail={mail} setUnreadMailCount={setUnreadMailCount} setLikeMailCount={setLikeMailCount} />
+            {mailList.map(mail => (
+              <MailList key={mail.messageId} mail={mail} setUnreadMailCount={setUnreadMailCount} setLikeMailCount={setLikeMailCount} />
             ))}
           </div>
         ) : (

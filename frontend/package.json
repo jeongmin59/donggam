@@ -13,6 +13,7 @@
     "@heroicons/react": "1.0.0",
     "axios": "^1.5.1",
     "browser-image-compression": "^2.0.2",
+    "firebase": "^10.6.0",
     "image-compressor": "^2.0.3",
     "image-size": "^1.0.2",
     "react": "^18.2.0",

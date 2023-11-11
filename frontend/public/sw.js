@@ -5,7 +5,7 @@ const responseContent =
   "<head>" +
   "<meta charset='utf-8'>" + // 한글 인코딩 설정
   "<style>" +
-  "body {text-align: center; background-color: #333; color: #eee;}" +
+  "body {text-align: left;}" +
   "</style>" +
   "</head>" +
   "<body>" +

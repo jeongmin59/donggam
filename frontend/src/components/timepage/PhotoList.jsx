@@ -16,7 +16,7 @@ const PhotoList = ({ setTotalParticipants, totalParticipants, remainTime, isBest
         const response = await axiosInstance.get("/time");
         if (response.data && response.data.data) {
           setPhotos(response.data.data);
-          setTotalParticipants(photos.length);
+          setTotalParticipants(response.data.data.length);
           // console.log('왔니?', response);
         }
         setLoading(false);

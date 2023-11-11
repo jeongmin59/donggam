@@ -1,0 +1,21 @@
+{
+  "name": "동감(Ditto)",
+  "short_name": "ditto",
+  "start_url": "https://donggam.site",
+  "display": "standalone",
+  "background_color": "#E4EFFF",
+  "theme_color": "#E4EFFF",
+  "description": "위치 기반 SNS, 동감",
+  "icons": [
+    {
+      "src":"icons/android-chrome-192x192.png",
+      "sizes":"192x192",
+      "type":"image/png"
+    },
+    {
+      "src":"icons/android-chrome-512x512.png",
+      "sizes":"512x512",
+      "type":"image/png"
+    }
+  ]
+}

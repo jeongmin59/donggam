@@ -5,4 +5,5 @@ export const transmitFCMToken = async (fcmToken) => {
     const res = await axiosInstance.post(`/member/FCMToken`, {
         firebaseToken: fcmToken
     });
+    return res;
 }

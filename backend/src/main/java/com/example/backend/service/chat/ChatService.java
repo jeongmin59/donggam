@@ -11,6 +11,8 @@ import com.example.backend.exception.type.CustomException;
 import com.example.backend.repository.mariaDB.member.MemberRepository;
 import com.example.backend.repository.mariaDB.chat.ChatRepository;
 import com.example.backend.repository.mariaDB.chat.ChatRoomRepository;
+import com.example.backend.util.fcm.FCMNotificationRequestDto;
+import com.example.backend.util.fcm.FCMNotificationService;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +25,7 @@ public class ChatService {
     private final ChatRepository chatRepository;
     private final ChatRoomRepository chatRoomRepository;
     private final MemberRepository memberRepository;
+    private final FCMNotificationService fcmNotificationService;
 
     public List<ChatDto.Response> getChatList(Long roomId) {
         List<Chat> chatList = chatRepository.findAllByChatRoomId(roomId);
@@ -58,17 +61,24 @@ public class ChatService {
             return InviteChatDto.toDto(chatRoom1);
         } else if (chatRoom2 != null) {
             return InviteChatDto.toDto(chatRoom2);
+        } else {
+            // 처음 채팅하는 사람일 경우
+            ChatRoom chatRoom = chatRoomRepository.save(ChatRoom.builder()
+                    .member1(member1)
+                    .member2(member2)
+                    .isMember1Active(true)
+                    .isMember2Active(true)
+                    .build());
+
+            FCMNotificationRequestDto chatRoomAlert = FCMNotificationRequestDto.builder()
+                    .memberId(member1.getId())
+                    .title("새로운 만남의 시작")
+                    .body(member2.getNickname() + "에게서 대화를 신청받았어요.")
+                    .build();
+
+            fcmNotificationService.sendNotificationByToken(chatRoomAlert);
+
+            return InviteChatDto.toDto(chatRoom);
         }
-
-        // 처음 채팅하는 사람일 경우
-        ChatRoom chatRoom = chatRoomRepository.save(ChatRoom.builder()
-                .member1(member1)
-                .member2(member2)
-                .isMember1Active(true)
-                .isMember2Active(true)
-                .build());
-
-        return InviteChatDto.toDto(chatRoom);
-
     }
 }

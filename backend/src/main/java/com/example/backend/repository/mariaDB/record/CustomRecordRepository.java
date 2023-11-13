@@ -30,4 +30,11 @@ public class CustomRecordRepository extends QuerydslRepositorySupport{
         );
     }
 
+    public Record findWithCommentById(Long recordId) {
+        return queryFactory
+                .selectFrom(record)
+                .leftJoin(record.comments, recordComment).fetchJoin()
+                .where(record.id.eq(recordId))
+                .fetchOne();
+    }
 }

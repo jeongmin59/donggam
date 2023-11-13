@@ -22,7 +22,7 @@ const SpacePage = () => {
 
   const settings = {
     dots: true,
-    infinite: false,
+    infinite: true,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
@@ -49,7 +49,7 @@ const SpacePage = () => {
                 <div className="flex justify-center">
                   <img src={postImg} style={{ width: '80%' }} />
                 </div>
-                <SpaceButton title="방명록 쓰기" to="/space/upload" />
+                <SpaceButton title="방명록 작성" to="/space/upload" />
               </div>
 
               <div className="trace-guide">

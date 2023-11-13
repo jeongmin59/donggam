@@ -6,7 +6,7 @@ import fullLikeImg from "../../assets/like/full_heart.png";
 import nullLogo from "../../assets/images/noPhoto.svg";
 import CreateBtn from "../timepage/CreateBtn";
 
-const PhotoList = ({ setTotalParticipants }) => {
+const PhotoList = ({ setTotalParticipants, totalParticipants, remainTime, isBestTime }) => {
   const [photos, setPhotos] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -16,7 +16,7 @@ const PhotoList = ({ setTotalParticipants }) => {
         const response = await axiosInstance.get("/time");
         if (response.data && response.data.data) {
           setPhotos(response.data.data);
-          setTotalParticipants(photos.length);
+          setTotalParticipants(response.data.data.length);
           // console.log('왔니?', response);
         }
         setLoading(false);
@@ -50,6 +50,7 @@ const PhotoList = ({ setTotalParticipants }) => {
             >
               <Link
                 to={`/time/${photo.imageId}`}
+                state={{isBestTime, totalParticipants, remainTime}}
                 className="m-2 flex flex-col items-center relative"
               >
                 <div className="overflow-hidden">

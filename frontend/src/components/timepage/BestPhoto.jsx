@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 const BestPhoto = ({ setTotalParticipants }) => {
   const [photos, setPhotos] = useState([]);
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
   const navigate = useNavigate();
 
@@ -17,10 +17,10 @@ const BestPhoto = ({ setTotalParticipants }) => {
           setTotalParticipants(response.data.data.totalParticipants);
         }
         // console.log("베스트컷 왔니?", response);
-        setLoading(false);
+        // setLoading(false);
       } catch (error) {
         // console.error("에러", error);
-        setLoading(false);
+        // setLoading(false);
       }
     };
 
@@ -37,8 +37,8 @@ const BestPhoto = ({ setTotalParticipants }) => {
 
   return (
     <div className="px-5 bg-white h-[75vh]">
-      {loading ? (
-        <h4 className="text-center">Loading...</h4>
+      {!photos || photos.length === 0 ? (
+        <h4 className="text-center">전시할 사진이 없어요.</h4>
       ) : (
         <div className="bg-white shadow-xl">
           <div className="flex flex-col items-center">

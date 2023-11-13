@@ -120,4 +120,11 @@ public class RecordService {
             return MyRecordDto.toDto(record, recordLocation);
         }).collect(Collectors.toList());
     }
+
+    public List<RecordCommentDto.Response> recordComments(Long recordId) {
+        Record record = customRecordRepository.findWithCommentById(recordId);
+
+        return record.getComments().stream().map(RecordCommentDto::toCommentDto)
+                .collect(Collectors.toList());
+    }
 }

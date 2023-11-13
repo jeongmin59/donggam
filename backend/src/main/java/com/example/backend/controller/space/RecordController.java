@@ -78,4 +78,10 @@ public class RecordController {
         Long memberId = Long.parseLong(userDetails.getUsername());
         return new Response<>(200, "내 방명록 목록 조회 성공", recordService.myRecords(memberId));
     }
+
+    @Operation(summary = "방명록 댓글 조회", description = "방명록 댓글 조회")
+    @GetMapping("/comment/{recordId}")
+    public Response<List<RecordCommentDto.Response>> recordComments(@PathVariable("recordId") Long recordId) {
+        return new Response<>(200, "방명록 댓글 조회 성공", recordService.recordComments(recordId));
+    }
 }

@@ -35,12 +35,12 @@ const TimeBackground = ({
           {isBestTime ? (
             <div>
               <h6>총 {totalParticipants}장이 전시되었어요!</h6>
-              <h6>개장까지 {remainTime} 전</h6>
+              <h6>다음 전시회까지 {remainTime} 전</h6>
             </div>
           ) : (
             <div>
               <h6>총 {totalParticipants}장이 전시되어 있어요!</h6>
-              <h6>마감까지 {remainTime} 전</h6>
+              <h6>전시회 마감까지 {remainTime} 전</h6>
             </div>
           )}
         </div>

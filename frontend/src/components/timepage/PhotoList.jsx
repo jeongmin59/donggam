@@ -69,7 +69,7 @@ const PhotoList = ({
   };
 
   return (
-    <div className="h-[73vh] bg-white px-5">
+    <div className="h-[75vh] bg-white px-5">
       {loading ? (
         <h4 className="text-center">Loading...</h4>
       ) : photos.length === 0 ? (

@@ -106,7 +106,7 @@ public class MainService {
                         positionX >= 15 &&
                                 positionX <= 60 &&
                                 positionY >= 25 &&
-                                positionY <= 60
+                                positionY <= 75
                 ) {
                     isOverlapping = true;
                     continue;

@@ -130,6 +130,11 @@
     );
   }
 
+  .landmark-selector{
+    @apply flex w-[100%] px-9 py-2 rounded-[16px] text-center text-[14px] text-blue-400 outline-none border-2 border-blue-200
+
+  }
+
   /* 방명록 등록 */
   .photo-frame {
     @apply /* relative h-[50vh] max-h-[] my-5 rounded-lg flex items-center justify-center overflow-hidden; */

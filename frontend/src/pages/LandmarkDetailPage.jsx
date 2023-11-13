@@ -55,7 +55,7 @@ const LandmarkDetailPage = () => {
                 id="landmarkSelector"
                 onChange={(e) => handleLandmarkChange(e.target.value)}
                 value={selectedLandmark}
-                className='landmark-selector flex w-[100%] px-9 py-2 rounded-[16px] text-center text-[14px] bg-gray-200'
+                className='landmark-selector '
               >
                 {landmarks.map((landmark) => (
                   <option key={landmark} value={landmark}>

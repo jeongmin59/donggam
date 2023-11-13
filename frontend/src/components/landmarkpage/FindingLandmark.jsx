@@ -55,18 +55,24 @@ const FindingLandmark = () => {
     <>
       {loading ? (
         <div className="flex justify-center items-center h-screen bg-white">
-          <Lottie
-            options={{
-              loop: true,
-              autoplay: true,
-              animationData: loadingAnimation,
-              rendererSettings: {
-                preserveAspectRatio: "xMidYMid slice",
-              },
-            }}
-            height={200}
-            width={200}
-          />
+          <div className="flex-col">
+            <Lottie
+              options={{
+                loop: true,
+                autoplay: true,
+                animationData: loadingAnimation,
+                rendererSettings: {
+                  preserveAspectRatio: "xMidYMid slice",
+                },
+              }}
+              height={200}
+              width={300}
+            />
+            <div className="text-[14px] text-blue-300 text-center">
+              랜드마크를 찾고 있어요
+            </div>
+
+          </div>
         </div>
       ) : (
         <div>

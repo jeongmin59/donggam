@@ -71,10 +71,10 @@
     @apply text-[1rem];
     font-family: "GmarketSansBold";
   }
-  
-  p{
+
+  p {
     @apply text-[0.875rem];
-    font-family: "GmarketSansMedium";  
+    font-family: "GmarketSansMedium";
   }
 }
 
@@ -136,9 +136,8 @@
     );
   }
 
-  .landmark-selector{
-    @apply flex w-[100%] px-9 py-2 rounded-[16px] text-center text-[14px] text-blue-400 outline-none border-2 border-blue-200
-
+  .landmark-selector {
+    @apply flex w-[100%] px-9 py-2 rounded-[16px] text-center text-[14px] text-blue-400 outline-none border-2 border-blue-200;
   }
 
   /* 방명록 등록 */
@@ -247,17 +246,15 @@
   /* background-color: #abcef2;  */
 }
 
-
 .tutorial-style {
   @apply relative h-screen flex justify-center items-center overflow-hidden;
-  background: linear-gradient(180deg, #FFF 18.12%, #ABCEF2 100%);
+  background: linear-gradient(180deg, #fff 18.12%, #abcef2 100%);
 }
 
-.tutorial-text{
-  @apply w-[100%] text-center absolute top-[80px] left-1/2 transform -translate-x-1/2 space-y-2
+.tutorial-text {
+  @apply w-[100%] text-center absolute top-[80px] left-1/2 transform -translate-x-1/2 space-y-2;
 }
 
-.tutorial-img{
- @apply absolute bottom-[-30px] left-1/2 transform -translate-x-1/2 w-[70%];
+.tutorial-img {
+  @apply absolute bottom-[-30px] left-1/2 transform -translate-x-1/2 w-[70%];
 }
-

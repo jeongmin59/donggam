@@ -30,14 +30,14 @@ const MyTraceMap = ({ mappedList }) => {
         image: markerImage,
       });
       // 커스텀 오버레이를 생성합니다.
-      const title = positions[i].title.slice(0, 5);
+      // const title = positions[i].title.slice(0, 5);
+      const title = positions[i].title;
       const traceId = positions[i].traceId;
-      // const content = `<div style=>${title}</div>`;
 
       const content =
         `<div className="customoverlay">
           <a href="http://localhost:5173/space/trace/${traceId}">
-            <span className="title">${title}</span>
+            <h4 className="title">${title}</h4>
           </a>
         </div>`
 

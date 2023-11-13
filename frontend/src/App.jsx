@@ -20,6 +20,10 @@ import TutorialPage from "./pages/TutorialPage";
 import TraceDetailPage from "./pages/TraceDetailPage";
 import MyTracePage from "./pages/MyTracePage";
 import LandmarkDetailPage from "./pages/LandmarkDetailPage";
+import '../public/firebase-messaging-sw.js';
+import { getToken } from 'firebase/messaging';
+import { messaging } from './firebase.js';
+import { transmitFCMToken } from './api/transmitFCMToken.jsx';
 
 function App() {
 
@@ -28,13 +32,32 @@ function App() {
     .register('/sw.js')
     .then(registration => {
       console.log("Service Worker registered with scope : ", registration.scope);
-    }) 
+    })
     .catch(error => {
       console.log("Service Worker registration failed : ", error);
     })
   }
 
   const isLoggedIn = useRecoilValue(AccessTokenAtom);
+
+  if (isLoggedIn) {
+    Notification.requestPermission().then((permission) => {
+      if (permission === 'granted') {
+          // console.log('Notification permission granted.')
+          getToken(messaging).then(async (currentToken) => {
+              if (currentToken) {
+                  const res = await transmitFCMToken(currentToken)
+              } else {
+                  console.log('FCM Token Unavailable')
+              }
+          }).catch((err) => {
+              console.log('error', err);
+          })
+      }
+  }).catch((err) => {
+      console.log('error', err);
+  })
+  }
 
   return (
     <BrowserRouter>

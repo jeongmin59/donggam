@@ -66,9 +66,15 @@
     @apply text-[0.75rem];
     font-family: "GmarketSansLight";
   }
+
   sub-title {
     @apply text-[1rem];
     font-family: "GmarketSansBold";
+  }
+  
+  p{
+    @apply text-[0.875rem];
+    font-family: "GmarketSansMedium";  
   }
 }
 
@@ -240,3 +246,18 @@
 ::-webkit-scrollbar-thumb:hover {
   /* background-color: #abcef2;  */
 }
+
+
+.tutorial-style {
+  @apply relative h-screen flex justify-center items-center overflow-hidden;
+  background: linear-gradient(180deg, #FFF 18.12%, #ABCEF2 100%);
+}
+
+.tutorial-text{
+  @apply w-[100%] text-center absolute top-[80px] left-1/2 transform -translate-x-1/2 space-y-2
+}
+
+.tutorial-img{
+ @apply absolute bottom-[-30px] left-1/2 transform -translate-x-1/2 w-[70%];
+}
+

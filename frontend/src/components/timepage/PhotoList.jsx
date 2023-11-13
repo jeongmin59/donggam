@@ -35,13 +35,13 @@ const PhotoList = ({ setTotalParticipants, totalParticipants, remainTime, isBest
   };
 
   return (
-    <div className="px-5 bg-white h-[73vh] ">
+    <div className="px-5 bg-white h-[73vh]">
       {loading ? (
         <h4 className="text-center">Loading...</h4>
       ) : photos.length === 0 ? (
         <img src={nullLogo} alt="No Photos" className="mx-auto py-8" />
       ) : (
-        <Masonry className={"my-gallery-class overflow-y-auto max-h-[calc(100vh-250px)] pb-10"} options={masonryOptions}>
+        <Masonry className={"my-gallery-class overflow-auto max-h-[calc(100vh-300px)]"} options={masonryOptions}>
           {photos.map((photo) => (
             <div
               key={photo.imageId}

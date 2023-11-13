@@ -50,19 +50,6 @@ const FindingLandmark = () => {
     }
   }, [latitude, longitude, navigate]);
 
-  // useEffect(() => {
-  //   // landmark-no가 보여진 후 1초 뒤에 메인 페이지로 이동
-  //   if (!landmarkName) {
-  //     const timer = setTimeout(() => {
-  //       navigate("/");
-  //     }, 1000);
-
-  //     return () => {
-  //       // 컴포넌트가 언마운트될 때 타이머를 클리어
-  //       clearTimeout(timer);
-  //     };
-  //   }
-  // }, [landmarkName, navigate]);
 
   return(
     <>

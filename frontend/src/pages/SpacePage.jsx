@@ -2,6 +2,7 @@ import React from "react";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
+import postImg from "../assets/images/post-trace-img.svg"
 import landmarkImg from "../assets/images/landmark-img.svg"
 import traceImg from "../assets/images/trace-img.svg"
 import myTraceImg from "../assets/images/my-trace-img.svg"
@@ -44,6 +45,13 @@ const SpacePage = () => {
         <div className="h-[calc(100vh-250px)] mt-3 flex justify-center items-center px-8">
           <div className="w-full max-w-md">
             <Slider {...settings} className="carousel">
+              <div className="trace-guide">
+                <div className="flex justify-center">
+                  <img src={postImg} style={{ width: '80%' }} />
+                </div>
+                <SpaceButton title="방명록 쓰기" to="/space/upload" />
+              </div>
+
               <div className="trace-guide">
                 <div className="flex justify-center">
                   <img src={landmarkImg} style={{ width: '80%' }} />

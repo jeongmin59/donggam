@@ -35,7 +35,7 @@ const PhotoList = ({ setTotalParticipants, totalParticipants, remainTime, isBest
   };
 
   return (
-    <div className="px-5 bg-white h-[73vh]">
+    <div className="px-5 bg-white h-[75vh]">
       {loading ? (
         <h4 className="text-center">Loading...</h4>
       ) : photos.length === 0 ? (

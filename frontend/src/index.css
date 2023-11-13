@@ -76,9 +76,9 @@
   background-color: #d7ecff;
   height: 100vh;
   left: 50%;
+  transform: translate(-50%);
   max-width: 443px;
   position: absolute;
-  transform: translate(-50%);
   width: 100vw;
   z-index: -9999;
 
@@ -221,5 +221,5 @@
 
 /* 스크롤바에 마우스 오버 시 스타일 변경 */
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #abcef2; /* 마우스 오버 시 스크롤바 색상 변경 */
+  /* background-color: #abcef2;  */
 }

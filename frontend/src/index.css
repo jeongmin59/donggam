@@ -176,7 +176,17 @@
   .nav-shadow {
     box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.1);
   }
+
+  /* 지도 관련 */
+  .overlay-box {
+    @apply border-2 border-solid border-[#abcef2] border-b-2 bg-[#abcef2] rounded-[16px] p-1 text-center;
+  }
+
+  .overlay-link {
+    @apply block no-underline rounded-[12px];
+  }
 }
+
 .trace-content {
   @apply text-center h-[65vh] flex items-center justify-center;
   background-image: radial-gradient(

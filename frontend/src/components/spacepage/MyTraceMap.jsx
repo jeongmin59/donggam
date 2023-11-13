@@ -34,20 +34,24 @@ const MyTraceMap = ({ mappedList }) => {
       const title = positions[i].title;
       const traceId = positions[i].traceId;
 
-      const content =
-        `<div className="customoverlay">
-          <a href="http://localhost:5173/space/trace/${traceId}">
-            <h4 className="title">${title}</h4>
-          </a>
-        </div>`
+      // const content =
+      //   `<div>
+      //     <a href="http://localhost:5173/space/trace/${traceId}">
+      //       <h4>${title}</h4>
+      //     </a>
+      //   </div>`
 
-
+      const content = '<div class="overlay-box">' +
+        `  <a href="http://localhost:5173/space/trace/${traceId}" 
+    class="overlay-link">` +
+        `    <h5 class="text-white">${title}</h5>` +
+        '  </a>' +
+        '</div>';
 
       const customOverlay = new window.kakao.maps.CustomOverlay({
         content: content,
         position: positions[i].latlng,
-        yAnchor: 3
-
+        yAnchor: 2.5
       });
 
       // 커스텀 오버레이를 지도에 추가합니다.

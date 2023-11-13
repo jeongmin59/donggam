@@ -6,10 +6,15 @@ import BestPhoto from "../../components/timepage/BestPhoto";
 import NavBar from "../../components/common/NavBar";
 
 const TimePage = () => {
-  const [currentTime, setCurrentTime] = useState(new Date().getHours()); 
+  const [currentTime, setCurrentTime] = useState(new Date().getHours());
   const [totalParticipants, setTotalParticipants] = useState(0);
   const [remainTime, setRemainTime] = useState("0시간 0분");
-  const isBestTime = (currentTime >= 7 && currentTime < 10) || (currentTime >= 11 && currentTime < 14) || (currentTime >= 17 && currentTime < 20) ? false : true;
+  const isBestTime =
+    (currentTime >= 7 && currentTime < 10) ||
+    (currentTime >= 11 && currentTime < 14) ||
+    (currentTime >= 17 && currentTime < 20)
+      ? false
+      : true;
 
   const calculateTime = () => {
     const now = new Date();
@@ -33,7 +38,7 @@ const TimePage = () => {
       }
       const timeDiffHour = targetHour - currentHour;
       const timeDiffMinute = targetMinute - currentMinute;
-      setRemainTime(`${timeDiffHour}시간 ${timeDiffMinute}분`)
+      setRemainTime(`${timeDiffHour}시간 ${timeDiffMinute}분`);
     } else if (!isBestTime) {
       if (currentHour >= 7 && currentHour < 10) {
         targetHour = 9;
@@ -47,9 +52,9 @@ const TimePage = () => {
       }
       const timeDiffHour = targetHour - currentHour;
       const timeDiffMinute = targetMinute - currentMinute;
-      setRemainTime(`${timeDiffHour}시간 ${timeDiffMinute}분`)
+      setRemainTime(`${timeDiffHour}시간 ${timeDiffMinute}분`);
     }
-  }
+  };
 
   useEffect(() => {
     setCurrentTime(new Date().getHours());
@@ -59,20 +64,29 @@ const TimePage = () => {
 
   return (
     <>
-      <TimeBackground currentTime={currentTime} totalParticipants={totalParticipants} isBestTime={isBestTime} remainTime={remainTime}/>
+      <TimeBackground
+        currentTime={currentTime}
+        totalParticipants={totalParticipants}
+        isBestTime={isBestTime}
+        remainTime={remainTime}
+      />
       {!isBestTime ? (
         <div>
-          <PhotoList setTotalParticipants={setTotalParticipants} totalParticipants={totalParticipants} remainTime={remainTime} isBestTime={isBestTime}/>
+          <PhotoList
+            setTotalParticipants={setTotalParticipants}
+            totalParticipants={totalParticipants}
+            remainTime={remainTime}
+            isBestTime={isBestTime}
+          />
         </div>
       ) : (
         <div>
-          <BestPhoto setTotalParticipants={setTotalParticipants}/>
+          <BestPhoto setTotalParticipants={setTotalParticipants} />
           {/* <img src={trophy} alt="트로피" className="fixed bottom-[12vh] right-4 z-50 w-20 h-20" /> */}
         </div>
       )}
 
       <NavBar />
-
     </>
   );
 };

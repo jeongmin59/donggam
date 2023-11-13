@@ -3,9 +3,19 @@ import MyTraceItem from './../components/spacepage/MyTraceItem';
 import { getMyTrace } from "../api/spaceApi";
 import Header from './../components/common/Header';
 import CreateButton from './../components/common/CreateButton';
+import MyTraceMap from "../components/spacepage/MyTraceMap";
 
 const MyTracePage = () => {
   const [traceList, setTraceList] = useState([])
+  // console.log(traceList)
+
+  const mappedList = traceList.map(item => ({
+    title: item.title,
+    latlng: new window.kakao.maps.LatLng(item.latitude, item.longitude)
+  }));
+
+  console.log(mappedList)
+
 
 
   // 내 방명록 조회 axios 호출
@@ -30,6 +40,7 @@ const MyTracePage = () => {
               ))}
             </ul>
           </div>
+          <MyTraceMap mappedList={mappedList} />
         </div>
       </div>
       <CreateButton to='/space/upload' />

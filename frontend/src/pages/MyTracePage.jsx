@@ -11,10 +11,10 @@ const MyTracePage = () => {
 
   const [traceList, setTraceList] = useState([]);
 
-
   const mappedList = traceList.map(item => ({
     title: item.title,
-    latlng: new window.kakao.maps.LatLng(item.latitude, item.longitude)
+    latlng: new window.kakao.maps.LatLng(item.latitude, item.longitude),
+    traceId: item.recordId
   }));
 
   const updateTraceList = async () => {

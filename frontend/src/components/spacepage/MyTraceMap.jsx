@@ -12,7 +12,7 @@ const MyTraceMap = ({ mappedList }) => {
     const container = document.getElementById('map');
     const options = {
       center: new window.kakao.maps.LatLng(nowLatitude, nowLongitude),
-      level: 10
+      level: 10,
     };
 
     const map = new window.kakao.maps.Map(container, options);
@@ -27,9 +27,33 @@ const MyTraceMap = ({ mappedList }) => {
         map: map,
         position: positions[i].latlng,
         title: positions[i].title,
-        image: markerImage
+        image: markerImage,
       });
+      // 커스텀 오버레이를 생성합니다.
+      // const title = positions[i].title.slice(0, 5);
+      const title = positions[i].title;
+      const traceId = positions[i].traceId;
+
+      const content =
+        `<div className="customoverlay">
+          <a href="http://localhost:5173/space/trace/${traceId}">
+            <h4 className="title">${title}</h4>
+          </a>
+        </div>`
+
+
+
+      const customOverlay = new window.kakao.maps.CustomOverlay({
+        content: content,
+        position: positions[i].latlng,
+        yAnchor: 3
+
+      });
+
+      // 커스텀 오버레이를 지도에 추가합니다.
+      customOverlay.setMap(map);
     }
+
 
   }, []);
 

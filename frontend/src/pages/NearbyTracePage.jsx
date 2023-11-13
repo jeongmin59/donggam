@@ -63,7 +63,8 @@ const NearbyTracePage = () => {
           근처에 있는 {traceList.length}개의 <br /> 방명록을 발견했어요!
         </h2>
       </div>
-      <div ref={containerRef} className="overflow-auto px-5">
+
+      <div ref={containerRef} className="overflow-auto px-5 pb-20">
         <div className="mb-10 flex flex-col space-y-4">
           {displayData.map((trace, index) => (
             <TraceItem

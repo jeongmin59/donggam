@@ -3,7 +3,7 @@ import CommentForm from './CommentForm';
 import CommentItem from './CommentItem';
 import TraceDetailTitle from './TraceDetailTitle';
 import { getKakaoAddress } from '../../../api/mapApi';
-// import defaultimg from '../../../assets/icons/android-chrome-192x192.png'
+import TraceDetailMap from './TraceDetailMap';
 
 const TraceDetailBack = ({ data, setComment, comment, traceId, setShowFront }) => {
   const [location, setLocation] = useState('');
@@ -26,8 +26,7 @@ const TraceDetailBack = ({ data, setComment, comment, traceId, setShowFront }) =
 
   return (
     <div >
-      {/* <img src='/icons/android-chrome-192x192.png' alt='지도 사진' className="trace-image text-justify" /> */}
-      <div className="trace-image text-justify bg-slate-50"></div>
+      <TraceDetailMap latitude={latitude} longitude={longitude} />
 
       <TraceDetailTitle title={title} content={location} />
 

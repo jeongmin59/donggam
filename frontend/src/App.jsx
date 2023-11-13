@@ -20,9 +20,6 @@ import TutorialPage from "./pages/TutorialPage";
 import TraceDetailPage from "./pages/TraceDetailPage";
 import MyTracePage from "./pages/MyTracePage";
 import LandmarkDetailPage from "./pages/LandmarkDetailPage";
-import { getToken } from 'firebase/messaging';
-import { messaging } from './firebase.js';
-import { transmitFCMToken } from './api/transmitFCMToken.jsx';
 
 function App() {
 
@@ -38,35 +35,6 @@ function App() {
   }
 
   const isLoggedIn = useRecoilValue(AccessTokenAtom);
-
-  // 로그인되어있고, 알림이 가능한 브라우저라면 알림 허용 및 fcm토큰 발급
-  if (isLoggedIn && Notification) {
-    try {
-      Notification.requestPermission().then(permission => {
-        if (permission !== 'granted') return;
-        else {
-          getToken(messaging).then(async (currentToken) => {
-            if (currentToken) {
-              const res = await transmitFCMToken(currentToken);
-            } else {
-              console.log('FCM Token Unavailable');
-            }
-          }).catch(error => {
-            console.log(error);
-          }) 
-        }
-      })
-    } catch (error) {
-      if (error instanceof TypeError) {
-        Notificaion.requestPermission().then(permission => {
-          if (permission !== 'granted') return;
-        });
-      } else {
-        console.log(error);
-      }
-    }
-  }
-  
 
   return (
     <BrowserRouter>

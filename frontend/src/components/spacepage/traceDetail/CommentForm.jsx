@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import { postTraceComment } from '../../../api/spaceApi';
 import { useNavigate } from 'react-router-dom';
+import axios from "axios";
 
-const CommentForm = ({ setComment, comment, traceId }) => {
+const CommentForm = ({ setComment, comment, traceId, updateComments }) => {
 
   // 댓글 입력이 변경될 때 호출되는 함수
   const handleCommentChange = (e) => {
@@ -12,15 +13,22 @@ const CommentForm = ({ setComment, comment, traceId }) => {
   const navigate = useNavigate();
 
   // 댓글을 제출할 때 호출되는 함수
-  const handleSubmitComment = (e) => {
+  const handleSubmitComment = async (e) => {
     e.preventDefault(); // 폼 제출 시 페이지 리로드 방지
 
-    postTraceComment(traceId, comment)
+    try {
+      await postTraceComment(traceId, comment);
+      setComment(''); // 댓글 입력창 비우기
+      updateComments(); // 부모 컴포넌트에서 댓글 업데이트
+    } catch (error) {
+      console.error('댓글 등록 중 오류 발생:', error);
+    }
+    // postTraceComment(traceId, comment)
 
     // 댓글을 처리하고 상태 초기화 또는 전송할 수 있음
     // console.log('제출된 댓글:', comment);
-    setComment(''); // 댓글 입력창 비우기
-    window.location.reload();
+    // setComment(''); // 댓글 입력창 비우기
+    // window.location.reload();
   };
 
   return (

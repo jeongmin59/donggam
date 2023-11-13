@@ -14,7 +14,8 @@ const MailModal = ({mailModalInfo, closeMailModal}) => {
   const imageInputRef = useRef(null);
 
   const handleSendMailClick = async () => {
-    if (!content) {                     
+    if (!content && !isEditingImage) {       
+      alert('사진 등록 또는 쪽지를 작성해주세요.');              
       // console.log("쪽지 내용을 작성하세요");
       return;
     }

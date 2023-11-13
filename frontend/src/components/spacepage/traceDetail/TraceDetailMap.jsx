@@ -25,7 +25,7 @@ const TraceDetailMap = ({ title, longitude, latitude }) => {
     marker.setMap(map);
 
     const content = '<div class="overlay-box">' +
-      `  <a href="https://map.kakao.com/link/map/${latitude}, ${longitude}" class="overlay-link" target="_blank">` +
+      `  <a href="https://map.kakao.com/link/map/${title}, ${latitude}, ${longitude}" class="overlay-link" target="_blank">` +
       `    <h5 class="text-white">카카오 맵으로 보기</h5>` +
       '  </a>' +
       '</div>';

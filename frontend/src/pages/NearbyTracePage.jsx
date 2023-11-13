@@ -9,7 +9,7 @@ const NearbyTracePage = () => {
   const [displayData, setDisplayData] = useState([]); // 현재 화면에 보여줄 데이터
   const [currentPage, setCurrentPage] = useState(0); // 현재 페이지
 
-  const itemsPerPage = 10;
+  const itemsPerPage = 12;
   const containerRef = useRef(null);
 
   const navigate = useNavigate();

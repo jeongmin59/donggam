@@ -21,14 +21,12 @@ const MyTraceMap = ({ mappedList }) => {
 
     const imageSize = new window.kakao.maps.Size(60, 60);
     const markerImage = new window.kakao.maps.MarkerImage(markerImg, imageSize);
-    const title = new window.kakao.maps.MarkerTitle('안됨');
 
     for (let i = 0; i < positions.length; i++) {
       const marker = new window.kakao.maps.Marker({
         map: map,
         position: positions[i].latlng,
         title: positions[i].title,
-        text: title,
         image: markerImage
       });
     }

@@ -1,24 +1,22 @@
 import React, { useEffect, useState } from "react";
-import MyTraceItem from './../components/spacepage/MyTraceItem';
+import MyTraceItem from '../components/spacepage/MyTraceItem';
 import { getMyTrace } from "../api/spaceApi";
-import Header from './../components/common/Header';
-import CreateButton from './../components/common/CreateButton';
+import Header from '../components/common/Header';
+import CreateButton from '../components/common/CreateButton';
 import MyTraceMap from "../components/spacepage/MyTraceMap";
 
 const MyTracePage = () => {
-  const [traceList, setTraceList] = useState([])
-  // console.log(traceList)
+  // 탭 상태 설정 (default는 리스트로 보기)
+  const [isListTabSelected, setListTabSelected] = useState(true);
+
+  const [traceList, setTraceList] = useState([]);
+
 
   const mappedList = traceList.map(item => ({
     title: item.title,
     latlng: new window.kakao.maps.LatLng(item.latitude, item.longitude)
   }));
 
-  console.log(mappedList)
-
-
-
-  // 내 방명록 조회 axios 호출
   const updateTraceList = async () => {
     const res = await getMyTrace();
     setTraceList(res.data);
@@ -32,17 +30,37 @@ const MyTracePage = () => {
     <>
       <div className="bg-white h-screen">
         <Header title="내 방명록" to='/space' />
-        <div className='px-5 pt-5 overflow-y-auto h-full max-h-[calc(100vh-100px)]'>
+
+        {/* 탭 버튼 */}
+        <div className="flex justify-around">
+          <button
+            onClick={() => setListTabSelected(true)}
+            className={`${isListTabSelected ? 'isSelected-tab ' : 'isNotSelected-tab'}`}
+          >
+            <sub-title>리스트로 보기</sub-title>
+          </button>
+          <button
+            onClick={() => setListTabSelected(false)}
+            className={`${!isListTabSelected ? 'isSelected-tab' : 'isNotSelected-tab'}`}
+          >
+            <sub-title>지도로 보기</sub-title>
+          </button>
+        </div>
+
+
+        <div className='px-4 pt-2 overflow-y-auto h-full max-h-[calc(100vh-100px)]'>
           <div>
             <ul>
-              {traceList.map((traceData, index) => (
-                <MyTraceItem key={index} data={traceData} />
-              ))}
+              {isListTabSelected && (
+                traceList.map((traceData, index) => (
+                  <MyTraceItem key={index} data={traceData} />
+                )))
+              }
             </ul>
           </div>
-          <MyTraceMap mappedList={mappedList} />
+          {!isListTabSelected && <MyTraceMap mappedList={mappedList} />}
         </div>
-      </div>
+      </div >
       <CreateButton to='/space/upload' />
     </>
   );

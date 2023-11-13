@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import { LocationSelector } from './../../recoil/location/locationSelector';
+import markerImg from '../../assets/icons/marker.svg'
 
 const MyTraceMap = ({ mappedList }) => {
   const location = useRecoilValue(LocationSelector)
@@ -11,23 +12,23 @@ const MyTraceMap = ({ mappedList }) => {
     const container = document.getElementById('map');
     const options = {
       center: new window.kakao.maps.LatLng(nowLatitude, nowLongitude),
-      level: 3
+      level: 10
     };
 
     const map = new window.kakao.maps.Map(container, options);
 
     const positions = mappedList
 
-    const imageSrc =
-      'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png';
-    const imageSize = new window.kakao.maps.Size(24, 35);
-    const markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize);
+    const imageSize = new window.kakao.maps.Size(60, 60);
+    const markerImage = new window.kakao.maps.MarkerImage(markerImg, imageSize);
+    const title = new window.kakao.maps.MarkerTitle('안됨');
 
     for (let i = 0; i < positions.length; i++) {
       const marker = new window.kakao.maps.Marker({
         map: map,
         position: positions[i].latlng,
         title: positions[i].title,
+        text: title,
         image: markerImage
       });
     }
@@ -35,9 +36,10 @@ const MyTraceMap = ({ mappedList }) => {
   }, []);
 
 
-
   return (
-    <div id='map' className='trace-image'>
+    <div className=' flex justify-center px-4 pt-2'>
+      <div id='map' className='trace-map' >
+      </div>
     </div>
   );
 };

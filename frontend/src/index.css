@@ -58,10 +58,6 @@
     @apply text-[1rem];
     font-family: "GmarketSansMedium";
   }
-  h4 {
-    @apply text-[1rem];
-    font-family: "GmarketSansMedium";
-  }
   h5 {
     @apply text-[0.875rem];
     font-family: "GmarketSansLight";
@@ -69,6 +65,10 @@
   h6 {
     @apply text-[0.75rem];
     font-family: "GmarketSansLight";
+  }
+  sub-title {
+    @apply text-[1rem];
+    font-family: "GmarketSansBold";
   }
 }
 
@@ -159,6 +159,10 @@
     @apply h-[35vh] w-full bg-cover bg-center relative object-cover bg-slate-50;
   }
 
+  .trace-map {
+    @apply h-[45vh] w-full bg-cover bg-center relative object-cover;
+  }
+
   .trace-title {
     @apply w-[80%]  py-2 bg-white absolute left-1/2 -translate-x-1/2 top-[30%]
     border-2 border-[#ABCEF2] rounded-[16px];
@@ -207,6 +211,14 @@
     #fff 56.67%,
     #d6dfec 100%
   );
+}
+
+.isSelected-tab {
+  @apply text-[#ABCEF2] border-b-4 border-[#ABCEF2] mt-4;
+}
+
+.isNotSelected-tab {
+  @apply text-black mt-4;
 }
 
 /* 스크롤바 커스터마이징 */

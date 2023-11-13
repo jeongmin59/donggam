@@ -43,7 +43,7 @@ const TraceDetailBack = ({ data, setComment, comment, traceId, setShowFront }) =
 
   return (
     <div>
-      <TraceDetailMap latitude={latitude} longitude={longitude} />
+      <TraceDetailMap title={title} latitude={latitude} longitude={longitude} />
 
       <TraceDetailTitle title={title} content={location} />
 

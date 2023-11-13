@@ -10,6 +10,16 @@ const TraceDetailMap = ({ longitude, latitude }) => {
     };
 
     const map = new window.kakao.maps.Map(container, options);
+
+
+    const markerPosition = new window.kakao.maps.LatLng(latitude, longitude);
+
+    const marker = new window.kakao.maps.Marker({
+      position: markerPosition
+    });
+
+    marker.setMap(map);
+
   }, []);
 
 

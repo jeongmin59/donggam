@@ -9,15 +9,13 @@ const MyTracePage = () => {
 
 
   // 내 방명록 조회 axios 호출
+  const updateTraceList = async () => {
+    const res = await getMyTrace();
+    setTraceList(res.data);
+  }
+
   useEffect(() => {
-    getMyTrace()
-      .then((res) => {
-        setTraceList(res.data)
-        // console.log('내 방명록 잘 옴??', res.data)
-      })
-      .catch((err) => {
-        // console.log('내 방명록 가져오기  실패ㄱ-', err)
-      })
+    updateTraceList()
   }, [])
 
   return (

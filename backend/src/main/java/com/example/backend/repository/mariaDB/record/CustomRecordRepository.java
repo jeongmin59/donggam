@@ -37,4 +37,12 @@ public class CustomRecordRepository extends QuerydslRepositorySupport{
                 .where(record.id.eq(recordId))
                 .fetchOne();
     }
+
+    public Record findWithAuthorById(Long recordId) {
+        return queryFactory
+                .selectFrom(record)
+                .join(record.member, member)
+                .where(record.id.eq(recordId))
+                .fetchOne();
+    }
 }

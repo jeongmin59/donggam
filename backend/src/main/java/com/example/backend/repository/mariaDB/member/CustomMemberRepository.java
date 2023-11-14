@@ -25,13 +25,20 @@ public class CustomMemberRepository extends QuerydslRepositorySupport {
         this.queryFactory = queryFactory;
     }
 
-    public List<Member> findByIdInAndLastUpdateTimeAfter(List<Long> memberIds, LocalDateTime time) {
+//    public List<Member> findByIdInAndLastUpdateTimeAfter(List<Long> memberIds, LocalDateTime time) {
+//        return queryFactory
+//                .selectDistinct(member)
+//                .from(member)
+//                .leftJoin(member.status, status)
+//                .where(member.id.in(memberIds).and(member.lastUpdateTime.after(time)))
+//                .fetch();
+//    }
+    public Member findByIdAndLastUpdateTimeAfter(Long memberId, LocalDateTime time) {
         return queryFactory
-                .selectDistinct(member)
-                .from(member)
+                .selectFrom(member)
                 .leftJoin(member.status, status)
-                .where(member.id.in(memberIds).and(member.lastUpdateTime.after(time)))
-                .fetch();
+                .where(member.id.eq(memberId).and(member.lastUpdateTime.after(time)))
+                .fetchOne();
     }
 
     public Member findById(Long memberId) {

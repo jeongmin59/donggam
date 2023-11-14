@@ -19,6 +19,8 @@ import com.example.backend.repository.mariaDB.record.RecordRepository;
 import com.example.backend.repository.postgreSQL.MemberLocationRepository;
 import com.example.backend.repository.postgreSQL.RecordLocationRepository;
 import com.example.backend.util.ImageUtil;
+import com.example.backend.util.fcm.FCMNotificationRequestDto;
+import com.example.backend.util.fcm.FCMNotificationService;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -39,6 +41,7 @@ public class RecordService {
     private final CustomRecordRepository customRecordRepository;
     private final RecordLocationRepository recordLocationRepository;
     private final RecordCommentRepository recordCommentRepository;
+    private final FCMNotificationService fcmNotificationService;
 
     public RecordDetailDto.Response createRecord(Long memberId, RecordDetailDto.Request request, MultipartFile image)
             throws IOException {
@@ -71,8 +74,7 @@ public class RecordService {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND.getMessage(), ErrorCode.USER_NOT_FOUND));
 
-        Record record = recordRepository.findById(recordId)
-                .orElseThrow(() -> new CustomException(ErrorCode.ENTITY_NOT_FOUND.getMessage(), ErrorCode.ENTITY_NOT_FOUND));
+        Record record = customRecordRepository.findWithAuthorById(recordId);
 
         RecordComment recordComment = recordCommentRepository.save(RecordComment.builder()
                 .content(content)
@@ -80,6 +82,13 @@ public class RecordService {
                 .member(member)
                 .record(record)
                 .build());
+
+        FCMNotificationRequestDto commentAlert = FCMNotificationRequestDto.builder()
+                .memberId(record.getMember().getId())
+                .title("동감")
+                .body(record.getTitle() + "에 새로운 댓글이 달렸어요")
+                .build();
+        fcmNotificationService.sendNotificationByToken(commentAlert);
 
         return RecordCommentDto.toCommentDto(recordComment);
     }

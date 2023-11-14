@@ -72,8 +72,8 @@ public class ChatService {
 
             FCMNotificationRequestDto chatRoomAlert = FCMNotificationRequestDto.builder()
                     .memberId(member1.getId())
-                    .title("새로운 만남의 시작")
-                    .body(member2.getNickname() + "에게서 대화를 신청받았어요.")
+                    .title("동감")
+                    .body("새로운 대화가 시작되었어요")
                     .build();
 
             fcmNotificationService.sendNotificationByToken(chatRoomAlert);

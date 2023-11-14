@@ -63,8 +63,8 @@ public class MessageService {
         // fcm 알림 보내기
         FCMNotificationRequestDto messageAlert = FCMNotificationRequestDto.builder()
                 .memberId(status.getMember().getId())
-                .title("새 메시지 도착")
-                .body(from.getNickname() + "에게서 온 메시지를 확인해보세요")
+                .title("동감")
+                .body("새 쪽지를 확인해보세요")
                 .build();
 
         fcmNotificationService.sendNotificationByToken(messageAlert);

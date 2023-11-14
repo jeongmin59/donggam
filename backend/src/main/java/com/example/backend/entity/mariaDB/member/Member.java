@@ -51,6 +51,9 @@ public class Member {
     @Column
     private LocalDateTime lastUpdateTime;
 
+    @Column
+    private String firebaseToken;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<Status> status;
 

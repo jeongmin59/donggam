@@ -42,4 +42,13 @@ public class CustomChatRoomRepository extends QuerydslRepositorySupport {
                 .fetchOne();
     }
 
+    public ChatRoom findWithMemberById(Long roomId) {
+        return queryFactory
+                .selectFrom(chatRoom)
+                .join(chatRoom.member1, member)
+                .join(chatRoom.member2, member)
+                .where(chatRoom.id.eq(roomId))
+                .fetchOne();
+    }
+
 }

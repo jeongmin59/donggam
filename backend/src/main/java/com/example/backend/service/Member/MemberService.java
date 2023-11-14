@@ -130,6 +130,14 @@ public class MemberService {
                 lastStatus.getId(), lastStatus.getContent(), lastStatus.getEmotion().name());
     }
 
+    public void saveFirebaseToken(Long memberId, String firebaseToken) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND.getMessage(), ErrorCode.USER_NOT_FOUND));
+
+        member.setFirebaseToken(firebaseToken);
+        memberRepository.save(member);
+    }
+
     // 클라이언트에서 전달받은 code를 사용해서 카카오에서 accessToken 발급
     private String kakaoToken(String code) {
         RestTemplate rt = new RestTemplate();

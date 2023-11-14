@@ -1,41 +1,13 @@
-self.addEventListener("install", function (e) {
-  // console.log("fcm sw install..");
+self.addEventListener("install", () => {
+  console.log("fcm sw install..");
   self.skipWaiting();
 });
 
-self.addEventListener("activate", function (e) {
-  // console.log("fcm sw activate..");
+self.addEventListener("activate", () => {
+  console.log("fcm sw activate..");
 });
 
-// 알림이 가능한 브라우저라면 알림 허용 및 fcm토큰 발급
-if (Notification) {
-  try {
-    Notification.requestPermission().then(permission => {
-      if (permission !== 'granted') return;
-      else {
-        getToken(messaging).then(async (currentToken) => {
-          if (currentToken) {
-            const res = await transmitFCMToken(currentToken);
-          } else {
-            // console.log('FCM Token Unavailable');
-          }
-        }).catch(error => {
-          console.log(error);
-        }) 
-      }
-    })
-  } catch (error) {
-    if (error instanceof TypeError) {
-      Notificaion.requestPermission().then(permission => {
-        if (permission !== 'granted') return;
-      });
-    } else {
-      // console.log(error);
-    }
-  }
-}
-
-self.addEventListener("push", function (e) {
+self.addEventListener("push", e => {
   if (!e.data.json()) return;
 
   const resultData = e.data.json().notification;
@@ -46,12 +18,37 @@ self.addEventListener("push", function (e) {
   
   // console.log("push: ", { resultData, notificationTitle, notificationOptions });
 
-  self.registration.showNotification(notificationTitle, notificationOptions);
+
+  // 백그라운드 알림
+  e.waitUntil(
+    self.registration.showNotification(notificationTitle, notificationOptions)
+  );
+
+  // 포그라운드 알림
+  self.clients.matchAll({
+    includeUncontrolled: true,
+    type: 'window'
+  }).then(clientList => {
+    clientList.forEach(client => {
+      client.postMessage({
+        type: 'showNotification',
+        payload: {title: notificationTitle, options: notificationOptions},
+      });
+    });
+  });
 });
 
-self.addEventListener("notificationclick", function (event) {
+// 백그라운드 알림 표시
+self.addEventListener("notificationclick", event => {
   // console.log("notification click");
   const url = "/";
   event.notification.close();
   event.waitUntil(clients.openWindow(url));
 });
+
+// 포그라운드 알림 표시
+self.addEventListener('message', event => {
+  if (event.data.type === 'showNotification') {
+    self.registration.showNotification(event.data.payload.title, event.data.payload.options);
+  }
+})

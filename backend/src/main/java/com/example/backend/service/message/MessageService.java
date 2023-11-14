@@ -13,10 +13,13 @@ import com.example.backend.entity.mariaDB.message.Message;
 import com.example.backend.exception.ErrorCode;
 import com.example.backend.exception.type.CustomException;
 import com.example.backend.repository.mariaDB.member.MemberRepository;
+import com.example.backend.repository.mariaDB.status.CustomStatusRepository;
 import com.example.backend.repository.mariaDB.status.StatusRepository;
 import com.example.backend.repository.mariaDB.message.CustomMessageRepository;
 import com.example.backend.repository.mariaDB.message.MessageRepository;
 import com.example.backend.util.ImageUtil;
+import com.example.backend.util.fcm.FCMNotificationRequestDto;
+import com.example.backend.util.fcm.FCMNotificationService;
 import java.io.IOException;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -32,7 +35,9 @@ public class MessageService {
     private final MemberRepository memberRepository;
     private final CustomMessageRepository customMessageRepository;
     private final StatusRepository statusRepository;
+    private final CustomStatusRepository customStatusRepository;
     private final ImageUtil imageUtil;
+    private final FCMNotificationService fcmNotificationService;
 
     public Response sendMessage(Long memberId, MultipartFile img, Request request)
         throws IOException {
@@ -41,24 +46,28 @@ public class MessageService {
             throw new CustomException("내용이 없습니다.", ErrorCode.INVALID_INPUT_VALUE);
         }
         Long statusId = request.getStatusId();
-        Status status = statusRepository.findById(statusId).get();
-        if(status == null) {
-            throw new CustomException("상태 메세지가 존재하지 않습니다.", ErrorCode.NOT_SAME_DATA_VALUE);
-        }
+        Status status = customStatusRepository.findWIthMemberById(statusId);
 
         Member from = memberRepository.findById(memberId).get();
-
         if(from == null) {
             throw new CustomException("존재하지 않는 유저입니다", ErrorCode.NOT_SAME_DATA_VALUE);
         }
 
         String imageAddress = null;
-
         if(img != null){
             imageAddress = imageUtil.uploadImage(img, "message");
         }
 
         Message message = messageRepository.save(request.toMessageEnitty(from, imageAddress, status));
+
+        // fcm 알림 보내기
+        FCMNotificationRequestDto messageAlert = FCMNotificationRequestDto.builder()
+                .memberId(status.getMember().getId())
+                .title("동감")
+                .body("새 쪽지를 확인해보세요")
+                .build();
+
+        fcmNotificationService.sendNotificationByToken(messageAlert);
 
         return message.toSendMessageResponse();
     }

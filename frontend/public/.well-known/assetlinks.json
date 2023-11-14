@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "site.donggam.twa",
+        "sha256_cert_fingerprints": ["10:B1:59:3C:EA:B9:2A:44:27:DD:66:F8:06:6E:55:38:DE:14:55:1B:50:4A:DE:EB:AB:3D:27:19:47:D2:87:8D"]
+      }
+    }]

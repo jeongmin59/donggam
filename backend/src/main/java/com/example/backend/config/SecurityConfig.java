@@ -32,9 +32,9 @@ public class SecurityConfig {
                 .csrf().disable()
                 .cors()
 
-//                .and()
-//                .headers()
-//                .frameOptions().disable()
+                .and()
+                .headers()
+                .frameOptions().disable()
 
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

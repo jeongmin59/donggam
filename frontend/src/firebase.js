@@ -1,8 +1,5 @@
 // firebase를 초기화하고 firebase 앱 객체를 만듦
 import { initializeApp } from 'firebase/app';
-import { getMessaging, getToken } from 'firebase/messaging';
-import { getAnalytics } from "firebase/analytics";
-import { transmitFCMToken } from '../src/api/transmitFCMToken.jsx'
 
 //firebase 구성객체
 const firebaseConfig = {
@@ -16,26 +13,16 @@ const firebaseConfig = {
 };
 
 // Firebase 초기화
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const messaging = getMessaging(app);
+export const firebaseApp = initializeApp(firebaseConfig);
+// const analytics = getAnalytics(app);
+// const messaging = getMessaging(app);
 
-// 알림이 가능한 브라우저라면 알림 허용 및 fcm토큰 발급
+
+// 알림이 가능한 브라우저라면 알림 허용 신청
 if (Notification) {
   try {
     Notification.requestPermission().then(permission => {
       if (permission !== 'granted') return;
-      else {
-        getToken(messaging).then(async (currentToken) => {
-          if (currentToken) {
-            const res = await transmitFCMToken(currentToken);
-          } else {
-            // console.log('FCM Token Unavailable');
-          }
-        }).catch(error => {
-          console.log(error);
-        }) 
-      }
     })
   } catch (error) {
     if (error instanceof TypeError) {
@@ -47,4 +34,3 @@ if (Notification) {
     }
   }
 }
-

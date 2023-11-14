@@ -48,8 +48,8 @@ const MyTracePage = () => {
         </div>
 
 
-        <div className='px-4 pt-2 overflow-y-auto h-full max-h-[calc(100vh-100px)]'>
-          <div>
+        <div className='px-4 pt-2 bg-white '>
+          <div className="overflow-y-auto h-full max-h-[calc(100vh-100px)]">
             <ul>
               {isListTabSelected && (
                 traceList.map((traceData, index) => (

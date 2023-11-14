@@ -58,10 +58,6 @@
     @apply text-[1rem];
     font-family: "GmarketSansMedium";
   }
-  h4 {
-    @apply text-[1rem];
-    font-family: "GmarketSansMedium";
-  }
   h5 {
     @apply text-[0.875rem];
     font-family: "GmarketSansLight";
@@ -70,15 +66,25 @@
     @apply text-[0.75rem];
     font-family: "GmarketSansLight";
   }
+
+  sub-title {
+    @apply text-[1rem];
+    font-family: "GmarketSansBold";
+  }
+
+  p {
+    @apply text-[0.875rem];
+    font-family: "GmarketSansMedium";
+  }
 }
 
 :root {
   background-color: #d7ecff;
   height: 100vh;
   left: 50%;
+  transform: translate(-50%);
   max-width: 443px;
   position: absolute;
-  transform: translate(-50%);
   width: 100vw;
   z-index: -9999;
 
@@ -130,6 +136,10 @@
     );
   }
 
+  .landmark-selector {
+    @apply flex w-[100%] px-9 py-2 rounded-[16px] text-center text-[14px] text-blue-400 outline-none border-2 border-blue-200;
+  }
+
   /* 방명록 등록 */
   .photo-frame {
     @apply /* relative h-[50vh] max-h-[] my-5 rounded-lg flex items-center justify-center overflow-hidden; */
@@ -154,6 +164,10 @@
     @apply h-[35vh] w-full bg-cover bg-center relative object-cover bg-slate-50;
   }
 
+  .trace-map {
+    @apply h-[45vh] w-full bg-cover bg-center relative object-cover;
+  }
+
   .trace-title {
     @apply w-[80%]  py-2 bg-white absolute left-1/2 -translate-x-1/2 top-[30%]
     border-2 border-[#ABCEF2] rounded-[16px];
@@ -162,7 +176,17 @@
   .nav-shadow {
     box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.1);
   }
+
+  /* 지도 관련 */
+  .overlay-box {
+    @apply border-2 border-solid border-[#abcef2] border-b-2 bg-[#abcef2] rounded-[16px] p-1 text-center;
+  }
+
+  .overlay-link {
+    @apply block no-underline rounded-[12px];
+  }
 }
+
 .trace-content {
   @apply text-center h-[65vh] flex items-center justify-center;
   background-image: radial-gradient(
@@ -204,6 +228,14 @@
   );
 }
 
+.isSelected-tab {
+  @apply text-[#ABCEF2] border-b-4 border-[#ABCEF2] mt-4;
+}
+
+.isNotSelected-tab {
+  @apply text-black mt-4;
+}
+
 /* 스크롤바 커스터마이징 */
 ::-webkit-scrollbar {
   width: 5px; /* 스크롤바 너비 */
@@ -221,5 +253,18 @@
 
 /* 스크롤바에 마우스 오버 시 스타일 변경 */
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #abcef2; /* 마우스 오버 시 스크롤바 색상 변경 */
+  /* background-color: #abcef2;  */
+}
+
+.tutorial-style {
+  @apply relative h-screen flex justify-center items-center overflow-hidden;
+  background: linear-gradient(180deg, #fff 18.12%, #abcef2 100%);
+}
+
+.tutorial-text {
+  @apply w-[100%] text-center absolute top-[80px] left-1/2 transform -translate-x-1/2 space-y-2;
+}
+
+.tutorial-img {
+  @apply absolute bottom-[-30px] left-1/2 transform -translate-x-1/2 w-[70%];
 }

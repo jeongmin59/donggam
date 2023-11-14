@@ -3,7 +3,8 @@ import { useParams } from 'react-router-dom';
 import { getTraceDetail } from '../api/spaceApi';
 import TraceDetailFront from '../components/spacepage/traceDetail/TraceDetailFront';
 import TraceDetailBack from '../components/spacepage/traceDetail/TraceDetailBack';
-import BackButton from '../components/common/BackButton';
+// import BackButton from '../components/common/BackButton';
+import BackTraceBtn from '../components/spacepage/BackTraceBtn';
 import moreBtn from "../assets/icons/more-btn.svg";
 import detailBackBtn from "../assets/icons/detail-back-btn.svg";
 import { useNavigate } from 'react-router-dom';
@@ -45,7 +46,7 @@ const TraceDetailPage = () => {
 
   return (
     <div className='bg-white h-screen'>
-      <BackButton to='/space' />
+      <BackTraceBtn />
       {/* showFront 상태에 따라서 TraceDetailFront 또는 TraceDetailBack 컴포넌트를 렌더링합니다 */}
       {showFront ? <TraceDetailFront data={traceData} /> : <TraceDetailBack data={traceData} comment={comment} setComment={setComment} traceId={traceId} setShowFront={setShowFront} />}
 

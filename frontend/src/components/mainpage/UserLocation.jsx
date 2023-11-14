@@ -94,11 +94,13 @@ const UserLocation = ({ otherUserInfo }) => {
           style={{ width: "100%", height: "100%", zIndex: 1 }}
         >
           <div>
-            <img
-              src={myCharacter}
-              alt={`${characterId}번 캐릭터`}
-              style={{ width: "8rem" }}
-            />
+            <a href="https://forms.gle/xhzTzuJz9uZNBPq76" target="_blank" rel="noopener noreferrer">
+              <img
+                src={myCharacter}
+                alt={`${characterId}번 캐릭터`}
+                style={{ width: "8rem" }}
+              />
+            </a>
           </div>
           {otherUserInfo.map((otherUser, index) => (
             <UserCharacter

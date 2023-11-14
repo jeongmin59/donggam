@@ -14,7 +14,8 @@ const CommentItem = (commentItem) => {
   const formattedDay = (day < 10 ? '0' : '') + day; // 한 자릿수 날일 경우, 06일로 표현
   const hour = newDate.getHours();
   const minute = newDate.getMinutes();
-  const formattedDate = `${formattedYear}-${month}-${formattedDay} ${hour}:${minute}`;
+  const formattedMin = (minute < 10 ? '0' : '') + minute;
+  const formattedDate = `${formattedYear}-${month}-${formattedDay} ${hour}:${formattedMin}`;
 
 
 

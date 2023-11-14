@@ -72,3 +72,14 @@ export const getMyTrace = async () => {
     return err;
   }
 };
+
+// 방명록 댓글 조회
+export const getTraceComments = async (recordId) => {
+  try {
+    const response = await axiosInstance.get(`/space/comment/${recordId}`);
+    return response.data;
+  } catch (error) {
+    console.log("댓글 안 불러와짐", error)
+    return error;
+  }
+};

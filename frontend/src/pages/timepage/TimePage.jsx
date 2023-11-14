@@ -70,7 +70,7 @@ const TimePage = () => {
         isBestTime={isBestTime}
         remainTime={remainTime}
       />
-      {!isBestTime ? (
+      {isBestTime ? (
         <div>
           <PhotoList
             setTotalParticipants={setTotalParticipants}

@@ -195,7 +195,17 @@ public class MainService {
             return Collections.emptyList();
             // 다른 사용자가 있을 경우에는 랜덤으로 섞어서 최대 5명 반환
         }
-        return customMemberRepository.findByIdInAndLastUpdateTimeAfter(locationIds,
-                LocalDateTime.now().minusMinutes(10));
+
+        Collections.shuffle(locationIds);
+
+        List<Member> result = new ArrayList<>();
+        for (Long id : locationIds) {
+            Member member = customMemberRepository.findByIdAndLastUpdateTimeAfter(id, LocalDateTime.now().minusMinutes(10));
+            if (member != null) result.add(member);
+            if (result.size() > 5) return result;
+        }
+//        return customMemberRepository.findByIdInAndLastUpdateTimeAfter(locationIds,
+//                LocalDateTime.now().minusMinutes(10));
+        return result;
     }
 }

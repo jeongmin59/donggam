@@ -148,8 +148,8 @@ public class MemberService {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("grant_type", "authorization_code");
         params.add("client_id", "48fe0d040eac475f7b407702d4e3d9ca");
-//        params.add("redirect_uri", "http://localhost:5173/kakao/callback");
-        params.add("redirect_uri", "https://donggam.site/kakao/callback");
+        params.add("redirect_uri", "http://localhost:5173/kakao/callback");
+//        params.add("redirect_uri", "https://donggam.site/kakao/callback");
         params.add("code", code);
         params.add("client_secret", "Tw1eluHepyso7S7ZKixxwnrBgX4g8b1O");
 

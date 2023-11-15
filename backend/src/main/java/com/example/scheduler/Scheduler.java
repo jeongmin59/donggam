@@ -21,7 +21,7 @@ public class Scheduler {
 
     // 매일 오전 7시, 오전 11시, 오후 5시에 실행될 작업
     // 사진 목록 삭제(초기화)
-    @Scheduled(cron = "0 0 7,11,17 * * *")
+    @Scheduled(cron = "0 0 2,8,22 * * *", zone="UTC")
     public void deactivateImages() {
         log.info("사진 삭제 스케줄러 실행");
         List<Image> activeImages = imageRepository.findByIsActiveTrue();

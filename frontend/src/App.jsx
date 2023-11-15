@@ -20,6 +20,7 @@ import TutorialPage from "./pages/TutorialPage";
 import TraceDetailPage from "./pages/TraceDetailPage";
 import MyTracePage from "./pages/MyTracePage";
 import LandmarkDetailPage from "./pages/LandmarkDetailPage";
+import ChatPage from './pages/ChatPage.jsx';
 import './firebase.js';
 
 function App() {
@@ -48,8 +49,9 @@ function App() {
             <Route path="/profile" element={<ProfilePage />} />
 
             {/* 채팅 페이지 */}
-            <Route path="/chatroom" element={<ChatRoomPage />} />
-            <Route path="/chatting/:roomId" element={<ChattingPage />} />
+            {/* <Route path="/chatroom" element={<ChatRoomPage />} /> */}
+            {/* <Route path="/chatting/:roomId" element={<ChattingPage />} /> */}
+            <Route path="/chat" element={<ChatPage />} />
 
             {/* 쪽지 페이지 */}
             <Route path="/mailbox" element={<MailboxPage />} />

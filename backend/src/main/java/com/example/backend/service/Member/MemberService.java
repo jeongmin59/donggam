@@ -136,8 +136,10 @@ public class MemberService {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND.getMessage(), ErrorCode.USER_NOT_FOUND));
 
-        member.setFirebaseToken(firebaseToken);
-        memberRepository.save(member);
+        if (member.getFirebaseToken() == null || !Objects.equals(member.getFirebaseToken(), firebaseToken)) {
+            member.setFirebaseToken(firebaseToken);
+            memberRepository.save(member);
+        }
     }
 
     // 클라이언트에서 전달받은 code를 사용해서 카카오에서 accessToken 발급

@@ -4,16 +4,14 @@ import { useParams, useLocation } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { UserSelector } from "../recoil/user/userSelector";
 import axiosInstance from "../api/axiosConfig";
-import Stomp from "stompjs";
-import SockJS from "sockjs-client/dist/sockjs";
 
 const ChattingPage = () => {
   const { roomId } = useParams();
   const location = useLocation();
   const isActive = location.state.isActive;
   const roomName = location.state.roomName;
+  const stompClient = location.state.stompClient;
   const [chatList, setChatList] = useState([]);
-  const [stompClient, SetStompClient] = useState(null);
   const [message, setMessage] = useState("");
   const user = useRecoilValue(UserSelector);
   const senderId = user.memberId;
@@ -25,35 +23,42 @@ const ChattingPage = () => {
   };
 
   // 스프링 서버 stomp와 연결
-  const updateStompClient = () => {
-    const socket = new SockJS(`https://k9e107.p.ssafy.io/stomp/chat`
-    , null, {transports: ["xhr-streaming", "xhr-polling"]});
-    const stompClient = Stomp.over(socket);
-    SetStompClient(stompClient);
-  }
+  // const updateStompClient = () => {
+  //   // const socket = new SockJS(`https://k9e107.p.ssafy.io/stomp/chat`
+  //   // , null, {transports: ["xhr-streaming", "xhr-polling"]});
+  //   const socket = new SockJS(`http://localhost:8080/stomp/chat`
+  //   , null, {
+  //     transports: ["xhr-streaming", "xhr-polling"],
+  // });
+  //   const stompClient = Stomp.over(socket);
+  //   SetStompClient(stompClient);
+  // }
 
   // 채팅 엔드포인트 subscribe
-  const connectStomp = () => {
-    stompClient.connect({}, function (frame) {
-      // console.log("Connected : " + frame);
-      stompClient.subscribe(`/sub/chat/room/${roomId}`, function (response) {
-        const message = JSON.parse(response.body);
-        setChatList((prevChatList) => [...prevChatList, message]);
-        const chatWindow = document.getElementById("chatWindow");
-        chatWindow.scrollTop = chatWindow.scrollHeight;
-      });
-    });
+  // const connectStomp = () => {
+  //   stompClient.connect({}, function (frame) {
+  //     // console.log("Connected : " + frame);
+  //     stompClient.subscribe(`/sub/chat/room/${roomId}`, function (response) {
+  //       const message = JSON.parse(response.body);
+  //       setChatList((prevChatList) => [...prevChatList, message]);
+  //       const chatWindow = document.getElementById("chatWindow");
+  //       chatWindow.scrollTop = chatWindow.scrollHeight;
+  //     });
+  //   });
+  // }
+  const stompSubscribe = () => {
+    stompClient.subscribe(`/sub/chat/room/${roomId}`, response => {
+      const message = JSON.parse(response.body);
+      setChatList((prevChatList) => [...prevChatList, message]);
+      const chatWindow = document.getElementById("chatWindow");
+      chatWindow.scrollTop = chatWindow.scrollHeight;
+    }, 
+    {id : 'chat'}
+    );
   }
 
-  const disconnectStomp = () => {
-    if (stompClient !== null) {
-      stompClient.disconnect();
-    }
-  }
-
-  const reconnectStomp = () => {
-      disconnectStomp();
-      updateStompClient();
+  const stompUnsubscribe = () => {
+    stompClient.unsubsribe('chat');
   }
 
   const readChats = async () => {
@@ -61,19 +66,19 @@ const ChattingPage = () => {
   };
 
   useEffect(() => {
-    updateChatList();
-    reconnectStomp();
+    // stompSubscribe();
+    console.log(stompClient);
     return () => {
-      readChats();
-      disconnectStomp();
-    };
-  }, [roomId]);
+      // stompUnsubscribe();
+    }
+  })
 
   useEffect(() => {
-    if (stompClient !== null) {
-      connectStomp();
-    }
-  }, [stompClient]);
+    updateChatList();
+    return () => {
+      readChats();
+    };
+  }, [roomId]);
 
   useEffect(() => {
     const element = document.querySelector(".bottom");

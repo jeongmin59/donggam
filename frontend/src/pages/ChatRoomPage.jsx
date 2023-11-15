@@ -3,10 +3,13 @@ import { useNavigate } from "react-router-dom";
 import Header from "./../components/common/Header";
 import axiosInstance from "../api/axiosConfig";
 import { XIcon } from "@heroicons/react/outline";
+import Stomp from "stompjs";
+import SockJS from "sockjs-client/dist/sockjs";
 
 const ChatRoomPage = () => {
   const navigate = useNavigate();
   const [chatRoom, setChatRoom] = useState([]);
+  const [stompClient, setStompClient] = useState(null);
 
   const updateChatRoom = async () => {
     const res = await axiosInstance.get(`/room/list`);
@@ -14,8 +17,8 @@ const ChatRoomPage = () => {
     setChatRoom(chatRoomList);
   };
 
-  const onClickRoom = (roomId, isActive, roomName) => {
-    navigate(`/chatting/${roomId}`, { state: { isActive, roomName } });
+  const onClickRoom = (roomId, isActive, roomName ) => {
+    navigate(`/chatting/${roomId}`, { state: { isActive, roomName, stompClient } });
   };
 
   const onClickLeave = async (e, roomId) => {
@@ -28,8 +31,20 @@ const ChatRoomPage = () => {
   };
 
   useEffect(() => {
+    const socket = new SockJS(`http://localhost:8080/stomp/chat`, null, {
+        transports: ["xhr-streaming", "xhr-polling"],
+    });
+    setStompClient(Stomp.over(socket));
     updateChatRoom();
-  }, []);
+  }, [])
+
+  useEffect(() => {
+    if (stompClient !== null) {
+      stompClient.connect({}, frame => {
+        console.log("Stomp Connected", frame);
+      })
+    }
+  }, [stompClient]);
 
   return (
     <div>

@@ -30,7 +30,6 @@ import org.hibernate.annotations.DynamicUpdate;
 @Table(name = "member")
 @Getter
 @Setter
-@DynamicUpdate
 public class Member {
     @Id
     private Long id;

@@ -16,7 +16,7 @@ const Sidebuttons = ({ unreadChatCount, unreadMessageCount }) => {
         <div className="mb-2 relative">
           <img
             src={ChattingBtn}
-            onClick={() => navigateTo('/chatroom')}
+            onClick={() => navigateTo('/chat')}
           />
           {unreadChatCount > 0 && (
             <span className="bg-red-400 text-white rounded-full w-6 h-6 flex items-center justify-center absolute top-2 left-2 transform -translate-x-1/2 -translate-y-1/2">

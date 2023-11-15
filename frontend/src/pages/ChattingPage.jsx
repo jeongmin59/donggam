@@ -60,7 +60,7 @@ const ChattingPage = () => {
     updateStompClient();
     return () => {
       readChats();
-      // disconnectStomp();
+      disconnectStomp();
     };
   }, []);
 

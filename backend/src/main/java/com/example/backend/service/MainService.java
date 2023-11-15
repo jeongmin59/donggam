@@ -51,8 +51,8 @@ public class MainService {
 
         if(!members.isEmpty()) {
             Collections.shuffle(members);
-            if (members.size() > 5) {
-                members = members.subList(0, 5);
+            if (members.size() >= 3) {
+                members = members.subList(0, 3);
             }
         }
 
@@ -65,10 +65,11 @@ public class MainService {
                         && !chat.getIsRead())
                 .mapToInt(chat -> 1)
                 .sum();
+//        int unreadChatCount = 0;
 
         // 주변에 다른 사용자를 찾지 못했을 때
         if (members.isEmpty()) {
-//            updateTime(request.getMemberId());
+            updateTime(request.getMemberId());
             return MainDto.toDtoAlone(member, unreadChatCount);
         }
 
@@ -77,7 +78,7 @@ public class MainService {
         int aroundPeopleCount = aroundPeople.size();
         Emotion statusWeather = getStatusWeather(member, members);
 
-//        updateTime(request.getMemberId());
+        updateTime(request.getMemberId());
         return MainDto.toDtoWith(member, statusWeather, unreadChatCount, aroundPeopleCount, aroundPeople);
     }
 

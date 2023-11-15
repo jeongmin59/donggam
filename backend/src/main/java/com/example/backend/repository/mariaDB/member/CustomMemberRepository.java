@@ -13,14 +13,21 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.persistence.LockModeType;
+import org.aspectj.lang.annotation.Aspect;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 @Repository
+@Aspect
+@Component
 public class CustomMemberRepository extends QuerydslRepositorySupport {
 
     private final JPAQueryFactory queryFactory;
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     public CustomMemberRepository(JPAQueryFactory queryFactory) {
         super(Member.class);
@@ -36,7 +43,6 @@ public class CustomMemberRepository extends QuerydslRepositorySupport {
 //                .fetch();
 //    }
 
-    @Lock(LockModeType.PESSIMISTIC_READ)
     public Member findByIdAndLastUpdateTimeAfter(Long memberId, LocalDateTime time) {
         return queryFactory
                 .selectFrom(member)
@@ -45,7 +51,6 @@ public class CustomMemberRepository extends QuerydslRepositorySupport {
                 .fetchOne();
     }
 
-    @Lock(LockModeType.PESSIMISTIC_READ)
     public Member findById(Long memberId) {
         return queryFactory
                 .selectFrom(member)
@@ -54,7 +59,6 @@ public class CustomMemberRepository extends QuerydslRepositorySupport {
                 .fetchOne();
     }
 
-    @Lock(LockModeType.PESSIMISTIC_READ)
     public Optional<Member> findOptionalById(Long memberId) {
         return Optional.ofNullable(queryFactory
                 .selectFrom(member)
@@ -64,7 +68,6 @@ public class CustomMemberRepository extends QuerydslRepositorySupport {
         );
     }
 
-    @Lock(LockModeType.PESSIMISTIC_READ)
     public Member findWithRecordsById(Long memberId) {
         return queryFactory
                 .selectFrom(member)

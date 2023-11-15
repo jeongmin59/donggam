@@ -1,15 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import Header from "./../components/common/Header";
-import axiosInstance from "../api/axiosConfig";
+import Header from "../common/Header";
+import axiosInstance from "../../api/axiosConfig";
 import { XIcon } from "@heroicons/react/outline";
-import Stomp from "stompjs";
-import SockJS from "sockjs-client/dist/sockjs";
- 
-const ChatRoomPage = () => {
-  const navigate = useNavigate();
+import React, { useState, useEffect } from "react";
+
+const ChatRoomList = ({ setCurrentRoom, setIsOnChat }) => {
   const [chatRoom, setChatRoom] = useState([]);
-  const [stompClient, setStompClient] = useState(null);
 
   const updateChatRoom = async () => {
     const res = await axiosInstance.get(`/room/list`);
@@ -17,12 +12,7 @@ const ChatRoomPage = () => {
     setChatRoom(chatRoomList);
   };
 
-  const onClickRoom = (roomId, isActive, roomName ) => {
-    const stompString = JSON.stringify(stompClient);
-    navigate(`/chatting/${roomId}`, { state: { isActive, roomName, stompString } });
-  };
-
-  const onClickLeave = async (e, roomId) => {
+  const handleDeactivateRoom = async (e, roomId) => {
     e.stopPropagation();
     const res = await axiosInstance.post(`/chat/leave`, {
       roomId: roomId,
@@ -31,27 +21,14 @@ const ChatRoomPage = () => {
     setChatRoom(chatRoomList);
   };
 
-  useEffect(() => {
-    const socket = new SockJS(`http://localhost:8080/stomp/chat`, null, {
-        transports: ["xhr-streaming", "xhr-polling"],
-    });
-    setStompClient(Stomp.over(socket));
+  const handleToChatRoom = (room) => {
+    setIsOnChat(true);
+    setCurrentRoom(room);
+  }
 
+  useEffect(() => {
     updateChatRoom();
-    return () => {
-      if (stompClient !== null) {
-        stompClient.disconnect();
-      }
-    }
-  }, [])
-
-  useEffect(() => {
-    if (stompClient !== null) {
-      stompClient.connect({}, frame => {
-        console.log("Stomp Connected", frame);
-      })
-    }
-  }, [stompClient]);
+  })
 
   return (
     <div>
@@ -64,7 +41,7 @@ const ChatRoomPage = () => {
                 <div
                   key={room.roomId}
                   className="my-2"
-                  onClick={() => onClickRoom(room.roomId, room.isActive, room.name)}
+                  onClick={() => handleToChatRoom(room)}
                 >
                   <div className="bg-white p-4 flex flex-col justify-between rounded-[20px] shadow-md h-full w-full relative ">
                     <div className="flex items-center w-full ">
@@ -88,7 +65,7 @@ const ChatRoomPage = () => {
                       )}
                       <div
                         className="absolute top-0 right-0 p-2 cursor-pointer"
-                        onClick={(e) => onClickLeave(e, room.roomId)}
+                        onClick={(e) => handleDeactivateRoom(e, room.roomId)}
                       >
                         <XIcon className="h-5 w-5 text-gray-500" />
                       </div>
@@ -103,4 +80,4 @@ const ChatRoomPage = () => {
   );
 };
 
-export default ChatRoomPage;
+export default ChatRoomList;

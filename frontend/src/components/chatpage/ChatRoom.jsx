@@ -1,16 +1,13 @@
-import Header from "../components/common/Header";
-import React, { useState, useEffect, useRef } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import Header from "../common/Header";
 import { useRecoilValue } from "recoil";
-import { UserSelector } from "../recoil/user/userSelector";
-import axiosInstance from "../api/axiosConfig";
+import { UserSelector } from "../../recoil/user/userSelector";
+import axiosInstance from "../../api/axiosConfig";
 
-const ChattingPage = () => {
-  const { roomId } = useParams();
-  const location = useLocation();
-  const isActive = location.state.isActive;
-  const roomName = location.state.roomName;
-
+const ChatRoom = ({ room, stompClient, setIsOnChat }) => {
+  const isActive = room.isActive;
+  const roomId = room.roomId;
+  const roomName = room.name;
   const [chatList, setChatList] = useState([]);
   const [message, setMessage] = useState("");
   const user = useRecoilValue(UserSelector);
@@ -23,39 +20,34 @@ const ChattingPage = () => {
   };
 
   const stompSubscribe = () => {
-    stompClient.subscribe(`/sub/chat/room/${roomId}`, response => {
-      const message = JSON.parse(response.body);
-      setChatList((prevChatList) => [...prevChatList, message]);
-      const chatWindow = document.getElementById("chatWindow");
-      chatWindow.scrollTop = chatWindow.scrollHeight;
-    }, 
-    {id : 'chat'}
-    );
-  }
+    if (stompClient !== null) {
+      stompClient.subscribe(
+        `/sub/chat/room/${roomId}`,
+        (response) => {
+          const message = JSON.parse(response.body);
+          setChatList((prevChatList) => [...prevChatList, message]);
+          const chatWindow = document.getElementById("chatWindow");
+          chatWindow.scrollTop = chatWindow.scrollHeight;
+        },
+        { id: "chat" },
+      );
+    }
+  };
 
   const stompUnsubscribe = () => {
-    stompClient.unsubsribe('chat');
-  }
+    stompClient.unsubscribe("chat");
+  };
 
   const readChats = async () => {
     await axiosInstance.post(`/chat/list/${roomId}`);
   };
 
   useEffect(() => {
-    console.log(stompClient);
-    if (stompClient !== null) {
-      stompSubscribe();
-    }
-    console.log(stompClient);
-    return () => {
-      stompUnsubscribe();
-    }
-  })
-
-  useEffect(() => {
     updateChatList();
+    stompSubscribe();
     return () => {
-      readChats();
+        readChats();
+        stompUnsubscribe();
     };
   }, [roomId]);
 
@@ -83,25 +75,21 @@ const ChattingPage = () => {
   };
 
   return (
-    <div
-      className=" flex flex-col chatting h-screen bg-white w-full"
-    >
-      <div>
-        <Header title={roomName} to="/chatroom" className='fixed' />
+    <div className=" flex flex-col chatting h-screen bg-white w-full">
+      <div onClick={() => setIsOnChat(false)}>
+        <Header title={roomName} to="/chat" className="fixed" />
       </div>
 
       <div className="h-[70%]" style={{ overflowY: "scroll" }}>
-        <ul
-          className="w-full pt-5"
-          id="chatWindow"
-        >
+        <ul className="w-full pt-5" id="chatWindow">
           {chatList &&
             chatList.length > 0 &&
             chatList.map((chat, index) => (
               <li
                 key={index}
-                className={`chatbox ${user.memberId === chat.senderId ? "text-right" : "text-left"
-                  }`}
+                className={`chatbox ${
+                  user.memberId === chat.senderId ? "text-right" : "text-left"
+                }`}
               >
                 {user.memberId !== chat.senderId && ( // 이 부분 추가
                   <div className="chat_user_name text-md font-bold mt-5 ml-5 mr-8">
@@ -109,10 +97,11 @@ const ChattingPage = () => {
                   </div>
                 )}
                 <div
-                  className={`inline-block ${user.memberId === chat.senderId
-                    ? "bg-gray-100"
-                    : "bg-mainColor"
-                    } px-4 py-2 my-1 rounded-3xl border max-w-xs max-h-96 whitespace-pre-wrap ml-5 mr-5`}
+                  className={`inline-block ${
+                    user.memberId === chat.senderId
+                      ? "bg-gray-100"
+                      : "bg-mainColor"
+                  } px-4 py-2 my-1 rounded-3xl border max-w-xs max-h-96 whitespace-pre-wrap ml-5 mr-5`}
                   style={{
                     maxHeight: "auto",
                     maxWidth: "auto",
@@ -125,10 +114,9 @@ const ChattingPage = () => {
                 </div>
               </li>
             ))}
-          <li className="bottom" ></li>
+          <li className="bottom"></li>
         </ul>
       </div>
-
 
       {isActive ? (
         <div
@@ -171,4 +159,4 @@ const ChattingPage = () => {
   );
 };
 
-export default ChattingPage;
+export default ChatRoom;

@@ -68,6 +68,7 @@ public class MainService {
 
         // 주변에 다른 사용자를 찾지 못했을 때
         if (members.isEmpty()) {
+            updateTime(request.getMemberId());
             return MainDto.toDtoAlone(member, unreadChatCount);
         }
 
@@ -76,15 +77,10 @@ public class MainService {
         int aroundPeopleCount = aroundPeople.size();
         Emotion statusWeather = getStatusWeather(member, members);
 
+        updateTime(request.getMemberId());
         return MainDto.toDtoWith(member, statusWeather, unreadChatCount, aroundPeopleCount, aroundPeople);
     }
 
-    public void updateTime(Long memberId) {
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND.getMessage(), ErrorCode.USER_NOT_FOUND));
-        member.setLastUpdateTime(LocalDateTime.now());
-        memberRepository.save(member);
-    }
     public MemberDetailDto.Response otherMember(Long memberId) {
         Member member = customMemberRepository.findById(memberId);
 
@@ -182,6 +178,13 @@ public class MainService {
                 return Emotion.NEGATIVE;
             }
         }
+    }
+
+    private void updateTime(Long memberId) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND.getMessage(), ErrorCode.USER_NOT_FOUND));
+        member.setLastUpdateTime(LocalDateTime.now());
+        memberRepository.save(member);
     }
 
     // 반경 10km이내의 회원을 탐색하는 메서드

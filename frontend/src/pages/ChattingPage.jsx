@@ -51,18 +51,23 @@ const ChattingPage = () => {
     }
   }
 
+  const reconnectStomp = () => {
+      disconnectStomp();
+      updateStompClient();
+  }
+
   const readChats = async () => {
     await axiosInstance.post(`/chat/list/${roomId}`);
   };
 
   useEffect(() => {
     updateChatList();
-    updateStompClient();
+    reconnectStomp();
     return () => {
       readChats();
       disconnectStomp();
     };
-  }, []);
+  }, [roomId]);
 
   useEffect(() => {
     if (stompClient !== null) {

@@ -68,7 +68,7 @@ public class MainService {
 
         // 주변에 다른 사용자를 찾지 못했을 때
         if (members.isEmpty()) {
-            updateTime(request.getMemberId());
+//            updateTime(request.getMemberId());
             return MainDto.toDtoAlone(member, unreadChatCount);
         }
 
@@ -77,7 +77,7 @@ public class MainService {
         int aroundPeopleCount = aroundPeople.size();
         Emotion statusWeather = getStatusWeather(member, members);
 
-        updateTime(request.getMemberId());
+//        updateTime(request.getMemberId());
         return MainDto.toDtoWith(member, statusWeather, unreadChatCount, aroundPeopleCount, aroundPeople);
     }
 

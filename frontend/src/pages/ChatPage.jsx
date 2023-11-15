@@ -12,7 +12,10 @@ const ChatPage = () => {
   const [currentRoom, setCurrentRoom] = useState({});
 
   const updateStompClient = () => {
-    const socket = new SockJS(`http://localhost:8080/stomp/chat`, null, {
+    // const socket = new SockJS(`http://localhost:8080/stomp/chat`, null, {
+    //   transports: ["xhr-streaming", "xhr-polling"],
+    // });
+    const socket = new SockJS(`https://k9e107.p.ssafy.io/stomp/chat`, null, {
       transports: ["xhr-streaming", "xhr-polling"],
     });
     setStompClient(Stomp.over(socket));

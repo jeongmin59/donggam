@@ -42,14 +42,14 @@ public class MainService {
         Long memberId = request.getMemberId();
         Member member = customMemberRepository.findById(memberId);
 
-        member.setLastUpdateTime(LocalDateTime.now());
-        member = memberRepository.save(member);
+//        member.setLastUpdateTime(LocalDateTime.now());
+//        member = memberRepository.save(member);
 
         locationService.saveLocation(memberId, request.getLatitude(), request.getLongitude());
 
         List<Member> members = getAroundMembers(memberId);
 
-        if(members.size() != 0) {
+        if(!members.isEmpty()) {
             Collections.shuffle(members);
             if (members.size() > 5) {
                 members = members.subList(0, 5);
@@ -79,6 +79,12 @@ public class MainService {
         return MainDto.toDtoWith(member, statusWeather, unreadChatCount, aroundPeopleCount, aroundPeople);
     }
 
+    public void updateTime(Long memberId) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND.getMessage(), ErrorCode.USER_NOT_FOUND));
+        member.setLastUpdateTime(LocalDateTime.now());
+        memberRepository.save(member);
+    }
     public MemberDetailDto.Response otherMember(Long memberId) {
         Member member = customMemberRepository.findById(memberId);
 

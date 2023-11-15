@@ -23,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ChatMessageService {
 
     private final ChatRoomRepository chatRoomRepository;

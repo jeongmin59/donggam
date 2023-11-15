@@ -4,9 +4,11 @@ import com.example.backend.entity.postgreSQL.MemberLocation;
 import com.example.backend.repository.postgreSQL.MemberLocationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class LocationService {
 
   private final MemberLocationRepository memberLocationRepository;

@@ -149,7 +149,7 @@ const ProfilePage = () => {
             placeholder={status}
             maxLength={50}
           />
-          <h5 className="mt-2 px-3 text-gray-500">* 최소 2글자 이상 작성해주세요. </h5>
+          <h5 className="mt-2 px-3 text-gray-500">* 최소 3글자 이상 작성해주세요. </h5>
           <h5 className="mt-1 px-3 text-gray-500">** 최대 50자까지 작성 가능해요. </h5>
         </div>
       </div>

@@ -29,12 +29,14 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class MemberService {
 
     private final MemberRepository memberRepository;
@@ -128,6 +130,16 @@ public class MemberService {
 
         return new UpdateDto.Response(savedMember.getNickname(), savedMember.getCharacterId(),
                 lastStatus.getId(), lastStatus.getContent(), lastStatus.getEmotion().name());
+    }
+
+    public void saveFirebaseToken(Long memberId, String firebaseToken) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND.getMessage(), ErrorCode.USER_NOT_FOUND));
+
+        if (member.getFirebaseToken() == null || !Objects.equals(member.getFirebaseToken(), firebaseToken)) {
+            member.setFirebaseToken(firebaseToken);
+            memberRepository.save(member);
+        }
     }
 
     // 클라이언트에서 전달받은 code를 사용해서 카카오에서 accessToken 발급

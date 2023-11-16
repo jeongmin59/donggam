@@ -29,52 +29,8 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-//@EnableTransactionManagement
-//@EnableJpaRepositories(
-//        basePackages = "com.example.backend.repository.redis",
-//        entityManagerFactoryRef = "mariaDBEntityManagerFactory",
-//        transactionManagerRef = "redisTransactionManager"
-//)
 @RequiredArgsConstructor
 public class RedisConfig {
-//    private final JpaProperties jpaProperties;
-//    private final HibernateProperties hibernateProperties;
-//
-//    @Bean
-//    @Primary
-//    @ConfigurationProperties("spring.third-datasource")
-//    public DataSourceProperties redisDatasourceProperties() {
-//        return new DataSourceProperties();
-//    }
-//
-//    @Bean
-//    @ConfigurationProperties("spring.third-datasource.configuration")
-//    public DataSource redisDatasource() {
-//        return redisDatasourceProperties()
-//                .initializeDataSourceBuilder()
-//                .type(HikariDataSource.class)
-//                .build();
-//    }
-//
-//    @Bean(name = "redisEntityManagerFactory")
-//    public LocalContainerEntityManagerFactoryBean redisEntityManagerFactory(
-//            EntityManagerFactoryBuilder builder) {
-//        Map<String, Object> properties = hibernateProperties.determineHibernateProperties(jpaProperties.getProperties(), new HibernateSettings());
-//        DataSource dataSource = redisDatasource();
-//        return builder
-//                .dataSource(dataSource)
-//                .packages("com.example.backend.entity.redis")
-//                .persistenceUnit("redisEntityManager")
-//                .properties(properties)
-//                .build();
-//    }
-//
-//    @Bean(name = "redisTransactionManager")
-//    public PlatformTransactionManager redisTransactionManager(
-//            final @Qualifier("redisEntityManagerFactory") LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean
-//    ) {
-//        return new JpaTransactionManager(localContainerEntityManagerFactoryBean.getObject());
-//    }
 
     @Bean
     public RedisMessageListenerContainer redisMessageListenerContainer(

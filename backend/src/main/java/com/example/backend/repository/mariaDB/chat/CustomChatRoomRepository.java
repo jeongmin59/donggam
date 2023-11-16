@@ -26,8 +26,8 @@ public class CustomChatRoomRepository extends QuerydslRepositorySupport {
                 .selectDistinct(chatRoom)
                 .from(chatRoom)
                 .leftJoin(chatRoom.chat, chat).fetchJoin()
-                .leftJoin(chatRoom.member1, member)
-                .leftJoin(chatRoom.member2, member)
+                .leftJoin(chatRoom.member1, member).fetchJoin()
+                .leftJoin(chatRoom.member2, member).fetchJoin()
                 .where(chatRoom.member1.id.eq(memberId).and(chatRoom.isMember1Active.isTrue())
                         .or(chatRoom.member2.id.eq(memberId).and(chatRoom.isMember2Active.isTrue())))
                 .orderBy(chatRoom.lastChatTime.desc())
@@ -38,6 +38,15 @@ public class CustomChatRoomRepository extends QuerydslRepositorySupport {
         return queryFactory
                 .selectFrom(chatRoom)
                 .leftJoin(chatRoom.chat, chat).fetchJoin()
+                .where(chatRoom.id.eq(roomId))
+                .fetchOne();
+    }
+
+    public ChatRoom findWithMemberById(Long roomId) {
+        return queryFactory
+                .selectFrom(chatRoom)
+                .join(chatRoom.member1, member)
+                .join(chatRoom.member2, member)
                 .where(chatRoom.id.eq(roomId))
                 .fetchOne();
     }

@@ -26,6 +26,8 @@ public class QMember extends EntityPathBase<Member> {
 
     public final StringPath email = createString("email");
 
+    public final StringPath firebaseToken = createString("firebaseToken");
+
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final ListPath<com.example.backend.entity.mariaDB.space.LandMarkRecord, com.example.backend.entity.mariaDB.space.QLandMarkRecord> landMarkRecords = this.<com.example.backend.entity.mariaDB.space.LandMarkRecord, com.example.backend.entity.mariaDB.space.QLandMarkRecord>createList("landMarkRecords", com.example.backend.entity.mariaDB.space.LandMarkRecord.class, com.example.backend.entity.mariaDB.space.QLandMarkRecord.class, PathInits.DIRECT2);

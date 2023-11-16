@@ -24,9 +24,11 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class MainService {
 
     private final MemberRepository memberRepository;
@@ -40,17 +42,17 @@ public class MainService {
         Long memberId = request.getMemberId();
         Member member = customMemberRepository.findById(memberId);
 
-        member.setLastUpdateTime(LocalDateTime.now());
-        member = memberRepository.save(member);
+//        member.setLastUpdateTime(LocalDateTime.now());
+//        member = memberRepository.save(member);
 
         locationService.saveLocation(memberId, request.getLatitude(), request.getLongitude());
 
         List<Member> members = getAroundMembers(memberId);
 
-        if(members.size() != 0) {
+        if(!members.isEmpty()) {
             Collections.shuffle(members);
-            if (members.size() > 5) {
-                members = members.subList(0, 5);
+            if (members.size() >= 3) {
+                members = members.subList(0, 3);
             }
         }
 
@@ -63,9 +65,11 @@ public class MainService {
                         && !chat.getIsRead())
                 .mapToInt(chat -> 1)
                 .sum();
+//        int unreadChatCount = 0;
 
         // 주변에 다른 사용자를 찾지 못했을 때
         if (members.isEmpty()) {
+            updateTime(request.getMemberId());
             return MainDto.toDtoAlone(member, unreadChatCount);
         }
 
@@ -74,6 +78,7 @@ public class MainService {
         int aroundPeopleCount = aroundPeople.size();
         Emotion statusWeather = getStatusWeather(member, members);
 
+        updateTime(request.getMemberId());
         return MainDto.toDtoWith(member, statusWeather, unreadChatCount, aroundPeopleCount, aroundPeople);
     }
 
@@ -106,7 +111,7 @@ public class MainService {
                         positionX >= 15 &&
                                 positionX <= 60 &&
                                 positionY >= 25 &&
-                                positionY <= 60
+                                positionY <= 75
                 ) {
                     isOverlapping = true;
                     continue;
@@ -176,6 +181,13 @@ public class MainService {
         }
     }
 
+    private void updateTime(Long memberId) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND.getMessage(), ErrorCode.USER_NOT_FOUND));
+        member.setLastUpdateTime(LocalDateTime.now());
+        memberRepository.save(member);
+    }
+
     // 반경 10km이내의 회원을 탐색하는 메서드
     private List<Member> getAroundMembers(Long locationId) {
         // 현재 자신의 위치 정보를 가져 옴
@@ -195,7 +207,17 @@ public class MainService {
             return Collections.emptyList();
             // 다른 사용자가 있을 경우에는 랜덤으로 섞어서 최대 5명 반환
         }
-        return customMemberRepository.findByIdInAndLastUpdateTimeAfter(locationIds,
-                LocalDateTime.now().minusMinutes(10));
+
+        Collections.shuffle(locationIds);
+
+        List<Member> result = new ArrayList<>();
+        for (Long id : locationIds) {
+            Member member = customMemberRepository.findByIdAndLastUpdateTimeAfter(id, LocalDateTime.now().minusMinutes(10));
+            if (member != null) result.add(member);
+            if (result.size() > 5) return result;
+        }
+//        return customMemberRepository.findByIdInAndLastUpdateTimeAfter(locationIds,
+//                LocalDateTime.now().minusMinutes(10));
+        return result;
     }
 }

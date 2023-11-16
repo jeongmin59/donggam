@@ -3,7 +3,7 @@ import axiosInstance from "../../api/axiosConfig";
 import { XIcon } from "@heroicons/react/outline";
 import React, { useState, useEffect } from "react";
 
-const ChatRoomList = ({ setCurrentRoom, setIsOnChat }) => {
+const ChatRoomList = ({ setCurrentRoom, setIsOnChat, setIsInvite }) => {
   const [chatRoom, setChatRoom] = useState([]);
 
   const updateChatRoom = async () => {
@@ -24,6 +24,7 @@ const ChatRoomList = ({ setCurrentRoom, setIsOnChat }) => {
   const handleToChatRoom = (room) => {
     setIsOnChat(true);
     setCurrentRoom(room);
+    setIsInvite(false);
   }
 
   useEffect(() => {

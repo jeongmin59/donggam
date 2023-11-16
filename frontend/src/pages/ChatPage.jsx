@@ -84,7 +84,7 @@ const ChatPage = () => {
           setIsInvite={setIsInvite}
         />
       )}
-      {isStompConnected && isOnChat && isInvite === null && (
+      {isStompConnected && isOnChat && (!isInvite || isInvite === null) && (
         <ChatRoom
           room={currentRoom}
           stompClient={stompClient}
@@ -95,6 +95,7 @@ const ChatPage = () => {
         <ChatRoomList
           setCurrentRoom={setCurrentRoom}
           setIsOnChat={setIsOnChat}
+          setIsInvite={setIsInvite}
         />
       )}
     </div>

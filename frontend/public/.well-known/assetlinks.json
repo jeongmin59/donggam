@@ -1,0 +1,13 @@
+[{
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "site.donggam.twa",
+      "sha256_cert_fingerprints": [
+        "10:B1:59:3C:EA:B9:2A:44:27:DD:66:F8:06:6E:55:38:DE:14:55:1B:50:4A:DE:EB:AB:3D:27:19:47:D2:87:8D",
+        "56:3C:E8:4A:BF:F9:99:AB:99:60:BC:86:0B:91:2B:BC:75:09:B6:EA:3B:60:C9:2E:D8:57:79:18:D5:BC:95:5B",
+        "50:97:A3:B0:80:F6:0D:A1:C0:75:B4:FF:9A:4D:F2:2D:87:42:F0:FF:B2:3F:6A:92:F6:1F:14:C5:EA:BD:D7:83"
+      ]
+    }
+  }]
+  

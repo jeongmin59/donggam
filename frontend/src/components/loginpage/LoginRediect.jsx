@@ -3,6 +3,9 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MemberIdAtom, StatusMessageAtom, NicknameAtom, CharacterIdAtom, AccessTokenAtom, StatusMessageIdAtom, AccessTokenExpirationAtom } from '../../recoil/user/userAtom';
 import { useSetRecoilState } from 'recoil';
+import { firebaseApp } from '../../firebase.js';
+import { getMessaging, getToken } from 'firebase/messaging';
+import { transmitFCMToken } from '../../api/transmitFCMToken';
 
 
 const LoginRediect = () => {
@@ -53,6 +56,13 @@ const LoginRediect = () => {
         // expirationTime.setMinutes(expirationTime.getMinutes() + 3);
         setAccessTokenExpiration(expirationTime); // 수정된 부분
 
+        const messaging = getMessaging(firebaseApp);
+        getToken(messaging, {vapidKey: 'BFkfwgIJOQbZJBn3rrNagxnYpn7KRk3EPZ126bQ8TQB8YDYtN3liR18Wg8eeXHI-Z-sHmvUTCrfJ7IZP5CjDqmk'})
+        .then(async (currentToken) => {
+          if (currentToken) {
+            await transmitFCMToken(currentToken);
+          }
+        })
 
         // 로그인 성공 후 상태 메시지 설정 여부에 따라 네비게이트 해주기
         if (status != null) {

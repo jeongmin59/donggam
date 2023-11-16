@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import axiosInstance from "../../api/axiosConfig";
 import { Link } from "react-router-dom";
 import Masonry from "react-masonry-component";
@@ -6,9 +6,43 @@ import fullLikeImg from "../../assets/like/full_heart.png";
 import nullLogo from "../../assets/images/noPhoto.svg";
 import CreateBtn from "../timepage/CreateBtn";
 
-const PhotoList = ({ setTotalParticipants, totalParticipants, remainTime, isBestTime }) => {
+const PhotoList = ({
+  setTotalParticipants,
+  totalParticipants,
+  remainTime,
+  isBestTime,
+}) => {
   const [photos, setPhotos] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [displayData, setDisplayData] = useState([]); // 현재 화면에 보여줄 데이터
+  const [currentPage, setCurrentPage] = useState(0); // 현재 페이지
+
+  const itemsPerPage = 10;
+  const containerRef = useRef(null);
+
+  // 스크롤 이벤트 핸들러
+  const checkScroll = useCallback(() => {
+    if (!photos.length) return; // photos 비어있으면 종료
+    const scrollTop = window.scrollY;
+    const clientHeight = window.innerHeight;
+    const scrollHeight = document.body.offsetHeight;
+    const isNearBottom = scrollTop + clientHeight >= scrollHeight - 5;
+    if (isNearBottom) {
+      setCurrentPage((prev) => prev + 1);
+    }
+  }, [photos]);
+  useEffect(() => {
+    setDisplayData(photos.slice(0, itemsPerPage * (currentPage + 1)));
+  }, [photos, currentPage]);
+
+  useEffect(() => {
+    //스크롤 이벤트 등록
+    window.addEventListener("scroll", checkScroll);
+
+    return () => {
+      window.removeEventListener("scroll", checkScroll);
+    };
+  }, [checkScroll]);
 
   useEffect(() => {
     const getPhotos = async () => {
@@ -16,7 +50,7 @@ const PhotoList = ({ setTotalParticipants, totalParticipants, remainTime, isBest
         const response = await axiosInstance.get("/time");
         if (response.data && response.data.data) {
           setPhotos(response.data.data);
-          setTotalParticipants(photos.length);
+          setTotalParticipants(response.data.data.length);
           // console.log('왔니?', response);
         }
         setLoading(false);
@@ -35,14 +69,18 @@ const PhotoList = ({ setTotalParticipants, totalParticipants, remainTime, isBest
   };
 
   return (
-    <div className="px-5 bg-white h-[73vh]">
+    <div className="h-[75vh] bg-white px-5">
       {loading ? (
         <h4 className="text-center">Loading...</h4>
       ) : photos.length === 0 ? (
         <img src={nullLogo} alt="No Photos" className="mx-auto py-8" />
       ) : (
-        <Masonry className={"my-gallery-class overflow-y-auto max-h-[calc(100vh-200px)]"} options={masonryOptions}>
-          {photos.map((photo) => (
+        <Masonry
+          // className={"my-gallery-class max-h-[calc(100vh-300px)] "}
+          className={"my-gallery-class max-h-[calc(100vh-250px)] overflow-y-auto"}
+          options={masonryOptions}
+        >
+          {displayData.map((photo) => (
             <div
               key={photo.imageId}
               className="masonry-grid-item "
@@ -50,8 +88,8 @@ const PhotoList = ({ setTotalParticipants, totalParticipants, remainTime, isBest
             >
               <Link
                 to={`/time/${photo.imageId}`}
-                state={{isBestTime, totalParticipants, remainTime}}
-                className="m-2 flex flex-col items-center relative"
+                state={{ isBestTime, totalParticipants, remainTime }}
+                className="relative m-2 flex flex-col items-center"
               >
                 <div className="overflow-hidden">
                   <img
@@ -63,17 +101,17 @@ const PhotoList = ({ setTotalParticipants, totalParticipants, remainTime, isBest
                     <img
                       src={fullLikeImg}
                       alt="Liked"
-                      className="absolute top-0 left-0 m-3"
+                      className="absolute left-0 top-0 m-3"
                     />
                   ) : null}
                 </div>
                 <h5 className="mt-1">{photo.title}</h5>
               </Link>
             </div>
-          ))}   
+          ))}
         </Masonry>
       )}
-      <CreateBtn to="/time/upload" />  
+      <CreateBtn to="/time/upload" />
     </div>
   );
 };

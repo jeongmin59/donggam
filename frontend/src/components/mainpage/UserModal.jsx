@@ -1,26 +1,19 @@
 import Modal from "../common/Modal";
 import SmallButton from "../common/SmallButton";
 import { useNavigate } from 'react-router-dom';
-import axiosInstance from "../../api/axiosConfig";
 
 const UserModal = ({ modalInfo, openMailModal }) => {
   const navigate = useNavigate();
 
-  const handleChatting = async () => {
-    const res = await axiosInstance.post(`/chat/invite`, {
-      memberId: modalInfo.otherMemberId,
+  const handleChatting = () => {
+    navigate('/chat', {
+      state : {
+        memberId: modalInfo.otherMemberId,
+        memberName: modalInfo.otherNickname,
+        isInvite: true,
+      }
     });
-    if (res.status === 200) {
-      // console.log(res.data.data); // roomId 확인
-      const roomId = res.data.data.roomId;
-      const isActive = res.data.data.isActive;
-      const roomName = modalInfo.otherNickname;
-      // console.log(roomName);
-      navigate(`/chatting/${roomId}`, {state : {isActive , roomName}});
-    } else {
-      // console.log('채팅 신청 실패');
-    }
-  }
+  } 
 
   return(
     <>

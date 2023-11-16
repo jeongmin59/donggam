@@ -12,16 +12,27 @@ import NearbyTracePage from "./pages/NearbyTracePage";
 import NearbyLandmarkPage from "./pages/NearbyLandmarkPage";
 import SpaceUploadpage from "./pages/SpaceUploadPage";
 import ProfilePage from "./pages/ProfilePage";
-import ChatRoomPage from "./pages/ChatRoomPage";
-import ChattingPage from './pages/ChattingPage';
 import { AccessTokenAtom } from './recoil/user/userAtom';
 import { useRecoilValue } from "recoil";
 import TutorialPage from "./pages/TutorialPage";
 import TraceDetailPage from "./pages/TraceDetailPage";
 import MyTracePage from "./pages/MyTracePage";
 import LandmarkDetailPage from "./pages/LandmarkDetailPage";
+import ChatPage from './pages/ChatPage.jsx';
+import './firebase.js';
 
 function App() {
+
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker
+    .register('/sw.js')
+    .then(registration => {
+      console.log("Service Worker registered with scope : ", registration.scope);
+    })
+    .catch(error => {
+      console.log("Service Worker registration failed : ", error);
+    })
+  }
 
   const isLoggedIn = useRecoilValue(AccessTokenAtom);
 
@@ -36,8 +47,7 @@ function App() {
             <Route path="/profile" element={<ProfilePage />} />
 
             {/* 채팅 페이지 */}
-            <Route path="/chatroom" element={<ChatRoomPage />} />
-            <Route path="/chatting/:roomId" element={<ChattingPage />} />
+            <Route path="/chat" element={<ChatPage />} />
 
             {/* 쪽지 페이지 */}
             <Route path="/mailbox" element={<MailboxPage />} />

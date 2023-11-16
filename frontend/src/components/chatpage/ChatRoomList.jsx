@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import Header from "./../components/common/Header";
-import axiosInstance from "../api/axiosConfig";
+import Header from "../common/Header";
+import axiosInstance from "../../api/axiosConfig";
 import { XIcon } from "@heroicons/react/outline";
+import React, { useState, useEffect } from "react";
 
-const ChatRoomPage = () => {
-  const navigate = useNavigate();
+const ChatRoomList = ({ setCurrentRoom, setIsOnChat, setIsInvite }) => {
   const [chatRoom, setChatRoom] = useState([]);
 
   const updateChatRoom = async () => {
@@ -14,11 +12,7 @@ const ChatRoomPage = () => {
     setChatRoom(chatRoomList);
   };
 
-  const onClickRoom = (roomId, isActive, roomName) => {
-    navigate(`/chatting/${roomId}`, { state: { isActive, roomName } });
-  };
-
-  const onClickLeave = async (e, roomId) => {
+  const handleDeactivateRoom = async (e, roomId) => {
     e.stopPropagation();
     const res = await axiosInstance.post(`/chat/leave`, {
       roomId: roomId,
@@ -27,9 +21,15 @@ const ChatRoomPage = () => {
     setChatRoom(chatRoomList);
   };
 
+  const handleToChatRoom = (room) => {
+    setIsOnChat(true);
+    setCurrentRoom(room);
+    setIsInvite(false);
+  }
+
   useEffect(() => {
     updateChatRoom();
-  }, []);
+  }, [])
 
   return (
     <div>
@@ -42,7 +42,7 @@ const ChatRoomPage = () => {
                 <div
                   key={room.roomId}
                   className="my-2"
-                  onClick={() => onClickRoom(room.roomId, room.isActive, room.name)}
+                  onClick={() => handleToChatRoom(room)}
                 >
                   <div className="bg-white p-4 flex flex-col justify-between rounded-[20px] shadow-md h-full w-full relative ">
                     <div className="flex items-center w-full ">
@@ -66,7 +66,7 @@ const ChatRoomPage = () => {
                       )}
                       <div
                         className="absolute top-0 right-0 p-2 cursor-pointer"
-                        onClick={(e) => onClickLeave(e, room.roomId)}
+                        onClick={(e) => handleDeactivateRoom(e, room.roomId)}
                       >
                         <XIcon className="h-5 w-5 text-gray-500" />
                       </div>
@@ -81,4 +81,4 @@ const ChatRoomPage = () => {
   );
 };
 
-export default ChatRoomPage;
+export default ChatRoomList;

@@ -52,8 +52,33 @@ const MainBackground = () => {
   //   setLongitude(position.coords.longitude);
   // }
 
-  const handleRefresh = () => {
-    window.location.reload();
+  const updateLocation = async () => {
+    const position = await new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(resolve, reject)
+    });
+    // console.log(position);
+    setLatitude(position.coords.latitude);
+    setLongitude(position.coords.longitude);
+    setLatitudeAtom(position.coords.latitude);
+    setLongitudeAtom(position.coords.longitude);
+  }
+
+  const refresh = async () => {
+    const res = await locationInfo(memberId, latitude, longitude);
+    // console.log(res.data);
+    setSelectedBackground(res.data.statusWeather);
+    setAroundPeopleCount(res.data.aroundPeopleCount);
+    setAroundPeople(res.data.aroundPeople);
+    setCharacterId(res.data.characterId);
+    setNickname(res.data.nickname);
+    setStatusMessage(res.data.status);
+    setStatusMessageId(res.data.statusId);
+    updateUnreadCounts(res.data.unreadChatCount, res.data.unreadMessageCount);
+  }
+
+  const handleRefresh = async () => {
+    await updateLocation();
+    await refresh();
   }
 
   const navigate = useNavigate();

@@ -77,7 +77,7 @@ const ChatRoom = ({ room, stompClient, setIsOnChat }) => {
   return (
     <div className=" flex flex-col chatting h-screen bg-white w-full">
       <div onClick={() => setIsOnChat(false)}>
-        <Header title={roomName} to="/chat" className="fixed" />
+        <Header title={roomName} className="fixed" />
       </div>
 
       <div className="h-[70%]" style={{ overflowY: "scroll" }}>

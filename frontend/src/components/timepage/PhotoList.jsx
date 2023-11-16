@@ -76,7 +76,8 @@ const PhotoList = ({
         <img src={nullLogo} alt="No Photos" className="mx-auto py-8" />
       ) : (
         <Masonry
-          className={"my-gallery-class max-h-[calc(100vh-300px)] overflow-auto"}
+          // className={"my-gallery-class max-h-[calc(100vh-300px)] "}
+          className={"my-gallery-class max-h-[calc(100vh-250px)] overflow-y-auto"}
           options={masonryOptions}
         >
           {displayData.map((photo) => (

@@ -23,6 +23,7 @@ import com.example.backend.util.fcm.FCMNotificationRequestDto;
 import com.example.backend.util.fcm.FCMNotificationService;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -106,6 +107,7 @@ public class RecordService {
                 .collect(Collectors.toList());
 
         List<Record> records = recordRepository.findByIdIn(locationIds);
+        Collections.shuffle(records);
 
         return records.stream().map(RecordDto::toRecordDto)
                 .collect(Collectors.toList());

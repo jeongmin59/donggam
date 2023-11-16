@@ -12,8 +12,6 @@ import NearbyTracePage from "./pages/NearbyTracePage";
 import NearbyLandmarkPage from "./pages/NearbyLandmarkPage";
 import SpaceUploadpage from "./pages/SpaceUploadPage";
 import ProfilePage from "./pages/ProfilePage";
-import ChatRoomPage from "./pages/ChatRoomPage";
-import ChattingPage from './pages/ChattingPage';
 import { AccessTokenAtom } from './recoil/user/userAtom';
 import { useRecoilValue } from "recoil";
 import TutorialPage from "./pages/TutorialPage";
@@ -49,8 +47,6 @@ function App() {
             <Route path="/profile" element={<ProfilePage />} />
 
             {/* 채팅 페이지 */}
-            {/* <Route path="/chatroom" element={<ChatRoomPage />} /> */}
-            {/* <Route path="/chatting/:roomId" element={<ChattingPage />} /> */}
             <Route path="/chat" element={<ChatPage />} />
 
             {/* 쪽지 페이지 */}

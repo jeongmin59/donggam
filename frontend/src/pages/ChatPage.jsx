@@ -44,6 +44,7 @@ const ChatPage = () => {
     return () => {
       if (stompClient !== null) {
         stompClient.disconnect();
+        setStompClient(null);
       }
     };
   }, []);

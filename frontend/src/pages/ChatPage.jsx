@@ -38,14 +38,22 @@ const ChatPage = () => {
     }
   };
 
+  const preventGoBack = () => {
+    history.pushState(null, "", location.href);
+    // console.log("뒤로가기 막기 On!");
+  };
+
   useEffect(() => {
     if (isInvite) setIsOnChat(true);
     updateStompClient();
+    history.pushState(null, "", location.href);
+    window.addEventListener("popstate", preventGoBack);
     return () => {
       if (stompClient !== null) {
         stompClient.disconnect();
         setStompClient(null);
       }
+      window.removeEventListener("popstate", preventGoBack);
     };
   }, []);
 

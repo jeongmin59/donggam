@@ -65,7 +65,7 @@ const ChatInviteRoom = ({ memberId, memberName, stompClient, setIsOnChat, setIsI
 
   const handleBack = () => {
     setIsOnChat(false);
-    setIsInvite(null);
+    setIsInvite(false);
     readChats();
   }
 

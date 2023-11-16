@@ -55,6 +55,8 @@ public class TimeService {
             return Collections.emptyList();
         }
 
+        Collections.shuffle(images);
+
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND.getMessage(),
                         ErrorCode.USER_NOT_FOUND));

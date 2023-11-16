@@ -57,7 +57,8 @@ const LoginRediect = () => {
         setAccessTokenExpiration(expirationTime); // 수정된 부분
 
         const messaging = getMessaging(firebaseApp);
-        getToken(messaging).then(async (currentToken) => {
+        getToken(messaging, {vapidKey: 'BFkfwgIJOQbZJBn3rrNagxnYpn7KRk3EPZ126bQ8TQB8YDYtN3liR18Wg8eeXHI-Z-sHmvUTCrfJ7IZP5CjDqmk'})
+        .then(async (currentToken) => {
           if (currentToken) {
             await transmitFCMToken(currentToken);
           }

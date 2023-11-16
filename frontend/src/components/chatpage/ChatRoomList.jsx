@@ -28,7 +28,7 @@ const ChatRoomList = ({ setCurrentRoom, setIsOnChat }) => {
 
   useEffect(() => {
     updateChatRoom();
-  })
+  }, [])
 
   return (
     <div>

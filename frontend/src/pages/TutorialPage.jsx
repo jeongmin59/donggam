@@ -17,19 +17,51 @@ const TutorialPage = () => {
   const handleStartClick = () => {
     navigate("/profile");
   };
+  // 커스텀 화살표 컴포넌트
+  const CustomPrevArrow = (props) => (
+    <div
+      {...props}
+      style={{
+        width: "50px", // 화살표의 너비 설정
+        height: "50px", // 화살표의 높이 설정
+        left: "20px", // 왼쪽 위치 조정
+        zIndex: 1, // z-index 설정하여 슬라이더 내용 위로 표시
+      }}
+    >
+      {/* 커스텀 화살표 내용 */}
+      <span className='text-red-500'>이전</span>
+    </div>
+  );
+
+  const CustomNextArrow = (props) => (
+    <div
+      {...props}
+      style={{
+        width: "50px", // 화살표의 너비 설정
+        height: "50px", // 화살표의 높이 설정
+        right: "-10px", // 오른쪽 위치 조정
+        zIndex: 1, // z-index 설정하여 슬라이더 내용 위로 표시
+      }}
+    >
+      {/* 커스텀 화살표 내용 */}
+      <span>다음</span>
+    </div>
+  );
 
   const settings = {
     // dots: true,
-    // infinite: true,
+    infinite: false,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    arrows: false,
+    arrows: true,
     centerMode: true, // 중앙 정렬을 위해 추가
     centerPadding: '0', // 중앙 정렬을 위해 추가
     cssEase: 'linear', // 중앙 정렬을 위해 추가
+    prevArrow: <CustomPrevArrow />,
+    nextArrow: <CustomNextArrow />,
   };
-
+  
 
   return (
     <div className='bg-white h-screen '>

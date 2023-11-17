@@ -3,7 +3,7 @@ import { initializeApp } from 'firebase/app';
 
 //firebase 구성객체
 const firebaseConfig = {
-  apiKey: "AIzaSyDxjAgzEs8mAlKepOcCROhpRP1ftBvYXBk",
+  apiKey: import.meta.env.VITE_FIRE_BASE_API_KEY,
   authDomain: "donggam-4fe2a.firebaseapp.com",
   projectId: "donggam-4fe2a",
   storageBucket: "donggam-4fe2a.appspot.com",

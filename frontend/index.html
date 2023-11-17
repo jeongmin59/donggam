@@ -8,7 +8,10 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <!-- <link rel="manifest" href="/site.webmanifest"> -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="google-site-verification" content="ZBtq2a_QHSDqiNAPbNFpmzNYOvmfAjSQV5WvUb_k1YE" />
+    <meta
+      name="google-site-verification"
+      content="ZBtq2a_QHSDqiNAPbNFpmzNYOvmfAjSQV5WvUb_k1YE"
+    />
     <link rel="manifest" href="/manifest.json" />
     <title>동감 (Ditto)</title>
   </head>
@@ -16,19 +19,24 @@
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GHBCF2FTMT"></script>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-GHBCF2FTMT"
+    ></script>
     <script>
       window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
 
-      gtag('config', 'G-GHBCF2FTMT');
+      gtag("config", "G-GHBCF2FTMT");
     </script>
-    
+
     <!-- 카카오 MAP API -->
     <script
       type="text/javascript"
-      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=642b656cfc4246856c593847189e45af&libraries=clusterer"
+      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=<%= JS_KEY %>&libraries=clusterer"
     ></script>
   </body>
 </html>
